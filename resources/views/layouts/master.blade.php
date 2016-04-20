@@ -36,9 +36,9 @@ $currentPath = Route::getCurrentRoute()->getPath();
                 </button>
                 <!-- end: RESPONSIVE MENU TOGGLER -->
                 <!-- start: LOGO -->
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="doctorhome">
                    <!--  CLIP<i class="clip-clip"></i>ONE -->
-                   <img src="assets/images/logo2.png" height="45px">
+                   <img src="assets/images/button_home.png" height="45px">
 
                 </a>
                 <!-- Top Menu Starts-->

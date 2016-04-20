@@ -1,8 +1,11 @@
 <?php namespace App\Http\Controllers;
+use Input;
 use DB;
 use Log;
 use App\Quotation;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Session;
 
 class DoctorController extends Controller {
 
@@ -63,9 +66,20 @@ class DoctorController extends Controller {
 		    } 
 		    if(!in_array('', $city)){
 		     	 array_unshift($city, '');
-		    }	  		
+		    }	
 
-		return view('patientpersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city));
+	/*	    select *,s.state_name from patients As p JOIN states As s
+
+on p.state = s.id 
+
+where p.id_patient='KL100200'*/
+		    $patientId = Session::get('patientId');  		
+		    $patientData = DB::table('patients As p')
+		    						 ->leftJoin('states As s','p.state','=','s.id')
+		    						 ->where('id_patient','=',$patientId)->get();
+		Log::info("Patientdata",array($patientData));
+
+		return view('patientpersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData));
 	}
 	public function showPatientObstetricsHistory(){
 		return view('patientobstetricshistory');
@@ -82,6 +96,95 @@ class DoctorController extends Controller {
 
 	public function showPatientExamination(){
 		return view('patientexamination');
+	}
+
+	public function patientIdSubmit(){
+		$patientId     = Input::get('patient_id');
+		$patientStatus = Input::get('patient_status');
+
+		$patientData = DB::table('patients')->where('id_patient','=',$patientId)->get();
+		Log::info("Patientdata",array($patientData));
+
+		if(!empty($patientData)){
+			foreach ($patientData as $key => $value) {
+					$patientId 	     = $value->id_patient;
+					$firstName 	     = $value->first_name;
+					$middleName      = $value->middle_name;
+					$lastName        = $value->last_name;
+					$aadharNo        = $value->id_aadhar;
+					$patientGender   = $value->gender;
+					$patientDob      = $value->dob;
+					$age             = $value->age;
+					$maritialStatus  = $value->maritial_status;
+					$house           = $value->house_name;
+					$street          = $value->street;
+					$city            = $value->city;
+					$state           = $value->state;
+					$country         = $value->country;
+					$pincode         = $value->pincode;
+					$phone           = $value->phone;
+					$email           = $value->email;
+					//echo $patientDob;
+			}
+			Session::put('patientId',$patientId);
+			/*Session::put('firstName',$firstName);
+			Session::put('middleName',$middleName);
+			Session::put('lastName',$lastName);
+			Session::put('aadharNo',$aadharNo);
+			Session::put('patientGender',$patientGender);
+			Session::put('patientDob',$patientDob);
+			Session::put('age',$age);
+			Session::put('maritialStatus',$maritialStatus);
+			Session::put('house',$house);
+			Session::put('street',$street);
+			Session::put('city',$city);
+			Session::put('state',$state);
+			Session::put('country',$country);
+			Session::put('pincode',$pincode);
+			Session::put('phone',$phone);
+			Session::put('email',$email);*/
+		}
+			
+
+	
+
+		if(!empty($patientId)){
+
+			$patientIdExistCheck = DB::table('patients')->where('id_patient','=',$patientId)->first();
+
+
+			if($patientIdExistCheck){
+				
+				if($patientStatus=="new"){
+					echo "Status from new and returns to home with exists message";
+					return Redirect::to('doctorhome')->with(array('error'=>'Patient already exists'));
+					//eturn view('doctorhome');
+				}
+				else{
+					//echo "Status from old and returns to patient information";
+					return Redirect::to('patientpersonalinformation');
+					
+            
+
+			    }		
+					
+			}
+			else{
+				echo $patientStatus;
+				echo "New patient";
+				if($patientStatus=="old"){
+					echo "No patient exist with this id.Are you sure you want to add new patient";
+				}
+				else{
+					Session::flush();
+					//return Redirect::to('patientpersonalinformation');
+					echo "Add new patient";
+				}
+				
+
+			}
+				
+		}
 	}
 	
 	

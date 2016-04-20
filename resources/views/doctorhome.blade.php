@@ -106,19 +106,85 @@
 						<div class="col-sm-12">
 							<div class="core-box">
 								<div class="heading">
+									  <?php $error = Session::get('error');
+			                            $success = Session::get('success');
+			                            Session::forget('error');
+			                            Session::forget('success');
+			                           
+			                          ?>
+				                      @if(!empty($error))
+				                        <div class="alert alert-danger display-none" style="display: block;">
+				                          <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+				                                  {{$error}}
+				                        </div>
+				                      @elseif(!empty($success))
+				                        <div class="alert alert-success display-none" style="display: block;">
+				                          <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+				                                  {{$success}}
+				                        </div>
+				                      @endif
+							                
+								</div>
+								<div class="content">
+									
+								</div>
+									{!! Form::open(array('route' => 'patientIdSubmit', 'role'=>'form', 'id'=>'addPatientPersonalInformation', 'class'=>'form-horizontal','novalidate'=>'novalidate')) !!}
+									<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
+										<div class="form-group">
+										    <!-- {!! Form::label('first_name', 'First Name', $attributes = array('class'=>'col-sm-2 control-label'));  !!} -->	
+										    {!! Form::hidden('patient_status', 'new', $attributes = array('class'=>'form-control','placeholder' => 'Enter New Patient Id'));  !!}	
+											<div class="col-sm-12">
+												<span class="input-icon">
+													{!! Form::text('patient_id', null, $attributes = array('class'=>'form-control','placeholder' => 'Enter New Patient Id'));  !!}
+													<i class="fa fa-user"></i> 
+												</span>
+											</div>
+											
+										</div>
+										<div class="form-group">
+										    <!-- {!! Form::label('first_name', 'First Name', $attributes = array('class'=>'col-sm-2 control-label'));  !!} -->		
+											<div class="col-sm-12">
+												<span class="input-icon">
+													<button type="submit" class="btn btn-primary btn-block newPatientIdBtn">Submit</button>
+													
+												</span>
+											</div>
+											
+										</div>
+
+									{!! Form::close() !!}
+							</div>
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="core-box">
+								<div class="heading">
 									<!-- <i class="clip-user-4 circle-icon circle-green"></i>
 									<h2>Manage Users</h2> -->
 								</div>
 								<div class="content">
 									
 								</div>
-									{!! Form::open(array('route' => 'addPatientPersonalInformation', 'role'=>'form', 'id'=>'addPatientPersonalInformation', 'class'=>'form-horizontal','novalidate'=>'novalidate')) !!}
+									{!! Form::open(array('route' => 'patientIdSubmit', 'role'=>'form', 'id'=>'addPatientPersonalInformation', 'class'=>'form-horizontal','novalidate'=>'novalidate')) !!}
+									<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
+										<div class="form-group">
+										    <!-- {!! Form::label('first_name', 'First Name', $attributes = array('class'=>'col-sm-2 control-label'));  !!} -->	
+										     {!! Form::hidden('patient_status', 'old', $attributes = array('class'=>'form-control','placeholder' => 'Enter New Patient Id'));  !!}	
+											<div class="col-sm-12">
+												<span class="input-icon">
+													{!! Form::text('patient_id', null, $attributes = array('class'=>'form-control','placeholder' => 'Enter Old Patient Id'));  !!}
+													<i class="fa fa-user"></i> 
+												</span>
+											</div>
+											
+										</div>
 										<div class="form-group">
 										    <!-- {!! Form::label('first_name', 'First Name', $attributes = array('class'=>'col-sm-2 control-label'));  !!} -->		
-											<div class="col-sm-6">
+											<div class="col-sm-12">
 												<span class="input-icon">
-													{!! Form::text('first_name', null, $attributes = array('class'=>'form-control','placeholder' => 'First Name'));  !!}
-													<i class="fa fa-user"></i> 
+													<button type="submit" class="btn btn-primary btn-block oldPatientIdBtn">Submit</button>
+													
 												</span>
 											</div>
 											

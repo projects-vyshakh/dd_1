@@ -37,6 +37,7 @@ Route::get('doctordashboard',  array('as' => 'doctordashboard', 'uses' => 'HomeC
 Route::get('patientinformation', 'DoctorController@showPatientInformation');
 Route::get('patientdiagnosis', 'DoctorController@showPatientDiagnosis');
 Route::any('patientpersonalinformation', 'DoctorController@showPatientPersonalInformation');
+/*Route::post('patientpersonalinformation', 'DoctorController@PatientPersonalInformation');*/
 Route::any('patientobstetricshistory', 'DoctorController@showPatientObstetricsHistory');
 Route::any('patientmedicalhistory', 'DoctorController@showPatientMedicalHistory');
 Route::any('patientprevioustreatment', 'DoctorController@showPatientPreviousTreatment');
@@ -45,3 +46,5 @@ Route::any('addPatientPersonalInformation', array('as' => 'addPatientPersonalInf
 Route::get('patientexamination', 'DoctorController@showPatientExamination');
 
 Route::post('getState',  array('as' => 'getState', 'uses' => 'UtilityController@getState'));
+
+Route::post('patientIdSubmit',  array('as' => 'patientIdSubmit', 'uses' => 'DoctorController@patientIdSubmit'));
