@@ -6,6 +6,8 @@ use App\Quotation;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Session;
+use Request;
+
 
 class DoctorController extends Controller {
 
@@ -35,7 +37,11 @@ class DoctorController extends Controller {
 	 *
 	 * @return Response
 	 */
-	
+	public function showDoctorHome(){
+		Session::forget('patientId');
+		return view('doctorhome');
+		//echo 'Doctor ome';
+	}
 	public function showpatientInformation(){
 		return view('patientinformation');
 	}
@@ -47,7 +53,7 @@ class DoctorController extends Controller {
 		
 		$country =  DB::table('countries')->select('country_name','sortname','id')->orderBy('country_name', 'asc')->lists('country_name', 'id'); 	
 		
-		$state =  DB::table('states')->select('state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); 	
+		$state =  DB::table('states')->select('id','state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); 	
 		
 		$city =  DB::table('cities')->select('city_name','state_id')->orderBy('city_name', 'asc')->lists('city_name', 'city_name'); 	
 		    	
@@ -68,16 +74,12 @@ class DoctorController extends Controller {
 		     	 array_unshift($city, '');
 		    }	
 
-	/*	    select *,s.state_name from patients As p JOIN states As s
 
-on p.state = s.id 
-
-where p.id_patient='KL100200'*/
 		    $patientId = Session::get('patientId');  		
-		    $patientData = DB::table('patients As p')
-		    						 ->leftJoin('states As s','p.state','=','s.id')
+		    $patientData = DB::table('patients')
+		    						
 		    						 ->where('id_patient','=',$patientId)->get();
-		Log::info("Patientdata",array($patientData));
+		//Log::info("Patientdata",array($patientData));
 
 		return view('patientpersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData));
 	}
@@ -90,8 +92,89 @@ where p.id_patient='KL100200'*/
 	public function showPatientPreviousTreatment(){
 		return view('patientprevioustreatment');
 	}
+
 	public function addPatientPersonalInformation(){
-		echo "vyshakh";
+		
+		$input = Request::all();
+		var_dump(json_encode($input));
+		
+		$var1 = $input['dob'];
+		$date1 = str_replace('/', '-', $var1);
+		$newDob = date('Y-m-d', strtotime($date1));
+
+		$var2 = $input['now_date'];
+		$date2 = str_replace('/', '-', $var2);
+		$editedDate = date('Y-m-d', strtotime($date2));
+		$createdDate  = date('Y-m-d', strtotime($date2));
+
+		$doctorId = Session::get('doctorId');
+
+		$patientIdExistCheck = DB::table('patients')->where('id_patient','=',$input['id_patient'])->get();
+		var_dump($patientIdExistCheck);
+		if(!empty($patientIdExistCheck)){
+			foreach ($patientIdExistCheck as $key=> $value) {
+				$createdDate = $value->created_date;
+			}
+		}
+		else{
+			$editedDate = " ";
+		}
+		
+
+
+		$inputValue = array('id_patient' => $input['id_patient'],
+								'first_name'=>$input['first_name'],
+								'middle_name'=> $input['middle_name'],
+								'last_name'=> $input['last_name'],
+								'id_aadhar' => $input['aadhar_no'],
+								'gender' => $input['gender'],
+								'dob' => $newDob,
+								'age' => $input['age'],
+								'maritial_status' => $input['maritial_status'],
+								'house_name' => $input['house'],
+								'street' => $input['street'],
+								'city' => $input['city'],
+								'state' => $input['state'],
+								'pincode' => $input['pincode'],
+								'country' => $input['country'],
+								'phone' => $input['phone'],
+								'email' => $input['email'],
+								'id_doctor' => $doctorId,
+								'created_date' => $createdDate,
+								'edited_date'=>$editedDate);
+		
+		
+
+
+
+		
+		if($patientIdExistCheck){
+			
+			echo "enter into patientId Exist of addPatientPersonalInformation";
+
+
+			//	var_dump($inputValue);
+			$patientPersonalInfoUpdate = DB::table('patients')->where('id_patient','=',$input['id_patient'])->update($inputValue);
+
+			if($patientPersonalInfoUpdate){
+				//return Redirect::to('patientpersonalinformation');
+				//echo 'Hai';
+				return Redirect::to('patientpersonalinformation')->with(array('success'=>'Data updated successfully'));
+			}
+			else{
+				return Redirect::to('patientpersonalinformation')->with(array('error'=>'No values changed for update '));
+			}
+
+		}
+		else{
+
+			
+
+			$patientPersonalInfoSave = DB::table('patients')->insert($inputValue);
+			if($patientPersonalInfoSave){
+				return Redirect::to('patientpersonalinformation')->with(array('success'=>'Data saved successfully'));
+			}
+		}
 	}
 
 	public function showPatientExamination(){
@@ -102,9 +185,12 @@ where p.id_patient='KL100200'*/
 		$patientId     = Input::get('patient_id');
 		$patientStatus = Input::get('patient_status');
 
-		$patientData = DB::table('patients')->where('id_patient','=',$patientId)->get();
+		$patientData = DB::table('patients As p')
+		    						 ->leftJoin('states As s','p.state','=','s.id')
+		    						 ->where('id_patient','=',$patientId)->get();
 		Log::info("Patientdata",array($patientData));
 
+		Session::put('patientId',$patientId);
 		if(!empty($patientData)){
 			foreach ($patientData as $key => $value) {
 					$patientId 	     = $value->id_patient;
@@ -126,23 +212,8 @@ where p.id_patient='KL100200'*/
 					$email           = $value->email;
 					//echo $patientDob;
 			}
-			Session::put('patientId',$patientId);
-			/*Session::put('firstName',$firstName);
-			Session::put('middleName',$middleName);
-			Session::put('lastName',$lastName);
-			Session::put('aadharNo',$aadharNo);
-			Session::put('patientGender',$patientGender);
-			Session::put('patientDob',$patientDob);
-			Session::put('age',$age);
-			Session::put('maritialStatus',$maritialStatus);
-			Session::put('house',$house);
-			Session::put('street',$street);
-			Session::put('city',$city);
-			Session::put('state',$state);
-			Session::put('country',$country);
-			Session::put('pincode',$pincode);
-			Session::put('phone',$phone);
-			Session::put('email',$email);*/
+			
+		
 		}
 			
 
@@ -170,15 +241,15 @@ where p.id_patient='KL100200'*/
 					
 			}
 			else{
-				echo $patientStatus;
-				echo "New patient";
+				/*echo $patientStatus;
+				echo "New patient";*/
 				if($patientStatus=="old"){
-					echo "No patient exist with this id.Are you sure you want to add new patient";
+					return Redirect::to('doctorhome')->with(array('error'=>'Invalid patient Id'));
 				}
 				else{
-					Session::flush();
-					//return Redirect::to('patientpersonalinformation');
-					echo "Add new patient";
+					 
+					return Redirect::to('patientpersonalinformation');
+					
 				}
 				
 

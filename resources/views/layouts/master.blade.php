@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_token" content="{!! csrf_token() !!}"/>
+    <!-- <meta content="authenticity_token" name="csrf-param"> -->
     <title>Laravel 5 New Auth Generators and User Authentication</title>
 
     

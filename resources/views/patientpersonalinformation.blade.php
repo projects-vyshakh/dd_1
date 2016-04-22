@@ -5,48 +5,78 @@
     {!!Html::style('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')!!}
     
 
+
 @stop
 @extends('layouts.master')
 
 @section('main')
 
 <?php
-var_dump($patientData);
-foreach ($patientData as $key => $value) {
-	$patientId 	     			= $value->id_patient;
-	$firstName 	     			= $value->first_name;
-	$middleName      			= $value->middle_name;
-	$lastName        			= $value->last_name;
-	$aadharNo        			= $value->id_aadhar;
-	$patientGender   			= $value->gender;
-	$patientDob      			= $value->dob;
-	$age             			= $value->age;
-	$patientMaritialStatus  	= $value->maritial_status;
-	$house           			= $value->house_name;
-	$patientStreet          	= $value->street;
-	$patientCity            	= $value->city;
-	$patientState           	= $value->state_name;
-	$patientCountry         	= $value->country;
-	$pincode         			= $value->pincode;
-	$phone           			= $value->phone;
-	$email           			= $value->email;
-	//echo $patientDob;
+//var_dump($patientData);
+if(!empty($patientData)){
+	foreach ($patientData as $key => $value) {
+		$patientId 	     			= $value->id_patient;
+		$firstName 	     			= $value->first_name;
+		$middleName      			= $value->middle_name;
+		$lastName        			= $value->last_name;
+		$aadharNo        			= $value->id_aadhar;
+		$patientGender   			= $value->gender;
+		$patientDob      			= $value->dob;
+		$age             			= $value->age;
+		$patientMaritialStatus  	= $value->maritial_status;
+		$house           			= $value->house_name;
+		$patientStreet          	= $value->street;
+		$patientCity            	= $value->city;
+		$patientState           	= $value->state;
+		$patientCountry         	= $value->country;
+		$pincode         			= $value->pincode;
+		$phone           			= $value->phone;
+		$email           			= $value->email;
+		//echo $patientDob;
+	}
+}
+else{
+	$newPatientId = Session::get('patientId'); 
 }
 
 
+
 ?>
+@if(!empty($patientData))
+<input type="hidden" id="state-hidden" value="<?php echo $patientState; ?>">
+@endif
 	<div class="page-header">
 		<h1>Patient Personal Information <small></small></h1>
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
+			<?php $error = Session::get('error');
+	                $success = Session::get('success');
+	                Session::forget('error');
+	                Session::forget('success');
+
+
+	               
+	        ?>
+              @if(!empty($error))
+                <div class="alert alert-danger display-none" style="display: block;">
+                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+                          {{$error}}
+                </div>
+              @elseif(!empty($success))
+                <div class="alert alert-success display-none" style="display: block;">
+                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+                          {{$success}}
+                </div>
+              @endif
+
 			<!-- start: TEXT FIELDS PANEL -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<i class="fa fa-external-link-square"></i>
-					 Patient Id : <b>{{$patientId}}</b>
+					 Patient Id : <b>@if(!empty($patientData)) {{$patientId}} @else {{$newPatientId}} @endif</b>
 					<div class="panel-tools">
-						Date : <b> <?php echo date('d-M-Y'); ?> </b>
+						Date : <b> <?php echo $nowDate = date('d-M-Y'); ?> </b>
 						<!-- <a class="btn btn-xs btn-link panel-collapse collapses" href="#">
 						</a>
 						<a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal">
@@ -65,7 +95,7 @@ foreach ($patientData as $key => $value) {
 				</div>
 				<div class="panel-body">
 					{!! Form::open(array('route' => 'addPatientPersonalInformation', 'role'=>'form', 'id'=>'addPatientPersonalInformation', 'class'=>'form-horizontal','novalidate'=>'novalidate')) !!}
-
+								{!! Form::hidden('id_patient', (!empty($patientData))?$patientId : $newPatientId, $attributes = array('class'=>'form-control'));  !!}
 					<div class="form-group">
 					    <!-- {!! Form::label('first_name', 'First Name', $attributes = array('class'=>'col-sm-2 control-label'));  !!} -->		
 						<div class="col-sm-4">
@@ -110,7 +140,9 @@ foreach ($patientData as $key => $value) {
 					<div class="form-group">
 						{!! Form::label('dob', 'Date Of Birth.', $attributes = array('class'=>'col-sm-2 control-label'));  !!}
 						
-						<?php $newDate = date('d/m/Y',strtotime($patientDob)); ?>
+						@if(!empty($patientData)) 
+							<?php $newDate = date('d/m/Y',strtotime($patientDob)); ?> 
+						@endif
 
 						<div class="col-sm-2">
 							<span class="input-icon">
@@ -217,6 +249,8 @@ foreach ($patientData as $key => $value) {
 						</div>
 					</div>	
 
+					{!! Form::hidden('now_date', $nowDate, $attributes = array('class'=>'form-control','placeholder' => 'First Name'));  !!}
+
 					<div class="form-group">
 						<div class="col-sm-10"></div>
 						<div class="col-sm-2">
@@ -255,6 +289,28 @@ foreach ($patientData as $key => $value) {
 		$(document).ready(function() {
 			Main.init();
 			patientElements.init();
+
+			/*Dynamically adding state responding to country and also keeping selected value of state*/
+			var stateHidden = $('#state-hidden').val();
+          	var countryId  = $( "#country option:selected" ).val();
+            //alert(country);
+            $.ajax({
+                type: "POST",
+                url: "getState",
+                data: "country_id="+ countryId ,
+                success: function(data){
+                    $('#state').empty();
+                    for(var s=0;s<data.length;s++){
+
+                        $('#state').append('<option>'+data[s].state_name+'</option>');
+                        $('#state').val(stateHidden).attr("selected", "selected");
+
+                    }
+                }
+            });
+
+            
+			
 	
 	 	});
 	</script>

@@ -1,9 +1,13 @@
 <?php namespace App\Http\Controllers;
 
+use Input;
 use DB;
 use Log;
-use Input;
 use App\Quotation;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Session;
+use Request;
 
 class LoginController extends Controller {
 
@@ -49,12 +53,15 @@ class LoginController extends Controller {
 		$checkLoginCredentials = DB::table('doctors')->where('email','=',$email)->where('password','=',$password)->where('status','=','1')->first();
 
 		if($checkLoginCredentials){
+			var_dump($checkLoginCredentials);
+
+			Session::put('doctorId',$checkLoginCredentials->id_doctor);
 			return redirect('doctorhome');
 			//echo "Ok";
 			//return redirect('doctorhome')->with('message', 'Login Failed');
 		}
 		else{
-			echo "Not";
+			return Redirect::to('login')->with(array('error'=>"Login failed!!! Please check the credentials"));
 		}
 	}
 	public function showRegister(){

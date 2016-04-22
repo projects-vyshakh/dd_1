@@ -1,9 +1,17 @@
 @section('head')
+
+	{!!Html::style('assets/plugins/datepicker/css/datepicker.css')!!}
+    {!!Html::style('assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')!!}
+    {!!Html::style('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')!!}
+    
+
 @stop
 @extends('layouts.master')
 
 @section('main')
-
+	<div class="page-header">
+		<h1>Obstetrics History <small></small></h1>
+	</div>
 
 @stop
 

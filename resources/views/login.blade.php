@@ -108,6 +108,24 @@
 	        	<!-- <div class="main-login"> -->
 	        	<div>
 	        		<div class="logo">
+	        			<?php 
+	        				$error = Session::get('error');
+                            $success = Session::get('success');
+                            Session::forget('error');
+                            Session::forget('success');
+                           
+                         ?>
+	                      @if(!empty($error))
+	                        <div class="alert alert-danger display-none" style="display: block;">
+	                          <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+	                                  {{$error}}
+	                        </div>
+	                      @elseif(!empty($success))
+	                        <div class="alert alert-success display-none" style="display: block;">
+	                          <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+	                                  {{$success}}
+	                        </div>
+	                      @endif
 	        			<h3>Sign in to your account</h3>
 	        		</div>
 	        		<div class="box-login" style="display: block;">

@@ -39,9 +39,6 @@ class HomeController extends Controller {
 		//return view('doctordashboard/patient');
 		echo "ssds";
 	}
-	public function showDoctorHome(){
-		return view('doctorhome');
-		//echo 'Doctor ome';
-	}
+	
 
 }

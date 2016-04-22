@@ -32,7 +32,7 @@ Route::get('login',  array('as' => 'login', 'uses' => 'LoginController@showLogin
 Route::get('register',  array('as' => 'register', 'uses' => 'LoginController@showRegister'));
 Route::post('handleLogin', array('as' => 'handleLogin', 'uses' => 'LoginController@handleLogin'));
 
-Route::any('doctorhome',  array('as' => 'doctorhome', 'uses' => 'HomeController@showDoctorHome'));
+Route::any('doctorhome',  array('as' => 'doctorhome', 'uses' => 'DoctorController@showDoctorHome'));
 Route::get('doctordashboard',  array('as' => 'doctordashboard', 'uses' => 'HomeController@doctorDashboard'));
 Route::get('patientinformation', 'DoctorController@showPatientInformation');
 Route::get('patientdiagnosis', 'DoctorController@showPatientDiagnosis');
