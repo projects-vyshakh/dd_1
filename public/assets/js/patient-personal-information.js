@@ -69,14 +69,26 @@ var patientElements = function () {
     };
     var runAge = function (){
        $('#dob').change(function(){
-           var dob = $('#dob').val();
-           var now  = new Date();
-           var past = new Date(dob);
-           var nowYear = now.getFullYear();
-           var pastYear = past.getFullYear();
-           var age = nowYear - pastYear;
+           var dateString = $('#dob').val(); 
+           /*var now  = new Date();   alert("nowdate"+now);
+           var past = new Date(dob); alert("past"+past);
+           var nowYear = now.getFullYear(); alert('nowYear'+nowYear);
+           var pastYear = past.getFullYear(); alert('pastYear'+pastYear);
+           var age = nowYear - pastYear; alert('Age'+age);
            console.log(age + 1);
-           $('#age').val(age + 1);
+           $('#age').val(age);*/
+
+           /*var dob = new Date(dobDate);   alert("dob"+ dob); 
+           var past = dob.getFullYear(); alert(past);
+            var today = new Date();   alert("today" + today);
+            var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+            $('#age').html(age+' years old'); alert(age);*/
+
+            var dob = new Date(dateString.substring(6,10),
+                     dateString.substring(0,2)-1,                   
+                     dateString.substring(3,5)                  
+                     );
+            alert(dob);
        }); 
     };
     // function to initiate Validation Sample 2
@@ -240,6 +252,11 @@ var patientElements = function () {
         
 
     };
+    var runAddMoreFunctions = function(){
+
+      
+    };    
+
     return {
         //main function to initiate template pages
         init: function () {
@@ -259,6 +276,7 @@ var patientElements = function () {
             runAge();
             runValidator2();
             runCountryCityState();
+            runAddMoreFunctions();
         }
     };
 }();

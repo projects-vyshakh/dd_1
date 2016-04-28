@@ -43,6 +43,8 @@ Route::any('patientmedicalhistory', 'DoctorController@showPatientMedicalHistory'
 Route::any('patientprevioustreatment', 'DoctorController@showPatientPreviousTreatment');
 Route::any('addPatientPersonalInformation', array('as' => 'addPatientPersonalInformation', 'uses' => 'DoctorController@addPatientPersonalInformation'));
 
+Route::any('addPatientObstetricsHistory', array('as' => 'addPatientObstetricsHistory', 'uses' => 'DoctorController@addPatientObstetricsHistory'));
+
 Route::get('patientexamination', 'DoctorController@showPatientExamination');
 
 Route::post('getState',  array('as' => 'getState', 'uses' => 'UtilityController@getState'));

@@ -37,6 +37,15 @@ class DoctorController extends Controller {
 	 *
 	 * @return Response
 	 */
+
+	public function convertDateToMysql($date){
+
+		$date1  		  = str_replace('/', '-', $date);
+		$convertedDate    = date('Y-d-m', strtotime($date1));
+		return $convertedDate;
+	}
+
+	
 	public function showDoctorHome(){
 		Session::forget('patientId');
 		return view('doctorhome');
@@ -84,11 +93,60 @@ class DoctorController extends Controller {
 		return view('patientpersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData));
 	}
 	public function showPatientObstetricsHistory(){
-		return view('patientobstetricshistory');
+
+		$lmpFlow = DB::table('business_key_details')->where('business_key', '=', 'OBS_LMP_FLOW')->lists('business_value', 'business_value');
+		$lmpDysmenohrrea = DB::table('business_key_details')->where('business_key', '=', 'OBS_LMP_DYSMENORRHEA')->lists('business_value', 'business_value');
+		$lmpMensusType = DB::table('business_key_details')->where('business_key', '=', 'OBS_LMP_MENSUS_TYPE')->lists('business_value', 'business_value');
+		$pregKind = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_KIND')->lists('business_value', 'business_value');
+		$pregType = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_TYPE')->lists('business_value', 'business_value');
+		$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->lists('business_value', 'business_value');
+		$pregTerm = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_TERM')->lists('business_value', 'business_value');
+		$pregChildHealth = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_HEALTH')->lists('business_value', 'business_value');
+
+		if(!in_array('', $lmpFlow)){
+		     	 array_unshift($lmpFlow, '');
+		}
+		if(!in_array('', $lmpDysmenohrrea)){
+		     	 array_unshift($lmpDysmenohrrea, '');
+		}	
+		if(!in_array('', $lmpMensusType)){
+		     	 array_unshift($lmpMensusType, '');
+		}
+		if(!in_array('', $pregKind)){
+		     	 array_unshift($pregKind, '');
+		}
+		if(!in_array('', $pregType)){
+		     	 array_unshift($pregType, '');
+		}
+		if(!in_array('', $gender)){
+		     	 array_unshift($gender, '');
+		}	
+		if(!in_array('', $pregTerm)){
+		     	 array_unshift($pregTerm, '');
+		}	
+		if(!in_array('', $pregChildHealth)){
+		     	 array_unshift($pregChildHealth, '');
+		}	
+
+
+		$patientId = Session::get('patientId'); 
+        $doctorId = Session::get('doctorId');  //echo "DoctorId".$doctorId;
+
+        $patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+        $patientGynObsData	 	= DB::table('sp_gynaecology_obs')->where('id_patient','=',$patientId)->first();
+        $patientGynObsLmpData 	= DB::table('sp_gynaecology_obs_lmp')->where('id_patient','=',$patientId)->get();
+        $patientGynObsPregData  = DB::table('sp_gynaecology_obs_preg')->where('id_patient','=',$patientId)->get();
+		
+				
+		
+
+		return view('patientobstetricshistory',array('lmpFlow' => $lmpFlow,'lmpDysmenohrrea'=>$lmpDysmenohrrea, 'lmpMensusType' => $lmpMensusType, 'pregKind' => $pregKind, 'pregType' => $pregType,'gender' => $gender, 'pregTerm' =>$pregTerm, 'pregChildHealth' => $pregChildHealth,'patientPersonalData' =>$patientPersonalData, 'patientGynObsData' =>$patientGynObsData, 'patientGynObsLmpData' =>$patientGynObsLmpData, 'patientGynObsPregData' =>$patientGynObsPregData));
 	}
+
 	public function showPatientMedicalHistory(){
 		return view('patientmedicalhistory');
 	}
+
 	public function showPatientPreviousTreatment(){
 		return view('patientprevioustreatment');
 	}
@@ -96,21 +154,17 @@ class DoctorController extends Controller {
 	public function addPatientPersonalInformation(){
 		
 		$input = Request::all();
-		var_dump(json_encode($input));
 		
-		$var1 = $input['dob'];
-		$date1 = str_replace('/', '-', $var1);
-		$newDob = date('Y-m-d', strtotime($date1));
-
-		$var2 = $input['now_date'];
-		$date2 = str_replace('/', '-', $var2);
-		$editedDate = date('Y-m-d', strtotime($date2));
-		$createdDate  = date('Y-m-d', strtotime($date2));
+		$date1 			= str_replace('/', '-', $input['dob']);
+		$newDob 		= date('Y-m-d', strtotime($date1));
+		$date2 			= str_replace('/', '-', $input['now_date']);
+		$editedDate 	= date('Y-m-d', strtotime($date2));
+		$createdDate  	= date('Y-m-d', strtotime($date2));
 
 		$doctorId = Session::get('doctorId');
 
 		$patientIdExistCheck = DB::table('patients')->where('id_patient','=',$input['id_patient'])->get();
-		var_dump($patientIdExistCheck);
+		
 		if(!empty($patientIdExistCheck)){
 			foreach ($patientIdExistCheck as $key=> $value) {
 				$createdDate = $value->created_date;
@@ -168,8 +222,6 @@ class DoctorController extends Controller {
 		}
 		else{
 
-			
-
 			$patientPersonalInfoSave = DB::table('patients')->insert($inputValue);
 			if($patientPersonalInfoSave){
 				return Redirect::to('patientpersonalinformation')->with(array('success'=>'Data saved successfully'));
@@ -184,6 +236,8 @@ class DoctorController extends Controller {
 	public function patientIdSubmit(){
 		$patientId     = Input::get('patient_id');
 		$patientStatus = Input::get('patient_status');
+
+
 
 		$patientData = DB::table('patients As p')
 		    						 ->leftJoin('states As s','p.state','=','s.id')
@@ -216,9 +270,6 @@ class DoctorController extends Controller {
 		
 		}
 			
-
-	
-
 		if(!empty($patientId)){
 
 			$patientIdExistCheck = DB::table('patients')->where('id_patient','=',$patientId)->first();
@@ -234,15 +285,12 @@ class DoctorController extends Controller {
 				else{
 					//echo "Status from old and returns to patient information";
 					return Redirect::to('patientpersonalinformation');
-					
-            
-
+			
 			    }		
 					
 			}
 			else{
-				/*echo $patientStatus;
-				echo "New patient";*/
+				
 				if($patientStatus=="old"){
 					return Redirect::to('doctorhome')->with(array('error'=>'Invalid patient Id'));
 				}
@@ -257,7 +305,135 @@ class DoctorController extends Controller {
 				
 		}
 	}
-	
+	public function addPatientObstetricsHistory(){
+		$input = Request::all();
+        
+        var_dump(json_encode($input));  //die();
+
+
+        if(!empty($input['lmp_flow'])) { echo "no empty"; } else{ echo "empty"; } 
+		$marriedLife 	 = $input['married_life'];
+        $husBloodGroup 	 = $input['hus_bloodgroup'];
+        $gravida 		 = $input['gravida'];
+        $para 			 = $input['para'];
+        $living 		 = $input['living'];
+        $abortion 		 = $input['abortion'];
+        $gestationalAge  = $input['gestational_age'];
+        (!empty($input['last_mensus_date']))? $lastMensusDate = $input['last_mensus_date'] : $lastMensusDate="";
+        (!empty($input['lmp_flow']))? $lmpFlow = $input['lmp_flow'] : $lmpFlow="";
+        (!empty($input['lmp_dysmenorrhea']))? $lmpDysmenohrrea = $input['lmp_dysmenorrhea'] : $lmpDysmenohrrea="";
+        (!empty($input['days']))? $days = $input['days'] : $days="";
+        (!empty($input['cycle']))? $cycle = $input['cycle'] : $cycle="";
+		
+        $createdDate     = date('Y-m-d');
+        $lmpCount        = $input['lmp_count'];
+        (!empty($input['lmp_mensus_type']))? $lmpMensusType = $input['lmp_mensus_type'] : $lmpMensusType="";
+        
+
+
+		$date1  		 		= str_replace('/', '-', $input['last_delvery_date']);
+		$lastDeliveryDate 		= date('Y-m-d', strtotime($date1));
+		$date2  		  		= str_replace('/', '-', $input['expected_delvery_date']);
+		$expectedDeliveryDate 	= date('Y-m-d', strtotime($date2));
+		/*$date3  		  		= str_replace('/', '-', $lastMensusDate);
+		$$lastMensusDate 	 	= date('Y-m-d', strtotime($date3));*/
+
+		(!empty($input['preg_kind']))? $pregKind = $input['preg_kind'] : $pregKind="";
+		(!empty($input['preg_type']))? $pregType = $input['preg_type'] : $pregType="";
+		(!empty($input['preg_term']))? $pregTerm = $input['preg_term'] : $pregTerm="";
+		(!empty($input['type_of_abortion']))? $pregAbortion = $input['type_of_abortion'] : $pregAbortion="";
+		(!empty($input['preg_health'] ))? $pregHealth = $input['preg_health'] : $pregHealth="";
+		(!empty($input['years']))? $pregYear = $input['years'] : $pregYear="";
+		(!empty($input['weeks']))? $pregWeek = $input['weeks'] : $pregWeek="";
+		(!empty($input['gender']))? $pregGender = $input['gender'] : $pregGender="";
+		
+		
+		var_dump($pregKind);
+		//die();
+
+        $patientId 	= Session::get('patientId'); 
+        $doctorId 	= Session::get('doctorId');  echo "DoctorId".$doctorId;
+
+        $patientExistCheck 		= DB::table('patients')->where('id_patient','=',$patientId)->first();
+        $patientGynObsExist 	= DB::table('sp_gynaecology_obs')->where('id_patient','=',$patientId)->first();
+        $patientGynObsLmpExist 	= DB::table('sp_gynaecology_obs_lmp')->where('id_patient','=',$patientId)->get();
+        $patientGynObsPregExist = DB::table('sp_gynaecology_obs_preg')->where('id_patient','=',$patientId)->get();
+
+       
+        //This is for checking whether the patient is available.
+
+        if($patientExistCheck){
+
+        	//Inserting into sp_gynaecology_obs
+        	$insertValues = array('id_patient' => $patientId,
+							  'id_doctor' => $doctorId,
+							  'married_life' => $marriedLife,
+							  'husband_blood_group' => $husBloodGroup,
+							  'gravida' => $gravida,
+							  'para' => $para,
+							  'living' => $living,
+							  'abortion' => $abortion,
+							  'obs_last_delivery_date' => $lastDeliveryDate,
+							  'obs_expected_delivery_date' => $expectedDeliveryDate,
+							  'obs_gestational_age' => $gestationalAge,
+							  'created_date' => $createdDate);
+        	$gynObsData = DB::table('sp_gynaecology_obs')->insert($insertValues);
+        	
+        		//Inserting into sp_gynaecology_obs_lmp
+        		if(!empty($lastMensusDate)){
+        			echo "enter into last mensus date";
+					foreach ($lastMensusDate as $index => $value)
+					{
+					    echo $lastMensusDate[$index] .' '. $lmpDysmenohrrea[$index].' '.$lmpFlow[$index].' '.$lmpMensusType[$index].' '.$days[$index].' '.$cycle[$index];
+					   
+					    $date1  		  = str_replace('/', '-', $lastMensusDate[$index]);
+						$lastPeriodDate    = date('Y-m-d', strtotime($date1));
+  						echo "LastPeriod".$lastPeriodDate;
+					 
+					    $lmpData = array('id_patient' => $patientId,
+									     'id_doctor' => $doctorId,
+									     'obs_lmp_date' => $lastPeriodDate,
+									     'obs_lmp_flow' => $lmpFlow[$index],
+									     'obs_lmp_dysmenorrhea' => $lmpDysmenohrrea[$index],
+									     'obs_menstrual_type' => $lmpMensusType[$index],
+									     'obs_lmp_days' => $days[$index],
+									     'obs_lmp_cycle' => $cycle[$index],
+									     'created_date' => $createdDate);
+					    var_dump($lmpData);
+
+					    $gynObsLmpData = DB::table('sp_gynaecology_obs_lmp')->insert($lmpData);
+					}
+				}
+				
+				//Inserting into sp_gynaecology_obs_preg
+				if(!empty($pregKind)){ echo "Enter into Preg";
+					foreach ($pregKind as $index => $value){
+						echo $pregKind[$index].' '.$pregType[$index];
+						$pregData = array('id_patient' => $patientId,
+									      'id_doctor' => $doctorId, 
+									      'obs_preg_kind' => $pregKind[$index],
+									      'obs_preg_type' => $pregType[$index],
+									      'obs_preg_term' => $pregTerm[$index],
+									      'obs_preg_abortion' => $pregAbortion[$index],
+									      'obs_preg_health' => $pregHealth[$index],
+									      'obs_preg_gender' => $pregGender[$index],
+									      'obs_preg_years' => $pregYear[$index],
+									      'obs_preg_weeks' => $pregWeek[$index],
+									      'created_date' => $createdDate);
+
+						$gynObsPregData = DB::table('sp_gynaecology_obs_preg')->insert($pregData);
+
+
+					}
+				}
+			
+				return Redirect::to('patientobstetricshistory')->with(array('success' => "Data saved successfully"));
+        }
+        else{
+        	return Redirect::to('patientobstetricshistory')->with(array('error' => "Please save patient personal information"));
+        }
+
+   }
 	
 	
 
