@@ -39,7 +39,8 @@ return [
 	|
 	*/
 
-	'timezone' => 'UTC',
+	/*'timezone' => 'UTC',*/
+	'timezone' => 'Asia/Kolkata',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -136,7 +137,8 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider', 
-
+		'Barryvdh\DomPDF\ServiceProvider',
+		
 		/*
 		 * Application Service Providers...
 		 */
@@ -145,6 +147,7 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+
 
 	],
 
@@ -195,7 +198,8 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Form'      => 'Illuminate\Html\FormFacade',
 		'Html'      => 'Illuminate\Html\HtmlFacade',
-
+		'PDF' => 'Barryvdh\DomPDF\Facade',
+		
 	],
 
 ];

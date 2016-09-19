@@ -1,19 +1,10 @@
-@section('head')
-
-	{!!Html::style('assets/plugins/datepicker/css/datepicker.css')!!}
-    {!!Html::style('assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')!!}
-    {!!Html::style('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')!!}
-    
-
-
-@stop
-@extends('layouts.master')
-
-@section('main')
-
 <?php
 //var_dump($patientData);
+$nowDate = date('d-M-Y');
+
 if(!empty($patientData)){
+	//echo "ss";
+
 	foreach ($patientData as $key => $value) {
 		$patientId 	     			= $value->id_patient;
 		$firstName 	     			= $value->first_name;
@@ -34,14 +25,33 @@ if(!empty($patientData)){
 		$email           			= $value->email;
 		//echo $patientDob;
 	}
+	$patientName = $firstName." ".$lastName;
 }
 else{
 	$newPatientId = Session::get('patientId'); 
+	$patientName = "";
+}
+
+if(!empty($doctorData)){
+	$doctorSpecialization = $doctorData->specialization;
 }
 
 
-
 ?>
+@section('head')
+
+	{!!Html::style('assets/plugins/datepicker/css/datepicker.css')!!}
+    {!!Html::style('assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')!!}
+    {!!Html::style('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')!!}
+
+@stop
+@extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
+<style>
+
+</style>
+@section('main')
+<div class="loader"></div>
+
 @if(!empty($patientData))
 <input type="hidden" id="state-hidden" value="<?php echo $patientState; ?>">
 @endif
@@ -50,219 +60,238 @@ else{
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
-			<?php $error = Session::get('error');
-	                $success = Session::get('success');
-	                Session::forget('error');
-	                Session::forget('success');
-
-
-	               
+			<?php 
+				$error = Session::get('error');
+	            $success = Session::get('success');
+                Session::forget('error');
+                Session::forget('success');
+        
 	        ?>
-              @if(!empty($error))
-                <div class="alert alert-danger display-none" style="display: block;">
-                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-                          {{$error}}
-                </div>
-              @elseif(!empty($success))
-                <div class="alert alert-success display-none" style="display: block;">
-                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-                          {{$success}}
-                </div>
-              @endif
+          	@if(!empty($error))
+	            <div class="alert alert-danger display-none" style="display: block;">
+	              <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+	                {{$error}}
+	            </div>
+          	@elseif(!empty($success))
+	            <div class="alert alert-success display-none" style="display: block;">
+	              <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+	                {{$success}}
+	            </div>
+          	@endif
 
-			<!-- start: TEXT FIELDS PANEL -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<i class="fa fa-external-link-square"></i>
-					 Patient Id : <b>@if(!empty($patientData)) {{$patientId}} @else {{$newPatientId}} @endif</b>
-					<div class="panel-tools">
-						Date : <b> <?php echo $nowDate = date('d-M-Y'); ?> </b>
-						<!-- <a class="btn btn-xs btn-link panel-collapse collapses" href="#">
-						</a>
-						<a class="btn btn-xs btn-link panel-config" href="#panel-config" data-toggle="modal">
-							<i class="fa fa-wrench"></i>
-						</a>
-						<a class="btn btn-xs btn-link panel-refresh" href="#">
-							<i class="fa fa-refresh"></i>
-						</a>
-						<a class="btn btn-xs btn-link panel-expand" href="#">
-							<i class="fa fa-resize-full"></i>
-						</a>
-						<a class="btn btn-xs btn-link panel-close" href="#">
-							<i class="fa fa-times"></i>
-						</a> -->
-					</div>
-				</div>
-				<div class="panel-body">
-					{!! Form::open(array('route' => 'addPatientPersonalInformation', 'role'=>'form', 'id'=>'addPatientPersonalInformation', 'class'=>'form-horizontal','novalidate'=>'novalidate')) !!}
-								{!! Form::hidden('id_patient', (!empty($patientData))?$patientId : $newPatientId, $attributes = array('class'=>'form-control'));  !!}
+			
+			<div class="panel-body">
+				{!! Form::open(array('route' => 'addPatientPersonalInformation', 'role'=>'form', 'id'=>'addPatientPersonalInformation', 'class'=>'form-horizontal','novalidate'=>'novalidate')) !!}
+					{!! Form::hidden('id_patient', (!empty($patientData))?$patientId : $newPatientId, $attributes = array('class'=>'form-control'));  !!}
 					<div class="form-group">
-					    <!-- {!! Form::label('first_name', 'First Name', $attributes = array('class'=>'col-sm-2 control-label'));  !!} -->		
 						<div class="col-sm-4">
-							<span class="input-icon">
-								{!! Form::text('first_name', (!empty($patientData))?$firstName :Input::old('first_name'), $attributes = array('class'=>'form-control','placeholder' => 'First Name'));  !!}
-								<i class="fa fa-user"></i> 
+							<span class="">
+								{!! Form::text('first_name', (!empty($patientData))?$firstName :Input::old('first_name'), $attributes = array('class'=>'form-control dd_rs_mg dd_phone_from_bg','placeholder' => 'First Name','id'=>'first_name'));  !!}
+								<!-- <i class="fa fa-user"></i>  -->
+								
+							 	<span class="symbol required dd_name_abs"></span> 	
+							 	
 							</span>
 						</div>
 						<div class="col-sm-4">
-							<span class="input-icon">
-								{!! Form::text('middle_name', (!empty($patientData))?$middleName:Input::old('middle_name'), $attributes = array('class'=>'form-control','placeholder' => 'Middle Name'));  !!}
-								<i class="fa fa-quote-left"></i> </span>
+							<span class="">
+								{!! Form::text('middle_name', (!empty($patientData))?$middleName:Input::old('middle_name'), $attributes = array('class'=>'form-control dd_rs_mg dd_phone_from_bg','placeholder' => 'Middle Name','id'=>'middle_name'));  !!}
+								<!-- <i class="fa fa-quote-left"></i> --> 
+							</span>
 						</div>
 						<div class="col-sm-4">
-							<span class="input-icon">
-								{!! Form::text('last_name', (!empty($patientData))?$lastName:Input::old('last_name'), $attributes = array('class'=>'form-control','placeholder' => 'Last Name'));  !!}
-								<i class="fa fa-quote-left"></i> </span>
+							<span class="">
+								{!! Form::text('last_name', (!empty($patientData))?$lastName:Input::old('last_name'), $attributes = array('class'=>'form-control dd_rs_mg dd_phone_from_bg','placeholder' => 'Last Name','id'=>'last_name'));  !!}
+								<!-- <i class="fa fa-quote-left"></i> -->
+								<span class="required dd_name_abs"></span> 
+							</span>
 						</div>
-						
 					</div>
+									<hr class="dd_PDB_40_3">
 
+					<div class="row dd_menarche_3 dd_color">
+						<div class="col-sm-6 dd_PDR_40">
+							<div class="form-group dd_fromgroup_MG_0">
+								<div class="col-sm-12 dd_PDB_10 ">
+								<div class="col-sm-4">
+									Aadhar / ID No.
+							 	<!-- <span class="symbol required"></span> 	 -->
+							 	</div>
+										<div class="col-sm-8">
+											<span class="">
+												{!! Form::text('aadhar_no', (!empty($patientData))?$aadharNo :Input::old('aadhar_no'), $attributes = array('class'=>'form-control','placeholder'=>'','id'=>'aadhar_no'));  !!}
+											</span>
+										</div>
+								</div>
+								<div class="col-sm-12 dd_PDB_10 ">
+									<!-- {!! Form::label('gender', 'Gender', $attributes = array('class'=>'col-sm-4'));  !!} -->
+
+								<div class="col-sm-4">
+									Gender
+							 	<span class="symbol required"></span> 	
+							 	</div>
+									<div class="col-sm-8">
+										<span class="input-icon">
+											{!! Form::select('gender', $gender, (!empty($patientData))?$patientGender:Input::old('gender'), $attributes = array('class' => 'form-control','id'=>'gender')); !!}
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group dd_fromgroup_MG_0">
+								<div class="col-sm-12 dd_PDB_10 ">
+								<!-- 	{!! Form::label('dob', 'Year Of Birth.', $attributes = array('class'=>'col-sm-4'));  !!} -->
+
+								<div class="col-sm-4">
+									Year of Birth
+							 	<span class="symbol required"></span> 	
+							 	</div>
+									<div class="col-sm-8">
+										<span class="">
+											{!! Form::text('dob', (!empty($patientData))?$patientDob: Input::old('dob'), $attributes = array('class' => 'form-control', 'placeholder'=>'','id'=>'dob')); !!}
+										</span>
+									</div>
+								</div>
+								<div class="col-sm-12 dd_PDB_10 ">
+								<!-- 	{!! Form::label('age', 'Age', $attributes = array('class'=>' col-sm-4'));  !!} -->
+
+								<div class="col-sm-4">
+									Age
+							 	<span class="symbol required"></span> 	
+							 	</div>
+									<div class="col-sm-8">
+										<span class="">
+											{!! Form::text('age', (!empty($patientData))?$age:Input::old('age'), $attributes = array('class' => 'form-control ', 'id' => 'age','placeholder'=>"",'id'=>'age')); !!}
+										</span>
+									</div>
+								</div>
+								<div class="col-sm-12 dd_PDB_10 ">
+									<!-- {!! Form::label('maritial_status', 'Maritial Status', $attributes = array('class'=>'col-sm-4 '));  !!} -->	
+
+
+								<div class="col-sm-4">
+									Maritial Status
+							 	<span class="symbol required"></span> 	
+							 	</div>	
+									<div class="col-sm-8">
+										<span class="">
+											{!! Form::select('maritial_status', $maritialStatus, (!empty($patientData))?$patientMaritialStatus : Input::old('maritial_status'), $attributes = array('class' => 'form-control','id'=>'maritial_status')); !!}
+										</span>
+									</div>
+								</div>
+							</div>	
+						</div>
+						<div class="col-sm-6 dd_PDL_40"> 
+							<div class="form-group dd_fromgroup_MG_0">
+								 <div class="col-sm-12 dd_PDB_10">
+									{!! Form::label('house', 'House No / Name', $attributes = array('class'=>'col-sm-4 '));  !!}
+									<div class="col-sm-8">
+										<span class="">
+											{!! Form::text('house',(!empty($patientData))?$house: Input::old('house'), $attributes = array('class'=>'form-control', 'placeholder' => ''));  !!}
+										</span>
+									</div>
+								</div>
+								<div class="col-sm-12 dd_PDB_10">
+									{!! Form::label('street', 'Street Name', $attributes = array('class'=>'col-sm-4 '));  !!}	<div class="col-sm-8">
+										<span class="">
+											{!! Form::text('street',(!empty($patientData))?$patientStreet: Input::old('street'), $attributes = array('class'=>'form-control', 'placeholder' => ''));  !!}
+										</span>
+									</div>
+								</div>
+					   		</div>
+							<div class="form-group dd_fromgroup_MG_0 ">
+								<div class="col-sm-12 dd_PDB_10">
+									<!-- {!! Form::label('country', 'Country', $attributes = array('class'=>'col-sm-4 '));  !!} -->
+
+								<div class="col-sm-4">
+									Country
+							 	<span class="symbol required"></span> 	
+							 	</div>		
+									<div class="col-sm-8">
+										<span class="">
+										{!! Form::select('country', $country, null , $attributes = array('class' => 'form-control country','id'=>'country')); !!}
+										</span>
+									</div>
+								</div>
+								<div class="col-sm-12 dd_PDB_10">
+									<!-- {!! Form::label('state', 'State', $attributes = array('class'=>'col-sm-4'));  !!} -->
+
+								<div class="col-sm-4">
+									State
+							 	<span class="symbol required"></span> 	
+							 	</div>		
+									<div class="col-sm-8">
+										<span class="">
+											{!! Form::select('state',[], (!empty($patientData))?$patientState: Input::old('state'), $attributes = array('class' => 'form-control','id'=>'state')); !!}
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group dd_fromgroup_MG_0">
+							    <div class="col-sm-12 dd_PDB_10">
+								<!-- 	{!! Form::label('city', 'City', $attributes = array('class'=>'col-sm-4'));  !!}	 -->
+
+								<div class="col-sm-4">
+									City
+							 	<span class="symbol required"></span> 	
+							 	</div>	
+									<div class="col-sm-8">
+										<span class="">
+											{!! Form::text('city', (!empty($patientData))?$patientCity: Input::old('city'), $attributes = array('class' => 'form-control', 'placeholder' => '','id'=>'city')); !!}
+										</span>
+									</div>
+								</div>
+								<div class="col-sm-12 dd_PDB_10">
+									{!! Form::label('pincode', 'Pincode', $attributes = array('class'=>'col-sm-4'));  !!}		
+									<div class="col-sm-8">
+										<span class="">
+											{!! Form::text('pincode', (!empty($patientData))?$pincode:Input::old('pincode'), $attributes = array('class' => 'form-control', 'placeholder' => '')); !!}
+										</span>
+									</div>
+								</div>
+							</div>	
+						</div>
+					</div>
+					<hr class="dd_PDB_40">
+					<div class="row dd_mg_btn_10">
+						<div class="form-group dd_fromgroup_MG_0">
+							<div class="col-sm-6  dd_PDB_10 ">
+								<div class="col-sm-5"></div>	
+									<div class="col-sm-7">
+										<span class="input-icon">
+											{!! Form::text('phone', (!empty($patientData))?$phone:Input::old('phone'), $attributes = array('class' => 'form-control dd_phone_from_bg', 'placeholder' => 'Phone Number')); !!}
+											<i class="fa fa-phone-square" aria-hidden="true"></i>
+										</span>
+									</div>
+							</div>
+							<div class="col-sm-6  dd_PDB_10 "> 
+								<div class="col-sm-7">
+									<span class="input-icon">
+										{!! Form::text('email', (!empty($patientData))?$email: Input::old('email'), $attributes = array('class' => 'form-control dd_phone_from_bg', 'placeholder' => 'Email')); !!}
+										<i class="fa fa-envelope" aria-hidden="true"></i>
+									</span>
+								</div>
+								<div class="col-sm-5"></div>
+							</div>
+						</div>	
+					</div>
 					<hr>
-					
-					<div class="form-group">
-					    {!! Form::label('aadhar_no', 'Aadhar / Id No.', $attributes = array('class'=>'col-sm-2 control-label'));  !!}		
-						<div class="col-sm-4">
-							<span class="input-icon">
-								{!! Form::text('aadhar_no', (!empty($patientData))?$aadharNo :Input::old('aadhar_no'), $attributes = array('class'=>'form-control'));  !!}
-								<i class="fa fa-user"></i> 
-							</span>
-						</div>
-						{!! Form::label('gender', 'Gender', $attributes = array('class'=>'col-sm-2 control-label'));  !!}
-						<div class="col-sm-4">
-							<span class="input-icon">
-								
-								 {!! Form::select('gender', $gender, (!empty($patientData))?$gender:Input::old('gender'), $attributes = array('class' => 'form-control')); !!}
-								
-							</span>
+					<div class="row dd_btn_mg_TB_10">
+						{!! Form::hidden('now_date', $nowDate, $attributes = array('class'=>'form-control'));  !!}
+           				<div class="form-group dd_fromgroup_MG_0">
+						 	<div class="col-sm-12 ">
+								<div class="col-sm-12">
+									<button type="submit" class="btn btn-primary btn-block dd_btn_center">
+									<i class="fa fa-floppy-o" aria-hidden="true"></i>
+									Save</button>
+								</div>
+							</div>
 						</div>
 					</div>
-
-					<div class="form-group">
-						{!! Form::label('dob', 'Date Of Birth.', $attributes = array('class'=>'col-sm-2 control-label'));  !!}
-						
-						@if(!empty($patientData)) 
-							<?php $newDate = date('d/m/Y',strtotime($patientDob)); ?> 
-						@endif
-
-						<div class="col-sm-2">
-							<span class="input-icon">
-								{!! Form::text('dob', (!empty($patientData))?$newDate: Input::old('dob'), $attributes = array('class' => 'form-control date-picker', 'placeholder'=>'Select date','data-date-viewmode'=>'years','data-date-format'=>'dd/mm/yyyy')); !!}
-								<i class="fa fa-user"></i> 
-								
-							</span>
-						</div>
-						{!! Form::label('age', 'Age', $attributes = array('class'=>'control-label col-sm-1'));  !!}	
-						<div class="col-sm-1">
-							<span class="input-icon">
-								{!! Form::text('age', (!empty($patientData))?$age:Input::old('age'), $attributes = array('class' => 'form-control ', 'id' => 'age')); !!}
-								<!-- <i class="fa fa-user"></i>  -->
-							</span>
-						</div>
-						{!! Form::label('maritial_status', 'Maritial Status', $attributes = array('class'=>'col-sm-2 control-label'));  !!}		
-						<div class="col-sm-4">
-							<span class="input-icon">
-								{!! Form::select('maritial_status', $maritialStatus, (!empty($patientData))?$patientMaritialStatus : Input::old('maritial_status'), $attributes = array('class' => 'form-control')); !!}
-							
-								<i class="fa fa-user"></i> 
-								
-							</span>
-						</div>
-
-					</div>	
-
-					<hr>
-
-					<div class="form-group">
-						{!! Form::label('house', 'House No / Name', $attributes = array('class'=>'col-sm-2 control-label'));  !!}		
-						<div class="col-sm-4">
-							<span class="input-icon">
-								{!! Form::text('house',(!empty($patientData))?$house: Input::old('house'), $attributes = array('class'=>'form-control', 'placeholder' => 'House No / Name'));  !!}
-								<i class="fa fa-user"></i> 
-							</span>
-						</div>
-						{!! Form::label('street', 'Street Name', $attributes = array('class'=>'col-sm-2 control-label'));  !!}		
-						<div class="col-sm-4">
-							<span class="input-icon">
-								{!! Form::text('street',(!empty($patientData))?$patientStreet: Input::old('street'), $attributes = array('class'=>'form-control', 'placeholder' => 'Street Name'));  !!}
-								<i class="fa fa-user"></i> 
-							</span>
-						</div>
-					</div>
-
-					<div class="form-group">
-						{!! Form::label('country', 'Country', $attributes = array('class'=>'col-sm-2 control-label'));  !!}		
-						<div class="col-sm-4">
-							<span class="input-icon">
-								<!-- {!! Form::select('country', $country, $attributes = array('class'=>'form-control', 'placeholder' => 'City Name'));  !!} -->
-								{!! Form::select('country', $country, (!empty($patientData))?$patientCountry: Input::old('country'), $attributes = array('class' => 'form-control')); !!}
-								<!-- <i class="fa fa-user"></i>  -->
-							</span>
-						</div>
-						{!! Form::label('state', 'State', $attributes = array('class'=>'col-sm-2 control-label'));  !!}		
-						<div class="col-sm-4">
-							<span class="input-icon">
-								{!! Form::select('state', $state, (!empty($patientData))?$patientState: Input::old('state'), $attributes = array('class' => 'form-control')); !!}
-								
-								<!-- <i class="fa fa-user"></i>  -->
-							</span>
-						</div>
-					</div>
-
-					<div class="form-group">
-						{!! Form::label('city', 'City', $attributes = array('class'=>'col-sm-2 control-label'));  !!}		
-						<div class="col-sm-4">
-							<span class="input-icon">
-								<!-- {!! Form::select('country', $country, $attributes = array('class'=>'form-control', 'placeholder' => 'City Name'));  !!} -->
-								<!-- {!! Form::select('city', $city, null, $attributes = array('class' => 'form-control')); !!} -->
-								{!! Form::text('city', (!empty($patientData))?$patientCity: Input::old('city'), $attributes = array('class' => 'form-control', 'placeholder' => 'City')); !!}
-								<!-- <i class="fa fa-user"></i>  -->
-							</span>
-						</div>
-						{!! Form::label('pincode', 'Pincode', $attributes = array('class'=>'col-sm-2 control-label'));  !!}		
-						<div class="col-sm-4">
-							<span class="input-icon">
-								<!-- {!! Form::select('country', $country, $attributes = array('class'=>'form-control', 'placeholder' => 'City Name'));  !!} -->
-								{!! Form::text('pincode', (!empty($patientData))?$pincode:Input::old('pincode'), $attributes = array('class' => 'form-control', 'placeholder' => 'Pincode')); !!}
-								<!-- <i class="fa fa-user"></i>  -->
-							</span>
-						</div>
-					</div>	
-
-					<hr>
-
-					<div class="form-group">
-						{!! Form::label('phone', 'Phone No', $attributes = array('class'=>'col-sm-2 control-label'));  !!}		
-						<div class="col-sm-4">
-							<span class="input-icon">
-								<!-- {!! Form::select('country', $country, $attributes = array('class'=>'form-control', 'placeholder' => 'City Name'));  !!} -->
-								{!! Form::text('phone', (!empty($patientData))?$phone:Input::old('phone'), $attributes = array('class' => 'form-control', 'placeholder' => 'Phone Number')); !!}
-								<!-- <i class="fa fa-user"></i>  -->
-							</span>
-						</div>
-						{!! Form::label('email', 'Email', $attributes = array('class'=>'col-sm-2 control-label'));  !!}		
-						<div class="col-sm-4">
-							<span class="input-icon">
-								<!-- {!! Form::select('country', $country, $attributes = array('class'=>'form-control', 'placeholder' => 'City Name'));  !!} -->
-								{!! Form::text('email', (!empty($patientData))?$email: Input::old('email'), $attributes = array('class' => 'form-control', 'placeholder' => 'Email')); !!}
-								<!-- <i class="fa fa-user"></i>  -->
-							</span>
-						</div>
-					</div>	
-
-					{!! Form::hidden('now_date', $nowDate, $attributes = array('class'=>'form-control','placeholder' => 'First Name'));  !!}
-
-					<div class="form-group">
-						<div class="col-sm-10"></div>
-						<div class="col-sm-2">
-							<button type="submit" class="btn btn-primary btn-block">Save</button>
-						</div>
-					</div>
-
-					{!! Form::close() !!}
-				</div>
+				{!! Form::close() !!}
 			</div>
 		</div>
-	</div>			
+	</div>
+			
 
 @stop
 
@@ -283,12 +312,20 @@ else{
 		
 		{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 		{!!Html::script('assets/js/patient-personal-information.js')!!}
+        {!!Html::style('assets/css/dd-responsive.css')!!}
+
 		
 		
 	<script>
 		$(document).ready(function() {
 			Main.init();
 			patientElements.init();
+
+			$(window).load(function() {
+				$(".loader").fadeOut("slow");
+			})
+
+			$( "#country option:selected" ).val('101').text('India');
 
 			/*Dynamically adding state responding to country and also keeping selected value of state*/
 			var stateHidden = $('#state-hidden').val();
@@ -309,6 +346,7 @@ else{
                 }
             });
 
+           	
             
 			
 	

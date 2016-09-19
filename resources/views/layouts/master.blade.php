@@ -1,17 +1,49 @@
+<?php
+
+
+
+$currentPath = Route::getCurrentRoute()->getPath();
+//echo $currentPath;
+$patientId = Session::get('patientId');
+
+if(!empty($specialization )){
+    $specialization  = $specialization ;
+}
+else{
+    $specialization ="0";
+}
+
+//$patientName = Session::get('patientName');
+
+$todayDate = date('d-M-Y');
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_token" content="{!! csrf_token() !!}"/>
+    <link rel="shortcut icon" href="assets/images/logo-mob.png" type="image/x-icon">
     <!-- <meta content="authenticity_token" name="csrf-param"> -->
-    <title>Laravel 5 New Auth Generators and User Authentication</title>
-
+    @if($currentPath=="patientpersonalinformation")<title>Patient Personal Information</title> @endif
+    @if($currentPath=="patientobstetricshistory")<title>Patient Obstetrics History</title> @endif
+    @if($currentPath=="patientmedicalhistory")<title>Patient Medical History</title> @endif
+    @if($currentPath=="patientprevioustreatment")<title>Patient Previous Treatments</title> @endif
+    @if($currentPath=="patientexamination")<title>Patient Examination</title> @endif
+    @if($currentPath=="patientlabdata")<title>Patient Lab Data</title> @endif
+    @if($currentPath=="patientdiagnosis")<title>Patient Diagnosis</title> @endif
+    @if($currentPath=="patientprescmanagement")<title>Patient Prescription Management</title> @endif
+    @if($currentPath=="patientprescmedicine")<title>Patient Medicinal Prescription</title> @endif
+    @if($currentPath=="patientprofilemanagement")<title>Patient Profile Management</title> @endif
+    @if($currentPath=="patientprofileedit")<title>Patient Profile Edit</title> @endif
+    @if($currentPath=="patientprofileprevtreatment")<title>Patient Previous Treatment</title> @endif
+    @if($currentPath=="patientchangepassword")<title>Patient Change Password</title> @endif
     
     {!!Html::style('assets/plugins/bootstrap/css/bootstrap.min.css')!!}
-    {!!Html::style('assets/plugins/font-awesome/css/font-awesome.min.css')!!}
+    
     {!!Html::style('assets/fonts/style.css')!!}
-    {!!Html::style('assets/plugins/font-awesome/css/font-awesome.min.css')!!}
+   <!--  {!!Html::style('assets/plugins/font-awesome/css/font-awesome.min.css')!!} -->
     {!!Html::style('assets/css/main.css')!!}
     {!!Html::style('assets/css/main-responsive.css')!!}
     {!!Html::style('assets/plugins/iCheck/skins/all.css')!!}
@@ -19,17 +51,22 @@
     {!!Html::style('assets/plugins/perfect-scrollbar/src/perfect-scrollbar.css')!!}
     {!!Html::style('assets/css/theme_light.css',array('id'=>'skin_color'))!!}
     {!!Html::style('assets/css/print.css',array('media' => 'print')) !!}
+    {!!Html::style('assets/css/dd-responsive.css')!!}
+     
     @yield('head')
+   
+
+   
+
+    <link rel="stylesheet" href="">
+
  
 </head>
-<?php
-$currentPath = Route::getCurrentRoute()->getPath();
-//echo $currentPath;
-?>
+
 <body >
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-
+       
             <div class="navbar-header">
                 <!-- start: RESPONSIVE MENU TOGGLER -->
                 <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -37,42 +74,72 @@ $currentPath = Route::getCurrentRoute()->getPath();
                 </button>
                 <!-- end: RESPONSIVE MENU TOGGLER -->
                 <!-- start: LOGO -->
-                <a class="navbar-brand" href="doctorhome">
-                   <!--  CLIP<i class="clip-clip"></i>ONE -->
-                   <img src="assets/images/button_home.png" height="45px">
+                @if($currentPath=='patientprofilemanagement' || $currentPath=='patientprofileprevtreatment' || $currentPath=='patientprofileedit' || $currentPath=='patientchangepassword')
+                    <div class="dd_main_logo">
+                        <img src="assets/images/logo.png" height="40px">  
+                    </div>
+                @else
+                    <a class="navbar-brand" href="doctorhome">
+                       <!--  CLIP<i class="clip-clip"></i>ONE -->
+                       <img src="assets/images/home.png" height="38px" style="display:block">
 
-                </a>
+                    </a>
+                @endif
+                
+
                 <!-- Top Menu Starts-->
-                <div class="nav navbar-right">
+                @if(($currentPath =='patientprofileprevtreatment') || ($currentPath =='patientprofilemanagement') || ($currentPath =='patientprofileedit') || ($currentPath=='patientchangepassword'))
+                @else
+                <div class="nav navbar-left">
                     <div class="horizontal-menu navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li id="patient-top-menu-li"  @if($currentPath == 'patientpersonalinformation' || $currentPath == 'patientobstetricshistory' || $currentPath == 'patientmedicalhistory' || $currentPath == 'patientprevioustreatment') class="active" @endif >
+                            <li id="patient-top-menu-li"  @if($currentPath == 'patientpersonalinformation' || $currentPath == 'patientobstetricshistory' || $currentPath == 'patientmedicalhistory' || $currentPath == 'patientprevioustreatment' || $currentPath == 'cardiomedicalhistory') class="active" @endif >
                                 <a href="patientpersonalinformation" id="patient-menu">
-                                <!--  <i class="fa fa-wheelchair"></i> -->
-                                <img src="assets/images/Patient.png">
+                               <i class="icon pricon icon-pr-patient" ng-show="navOption.key"></i>
+                               <!--  <img src="assets/images/Patient.png"> -->
                                     Patient
                                 </a>
                             </li>
-                            <li id="diagnosis-top-menu-li" @if($currentPath == 'patientexamination') class="active" @endif>
+                            <li id="diagnosis-top-menu-li" @if($currentPath == 'patientexamination' || $currentPath == 'patientlabdata' || $currentPath == 'patientdiagnosis') class="active" @endif>
                                 <a href="patientexamination" id="diagnosis-menu">
-                                <img src="assets/images/Diagnosis.png">
+                                <!-- <img src="assets/images/Diagnosis.png"> -->
+                               <i class="icon pricon icon-pr-Diagnosis" ng-show="navOption.key"></i>
                                     Diagnosis
                                 </a>
                             </li>
-     
+                            <li id="diagnosis-top-menu-li" @if($currentPath == 'patientprescmanagement' || $currentPath=='patientprescmedicine') class="active" @endif>
+                                <a href="patientprescmanagement" id="diagnosis-menu">
+                                <!-- <img src="assets/images/Diagnosis.png"> -->
+                               <i class="icon pricon icon-pr-prescriptions" ng-show="navOption.key"></i>
+
+                                    Prescription
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
+
                 <!-- end: LOGO -->
+                @endif
 
             </div>
+            @if($currentPath=='patientprofilemanagement' || $currentPath=='patientprofileprevtreatment' || $currentPath =='patientprofileedit' || $currentPath=='patientchangepassword')
+            @else
+                 <div class="dd_main_logo">
+                   <img src="assets/images/logo.png" height="40px" style="display:block">  
+                </div>
+            @endif
+               
 
             <div class="navbar-tools">
+
                     <!-- start: TOP NAVIGATION MENU -->
-                @if($currentPath!="patientpersonalinformation")
+                @if($currentPath!="patientpersonalinformation" &&$currentPath!="patientobstetricshistory" &&     $currentPath!="patientmedicalhistory" && $currentPath!="patientprevioustreatment" &&$currentPath!="patientexamination" &&$currentPath!="patientlabdata" && $currentPath!="patientdiagnosis" && $currentPath!="patientprescmanagement" && $currentPath!="patientprescmedicine" &&
+                $currentPath!="cardiomedicalhistory" )
                     <ul class="nav navbar-right">
+
                         <!-- start: TO-DO DROPDOWN -->
-                        <li class="dropdown">
+                       <!--  <li class="dropdown">
                             <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
                                 <i class="clip-list-5"></i>
                                 <span class="badge"> 12</span>
@@ -170,7 +237,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
                         <!-- end: TO-DO DROPDOWN-->
                         <!-- start: NOTIFICATION DROPDOWN -->
                         <li class="dropdown">
@@ -279,6 +346,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
                                         </ul>
                                     </div>
                                 </li>
+                               
                                 <li class="view-all">
                                     <a href="javascript:void(0)">
                                         See all notifications <i class="fa fa-arrow-circle-o-right"></i>
@@ -288,7 +356,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
                         </li>
                         <!-- end: NOTIFICATION DROPDOWN -->
                         <!-- start: MESSAGE DROPDOWN -->
-                        <li class="dropdown">
+                       <!--  <li class="dropdown">
                             <a class="dropdown-toggle" data-close-others="true" data-hover="dropdown" data-toggle="dropdown" href="#">
                                 <i class="clip-bubble-3"></i>
                                 <span class="badge"> 9</span>
@@ -379,28 +447,56 @@ $currentPath = Route::getCurrentRoute()->getPath();
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
                         <!-- end: MESSAGE DROPDOWN -->
                         <!-- start: USER DROPDOWN -->
+                        @if($currentPath =='patientprofilemanagement' || $currentPath =='patientprofileprevtreatment' || $currentPath =='patientprofileedit' || $currentPath=='patientchangepassword')
+                            <div class="nav navbar-left">
+                                <div class="horizontal-menu navbar-collapse collapse">
+                                    <ul class="nav navbar-nav">
+                                        <li id="patient-top-menu-li"  @if($currentPath == 'patientpersonalinformation' || $currentPath == 'patientobstetricshistory' || $currentPath == 'patientmedicalhistory' || $currentPath == 'patientprevioustreatment') class="active" @endif >
+                                            <a href="#" id="patient-menu">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+             
+                                           <!--  <img src="assets/images/Patient.png"> -->
+                                                Dashboard
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+
+                        <!-- end: LOGO -->
+                        @endif
+
+                        @if($currentPath=='patientprofilemanagement' || $currentPath=='patientprofileprevtreatment' || $currentPath=='patientprofileedit')
+
                         <li class="dropdown current-user">
                             <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
                                 <img src="assets/images/avatar-1-small.jpg" class="circle-img" alt="">
-                                <span class="username">Peter Clark</span>
+                                <span class="username">{{$patientName}}</span>
                                 <i class="clip-chevron-down"></i>
                             </a>
                             <ul class="dropdown-menu">
+                                
+                                    <li>
+                                        <a href="patientprofileedit">
+                                            <i class="clip-user-2"></i>
+                                            &nbsp;My Profile
+                                        </a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="patientchangepassword">
+                                            <i class="clip-calendar"></i>
+                                            &nbsp;Change Password
+                                        </a>
+                                    </li>
+                              
+                                <!--
                                 <li>
-                                    <a href="pages_user_profile.html">
-                                        <i class="clip-user-2"></i>
-                                        &nbsp;My Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="pages_calendar.html">
-                                        <i class="clip-calendar"></i>
-                                        &nbsp;My Calendar
-                                    </a>
-                                <li>
+                               
                                     <a href="pages_messages.html">
                                         <i class="clip-bubble-4"></i>
                                         &nbsp;My Messages (3)
@@ -410,20 +506,21 @@ $currentPath = Route::getCurrentRoute()->getPath();
                                 <li>
                                     <a href="utility_lock_screen.html"><i class="clip-locked"></i>
                                         &nbsp;Lock Screen </a>
-                                </li>
+                                </li> -->
                                 <li>
-                                    <a href="login_example1.html">
+                                    <a href="patientlogout">
                                         <i class="clip-exit"></i>
                                         &nbsp;Log Out
                                     </a>
                                 </li>
                             </ul>
                         </li>
+                        @endif
                         <!-- end: USER DROPDOWN -->
                         <!-- start: PAGE SIDEBAR TOGGLE -->
-                        <li>
+                        <!-- <li>
                             <a class="sb-toggle" href="#"><i class="fa fa-outdent"></i></a>
-                        </li>
+                        </li> -->
                         <!-- end: PAGE SIDEBAR TOGGLE -->
                     </ul>
                     @endif
@@ -433,85 +530,192 @@ $currentPath = Route::getCurrentRoute()->getPath();
     </div>
     <div class="main-container">
             <div class="navbar-content">
-                <div class="main-navigation navbar-collapse collapse">
+                <div class="main-navigation navbar-collapse collapse" style="position:fixed">
                     <!-- start: MAIN MENU TOGGLER BUTTON -->
                     <div class="navigation-toggler">
                         <i class="clip-chevron-left"></i>
                         <i class="clip-chevron-right"></i>
                     </div>
-                    @if($currentPath == 'patientpersonalinformation' || $currentPath == 'patientobstetricshistory' || $currentPath == 'patientmedicalhistory' || $currentPath == 'patientprevioustreatment')
+                    @if($currentPath == 'patientpersonalinformation' || $currentPath == 'patientobstetricshistory' || $currentPath == 'patientmedicalhistory' || $currentPath == 'patientprevioustreatment' || $currentPath == 'cardiomedicalhistory')
                     <!-- Patient side menu starts -->
                     <div id="patient-side-menu">
                         <ul class="main-navigation-menu">
                             <li  @if($currentPath == 'patientpersonalinformation') class="active open" @endif>
-                                <a href="patientpersonalinformation"><i class="clip-home-3"></i>
+                                <a href="patientpersonalinformation">
+                              <!--    <i class="clip-home-3"></i> --> 
+                                 <span class="dd_input_icon_patientpersonalinformation"></span>
                                     <span class="title"> Personal Information </span><span class="selected"></span>
                                 </a>
                             </li>
-                             <li  @if($currentPath == 'patientobstetricshistory') class="active open" @endif>
-                                <a href="patientobstetricshistory"><i class="clip-home-3"></i>
-                                    <span class="title"> Obstetrics History </span><span class="selected"></span>
-                                </a>
-                            </li>
-                             <li  @if($currentPath == 'patientmedicalhistory') class="active open" @endif>
-                                <a href="patientmedicalhistory"><i class="clip-home-3"></i>
-                                    <span class="title"> Medical History </span><span class="selected"></span>
-                                </a>
-                            </li>
-                             <li  @if($currentPath == 'patientprevioustreatment') class="active open" @endif>
-                                <a href="patientprevioustreatment"><i class="clip-home-3"></i>
-                                    <span class="title"> Previous Treatments </span><span class="selected"></span>
-                                </a>
-                            </li>
-                    
+                            
+                            @if($specialization == 1)
+                                <li  @if($currentPath == 'patientobstetricshistory') class="active open" @endif>
+                                    <a href="patientobstetricshistory"> 
+                                        <span class="dd_input_icon_Obstetrics"></span>
+                                        <span class="title"> Obstetrics History </span><span class="selected"></span>
+                                    </a>
+                                </li>
+                                <li  @if($currentPath == 'patientmedicalhistory') class="active open" @endif>
+                                    <a href="patientmedicalhistory">
+                                        <span class="dd_input_icon_Medical_History"></span>
+                                        <span class="title"> Medical History </span><span class="selected"></span>
+                                    </a>
+                                </li>
+                                <li  @if($currentPath == 'patientprevioustreatment') class="active open" @endif>
+                                    <a href="patientprevioustreatment">
+                                        <span class="dd_input_icon_Previous_Treatments"></span>
+                                        <span class="title"> Previous Treatments </span>
+                                        <span class="selected"></span>
+                                    </a>
+                                </li>
+                            @elseif($specialization == 2)
+                                 <li  @if($currentPath == 'cardiomedicalhistory') class="active open" @endif>
+                                    <a href="cardiomedicalhistory">
+                                        <span class="dd_input_icon_Medical_History"></span>
+                                        <span class="title"> Medical History </span><span class="selected"></span>
+                                    </a>
+                                </li> 
+                                <li  @if($currentPath == 'patientprevioustreatment') class="active open" @endif>
+                                    <a href="patientprevioustreatment">
+                                        <span class="dd_input_icon_Previous_Treatments"></span>
+                                        <span class="title"> Previous Treatments </span>
+                                        <span class="selected"></span>
+                                    </a>
+                                </li> 
+
+                            @endif    
                         </ul>
                     </div>
-                    <!-- Patient side menu ends --> 
                     @endif
-                    @if($currentPath == 'patientexamination')
+                    <!-- Patient side menu ends --> 
+
                     <!-- Diagnosis side menu starts -->
-                    <div id="diagnosis-side-menu" >
+                    @if(($currentPath == 'patientexamination') || ($currentPath == 'patientdiagnosis') ||       ($currentPath == 'patientlabdata'))
+                    <!-- Diagbreadcrumbmenu"> -->
+                    <div id="diagnosis-side-menu">
                         <ul class="main-navigation-menu">
-                            <li class="active open">
-                                <a href="index.html"><i class="clip-home-3"></i>
+                            <li @if($currentPath == 'patientexamination') class="active open" @endif>
+                                <a href="patientexamination">
+                               <!--  <i class="clip-home-3"></i>  -->
+                                <span class="dd_input_icon_Examination"></span>
                                     <span class="title"> Examination </span><span class="selected"></span>
                                 </a>
                             </li>
-                             <li>
-                                <a href="index.html"><i class="clip-home-3"></i>
-                                    <span class="title"> View Examination </span><span class="selected"></span>
-                                </a>
-                            </li>
-                             <li>
-                                <a href="index.html"><i class="clip-home-3"></i>
+                            <li @if($currentPath == 'patientlabdata') class="active open" @endif>
+                                <a href="patientlabdata">
+                              <!--   <i class="clip-home-3"></i> -->
+                                <span class="dd_input_icon_Lab_Data"></span>
                                     <span class="title"> Lab Data </span><span class="selected"></span>
                                 </a>
                             </li>
-                             <li>
-                                <a href="index.html"><i class="clip-home-3"></i>
+                             <li @if($currentPath == 'patientdiagnosis') class="active open" @endif>
+                                <a href="patientdiagnosis">
+                               <!--  <i class="clip-home-3"></i> -->
+                                 <span class="dd_input_icon_Diagnosis"></span>
                                     <span class="title"> Diagnosis </span><span class="selected"></span>
                                 </a>
                             </li>
                     
                         </ul>
                     </div>
-                    <!-- Diagnosis side menu ends -->   
-                    @endif        
+                    @endif   
+                    <!-- Diagnosis side menu ends --> 
+
+                    <!-- Prescription side menu starts -->
+                    @if(($currentPath == 'patientprescmanagement') || ($currentPath == 'patientprescmedicine'))
+                    <!-- Diagbreadcrumbmenu"> -->
+                    <div id="diagnosis-side-menu">
+                        <ul class="main-navigation-menu">
+                            <li @if($currentPath == 'patientprescmanagement') class="active open" @endif>
+                                <a href="patientprescmanagement">
+                                <!-- <i class="clip-home-3"></i> -->
+                                 <span class="dd_input_icon_Management"></span>
+                                    <span class="title"> Management </span><span class="selected"></span>
+                                </a>
+                            </li>
+                            <li @if($currentPath == 'patientprescmedicine') class="active open" @endif>
+                                <a href="patientprescmedicine">
+                              <!--   <i class="clip-home-3"></i> -->
+                               <span class="dd_input_icon_Medicine"></span>
+                                    <span class="title"> Medicine </span><span class="selected"></span>
+                                </a>
+                            </li>
+                            <!--  <li @if($currentPath == 'patientdiagnosis') class="active open" @endif>
+                                <a href="patientdiagnosis"><i class="clip-home-3"></i>
+                                    <span class="title"> Diagnosis </span><span class="selected"></span>
+                                </a>
+                            </li> -->
+                    
+                        </ul>
+                    </div>
+                    @endif   
+                    <!-- Diagnosis side menu ends -->     
+
+
+
+                    <!-- Patient Prfofile Management side menu starts -->
+                    @if(($currentPath == 'patientprofilemanagement') || ($currentPath == 'patientprofileprevtreatment') || ($currentPath == 'patientprofileedit'))
+                    <!-- Diagbreadcrumbmenu"> -->
+                    <div id="diagnosis-side-menu">
+                        <ul class="main-navigation-menu">
+                            <li @if($currentPath == 'patientprofilemanagement' || $currentPath == 'patientprofileedit') class="active open" @endif>
+                                <a href="patientprofilemanagement">
+                                <!-- <i class="clip-home-3"></i> -->
+                                 <span class="dd_input_icon_Management"></span>
+                                    <span class="title"> Personal Information </span><span class="selected"></span>
+                                </a>
+                            </li>
+                            <li @if($currentPath == 'patientprofileprevtreatment') class="active open" @endif>
+                                <a href="patientprofileprevtreatment">
+                              <!--   <i class="clip-home-3"></i> -->
+                               <span class="dd_input_icon_Medicine"></span>
+                                    <span class="title"> Previous Treatments </span><span class="selected"></span>
+                                </a>
+                            </li>
+                            <!--  <li @if($currentPath == 'patientdiagnosis') class="active open" @endif>
+                                <a href="patientdiagnosis"><i class="clip-home-3"></i>
+                                    <span class="title"> Diagnosis </span><span class="selected"></span>
+                                </a>
+                            </li> -->
+                    
+                        </ul>
+                    </div>
+                    @endif   
+                    <!-- Diagnosis side menu ends -->  
+
+
+
                 </div>    
             </div>
             <div class="main-content">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">
-                            <ol class="breadcrumb">
-                                <li>
+                            <ol class="breadcrumb dd_breadcrumb">
+                                <div class="col-sm-8">
+                                    @if($currentPath == 'patientprofilemanagement' || $currentPath == 'patientprofileprevtreatment' || $currentPath == 'patientprofileedit')
+                                    @else
+                                        <a style="font-size: 14px;text-decoration: none;float: left">
+                                            PATIENT ID : {{$patientId}}
+                                           
+                                        </a>
+                                    @endif
+                                </div>
+                                <div class="">
+                                    <a style="font-size: 14px;text-decoration: none;float: right">
+                                            
+                                            PATIENT NAME : {{$patientName}}
+                                    </a>
+                                    <!-- <a style="font-size: 14px;float:right;text-decoration: none">TODAY : {{$todayDate}}</a> -->
+                                </div>
+                                <!-- <li>
                                     <i class="clip-home-3"></i>
                                     <a href="#">
                                         Home
                                     </a>
                                 </li>
                                 <li>
-                                   <!--  <i class="clip-home-3"></i> -->
+                                   
                                     <a href="patientpersonalinformation">
                                         Patient
                                     </a>
@@ -522,7 +726,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
                                     @if($currentPath == 'patientmedicalhistory')       Medical History     @endif
                                     @if($currentPath == 'patientprevioustreatment')    Previous Treatments @endif
                                     
-                                </li>
+                                </li> -->
                                <!--  <li class="search-box">
                                     <form class="sidebar-search">
                                         <div class="form-group">
@@ -540,7 +744,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
             </div>
 
     </div>        
-     @section('scripts')
+    @section('scripts')
   
     {!!Html::script('assets/plugins/jQuery-lib/2.0.3/jquery.min.js')!!}
     
@@ -567,5 +771,6 @@ $currentPath = Route::getCurrentRoute()->getPath();
        headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
     });
   </script>
+  
 </body>
 </html>

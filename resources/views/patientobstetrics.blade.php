@@ -6,7 +6,7 @@
     
 
 @stop
-@extends('layouts.master')
+@extends('layouts.master', ['patientName' =>$patientName])
 
 @section('main')
 	<div class="page-header">

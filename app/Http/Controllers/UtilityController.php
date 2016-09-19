@@ -43,8 +43,25 @@ class UtilityController extends Controller {
 
 		return $state;
 	}
+	public function generate_random_password($length = 5) {
+	    $alphabets = range('A','Z');
+	    $numbers = range('0','9');
+	    //$additional_characters = array('_','.');
+	    $final_array = array_merge($alphabets,$numbers);
+	         
+	    $password = '';
+	  
+	    while($length--) {
+	      $key = array_rand($final_array);
+	      $password .= $final_array[$key];
+	    }
+	  
+	    return $password;
+    }
+  
 
-	
+
+  
 	
 	
 

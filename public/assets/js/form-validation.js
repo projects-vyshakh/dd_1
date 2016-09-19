@@ -106,7 +106,7 @@ var FormValidator = function () {
     };
     // function to initiate Validation Sample 2
     var runValidator2 = function () {
-        var form2 = $('#form2');
+        var form2 = $('#doctor-register-form');
         var errorHandler2 = $('.errorHandler', form2);
         var successHandler2 = $('.successHandler', form2);
         $.validator.addMethod("getEditorValue", function () {
