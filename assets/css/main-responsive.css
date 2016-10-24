@@ -302,7 +302,10 @@
 		display: table;
 	}
 	.navbar-tools .navbar-right {
-		float: right;
+		 display: table;
+    float: none;
+    margin: 0 auto;
+    text-align: center;
 	}
 	.navbar-tools .nav > li.dropdown .dropdown-toggle {
 		margin-top: 0px !important;
@@ -514,10 +517,10 @@
 	 Set style for small navigation menu
 	 ***/
 	.navigation-small .main-content {
-		margin-left: 35px !important;
+		margin-left: 45px !important;
 	}
 	.navigation-small .main-navigation {
-		width: 35px !important;
+		width: 45px !important;
 		z-index: 1000;
 	}
 	.navigation-small.sidebar-fixed .wrap-menu {
@@ -527,7 +530,12 @@
 		display: none;
 	}
 	.navigation-small ul.main-navigation-menu > li > a {
-		padding-left: 7px;
+		padding-left: 28px;
+
+	}
+		.navigation-small ul.main-navigation-menu > li > a > span >  .titil {
+		padding-left: 10px;
+		
 	}
 	.navigation-small  .navigation-toggler {
 		margin-right: 3px !important;
@@ -565,6 +573,8 @@
 		top: -1px;
 		width: 14px;
 		background: url(../images/menu-white-arrow.png) left center no-repeat;
+		padding-left: 20px;
+		margin-left:10px; 
 	}
 	.navigation-small ul.main-navigation-menu > li:hover > a .title {
 		padding-left: 30px;

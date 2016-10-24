@@ -8,7 +8,7 @@
 	<!-- start: HEAD -->
 	<head>
 
-		<title>Doctor'Diary | Forget Password</title>
+		<title>Doctor's Diary | Login</title>
 		<!-- start: META -->
 		<meta charset="utf-8" />
 		<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
@@ -17,7 +17,17 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta content="" name="description" />
 		<meta content="" name="author" />
+		<link rel="shortcut icon" href="assets/images/logo-mob.png" type="image/x-icon">
 		<style type="text/css">
+
+	body {
+        background-color: #000;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#000;
+        margin: 0;
+        padding: 0;
+    }
 		.box {
 		    background: #fff none repeat scroll 0 0;
 		    /*height: 416px;*/
@@ -33,25 +43,40 @@
 		.resize-login{
 			z-index: 10001;
 		}
+		  html, body {
+        position: relative;
+        height: 100%;
+    }
+
+    /*.swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+    }*/
 		</style>
 		<!-- end: META -->
 		<!-- start: MAIN CSS -->
 		{!!Html::style('assets/plugins/bootstrap/css/bootstrap.min.css')!!}
 	    {!!Html::style('assets/plugins/font-awesome/css/font-awesome.min.css')!!}
 	    {!!Html::style('assets/fonts/style.css')!!}
-	    {!!Html::style('assets/plugins/font-awesome/css/font-awesome.min.css')!!}
+	    
 	    {!!Html::style('assets/css/main.css')!!}
 	    {!!Html::style('assets/css/main-responsive.css')!!}
 	    {!!Html::style('assets/plugins/iCheck/skins/all.css')!!}
 	    {!!Html::style('assets/plugins/bootstrap-colorpalette/css/bootstrap-colorpalette.css')!!}
 	    {!!Html::style('assets/plugins/perfect-scrollbar/src/perfect-scrollbar.css')!!}
-	    {!!Html::style('assets/css/theme_light.css',array('id'=>'skin_color'))!!}
+	    
 	    {!!Html::style('assets/css/print.css',array('media' => 'print')) !!}
 
-	     {!!Html::style('assets/plugins/fullslider/css/full-slider.css')!!}
+	   
 	     {!!Html::style('assets/css/dd-responsive.css')!!}
 
-
+	    <!--  {!!Html::style('assets/plugins/Swiper-master/dist/css/swiper.min.css')!!} -->
+	
+	      
 	    
 	    
 
@@ -61,135 +86,224 @@
 	<?php
 		$currentPath = Route::getCurrentRoute()->getPath();
 		//echo $currentPath;
-	?>
-	<body class="login example2">
-		<div class=" navbar-fixed-top resize-login dd_login_header">
-			<div class="inner_wrapper">
+	?>navbar-fixed-top
+	<body style="background-color:#f9f9f9">
+		<div class=" navbar-fixed-top resize-login dd_login_header"><!-- navbar-fixed-top -->
+			<div class="inner_wrapper_2">
 				<div class="container dd_pd_0">
 	        		<div class="row dd_mg_0">
 	        		 	<div class="col-sm-12 dd_pd_0">
 	        		 		<div class="logo_div">
-	    		 			   <a class="navbar-brand dd_logo_img" href="login">
-				                   <!-- <img src="assets/images/logo2.png" height=""> -->
+	    		 			   <a class="navbar-brand dd_logo_img_2" href="http://ww.doctorsdiary.co">
+				                   
 								</a>
 							</div>
-							<div class="login_div">
-	        		 			<a href="login" @if($currentPath=="login") class="topmenu-active" @endif>Login</a>&nbsp; | &nbsp;
-	        		 		 	<a href="register" @if($currentPath=="register") class="topmenu-active" @endif>Register</a>
+								<div class="login_div">
+								<div class="doctorlogin_main">
+									<span class="doctor_login"><img src="assets/images/doctor_icon.png"></span>
+
+										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #428bca" @endif>Doctor Login</a>&nbsp;  &nbsp;
+
+								</div>
+		        		 		<div class="patientlogin_main"> 		
+		        		 		 	<span class="patient_login"><img src="assets/images/patient_icon.png">
+		        		 		 	</span>	        		 		 	
+		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #428bca" @endif>
+		        		 		 		Patient Login
+		        		 		 	</a>
+		        		 		</div>
 	        		 		</div>
+							<!-- <div class="login_div">
+	        		 			<a href="patientlogin" @if($currentPath=="login") class="topmenu-active" @endif>Login</a>&nbsp; | &nbsp;
+	        		 		 	<a href="doctorsignup" @if($currentPath=="register") class="topmenu-active" @endif>Register</a>
+	        		 		</div> -->
 	        		 	</div>
 	        		</div>
 	        	</div>
 	        </div>
         </div>
-        <header id="myCarousel" class="carousel slide">
-		<div class="inner_wrapper ">
-			<div class="box">
-	        	<!-- <div class="main-login"> -->
-	        	<div>
-	        		<div class="logo">
-	        			<span class="login_HD">Enter Id</span>
-	        		</div>
-	        		<div class="box-login dd_pading_0" style="display: block;">
-	        			<div class="row">
-							<div class="col-sm-12">
-	        					{!! Form::open(array('route' => 'handleForgetPassword', 'role'=>'form', 'id'=>'forgetPassword', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
-			        				<!-- <div class="form-group dd_mg_B_10 ">
-										<div class="col-sm-12 dd_login">
-											<span class="input-icon ">
-												{!! Form::text('email', null, $attributes = array('class'=>'form-control dd_input','placeholder' => 'Email', 'id'=>'email'));  !!}
-												<i class="fa fa-user"></i>  
-											</span>
-										</div>
-			        				</div> -->
-			        				<div class="form-group dd_mg_B_10 ">
-										<div class="col-sm-12 dd_login">
-											<span class="input-icon ">
-												{!! Form::text('id_doctor', null, $attributes = array('class'=>'form-control dd_input','placeholder' => 'Doctor Id', 'id'=>'id_doctor'));  !!}
-												<i class="fa fa-user"></i>  
-											</span>
-										</div>
+       <!-- Swiper -->
+	    <div class="swiper-container dd_bg_black">
+
+	       
+	           
+	        
+	        <!-- Add Pagination -->
+	       <!--  <div class="swiper-pagination swiper-pagination-white"></div> -->
+	        <!-- Add Arrows -->
+	  <!--       <div class="swiper-button-next swiper-button-white"></div>
+	        <div class="swiper-button-prev swiper-button-white"></div> -->
+	        <div class="inner_wrapper_3 ">
+
+	        <div class="dd_doctor_login_main_hd">
+Reset Your Password</div>
+
+	        <div class="doctor_login_main">
+	       
+
+					<div class="box_2">
+					 <div class="box_2_main">
+			        	<!-- <div class="main-login"> -->
+			        	<div>
+
+			        	<div class="dd_logo_responsive">
+
+				        		<img src="assets/images/logo-mob.png" alt="">			        		
+				        	</div>
+				        	<div class="dd_drlogin_responsive">
+
+				        				<div class="login_div2">
+								<div class="doctorlogin_main2">								
+
+										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+
+								</div>
+		        		 		<div class="patientlogin_main2"> 		
+		        		 		         		 		 	
+		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
+		        		 		 		Patient Login
+		        		 		 	</a>
+		        		 		</div>
+	        		 		</div>
+				        	
+				        			        		
+				        	</div>
+
+
+			   
+
+
+			        		<div class="logo">
+			        			<span class="login_HD dd_signfont">We'll email you a link to make a brand new password. </span>
+			        		</div>
+
+			        		 
+			        		
+			        		<div class="box-login " style="display: block;">
+			        			<div class="row">
+									<div class="col-sm-12">
+			        					{!! Form::open(array('route' => 'handleForgetPassword', 'role'=>'form', 'id'=>'forgetPassword', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
+					        				<div class="form-group">
+												<div class="col-sm-12 dd_login">
+													<span class="input-icon ">
+														{!! Form::text('email', null, $attributes = array('class'=>'form-control dd_input','placeholder' => 'Email', 'id'=>'email'));  !!}
+														<span class="dd_input_icon_name"></span> 
+													</span>
+												</div>
+					        				</div>
+					        				<!-- <div class="form-group dd_mg_B_10">
+					        					<div class="col-sm-12 dd_login">
+													<span class="input-icon dd_relative">
+														{!! Form::password('password', array('placeholder'=>'Password', 'class'=>'form-control dd_input', 'id'=>'password' ) ) !!}
+														<span class="dd_input_icon"></span>
+
+													</span>
+												</div>
+					        				</div> -->
+					        				<div class=" dd_relative">
+						                        <div class="heading ">
+						                              <?php $error = Session::get('error');
+						                                $success = Session::get('success');
+						                                Session::forget('error');
+						                                Session::forget('success');
+						                               
+						                              ?>
+						                              @if(!empty($error))
+						                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
+						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+						                                          {{$error}}
+						                                </div>
+						                              @elseif(!empty($success))
+						                                <div class="dd_alert_2 display-none" style="display: block;">
+						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+						                                          {{$success}}
+						                                </div>
+						                              @endif
+						                                    
+						                        </div>
+						                    </div>
+					        				<div class="form-group dd_mg_B_10">
+					        					<div class="col-sm-12 dd_mg_B_T_10">
+													<span class="input-icon ">
+														<button type="submit" class="btn btn-primary btn-block dd_btn_new">Submit</button>
+													</span>
+												</div>
+												<!-- <div class="col-sm-12 dd_login_mg_30 dd_font_size_14px dd">
+													<a href="forgetpassword" class="dd_textalign_center ">Forgot Password?</a>
+												</div>
+												<div class="col-sm-12 dd_textalign_center dd_mg_25 dd_dummy dd_font_size_14px">
+												<span class="dd_color_light_bl">New User ?</span><a href="doctorsignup" class=""> Register Now</a>
+												</div> -->
+					        				</div>
+					        			<!-- 	<hr class="dd_border_CL">
+					        				<div class="form-group ">
+					        					<div class="col-sm-2 "></div>
+					        					<div class="col-sm-12 dd_textalign_center_mg">New to Doctor's Diary?&nbsp;<a href="doctorsignup">Signup</a></div>
+											</div> -->
+					        			
+										{!! Form::close() !!}
 			        				</div>
-			        				<div class="form-group dd_mg_B_10">
-			        					<div class="col-sm-12 dd_mg_B_10">
-											<span class="input-icon ">
-												<button type="submit" class="btn btn-primary btn-block dd_btn">Submit</button>
-											</span>
-										</div>
-										
-			        				</div>
+			        			</div>
+			        		</div>
 			        			
-			        			
-								{!! Form::close() !!}
-	        				</div>
-	        			</div>
-	        		</div>
-	        			
-				</div>
+						</div>
+
+							</div>
+					</div>
+
+
+					<div class="box_right">
+
+
+			        		<div class="logo">
+			        			<span class="login_HD dd_signfont">Already have an account on Doctors diary?</span>
+			        		</div>
+
+
+						<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
+												<!-- <span class="dd_color_light_bl">New User ?</span> -->
+													<span class="input-icon ">
+														<button type="submit" class="btn btn-primary btn-block dd_btn_new">
+														<a href="doctorsignup" class=""> Login Now</a></button>
+													</span>
+						</div>
+						
+
+					</div>
+
+
+
+					<div class="dd_clear"></div>
 			</div>
-		</div>		
-	        <!-- Indicators -->
-	        <ol class="carousel-indicators">
-	            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-	            <li data-target="#myCarousel" data-slide-to="1"></li>
-	            <li data-target="#myCarousel" data-slide-to="2"></li>
-	        </ol>
 
-	        <!-- Wrapper for Slides -->
-	        <div class="carousel-inner">
-	            <div class="item active">
-	                <!-- Set the first background image using inline CSS below. -->
-	                <div class="fill" style="background-image:url('assets/images/slider1.jpeg');"></div>
-	               <!--  <div class="carousel-caption">
-	                    <h2>Caption 1</h2>
-	                </div> -->
-	            </div>
-	            <div class="item">
-	                <!-- Set the second background image using inline CSS below. -->
-	                <div class="fill" style="background-image:url('assets/images/slider2.jpeg');"></div>
-	                <!-- <div class="carousel-caption">
-	                    <h2>Caption 2</h2>
-	                </div> -->
-	            </div>
-	            <div class="item">
-	                <!-- Set the third background image using inline CSS below. -->
-	                <div class="fill" style="background-image:url('assets/images/slider3.jpeg');"></div>
-	               <!--  <div class="carousel-caption">
-	                    <h2>Caption 3</h2>
-	                </div> -->
-	            </div>
-	        </div>
 
-	        <!-- Controls -->
-	        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-	            <span class="icon-prev"></span>
-	        </a>
-	        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-	            <span class="icon-next"></span>
-	        </a>
-	        <!-- start: COPYRIGHT -->
-			<footer>
-				<div class="navbar-fixed-bottom " style="z-index: 20000; bottom: 0;">
+
+					<div class="dd_clear"></div>
+				</div>
+
+
+		<footer>
+				<div class="navbar-fixed-bottom dd_footer" style="z-index: 20000; bottom: 0;">
 			      <div class="container " style="height:">
 			        <div class="row">
 			        	<div class="col-sm-12">
-			        	<div class="inner_wrapper">
+			        	<div class="inner_wrapper_2">
 			        		<div class="footer_div footer_pd dd_left ">
-			        			&copy2016 Doctor's Diary | Powered by BrainPan Innovations Pvt Ltd
+			        			&copy 2016 Doctor's Diary | Powered by Brainpan <!-- Innovations.  -->
 			        		</div>
 			        		<div class="footer_div_2 dd_right">
 				        		<ul class="footer_ul">
 					        		<li class="footer_li">
-					        			<a href="" class="footer_a">About us</a>
+					        		 <a href="" class="footer_a">Terms & Conditions</a>	
 					        		</li>
 					        		<li class="footer_li">
-					        			<a href="" class="footer_a">Career</a>
+					        		<a href="" class="footer_a">Blog</a>
 					        		</li>
 					        		<li class="footer_li">
-					        			<a href="" class="footer_a">Blog</a>
+					        		<a href="" class="footer_a">Career</a>
 					        		</li>
 					        		<li class="footer_li">
-					        			<a href="" class="footer_a">Terms & Conditions</a>
+					        		<a href="" class="footer_a">About Us</a>
 					        		</li>
 				        			
 				        		</ul>
@@ -202,57 +316,16 @@
 				</div>
 			</footer>
 
-    	</header>	
-<!-- 		<div class="main-login col-sm-4 col-sm-offset-4">
-			<div class="logo">CLIP<i class="clip-clip"></i>ONE
-			</div>
-		
-			<div class="box-login">
-				<h3>Sign in to your account</h3>
-				<p>
-					Please enter your name and password to log in.
-				</p>
-				<form class="form-login" action="index.html">
-					<div class="errorHandler alert alert-danger no-display">
-						<i class="fa fa-remove-sign"></i> You have some form errors. Please check below.
-					</div>
-					<fieldset>
-						<div class="form-group">
-							<span class="input-icon">
-								<input type="text" class="form-control" name="username" placeholder="Username">
-								<i class="fa fa-user"></i> </span>
-						</div>
-						<div class="form-group form-actions">
-							<span class="input-icon">
-								<input type="password" class="form-control password" name="password" placeholder="Password">
-								<i class="fa fa-lock"></i>
-								<a class="forgot" href="#">
-									I forgot my password
-								</a> </span>
-						</div>
-						<div class="form-actions">
-							<label for="remember" class="checkbox-inline">
-								<input type="checkbox" class="grey remember" id="remember" name="remember">
-								Keep me signed in
-							</label>
-							<button type="submit" class="btn btn-bricky pull-right">
-								Login <i class="fa fa-arrow-circle-right"></i>
-							</button>
-						</div>
-						<div class="new-account">
-							Don't have an account yet?
-							<a href="#" class="register">
-								Create an account
-							</a>
-						</div>
-					</fieldset>
-				</form>
-			</div>
-			
 
-		
-			
-		</div> -->
+
+
+
+
+
+
+	    </div>
+	  	
+
 		
 		<!-- start: MAIN JAVASCRIPTS -->
 		<!--[if lt IE 9]>
@@ -281,34 +354,26 @@
 	    {!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 	    {!!Html::script('assets/js/login.js')!!}
 
-	    <!-- {!!Html::script('assets/plugins/fullslider/js/jquery.js')!!} -->
-	    
-	<!-- 	<script src="assets/plugins/jQuery-lib/2.0.3/jquery.min.js"></script>
-		
-		<script src="assets/plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js"></script>
-		<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-		<script src="assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
-		<script src="assets/plugins/blockUI/jquery.blockUI.js"></script>
-		<script src="assets/plugins/iCheck/jquery.icheck.min.js"></script>
-		<script src="assets/plugins/perfect-scrollbar/src/jquery.mousewheel.js"></script>
-		<script src="assets/plugins/perfect-scrollbar/src/perfect-scrollbar.js"></script>
-		<script src="assets/plugins/less/less-1.5.0.min.js"></script>
-		<script src="assets/plugins/jquery-cookie/jquery.cookie.js"></script>
-		<script src="assets/plugins/bootstrap-colorpalette/js/bootstrap-colorpalette.js"></script>
-		<script src="assets/js/main.js"></script> -->
-		<!-- end: MAIN JAVASCRIPTS -->
-		<!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
-		<!-- <script src="assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
-		<script src="assets/js/login.js"></script> -->
-		<!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+	     {!!Html::script('assets/plugins/Swiper-master/dist/js/swiper.min.js')!!}
+	   	
+	
 		<script>
 			jQuery(document).ready(function() {
 				//Main.init();
 				Login.init();
-				//alert("vy");
-				$('.carousel').carousel({
-			        interval: 3000 //changes the speed
-			    })
+				
+			  	var swiper = new Swiper('.swiper-container', {
+			        pagination: '.swiper-pagination',
+			        speed: 1500,
+			        paginationClickable: true,
+			        autoplay : 5000,
+			        preloadImages : true,
+			        nextButton: '.swiper-button-next',
+			        prevButton: '.swiper-button-prev',
+			        spaceBetween: 5000,
+			        effect: 'fade',
+
+			    });
 				
 			});
 		</script>

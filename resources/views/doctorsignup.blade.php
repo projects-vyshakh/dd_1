@@ -8,7 +8,7 @@
 	<!-- start: HEAD -->
 	<head>
 
-		<title>Doctor's Diary | Doctor's Signup</title>
+		<title>Doctor's Diary | Login</title>
 		<!-- start: META -->
 		<meta charset="utf-8" />
 		<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
@@ -17,46 +17,45 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta content="" name="description" />
 		<meta content="" name="author" />
-		<meta name="_token" content="{!! csrf_token() !!}"/>
-		
+		<link rel="shortcut icon" href="assets/images/logo-mob.png" type="image/x-icon">
 		<style type="text/css">
 
-			body {
-		        background-color: #000;
-		        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-		        font-size: 14px;
-		        color:#000;
-		        margin: 0;
-		        padding: 0;
-		    }
-			.box {
-			    background: #fff none repeat scroll 0 0;
-			    /*height: 416px;*/
-			    position: absolute;
-			    right: 12%;
-			    top: 18%;
-			    width: 346px;
-			    z-index: 10000;
-			}
-			.topmenu-active{
-				color :black;
-			}
-			.resize-login{
-				z-index: 10001;
-			}
-			html, body {
-		        position: relative;
-		        height: 100%;
-	    	}
+	body {
+        background-color: #000;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#000;
+        margin: 0;
+        padding: 0;
+    }
+		.box {
+		    background: #fff none repeat scroll 0 0;
+		    /*height: 416px;*/
+		    position: absolute;
+		    right: 12%;
+		    top: 18%;
+		    width: 346px;
+		    z-index: 10000;
+		}
+		.topmenu-active{
+			color :black;
+		}
+		.resize-login{
+			z-index: 10001;
+		}
+		  html, body {
+        position: relative;
+        height: 100%;
+    }
 
-		    .swiper-container {
-		        width: 100%;
-		        height: 100%;
-		    }
-		    .swiper-slide {
-		        background-position: center;
-		        background-size: cover;
-		    }
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+    }
 		</style>
 		<!-- end: META -->
 		<!-- start: MAIN CSS -->
@@ -71,9 +70,13 @@
 	    {!!Html::style('assets/plugins/perfect-scrollbar/src/perfect-scrollbar.css')!!}
 	    
 	    {!!Html::style('assets/css/print.css',array('media' => 'print')) !!}
-		{!!Html::style('assets/css/dd-responsive.css')!!}
-  		{!!Html::style('assets/plugins/Swiper-master/dist/css/swiper.min.css')!!}
-	  	{!!Html::style('assets/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css')!!}
+
+	   
+	     {!!Html::style('assets/css/dd-responsive.css')!!}
+
+	     {!!Html::style('assets/plugins/Swiper-master/dist/css/swiper.min.css')!!}
+	
+	      
 	    
 	    
 
@@ -84,92 +87,66 @@
 		$currentPath = Route::getCurrentRoute()->getPath();
 		//echo $currentPath;
 	?>
-	<body style="background-color:#000">
-		<div class=" navbar-fixed-top resize-login dd_login_header">
-			<div class="inner_wrapper">
+	<body style="background-color:#f9f9f9">
+		<div class=" navbar-fixed-top resize-login dd_login_header"><!-- navbar-fixed-top -->
+			<div class="inner_wrapper_2">
 				<div class="container dd_pd_0">
 	        		<div class="row dd_mg_0">
 	        		 	<div class="col-sm-12 dd_pd_0">
 	        		 		<div class="logo_div">
-	    		 			   <a class="navbar-brand dd_logo_img" href="htt://www.doctorsdiar.co">
+	    		 			   <a class="navbar-brand dd_logo_img_2" href="http://ww.doctorsdiary.co">
 				                   
 								</a>
 							</div>
-							<div class="login_div">
-								<span class="doctor_login"><img src="assets/images/doctor_icon.png"></span>
-									<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active" @endif>Doctor Login</a>&nbsp; | &nbsp;
-	        		 		 		
-	        		 		 	<span class="doctor_login"><img src="assets/images/patient_icon.png"></span>
-	        		 		 		<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
-	        		 		 		Patient Login
-	        		 		 		</a>
+								<div class="login_div">
+								<div class="doctorlogin_main">
+									<span class="doctor_login"><img src="assets/images/doctor_icon.png"></span>
+
+										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #428bca" @endif>Doctor Login</a>&nbsp;  &nbsp;
+
+								</div>
+		        		 		<div class="patientlogin_main"> 		
+		        		 		 	<span class="patient_login"><img src="assets/images/patient_icon.png">
+		        		 		 	</span>	        		 		 	
+		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #428bca" @endif>
+		        		 		 		Patient Login
+		        		 		 	</a>
+		        		 		</div>
 	        		 		</div>
+							<!-- <div class="login_div">
+	        		 			<a href="patientlogin" @if($currentPath=="login") class="topmenu-active" @endif>Login</a>&nbsp; | &nbsp;
+	        		 		 	<a href="doctorsignup" @if($currentPath=="register") class="topmenu-active" @endif>Register</a>
+	        		 		</div> -->
 	        		 	</div>
 	        		</div>
 	        	</div>
 	        </div>
         </div>
        <!-- Swiper -->
-	    <div class="swiper-container dd_bg_black">
-				<!-- <span class="dd_slider_hd">The EHR platform that helps in Quantitative Research</span> -->
-	      <div class="swiper-wrapper dd_swiper_opacity  ">
-	         
-	            <div class="swiper-slide"  style="background-image:url(assets/images/slider1.jpeg);">
+	   
 
-	               <span class="dd_slider_hd">
 	       
-	             The EHR platform for billion Indian Population
-	              </span>
-                </div>
-
 	           
+	        
+	        <!-- Add Pagination -->
+	       <!--  <div class="swiper-pagination swiper-pagination-white"></div> -->
+	        <!-- Add Arrows -->
+	  <!--       <div class="swiper-button-next swiper-button-white"></div>
+	        <div class="swiper-button-prev swiper-button-white"></div> -->
+	        <div class="inner_wrapper">
 
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider2.jpeg)">	            	
-	            <span class="dd_slider_hd">
-	             The EHR platform with Machine Learning Algorithms
-	            </span>
-	            </div>
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider3.jpeg)">
+	        
 
-	            <span class="dd_slider_hd">
-	             The EHR platform that helps fight Cancer
-	            </span> 
-	            	
-
-	            </div>
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider4.jpg) ">
-		           <span class="dd_slider_hd">
-		             The EHR platform backed by Supercomputing
-		            </span> 	           
-	            </div>
-
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider5.jpg) ">
-		           <span class="dd_slider_hd">
-		             The EHR platform that saves lives from Epidemics
-		            </span> 	           
-	            </div>
-
-
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider6.jpeg) ">
-		           <span class="dd_slider_hd">
-		             The EHR platform that brings Personalized Medicine
-		            </span> 	           
-	            </div>
-
-
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider7.jpg) ">
-		           <span class="dd_slider_hd">
-		                The EHR platform that helps in Quantitative Research
-		            </span> 	           
-	            </div>
-<!-- 	            <div class="swiper-slide" style="background-image:url(assets/images/slider1.jpeg)">ggg</div> -->
-	        </div>
-	        </div>
+	        <div class="doctor_login_main">
 	       
-	        <div class="inner_wrapper ">
-				<div class="box_register">
-	        	<!-- <div class="main-login"> -->
-	        	<div class="box-register-inner">
+
+					<div class="box_register">
+
+
+					 <div class="box_2_register">
+			        	<!-- <div class="main-login"> -->
+			        	<div class="box-register-inner">
+			        	<div class="dd_doctor_register_main_hd">Sign in or create an account</div>
 		        	<div>
 		        		<div class="dd_create dd_mg_20">
 		        			<span class="login_HD  dd_signfont ">Create An Account</span>
@@ -308,49 +285,194 @@
 										</div>
 			        				</div> -->
 
-			        				<!-- <div class="dd_email_reg_label">email</div> -->
+			        		
+
+
+			        				<div class="dd_email_reg_label">Email</div>
 
 			        				<div class="form-group dd_mg_B_15">
 			        					<div class="col-sm-12">
 											<span class="input-icon ">
-												{!! Form::text('email',  Input::old('email'), $attributes = array('class' => 'form-control dd_input', 'placeholder' => 'Email')); !!}
-												<span class="dd_input_icon_email"></span> 
+												{!! Form::text('email',  Input::old('email'), $attributes = array('class' => 'form-control dd_input', 'placeholder' => '')); !!}
+												<!-- <span class="dd_input_icon_email"></span>  -->
 												<!-- <i class="fa fa-user"></i>  -->
 											</span>
 										</div>
 			        				</div>
 
-			        			<!-- 	<div class="dd_email_reg_label">Password</div> -->
+			        				<div class="dd_email_reg_label">Password</div>
 
 			        				<div class="form-group dd_mg_B_15">
 			        					<div class="col-sm-12">
 											<span class="input-icon ">
-												{!! Form::password('password', array('placeholder'=>'Password', 'class'=>'form-control dd_input', 'id'=>'password' ) ) !!}
-												<span class="dd_input_icon"></span>
+												{!! Form::password('password', array('placeholder'=>'', 'class'=>'form-control dd_input_2', 'id'=>'password' ) ) !!}
+
+												{!! Form::password('cpassword', array('placeholder'=>'Confirm password', 'class'=>'form-control dd_input_3', 'id'=>'cpassword' ) ) !!}
+												<!-- <span class="dd_input_icon"></span> -->
 												<!-- <i class="fa fa-user"></i>  -->
 											</span>
 										</div>
 			        				</div>
 
-
-			        				<!-- <div class="dd_email_reg_label">Confirm password</div> -->
+			        					 <div class="dd_email_reg_label">First Name</div>
 			        				<div class="form-group dd_mg_B_15">
 			        					<div class="col-sm-12">
 											<span class="input-icon ">
-												{!! Form::password('cpassword', array('placeholder'=>'Confirm Password', 'class'=>'form-control dd_input', 'id'=>'cpassword' ) ) !!}
+												{!! Form::password('cpassword', array('placeholder'=>'', 'class'=>'form-control dd_input_4', 'id'=>'cpassword' ) ) !!}
+
+												{!! Form::text('middle_name', null, $attributes = array('class'=>'form-control col-sm-6  middle_name dd_input_5','placeholder' => 'Middle Name', 'id'=>'middle_name'));  !!}
+
+												{!! Form::text('last_name', null, $attributes = array('class'=>'form-control last_name dd_input_6','placeholder' => 'Last Name', 'id'=>'last_name'));  !!}
 												<!-- <i class="fa fa-user"></i>  -->
-												<span class="dd_input_icon"></span>
+												<!-- <span class="dd_input_icon"></span> -->
 											</span>
 										</div>
 			        				</div>
-			        		<!-- 		<div class="form-group dd_mg_B_10 ">
+
+
+			        				<div class="dd_email_reg_label">Phone Number</div>
+
+			        		 		<div class="form-group dd_mg_B_15 ">
 										<div class="col-sm-12">
 											<span class=" ">
-												{!! Form::select('qualification[]', $qualification, Input::old('qualification'), $attributes = array('class' => 'form-control dd_input','id'=>'qualification','multiple' => 'multiple')); !!}
+											{!! Form::text('phone',Input::old('phone'), $attributes = array('class' => 'form-control dd_input', 'placeholder' => '')); !!}
+											<!-- 	<span class="symbol required"></span>	 -->						
+											</span>
+										</div>
+			        				</div> 
+
+			        			<div class="dd_email_reg_label">Gender</div>
+
+			        		 		<div class="form-group dd_mg_B_15 ">
+										<div class="col-sm-12">
+											<span class=" ">
+											{!! Form::select('gender', $gender, Input::old('gender'), $attributes = array('class' => 'form-control dd_input_2')); !!}
+											<!-- 	<span class="symbol required"></span>	 -->						
+											</span>
+										</div>
+			        				</div> 
+
+
+			        			<div class="dd_email_reg_label_2">Street Name</div><div class="dd_email_reg_label_2">Country </div>
+
+			        				<div class="form-group dd_mg_B_15">
+			        					<div class="col-sm-12">
+											<span class="input-icon ">
+												{!! Form::text('street', Input::old('street'), $attributes = array('class'=>'form-control dd_input_2', 'placeholder' => ''));  !!}
+
+												{!! Form::select('country', $country, Input::old('country'), $attributes = array('class' => 'form-control country dd_input_3', 'id'=>'country')); !!}
+												<!-- <span class="dd_input_icon"></span> -->
+												<!-- <i class="fa fa-user"></i>  -->
+											</span>
+										</div>
+			        				</div>
+
+
+			        				<div class="dd_email_reg_label_3">State </div>
+
+			        				<div class="form-group dd_mg_B_15">
+			        					<div class="col-sm-12">
+											<span class="input-icon ">
+												{!! Form::select('state', $state, Input::old('state'), $attributes = array('class' => 'form-control dd_input_4 state','id' =>'state')); !!}
+
+											<!-- 	 <i class="fa fa-sort-desc dd_fa_icons"></i>
+ -->
+												{!! Form::text('city', Input::old('city'), $attributes = array('class' => 'form-control dd_input_5', 'placeholder' => 'City')); !!}
+
+												{!! Form::text('pincode', Input::old('pincode'), $attributes = array('class' => 'form-control dd_input_6', 'placeholder' => 'Pincode')); !!}
+												<!-- <span class="dd_input_icon"></span> -->
+												 
+											</span>
+										</div>
+			        				</div>
+
+
+			        					<div class="dd_email_reg_label_2">Qualification</div><div class="dd_email_reg_label_2">Specialization </div>
+
+			        				<div class="form-group dd_mg_B_15">
+			        					<div class="col-sm-12">
+											<span class="input-icon ">
+													{!! Form::select('qualification[]', $qualification, Input::old('qualification'), $attributes = array('class' => 'form-control dd_input_2','id'=>'qualification','multiple' => 'multiple')); !!}
+
+												{!! Form::select('specialization', $specialization, Input::old('specialization'), $attributes = array('class' => 'form-control dd_input_3')); !!}
+												<!-- <span class="dd_input_icon"></span> -->
+												<!-- <i class="fa fa-user"></i>  -->
+											</span>
+										</div>
+			        				</div>
+
+			        				<div class="dd_email_reg_label_2">Super specialization</div><div class="dd_email_reg_label_2">Accredition
+			        				</div>
+
+			        				<div class="form-group dd_mg_B_15">
+			        					<div class="col-sm-12">
+											<span class="input-icon ">
+														{!! Form::text('super_specialization', null,array('placeholder'=>'', 'class'=>'form-control dd_input_2 super_specialization', 'id'=>'super_specialization' ) ) !!}
+
+												{!! Form::text('accredition', null,array('placeholder'=>'', 'class'=>'form-control dd_input_3', 'id'=>'accredition' ) ) !!}
+												<!-- <span class="dd_input_icon"></span> -->
+												<!-- <i class="fa fa-user"></i>  -->
+											</span>
+										</div>
+			        				</div>
+
+
+
+			        				<div class="dd_email_reg_label_2">IMA Register Number</div>
+
+			        				<div class="form-group dd_mg_B_15">
+			        					<div class="col-sm-12">
+											<span class="input-icon ">
+													{!! Form::text('register_no', null,array('placeholder'=>'', 'class'=>'form-control dd_input', 'id'=>'register_no	' ) ) !!}
+												<!-- <span class="dd_input_icon"></span> -->
+												<!-- <i class="fa fa-user"></i>  -->
+											</span>
+										</div>
+			        				</div>
+
+
+
+
+			        				<div class="dd_agree">
+			        			
+										<p>
+										<!-- <a href="" class="dd_textalign_center"> -->
+
+ 										<input type="checkbox" name=agree"agree" id="agree" value="agree" class="agree"> 
+										I agree to the Doctord Diary 
+
+
+										<a target="_blank"> Terms of Service </a> and
+										<a  target="_blank"> Privacy Policy </a>
+										 <!-- </a> -->
+										</p>
+									</div>
+
+									<div class="dd_PDB_30"></div>
+
+
+			        				<div class="form-group dd_mg_B_10">
+			        					<div class="col-sm-12 dd_mg_B_10">
+											<span class=" ">
+											
+												<button type="submit" class="btn btn-primary dd_btn_new">Save and Continue</button>
+											</span>
+										</div>
+											<div class="col-sm-12 dd_mg_B_10">
+											<span class=" ">
 												
 											</span>
 										</div>
-			        				</div> -->
+									<!-- 	<div class="col-sm-12">
+										<p
+										a href="" class="dd_textalign_center">I forget my password</a>
+										</p>
+										</div> -->
+			        				</div>
+
+
+
+
 			        		
 			        		<!-- 		<div class="form-group dd_mg_B_10">
 			        					<div class="col-sm-12">
@@ -400,16 +522,16 @@ and
 									</div> -->
 
 
-			        				<div class="form-group dd_mg_0email">
+			        <!-- 				<div class="form-group dd_mg_0email">
 			        					<div class="col-sm-12 dd_subit_mg_top">
 											<span class=" ">
-												<button type="submit" class="btn btn-primary btn-block dd_btn">	
+												<button type="submit" class="btn btn-primary btn-block dd_btn_2">	
 												<a class="dd_btn_next" href="doctorsignupinformation.php">Next</a></button>
 
 											</span>
 										</div>
 					
-			        				</div>
+			        				</div> -->
 			        			
 		
 
@@ -419,15 +541,30 @@ and
 	        		</div>
 	        		</div>	
 				</div>
+
+							</div>
+					</div>
+
+
+		
+
+
+
+					<div class="dd_clear"></div>
+			</div>
+
+
+
+					<div class="dd_clear"></div>
 				</div>
 
 
 		<footer>
-				<div class="navbar-fixed-bottom " style="z-index: 20000; bottom: 0;">
+				<div class="dd_footer" style="z-index: 20000; bottom: 0;">
 			      <div class="container " style="height:">
 			        <div class="row">
 			        	<div class="col-sm-12">
-			        	<div class="inner_wrapper">
+			        	<div class="inner_wrapper_2">
 			        		<div class="footer_div footer_pd dd_left ">
 			        			&copy 2016 Doctor's Diary | Powered by Brainpan <!-- Innovations.  -->
 			        		</div>
@@ -463,7 +600,6 @@ and
 
 
 
-	    </div>
 	  	
 
 		
@@ -493,19 +629,14 @@ and
 
 	    {!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 	    {!!Html::script('assets/js/login.js')!!}
-	    {!!Html::script('assets/js/doctors-information.js')!!}
-	    {!!Html::script('assets/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')!!}
-	    {!!Html::script('assets/plugins/Swiper-master/dist/js/swiper.min.js')!!}
+
+	     {!!Html::script('assets/plugins/Swiper-master/dist/js/swiper.min.js')!!}
 	   	
 	
 		<script>
 			jQuery(document).ready(function() {
 				//Main.init();
-				//Login.init();
-				//doctorElements.init();
-
-				$('#qualification').multiselect();
-			    //$('.btn-group').addClass('multiselect-fullwidth');
+				Login.init();
 				
 			  	var swiper = new Swiper('.swiper-container', {
 			        pagination: '.swiper-pagination',
@@ -519,52 +650,6 @@ and
 			        effect: 'fade',
 
 			    });
-
-
-			  	var form = $('.register-form');
-                var errorHandler = $('.errorHandler', form);
-                var successHandler = $('.successHandler', form);
-                
-
-		        
-                form.validate({
-                    rules: {
-                       
-		                email           :   { required: true, email : true }, 
-		                password        :   { required: true, minlength : 5 },   	 
-                        cpassword       : 	{
-									            required: true,
-									            minlength: 5,
-									            equalTo: "#password"
-									        }
-                        
-                    },
-                    messages: {
-                       
-		                email           : "Please specify valid email",
-		                password        : "Please specify password(Min : 5chars)",
-		               	cpassword        : "Please enter same values as above",
-		                
-                       
-                       
-                    },    
-                    submitHandler: function (form) {
-                        errorHandler.hide();
-                        form.submit();
-                        //alert('hh');
-                    },
-                    invalidHandler: function (event, validator) { //display error alert on form submit
-                        errorHandler.show();
-                    }
-                });
-
-
-
-
-
-
-
-
 				
 			});
 		</script>

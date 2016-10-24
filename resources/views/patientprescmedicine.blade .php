@@ -1,3 +1,21 @@
+<?php
+
+if(!empty($patientPersonalData)){
+	$firstName 	     			= $patientPersonalData->first_name;
+	$lastName        			= $patientPersonalData->last_name;
+
+	$patientName = $firstName." ".$lastName;
+}
+else{
+	$newPatientId = Session::get('patientId'); 
+	$patientName = "";
+}
+if(!empty($doctorData)){
+	$doctorSpecialization = $doctorData->specialization;
+}
+
+
+?>
 @section('head')
 	{!!Html::style('assets/plugins/datepicker/css/datepicker.css')!!}
     {!!Html::style('assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')!!}
@@ -6,7 +24,7 @@
 	{!!Html::style('assets/plugins/select2/select2.css')!!}
 
 @stop
-@extends('layouts.master')
+@extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
 
 
 @section('main')

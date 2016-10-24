@@ -4,27 +4,12 @@ var TableData = function () {
     //which will add advanced interaction controls to any HTML table
     //For more information, please visit https://datatables.net/
     var runDataTable = function () {
-        var oTable = $('#sample_1').dataTable({
-            "aoColumnDefs": [{
-                "aTargets": [0]
-            }],
-            "oLanguage": {
-                "sLengthMenu": "Show _MENU_ Rows",
-                "sSearch": "",
-                "oPaginate": {
-                    "sPrevious": "",
-                    "sNext": ""
-                }
-            },
-            "aaSorting": [
-                [1, 'asc']
-            ],
-            "aLengthMenu": [
-                [5, 10, 15, 20, -1],
-                [5, 10, 15, 20, "All"] // change per page values here
-            ],
-            // set the initial value
-            "iDisplayLength": 10,
+        var oTable = $('#sample-table-1').dataTable({
+            "responsive": true,
+        	"bPaginate" : false,
+        	"bAutoWidth": false,
+        	"bFilter": false,
+        	"bInfo": false,
         });
         $('#sample_1_wrapper .dataTables_filter input').addClass("form-control input-sm").attr("placeholder", "Search");
         // modify table search input
@@ -42,29 +27,28 @@ var TableData = function () {
 
     var runPatientDoctorListTable = function () {
         var oTable = $('#doctor_list').dataTable({
-        	"bPaginate" : false,
-        	"bFilter": false,
-        	"bInfo": false
-          /*  "aoColumnDefs": [{
+        	"responsive": true,
+        	"bPaginate" : true,
+        	"bFilter": true,
+        	"bInfo": true,
+            "aoColumnDefs": [{
                 "aTargets": [0]
             }],
-            "oLanguage": {
-                "sLengthMenu": "Show _MENU_ Rows",
-                "sSearch": "",
-                "oPaginate": {
-                    "sPrevious": "",
-                    "sNext": ""
-                }
-            }*/,
-            /*"aaSorting": [
-                [1, 'asc']
-            ],*/
-            /*"aLengthMenu": [
-                [5, 10, 15, 20, -1],
-                [5, 10, 15, 20, "All"] // change per page values here
-            ],*/
-            // set the initial value
-            //"iDisplayLength": 5,
+            "bAutoWidth": false,
+            
+
+            "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+					        if(aData['8'] >= 100 ) {
+					          $(nRow).css('color', 'blue').css('font-weight', 'bold');
+					        } else if(aData['8'] <= -100 ) {
+					          $(nRow).css('color', 'Red').css('font-weight', 'bold');
+					        }
+					  },
+
+
+
+           
+
 
         });
         $('#sample_1_wrapper .dataTables_filter input').addClass("form-control input-sm").attr("placeholder", "Search");

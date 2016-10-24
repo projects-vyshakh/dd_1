@@ -10,6 +10,9 @@ else{
 	$newPatientId = Session::get('patientId'); 
 	$patientName = "";
 }
+if(!empty($doctorData)){
+	$doctorSpecialization = $doctorData->specialization;
+}
 
 
 ?>
@@ -17,7 +20,7 @@ else{
 	 {!!Html::style('assets/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css')!!}
 	 {!!Html::style('assets/plugins/select2/select2.css')!!}
 @stop
-@extends('layouts.master', ['patientName' =>$patientName])
+@extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
 @section('main')
 
 

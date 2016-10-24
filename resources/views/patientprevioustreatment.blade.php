@@ -24,6 +24,8 @@ if(!empty($doctorData)){
 	{!!Html::style('assets/plugins/select2/select2.css')!!}
 	{!!Html::style('assets/plugins/tokenizemultiselect/jquery.tokenize.css')!!}
 
+
+	{!!Html::style('assets/plugins/ajax-loader/src/jquery.mloading.css')!!}
 	
 	
 
@@ -76,7 +78,7 @@ for($startYear;$startYear>=$endYear;$startYear--){
 
 ?>
 
-<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content" style="width:800px;height:580px">
 				<div class="modal-header">
@@ -91,22 +93,23 @@ for($startYear;$startYear>=$endYear;$startYear--){
 					</p>	
 	
 				</div>
-				<div class="modal-footer">
+				<!-- <div class="modal-footer">
 					<button class="btn btn-default printBtnOk" data-dismiss="modal">
 						OK
 					</button>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
-	
+
 		<div class="page-header">
 			<h1>Patient Previous Treatments <small></small></h1>
 		</div>
 		
-		<div class="row">
-			<div class="col-sm-2">
-				{!! Form::select('year', $yearArray, null , $attributes = array('class' => 'form-control year','id'=>'year')); !!}
+		<div class="row " style="margin-bottom:20px;">
+			<div class="col-sm-2 dd_year">
+				{!! Form::select('year', $yearArray, null , $attributes = array('class' => 'form-control year ','id'=>'year')); !!}
+				<!-- <i class="fa fa-sort-desc" aria-hidden="true"></i> -->
 			</div>
 		</div>	
 		
@@ -139,7 +142,7 @@ for($startYear;$startYear>=$endYear;$startYear--){
 
 	 	{!!Html::script('assets/plugins/tokenizemultiselect/jquery.tokenize.js')!!}
 
-	 	
+	 	{!!Html::script('assets/plugins/ajax-loader/src/jquery.mloading.js')!!}
 
 	 	
 
@@ -149,17 +152,17 @@ for($startYear;$startYear>=$endYear;$startYear--){
 			patientPrevElements.init();
 			Main.init();
 			
-	
-   
-			$(window).load(function() {
+			
+   	
+			/*$(window).load(function() {
 				$(".loader").fadeOut("slow");
 				
-			});
+			});*/
 
-			$('.quali').multiselect(); //Used class here instead of id
+			//$('.quali').multiselect(); //Used class here instead of id
 			
 			$('.tokenize-sample').tokenize();
-			$('.tokenize-disease').tokenize();
+			//$('.tokenize-disease').tokenize();
 			
 	 	});
 	</script>

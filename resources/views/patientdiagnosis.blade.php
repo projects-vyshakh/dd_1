@@ -10,7 +10,9 @@ else{
 	$newPatientId = Session::get('patientId'); 
 	$patientName = "";
 }
-
+if(!empty($doctorData)){
+	$doctorSpecialization = $doctorData->specialization;
+}
 
 ?>
 @section('head')
@@ -23,7 +25,7 @@ else{
 
 
 @stop
-@extends('layouts.master', ['patientName' =>$patientName])
+@extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
 @section('main')
 <div class="loader"></div>
 

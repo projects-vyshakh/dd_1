@@ -84,7 +84,6 @@ var Login = function () {
         form.validate({
             rules: {
                 email: {
-                    minlength: 2,
                     required: true,
                     email :true
                 },
@@ -113,12 +112,12 @@ var Login = function () {
                 }
             },
             messages: {
-                //email : "Please specify valid Email",
-                //password  : "Please specify correct password",
+                email : "Please type a valid email",
+                password  : "Please type correct password",
                 //cpassword : {"Password not matching"},
-                id_patient : "Please specify valid Patient ID",
-                mobile : "Please specify a valid mobile number",
-                otp_code : "Please specify a valid OTP",
+                id_patient : "Please type valid Patient ID",
+                mobile : "Please type a valid mobile number",
+                otp_code : "Please type a valid OTP",
                 //cpassword : "Please specify correct password",
             },    
             submitHandler: function (form) {
@@ -137,8 +136,26 @@ var Login = function () {
             rules: {
                 email: {
                     required: true
+                },
+                 password: {
+                    //minlength: 6,
+                    required: true,
+                },
+                cpassword : {
+                    required : true,
+                    equalTo : "#password",
+                    //minlength: 6,
+                },
+                otp : {
+                    required : true,
                 }
             },
+            messages: {
+                //email : "Please specify valid Email",
+                password  : "Please specify a password",
+                /*cpassword : "Please specify a passwordg",*/
+                
+            },    
             submitHandler: function (form) {
                 errorHandler2.hide();
                 form2.submit();

@@ -28,6 +28,7 @@ body, .main-container, .footer, .main-navigation, ul.main-navigation-menu > li >
     color: #5e5e5e;
     font-family: open sans;
     font-weight: 300;
+    height: auto;
 }
 .navbar-inverse .nav > li.current-user > a {
 	color: #666666 !important;
@@ -102,7 +103,7 @@ ul.main-navigation-menu > li.active > a i {
 ul.main-navigation-menu > li.open > a, ul.main-navigation-menu > li > a:hover, ul.main-navigation-menu > li:hover > a {
 	background-color: #505050;
 	/*prajeesh add*/
-	height:auto;
+	/*height:auto;*/
 
 }
 .navigation-toggler, .go-top {
@@ -159,7 +160,7 @@ body.rtl .main-content .container {
 		background: none !important;
 	}
 	.navbar-tools {
-		background: rgba(255, 255, 255, 0.9);
+		background: rgba(255, 255, 255, 1);
 		border-top-color: #C8C7CC;
 	}
 	/* ie8 fixes */

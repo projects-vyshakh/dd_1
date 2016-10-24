@@ -5,8 +5,7 @@
     {!!Html::style('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')!!}
 
 @stop
-@extends('layouts.master')
-@section('main')
+
 
 <?php
 //var_dump($patientData);
@@ -31,12 +30,15 @@ if(!empty($patientData)){
 		$phone           			= $patientData->phone;
 		$email           			= $patientData->email;
 		//echo $patientDob;
+		$patientName = $firstName." ".$lastName;
 	
 }
 
 
 
 ?>
+@extends('layouts.master', ['patientName'=>$patientName])
+@section('main')
 @if(!empty($patientData))
 <input type="hidden" id="state-hidden" value="<?php echo $patientState; ?>">
 @endif
@@ -66,7 +68,7 @@ if(!empty($patientData)){
 
 			
 			<div class="panel-body">
-				{!! Form::open(array('route' => 'patientProfileEdit', 'role'=>'form', 'id'=>'addPatientPersonalInformation', 'class'=>'form-horizontal','novalidate'=>'novalidate')) !!}
+				{!! Form::open(array('route' => 'patientProfileEdit', 'role'=>'form', 'id'=>'addPatientPersonalInformation', 'class'=>'form-horizontal','novalidate'=>'novalidate','enctype'=>'multipart/form-data')) !!}
 					{!! Form::hidden('id_patient', (!empty($patientData))?$patientId : $newPatientId, $attributes = array('class'=>'form-control'));  !!}
 					<div class="form-group">
 						<div class="col-sm-4">
@@ -134,6 +136,18 @@ if(!empty($patientData)){
 											{!! Form::select('maritial_status', $maritialStatus, (!empty($patientData))?$patientMaritialStatus : Input::old('maritial_status'), $attributes = array('class' => 'form-control')); !!}
 										</span>
 									</div>
+
+								</div>
+								<div class="col-sm-12 dd_PDB_10 ">
+									{!! Form::label('profile-pic', 'Upload Image', $attributes = array('class'=>'col-sm-4 '));  !!}		
+								</div>
+								<div class="col-sm-12 dd_PDB_10 ">
+									<div class="col-sm-4">
+										<span class="">
+											{!! Form::file('photo', Input::old('photo'), $attributes = array('class'=>'form-control', 'value'=>'Browse'));  !!}
+										</span>
+									</div>
+
 								</div>
 							</div>	
 						</div>
@@ -183,6 +197,7 @@ if(!empty($patientData)){
 									</div>
 								</div>
 								<div class="col-sm-12 dd_PDB_10">
+
 									{!! Form::label('pincode', 'Pincode', $attributes = array('class'=>'col-sm-4'));  !!}		
 									<div class="col-sm-8">
 										<span class="">

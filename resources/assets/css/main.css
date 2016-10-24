@@ -5591,3 +5591,7 @@ a:hover, a:focus{
 .dd_signin_font{
 	font-size: 16px;
 }
+.dd_sidetab  li  a {
+    padding: 10px 12px;
+  
+}

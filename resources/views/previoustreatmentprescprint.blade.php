@@ -227,6 +227,13 @@
 					margin: 0;
 					padding:-2px 0;
 				}
+				.full-cover{
+					margin-top: 	<?php echo $printData->margin_top."px"; ?> ;
+					margin-bottom: 	<?php echo $printData->margin_bottom."px"; ?> ;
+					margin-left:	<?php echo $printData->margin_left."px"; ?> ;
+					margin-right:	<?php echo $printData->margin_right."px"; ?> ;
+
+				}
 
 
 		</style>
@@ -237,7 +244,7 @@
 		
 		
 		
-
+	<div class="full-cover">
 				
 		<!-- Prescription -->
 		<table class="">
@@ -370,7 +377,7 @@
 					
 				</table> -->
 				
-			  </div>
+	</div>
 	
 		
 	</body>

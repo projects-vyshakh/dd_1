@@ -23,6 +23,7 @@ if(!empty($patientData)){
 		$pincode         			= $value->pincode;
 		$phone           			= $value->phone;
 		$email           			= $value->email;
+		$refferedBy 				= $value->reffered_by;
 		//echo $patientDob;
 	}
 	$patientName = $firstName." ".$lastName;
@@ -47,7 +48,16 @@ if(!empty($doctorData)){
 @stop
 @extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
 <style>
-
+	.loader 
+	{
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('assets/images/page_loading.gif') 50% 50% no-repeat rgb(249,249,249);
+    }
 </style>
 @section('main')
 <div class="loader"></div>
@@ -109,7 +119,7 @@ if(!empty($doctorData)){
 					</div>
 									<hr class="dd_PDB_40_3">
 
-					<div class="row dd_menarche_3 dd_color">
+					<div class="row  dd_color">
 						<div class="col-sm-6 dd_PDR_40">
 							<div class="form-group dd_fromgroup_MG_0">
 								<div class="col-sm-12 dd_PDB_10 ">
@@ -168,16 +178,30 @@ if(!empty($doctorData)){
 									<!-- {!! Form::label('maritial_status', 'Maritial Status', $attributes = array('class'=>'col-sm-4 '));  !!} -->	
 
 
-								<div class="col-sm-4">
-									Maritial Status
-							 	<span class="symbol required"></span> 	
-							 	</div>	
+									<div class="col-sm-4">
+										Maritial Status
+								 		<span class="symbol required"></span> 	
+								 	</div>	
+									<div class="col-sm-8">
+											<span class="">
+												{!! Form::select('maritial_status', $maritialStatus, (!empty($patientData))?$patientMaritialStatus : Input::old('maritial_status'), $attributes = array('class' => 'form-control','id'=>'maritial_status')); !!}
+											</span>
+									</div>
+								</div>
+								<div class="col-sm-12 dd_PDB_10">
+									{!! Form::label('refferedby', 'Referred By', $attributes = array('class'=>'col-sm-4 '));  !!}
 									<div class="col-sm-8">
 										<span class="">
-											{!! Form::select('maritial_status', $maritialStatus, (!empty($patientData))?$patientMaritialStatus : Input::old('maritial_status'), $attributes = array('class' => 'form-control','id'=>'maritial_status')); !!}
+											@if(!empty($refferedBy))
+												{!! Form::text('refferedby',$refferedBy, $attributes = array('class'=>'form-control', 'placeholder' => ''));  !!}
+											@else
+												{!! Form::text('refferedby',Input::old('refferedby'), $attributes = array('class'=>'form-control', 'placeholder' => ''));  !!}
+											@endif
+											
 										</span>
 									</div>
 								</div>
+							
 							</div>	
 						</div>
 						<div class="col-sm-6 dd_PDL_40"> 

@@ -143,7 +143,7 @@ class LoginController extends Controller {
 				return Redirect::to('doctorhome');
 			}
 			else{
-				return Redirect::to('doctorlogin')->with(array('error'=>"Login failed!!! Please check the credentials"));
+				return Redirect::to('doctorlogin')->withInput()->with(array('error'=>"Login failed!!! Incorrect email or password"));
 			}
 		}
 		else{
@@ -155,7 +155,7 @@ class LoginController extends Controller {
 			}
 			else{
 				//echo "enter into 0 else ";
-				return Redirect::to('doctorlogin')->with(array('error'=>$email." "."is Denied or Not Exist"));
+				return Redirect::to('doctorlogin')->with(array('error'=>"Login failed!!! Incorrect email or password"));
 			}
 
 			
@@ -169,8 +169,7 @@ class LoginController extends Controller {
 		$patientId = $input['id_patient'];
 		$password  = $input['password'];
 
-		
-		
+
 
 
 		$checkLoginCredentials = DB::table('patients')->where('id_patient','=',$patientId)->first();
@@ -201,10 +200,12 @@ class LoginController extends Controller {
 				    "\0"
 				);
 				
+				
 
 				
-				if($password==$decrypted){
+				if($password==$decrypted){ 
 					if($checkLoginCredentials->registration_status==1){
+						
 						Session::put('id_patient',$checkLoginCredentials->id_patient);
 						$patientName = $checkLoginCredentials->first_name." ".$checkLoginCredentials->last_name;
 						Session::put('patientName',$patientName);
@@ -217,7 +218,7 @@ class LoginController extends Controller {
 					
 				}
 				else{
-					return Redirect::to('patientlogin')->with(array('error'=>"Login failed!!! Please check the credentials"));
+					return Redirect::to('patientlogin')->with(array('error'=>"Login failed!!! Incorrect id or password"));
 				}
 				
 
@@ -230,7 +231,7 @@ class LoginController extends Controller {
 		else{
 
 			
-				return Redirect::to('patientlogin')->with(array('error'=>$patientId." "."is Denied or Not Exist"));
+				return Redirect::to('patientlogin')->with(array('error'=>"Login failed!!! Incorrect id or password"));
 			
 
 			
@@ -247,29 +248,144 @@ class LoginController extends Controller {
 	public function showForgetPassword(){
 		return View('forgetpassword');
 	}
+
 	public function handleForgetPassword(){
-		$doctorId = Input::get('id_doctor');
+		$email = Input::get('email');
+		$currentPath = Session::get('currentPath');
 
-		$doctorData = DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
-		
-		$email = $doctorData->email;
-		$password = $doctorData->password;	
-		
-		$to      = $email;
-		$subject = 'Recovered Email and Password';
-		$message = 'Please note your username and password. Donot reply to this email';
-		$headers = 'From: cipher.infos@gmail.com' . "\r\n" .
-		'Reply-To: vyshakhps1988@gmail.com' . "\r\n" .
-		    'X-Mailer: PHP/' . phpversion();
+		if($currentPath=="doctorlogin"){
+			$doctorData = DB::table('doctors')->where('email','=',$email)->first();
+			if(!empty($doctorData)){
+				Session::put('doctorEmail',$email);
+				//return Redirect::to('addnewpassword');
+				$otpCode = DBUtils::generate_random_password();
+				
+				
+				$to      = 'vyshakhps1988@gmail.com';
+				$subject = 'OTP for password change';
+				$message = 'OTP :'.$otpCode;
+				$headers = 'From: cipher.infos@gmail.com' . "\r\n" .
+				'Reply-To: vyshakhps1988@gmail.com' . "\r\n" .
+				    'X-Mailer: PHP/' . phpversion();
 
-		if(mail($to, $subject, $message, $headers))
-		{
-			echo "Mail sent";
+				if(mail($to, $subject, $message, $headers))
+				{
+					DB::table('doctors')->where('email','=',$email)->update(array('otp'=>$otpCode));
+					return Redirect::to('showdoctorotpcheck')->with(array('success'=>'An OTP has sent to you email. Please check your email'));
+				}
+				else{
+				}
+				Session::flush('currentPath');
+				
+			}
+			else{
+				return Redirect::to('forgetpassword')->withInput()->with(array('error'=>'Invalid email id'));
+			}
+
+		}
+		elseif ($currentPath=="patientlogin") {
+			$patientData = DB::table('patients')->where('email','=',$email)->first();
+			if(!empty($patientData)){
+				Session::put('patientEmail',$email);
+				//return Redirect::to('addnewpassword');
+				$otpCode = DBUtils::generate_random_password();
+				
+				
+				$to      = 'vyshakhps1988@gmail.com';
+				$subject = 'OTP for password change';
+				$message = 'OTP :'.$otpCode;
+				$headers = 'From: cipher.infos@gmail.com' . "\r\n" .
+				'Reply-To: vyshakhps1988@gmail.com' . "\r\n" .
+				    'X-Mailer: PHP/' . phpversion();
+
+				/*if(mail($to, $subject, $message, $headers))
+				{*/
+					DB::table('patients')->where('email','=',$email)->update(array('otp'=>$otpCode));
+					return Redirect::to('showdoctorotpcheck')->with(array('success'=>'An OTP has sent to you email. Please check your email'));
+				/*}
+				else{
+				}*/
+				Session::flush('currentPath');
+			}
+			else{
+				return Redirect::to('forgetpassword')->withInput()->with(array('error'=>'Invalid email id'));
+			}
+		}
+
+		
+		
+		
+
+	}
+	public function showDoctorOtpCheck(){
+		
+		return view('showdoctorotpcheck');
+	}
+	public function handleDoctorOtpCheck(){
+		$otpCode = Input::get('otp');
+		
+		$otpExistCheck = DB::table('doctors')->where('otp','=',$otpCode)->first();
+
+		if(!empty($otpExistCheck)){
+			Session::put('otp',$otpCode);
+			return Redirect::to('addnewpassword');
 		}
 		else{
-			echo "Failed to send";
+			return Redirect::to('showdoctorotpcheck')->with(array('error'=>"Invalid OTP"));
 		}
+	}
+	public function showAddNewPassword(){
+		return view('addnewpassword');
+	}
+	public function handleAddNewPassword(){
+		
+			$password = Input::get('password');
+			$cPassword = Input::get('cpassword');
+			$doctorEmail = Session::get('doctorEmail');
 
+			$doctorData = DB::table('doctors')->where('email','=',$doctorEmail)->first();
+
+			if(!empty($doctorData)){
+				if(($password==$cPassword) && !empty($doctorEmail)){
+					$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
+							$iv = mcrypt_create_iv(
+							    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
+							    MCRYPT_DEV_URANDOM
+							);
+
+							$encrypted = base64_encode(
+							    $iv .
+							    mcrypt_encrypt(
+							        MCRYPT_RIJNDAEL_128,
+							        hash('sha256', $key, true),
+							       	$password,
+							        MCRYPT_MODE_CBC,
+							        $iv
+							    )
+							);
+
+							$passwordUpdate = DB::table('doctors')->where('email','=',$doctorEmail)->update(array('password'=>$encrypted));
+							if($passwordUpdate){
+								DB::table('doctors')->where('email','=',$doctorEmail)->update(array('otp'=>''));
+								Session::flush('doctorEmail');
+								Session::flush('otp');
+								return Redirect::to('doctorlogin')->with(array('success'=>"Successfully changed the password. Please login here"));
+							}
+							else{
+								return Redirect::to('forgetpassword')->with(array('error'=>"Failed to update your new password"));
+							}
+				}
+				else{
+					return Redirect::to('addnewpassword')->with(array('error'=>"Either password do not match or invalid email"));
+				}
+			}
+			else{
+				return Redirect::to('addnewpassword')->with(array('error'=>"No doctors exist with".$doctorEmail));
+			}
+
+		
+		
+		
 	}
 	public function showDoctorRegister(){
 		//echo "Regsiter page";

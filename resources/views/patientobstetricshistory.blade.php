@@ -29,6 +29,7 @@ if(!empty($doctorData)){
 
 
 @section('main')
+	
 	<div class="page-header">
 		<h1>Patient Obstetrics History <small></small></h1>
 	</div>
@@ -582,6 +583,10 @@ if(!empty($doctorData)){
 			Main.init();
 			patientElements.init();
 
+			//Page Loader closing
+			$(window).load(function() {
+				$(".loader").fadeOut("slow");
+			})
 
 			/*$('body').on('focus',".expected_delivery_date", function(){
 					$(this).datepicker();

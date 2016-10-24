@@ -77,7 +77,6 @@ else{
 
 
 
-
 ?>
 
 
@@ -307,7 +306,14 @@ else{
 					margin: 0;
 					padding:-2px 0;
 				}
+				
+				.full-cover{
+					margin-top: 	<?php echo $printData->margin_top."px"; ?> ;
+					margin-bottom: 	<?php echo $printData->margin_bottom."px"; ?> ;
+					margin-left:	<?php echo $printData->margin_left."px"; ?> ;
+					margin-right:	<?php echo $printData->margin_right."px"; ?> ;
 
+				}
 
 		</style>
 		
@@ -316,7 +322,7 @@ else{
 	<body>
 		
 		<!-- Organization & Mobile number -->
-		<table>
+<!-- 		<table>
 			<tr>
 				<td colspan="4">
 					<div class="invoice" >
@@ -326,12 +332,12 @@ else{
 				<td class="amount" style="padding-bottom:0px;">Phone Number : </td>
 				<td class="amount">{{$mobile}} </td>
 			</tr>
-		</table>
-		<div class="pd_abs"></div>
+		</table> -->
+		<!-- <div class="pd_abs"></div> -->
 		<!-- Organization & Mobile number ends -->
 
 		<!-- Doctor & Patient Details -->
-		<table class="">
+		<!-- <table class="">
 			<tr >
 				<td colspan="3"><h2>Dr. {{strtoupper($doctorName)}} </h2></td>
 				<td>Patient ID  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp; {{$patientId}}</td>
@@ -351,12 +357,12 @@ else{
 				<td style="padding-top:-2px;">Blood Group &nbsp; : &nbsp; {{$bloodGroup}}</td>
 			</tr>
 		
-		</table>
-		<div class="pd_abs"></div>
+		</table> -->
+		<!-- <div class="pd_abs"></div> -->
 		<!-- Doctor & Patient Details ends -->
-			
+	<div class="full-cover">	
 		<!-- Medical History -->		
-		<table class="pd_mg_30_t pd_mg_30_b  pd_mg_30_t">
+		<table class="">
 			<tr>
 				<td><h3>Medical History :</h3></td>
 			</tr>
@@ -494,10 +500,11 @@ else{
 			</tr>
 			
 			<tr>
-				<td class="pd_mg_10_t"><textarea rows="3" cols="20" style="width:680px">{{$comments}}</textarea></td>
+				<td class="pd_mg_10_t"></td>
 				
 			</tr>
 		</table>
+		<div><textarea  style="width:100%">{{$comments}}</textarea></div>
 
 		<div class="pd_abs pd_mg_30_t"></div>
 		<!-- Diagnosis Ends -->
@@ -634,7 +641,7 @@ else{
 					
 				</table> -->
 				
-			  </div>
+		</div>
 	
 		
 	</body>

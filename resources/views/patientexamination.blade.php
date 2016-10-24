@@ -10,7 +10,9 @@ else{
 	$newPatientId = Session::get('patientId'); 
 	$patientName = "";
 }
-
+if(!empty($doctorData)){
+	$doctorSpecialization = $doctorData->specialization;
+}
 
 ?>
 @section('head')
@@ -30,7 +32,7 @@ else{
 
 
 @stop
-@extends('layouts.master', ['patientName' =>$patientName])
+@extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
 @section('main')
 <div class="loader"></div>
 	<div class="page-header">
@@ -319,7 +321,7 @@ else{
 					<div class="col-sm-3 dd_font_bold">
 						{!! Form::label('preabdomen_examination', 'Pre Abdomen Examination', $attributes = array('class'=>""));  !!}
 					</div>
-					{{$diagExam->diag_systemic_preabdomen}}
+					
 					<div class="col-sm-4">
 						<span>
 							@if($diagExam->diag_systemic_preabdomen=="Normal")

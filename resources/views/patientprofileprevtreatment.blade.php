@@ -82,9 +82,10 @@ for($startYear;$startYear>=$endYear;$startYear--){
 			<h1>Patient Previous Treatments <small></small></h1>
 		</div>
 		
-		<div class="row">
-			<div class="col-sm-2">
-				{!! Form::select('year', $yearArray, null , $attributes = array('class' => 'form-control year','id'=>'year')); !!}
+		<div class="row " style="margin-bottom:20px;">
+			<div class="col-sm-2 dd_year">
+				{!! Form::select('year', $yearArray, null , $attributes = array('class' => 'form-control year ','id'=>'year')); !!}
+				<!-- <i class="fa fa-sort-desc" aria-hidden="true"></i> -->
 			</div>
 		</div>	
 		
@@ -116,7 +117,7 @@ for($startYear;$startYear>=$endYear;$startYear--){
 	 	{!!Html::script('assets/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')!!}
 
 	 	{!!Html::script('assets/plugins/tokenizemultiselect/jquery.tokenize.js')!!}
-
+	 	{!!Html::script('assets/plugins/ajax-loader/src/jquery.mloading.js')!!}
 	 	
 
 	 	
@@ -129,15 +130,9 @@ for($startYear;$startYear>=$endYear;$startYear--){
 			
 	
    
-			$(window).load(function() {
-				$(".loader").fadeOut("slow");
-				
-			});
-
-			$('.quali').multiselect(); //Used class here instead of id
 			
-			$('.tokenize-sample').tokenize();
-			$('.tokenize-disease').tokenize();
+
+			
 			
 	 	});
 	</script>

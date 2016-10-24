@@ -10,7 +10,9 @@ else{
 	$newPatientId = Session::get('patientId'); 
 	$patientName = "";
 }
-
+if(!empty($doctorData)){
+	$doctorSpecialization = $doctorData->specialization;
+}
 
 ?>
 @section('head')
@@ -22,6 +24,7 @@ else{
 
 	<!-- {!!Html::style('assets/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css')!!} -->
 	{!!Html::style('assets/plugins/bootstrap-modal/css/bootstrap-modal.css')!!}
+	{!!Html::style('assets/plugins/ajax-loader/src/jquery.mloading.css')!!}
 	
 
 	
@@ -35,7 +38,7 @@ else{
 
 </style>
 @stop
-@extends('layouts.master', ['patientName' =>$patientName])
+@extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
 
 
 @section('main')
@@ -103,7 +106,7 @@ else{
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<div class="col-sm-12 dd_relative">
+								<div class="col-sm-12 dd_relative dd_alert_main">
 
 									<!-- <input type="button" class="btn btn-orange pull-right present-drug-btn dd_Present_mg" value="Load Previous Drugs"> -->
 									@if(!empty($prescMedicine))
@@ -129,12 +132,12 @@ else{
 
 						  			?>
 						              @if(!empty($error))
-						                <div class="alert alert-danger display-none" style="display: block;">
+						                <div class="alert alert-danger dd_alert  display-none" style="display: block;">
 						                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
 						                          {{$error}}
 						                </div>
 						              @elseif(!empty($success))
-						                <div class="alert alert-success display-none" style="display: block;">
+						                <div class="alert alert-success dd_alert   display-none" style="display: block;">
 						                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
 						                          {{$success}}
 						                </div>
@@ -175,9 +178,9 @@ else{
 										<th width="16%">Drug Name</th>
 										<th width="30%">Strength</th>
 										<th width="18%" >Duration</th>
-										<th width="9%">Morning</th>
-										<th width="9%">Noon </th>
-										<th width="9%">Night</th>
+										<th width="1%">Morning</th>
+										<th width="1%">Noon </th>
+										<th width="29%">Night</th>
 										<th width="9%"></th>
 									</tr>
 								</thead>
@@ -201,13 +204,13 @@ else{
 											</div>
 										</td>
 										<td>
-											{!! Form::text('morning1', Input::old('morning1'), $attributes = array('class'=>'col-sm-8 morning'));  !!}
+											{!! Form::text('morning1', Input::old('morning1'), $attributes = array('class'=>'col-sm-10 morning'));  !!}
 										</td>
 										<td>
-											{!! Form::text('noon1', Input::old('noon1'), $attributes = array('class'=>'col-sm-8 noon'));  !!}
+											{!! Form::text('noon1', Input::old('noon1'), $attributes = array('class'=>'col-sm-10 noon'));  !!}
 										</td>
 										<td>
-											{!! Form::text('night1', Input::old('night1'), $attributes = array('class'=>'col-sm-8 night'));  !!}
+											{!! Form::text('night1', Input::old('night1'), $attributes = array('class'=>'col-sm-10 night'));  !!}
 										</td>
 										<td></td>
 									
@@ -216,13 +219,13 @@ else{
 
 									<tr class="drugs_row dd_relative">
 										<!-- <td class="dd_presc_medicin"></td> -->
-										<td >
+										<td colspan="1" >
 											<input type="button" class="btn btn-default dd_instruction  btn-xs add-instruction-btn1" id="add-instruction-btn1" value="+ Add Instruction" />
 											<input type="button" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs remove-instruction-btn1" id="remove-instruction-btn1" value="- Remove Instruction" style="display:none" />
 											<!-- <div class="instruction-div1"></div> -->
 											
 										</td>
-										<td width="20%" style="vertical-align: top;" >	
+										<td colspan="2" style="vertical-align: top;" >	
 											<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date	</div>	
 											<div class="dd_dosage1_text_2 pull-left">
 											  						    	
@@ -233,7 +236,7 @@ else{
 											</div>
 										</td>
 										
-										<td class="dd_relative" style="vertical-align: top;">
+										<td colspan="2" class="dd_relative" style="vertical-align: top;">
 										    <div class="dd_beforfood">
 												<label class="dd_beforfood_pd" >
 													<input type="radio"  class="before_food" name="food_status1" value="Before Food">Before Food
@@ -263,13 +266,13 @@ else{
 						<div class="presc-inner contaner dd_border_table">
 							<table class="table table-bordered  presc-table" id="sample-table-1">
 								<thead>
-									<tr class="drugs_row_hd" >
+								<tr class="drugs_row_hd" >
 										<th width="16%">Drug Name</th>
 										<th width="30%">Strength</th>
 										<th width="18%" >Duration</th>
-										<th width="9%">Morning</th>
-										<th width="9%">Noon </th>
-										<th width="9%">Night</th>
+										<th width="1%">Morning</th>
+										<th width="1%">Noon </th>
+										<th width="29%">Night</th>
 										<th width="9%"></th>
 									</tr>
 								</thead>
@@ -293,13 +296,13 @@ else{
 											</div>
 										</td>
 										<td>
-											{!! Form::text('morning1', Input::old('morning1'), $attributes = array('class'=>'col-sm-8 morning'));  !!}
+											{!! Form::text('morning1', Input::old('morning1'), $attributes = array('class'=>'col-sm-10 morning'));  !!}
 										</td>
 										<td>
-											{!! Form::text('noon1', Input::old('noon1'), $attributes = array('class'=>'col-sm-8 noon'));  !!}
+											{!! Form::text('noon1', Input::old('noon1'), $attributes = array('class'=>'col-sm-10 noon'));  !!}
 										</td>
 										<td>
-											{!! Form::text('night1', Input::old('night1'), $attributes = array('class'=>'col-sm-8 night'));  !!}
+											{!! Form::text('night1', Input::old('night1'), $attributes = array('class'=>'col-sm-10 night'));  !!}
 										</td>
 										<td></td>
 										<!-- <td><span class="label label-sm label-warning">Expiring</span></td> -->
@@ -307,12 +310,12 @@ else{
 
 									<tr class="drugs_row dd_relative">
 										<!-- <td class="dd_presc_medicin"></td> -->
-										<td width="200px" >
+										<td colspan="1">
 											<input type="button" class="btn btn-default  dd_instruction  btn-xs add-instruction-btn1" id="add-instruction-btn1" value="+ Add Instruction" />
 											<input type="button" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs remove-instruction-btn1" id="remove-instruction-btn1" value="- Remove Instruction" style="display:none" />
 											
 										</td>
-										<td width="20%" style="vertical-align: top;" >	
+										<td colspan="2" style="vertical-align: top;" >	
 											<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date	</div>	
 											<div class="dd_dosage1_text_2 pull-left">
 											  						    	
@@ -323,7 +326,7 @@ else{
 											</div>
 										</td>
 										<!-- <td></td> -->	
-										<td class="dd_relative" style="vertical-align: top;">
+										<td colspan="2" class="dd_relative" style="vertical-align: top;">
 										    <div class="dd_beforfood">
 												<label class="dd_beforfood_pd" >
 													<input type="radio"  class="before_food" name="food_status1" value="Before Food">Before Food
@@ -429,6 +432,9 @@ else{
 		{!!Html::script('assets/plugins/bootstrap-modal/js/bootstrap-modalmanager.js')!!}
 		{!!Html::script('assets/js/ui-modals.js')!!}
 		{!!Html::script('assets/plugins/bootbox/bootbox.min.js')!!}
+
+		{!!Html::script('assets/plugins/tooltip-validation/jquery-validate.bootstrap-tooltip.js')!!}
+		{!!Html::script('assets/plugins/ajax-loader/src/jquery.mloading.js')!!}
 		
 
 	<script>
@@ -438,20 +444,18 @@ else{
 			patientElements.init(dosageUnit);
 			UIModals.init();
 
-			$(window).load(function() {
-				$(".loader").fadeOut("slow");
-				//alert('working');
-			});
+			
 
 			$('.pdfopen').click(function(){
-
+				
 				$('.print-data').val('printTrue');
 				
-				
-                var drugNameArray = [];
+                var drugNameArray 	= [];
                 var defaultDivCount = $('.default-div-count').val();
-                var prevDrugStatus = $('.prev-drug-load-status').val();
-                var prevDrugCount  = $('.prev-drug-count').val();
+                var prevDrugStatus 	= $('.prev-drug-load-status').val();
+                var prevDrugCount  	= $('.prev-drug-count').val();
+
+                /*Checking whether any drug name is existing or not*/
                 for(var i=1;i<=defaultDivCount;i++){
                 	var drugNames = $('#drug_name'+i).val();
                 	if(drugNames.length>0){
@@ -482,6 +486,7 @@ else{
 					});
 				}
 				else{
+					//Loaded previous drugs
 
 					if(prevDrugStatus>0){
 						if(defaultDivCount>prevDrugCount){
@@ -508,16 +513,16 @@ else{
 								      className: "btn-success",
 								      callback: function() {
 								        	var dataString = $( ".addPatientPrescMedicine" ).serializeArray();
-			                				console.log(dataString);
+			                				$("body").mLoading({ });
 			                				  	$.ajax({
 								                    type: "POST",
 								                    url: "addPatientPrescMedicine",
 								                    data: dataString,
 								                    success: function(data) {
 								                    	if(data!=""){
-								                    		console.log(data);
+								                    		$("body").mLoading('hide');
 								                    		$('#myModal3').modal('show');
-								                    		console.log(data);
+								                    		
 								                    		$('iframe').remove();
 								                    		$('.pdf_print').append('<iframe src="storage/pdf/'+data+'.pdf" style="width:780px;height:500px;"></iframe>');
 										                }
@@ -544,9 +549,7 @@ else{
 								});
 
 			                }
-
-
-							
+		
 						}
 						else{
 							for(var i=1;i<=defaultDivCount;i++){
@@ -570,6 +573,7 @@ else{
 						                    data: dataString,
 						                    success: function(data) {
 						                    	if(data!=' '){
+						                    		$("body").mLoading('hide');
 						                    		$('#myModal3').modal('show');
 						                    		console.log(data);
 						                    		$('iframe').remove();
@@ -593,7 +597,7 @@ else{
 								      className: "btn-success",
 								      callback: function() {
 								        	var dataString = $( ".addPatientPrescMedicine" ).serializeArray();
-			                				
+			                					$("body").mLoading({ });
 			                				  	$.ajax({
 								                    type: "POST",
 								                    url: "addPatientPrescMedicine",
@@ -601,7 +605,7 @@ else{
 								                    success: function(data) {
 								                    	if(data!=""){
 								                    		//location.href = "patientprescmedicine";
-								                    		
+								                    		$("body").mLoading('hide');
 								                    		$('#myModal3').modal('show');
 									                    		
 									                    		$('iframe').remove();
@@ -650,23 +654,11 @@ else{
 			});
 
 
-			//$('[data-toggle="tooltip"]').tooltip(); 
 			
-			//$('[data-toggle="popover"]').tooltip(); 
 			 $('.instruction1').hide();
 
 			
-			/*$('.treatment-btn').click(function(){
-				$('.treament').show();
-				$('.treatment-btn-remove').show();
-				$('.treatment-btn').hide();
-			});
-
-			$('.treatment-btn-remove').click(function(){
-				$('.treament').hide();
-				$('.treatment-btn-remove').hide();
-				$('.treatment-btn').show();
-			});*/
+			
 
 			$('body').on('focus',".date-picker", function(){
 					$(this).datepicker();
@@ -676,9 +668,7 @@ else{
 			var durationUnit 	= <?php echo json_encode($drugDurationUnit); ?>;
          	var prescMedicine   = <?php echo json_encode($prescMedicine); ?>;
 
-         	/*$('#loadDrugDiv').hide();
-			$('#loadDrugDiv').find('input, textarea, button, select').attr('disabled','disabled');*/
-
+         
 
 			
 			//Add more drugs
@@ -781,9 +771,9 @@ else{
 		                                                '<th width="16%">Drug Name</th>'+
 		                                                '<th width="30%">Strength</th>'+
 		                                                '<th width="18%">Duration</th>'+
-		                                                '<th width="9%">Morning</th>'+
-		                                                '<th width="9%">Noon </th>'+
-		                                                '<th width="9%">Night</th>'+
+		                                                '<th width="1%">Morning</th>'+
+		                                                '<th width="1%">Noon </th>'+
+		                                                '<th width="29%">Night</th>'+
 		                                                '<th width="9%"></th>'+
 
 		                                            '</tr>'+
@@ -829,7 +819,7 @@ else{
 		                                                '</tr>'+
 														'<tr class="drugs_row dd_relative">'+
 															
-															'<td >'+
+															'<td colspan="1" >'+
 															/*'<input type="button" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs add-instruction-btn" id="add-instruction-btn" value="+ Add instruction" />'+
 																*/
 
@@ -838,7 +828,7 @@ else{
 																
 																
 															'</td>'+
-															'<td width="20%" style="vertical-align: top;" >'+
+															'<td colspan="2" style="vertical-align: top;" >'+
 															'<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date</div>'+		
 																'<div class="dd_dosage1_text_2 pull-left">'+
 																  						  	
@@ -849,7 +839,7 @@ else{
 																'</div>'+
 															'</td>'+
 															/*'<td></td>'+*/	
-															'<td class="dd_relative" style="vertical-align: top;">'+
+															'<td colspan="2" class="dd_relative" style="vertical-align: top;">'+
 															    '<div class="dd_beforfood ">'+
 																	'<label class="dd_beforfood_pd" >'+
 																		'<input type="radio" class="before_food food_status" id="food_status_before'+counter+'" name="food_status'+counter+'" value="Before Food">Before Food'+
@@ -940,9 +930,9 @@ else{
 		                                                '<th width="16%">Drug Name</th>'+
 		                                                '<th width="30%">Strength</th>'+
 		                                                '<th width="18%">Duration</th>'+
-		                                                '<th width="9%">Morning</th>'+
-		                                                '<th width="9%">Noon </th>'+
-		                                                '<th width="9%">Night</th>'+
+		                                                '<th width="1%">Morning</th>'+
+		                                                '<th width="1%">Noon </th>'+
+		                                                '<th width="29%">Night</th>'+
 		                                                 '<th width="9%"></th>'+
 		                                            '</tr>'+
 		                                        '</thead>'+
@@ -987,7 +977,7 @@ else{
 		                                                '</tr>'+
 														'<tr class="drugs_row dd_relative">'+
 															
-															'<td >'+
+															'<td colspan="1" >'+
 															/*'<input type="button" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs add-instruction-btn" id="add-instruction-btn" value="+ Add instruction" />'+
 																*/
 
@@ -996,7 +986,7 @@ else{
 																
 																
 															'</td>'+
-															'<td width="20%" style="vertical-align: top;">'+
+															'<td colspan="2" style="vertical-align: top;">'+
 															'<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date</div>'+		
 																'<div class="dd_dosage1_text_2 pull-left">'+
 																  						  	
@@ -1007,7 +997,7 @@ else{
 																'</div>'+
 															'</td>'+
 															/*'<td></td>'+	*/
-															'<td class="dd_relative" style="vertical-align: top;">'+
+															'<td colspan="2"  class="dd_relative" style="vertical-align: top;">'+
 															    '<div class="dd_beforfood">'+
 																	'<label class="dd_beforfood_pd" >'+
 																		'<input type="radio" class="before_food food_status" id="food_status_before'+i+'" name="food_status'+i+'" value="Before Food">Before Food'+

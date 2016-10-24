@@ -292,13 +292,11 @@ var patientElements = function (dosageUnit) {
             }
         }, 'This field is required.');*/
         $.validator.addMethod("maritialStatusNotEquals", function(value, element, arg){
-            console.log("Arg"+arg);
-            console.log("Val"+value);
+            
           return arg != value;
         }, "Please specify maritial status");
         $.validator.addMethod("valueNotEquals", function(value, element, arg){
-            console.log("Arg"+arg);
-            console.log("Val"+value);
+            
           return arg != value;
         }, "Please specify gender");
         $.validator.addMethod("countryNotEquals", function(value, element, arg){
@@ -604,7 +602,7 @@ var patientElements = function (dosageUnit) {
 
     }  
 
-     var runPatientDiagnosisValidator2 = function () {
+    var runPatientDiagnosisValidator2 = function () {
         var form2           = $('#addPatientDiagnosis');
         var errorHandler2   = $('.errorHandler', form2);
         var successHandler2 = $('.successHandler', form2);
@@ -993,6 +991,15 @@ var patientElements = function (dosageUnit) {
         var errorHandler2   = $('.errorHandler', form2);
         var successHandler2 = $('.successHandler', form2);
 
+        $.validator.addClassRules("morning", {
+             number : true 
+        });
+        $.validator.addClassRules("noon", {
+             number : true 
+        });
+        $.validator.addClassRules("night", {
+             number : true 
+        });
         
         form2.validate({
             errorElement: "span", // contain the error msg in a small tag
@@ -1008,6 +1015,8 @@ var patientElements = function (dosageUnit) {
                 }
             },
 
+          
+
 
             ignore: "",
             rules: {
@@ -1017,18 +1026,19 @@ var patientElements = function (dosageUnit) {
                 'drugs[]' :   {  required:true },
                 'dosage[]'  :   {  required:true },
                 'start_date[]'   :   {  required:true },
-                'frequency1[]' :    {  required:true },
+                
                 /*'followup_date' : {  required:true },*/
                   
                 
                 
             },
+            
             messages: {
                
                 'drugs[]'  : "Please specify drug name", 
                 'dosage[]' :   "Please specify dosage",
                 'start_date[]'    :    "Please specify medicine start date",
-                 'frequency1[]' : "Please choose atleast one frequency",
+                 /*'morning' : "Please enter a valid number",*/
                  /*'followup_date' : "Please specify followup date",*/
                
             },
@@ -1081,7 +1091,7 @@ var patientElements = function (dosageUnit) {
                     $('#state').empty();
                     for(var s=0;s<data.length;s++){
 
-                         console.log(data[s].state_name);
+                         //console.log(data[s].state_name);
 
 
                         $('#state').append('<option>'+data[s].state_name+'</option>');
@@ -1340,6 +1350,181 @@ var patientElements = function (dosageUnit) {
 
     };
 
+
+    var runPatientChangePasswordValidation = function () {
+        var form2           = $('#patientChangePassword');
+        var errorHandler2   = $('.errorHandler', form2);
+        var successHandler2 = $('.successHandler', form2);
+
+        form2.validate({
+            errorElement: "span", // contain the error msg in a small tag
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) { // render error placement for each input type
+                if (element.attr("type") == "radio" || element.attr("type") == "checkbox") { // for chosen elements, need to insert the error after the chosen container
+                    error.insertAfter($(element).closest('.form-group').children('div').children().last());
+                } else if (element.hasClass("ckeditor")) {
+                    error.appendTo($(element).closest('.form-group'));
+                } else {
+                    error.insertAfter(element);
+                    // for other inputs, just perform default behavior
+                }
+            },
+            ignore: "",
+            rules: {
+                old_password: {
+                    
+                    required: true
+                },
+                new_password: {
+                    
+                    required: true
+                },
+                cnew_password : {
+                    required : true,
+                    equalTo : "#new_password",
+                    
+                }
+               
+                
+            },
+            messages: {
+                old_password  : "Please specify old password",
+                new_password   : "Please specify new password",
+                dob         : "Please specify date of birth",
+                age         : "Please specify age",
+               /* house       : "Please specify house name/no",
+                street      : "Please specify street",*/
+                country     : "Please specify country",
+                state       : "Please specify state",
+                city        : "Please specify city",
+                phone       : "Please specify phone number",
+                email   : {
+                    email: "Your email address must be in the format of name@domain.com"
+                },
+                
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                successHandler2.hide();
+                errorHandler2.show();
+            },
+            highlight: function (element) {
+                $(element).closest('.help-block').removeClass('valid');
+                // display OK icon
+                $(element).closest('.form-group').removeClass('has-success').addClass('has-error').find('.symbol').removeClass('ok').addClass('required');
+                // add the Bootstrap error class to the control group
+            },
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element).closest('.form-group').removeClass('has-error');
+                // set error class to the control group
+            },
+            success: function (label, element) {
+                label.addClass('help-block valid');
+                // mark the current input as valid and display OK icon
+                $(element).closest('.form-group').removeClass('has-error').addClass('has-success').find('.symbol').removeClass('required').addClass('ok');
+                $(element).tooltipster('hide');
+            },
+            submitHandler: function (form) {
+                successHandler2.show();
+                errorHandler2.hide();
+                // submit form
+                ("#form2" ).submit(function( event ) {
+                      //alert( "Handler for .submit() called." );
+                      //event.preventDefault();
+                });
+            }
+        });
+
+
+        
+    };
+    var runPrintSetup = function () {
+        var form2           = $('#addPrintSettings');
+        var errorHandler2   = $('.errorHandler', form2);
+        var successHandler2 = $('.successHandler', form2);
+
+        form2.validate({
+            errorElement: "span", // contain the error msg in a small tag
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) { // render error placement for each input type
+                if (element.attr("type") == "radio" || element.attr("type") == "checkbox") { // for chosen elements, need to insert the error after the chosen container
+                    error.insertAfter($(element).closest('.form-group').children('div').children().last());
+                } else if (element.hasClass("ckeditor")) {
+                    error.appendTo($(element).closest('.form-group'));
+                } else {
+                    error.insertAfter(element);
+                    // for other inputs, just perform default behavior
+                }
+            },
+            ignore: "",
+            rules: {
+                top: {
+                    
+                    number: true
+                },
+                bottom: {
+                    
+                    number: true
+                },
+                left: {
+                    
+                    number: true
+                },
+                right: {
+                    
+                    number: true
+                },
+                
+            },
+            messages: {
+                old_password  : "Please specify old password",
+                new_password   : "Please specify new password",
+                dob         : "Please specify date of birth",
+                age         : "Please specify age",
+               /* house       : "Please specify house name/no",
+                street      : "Please specify street",*/
+                country     : "Please specify country",
+                state       : "Please specify state",
+                city        : "Please specify city",
+                phone       : "Please specify phone number",
+                email   : {
+                    email: "Your email address must be in the format of name@domain.com"
+                },
+                
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                successHandler2.hide();
+                errorHandler2.show();
+            },
+            highlight: function (element) {
+                $(element).closest('.help-block').removeClass('valid');
+                // display OK icon
+                $(element).closest('.form-group').removeClass('has-success').addClass('has-error').find('.symbol').removeClass('ok').addClass('required');
+                // add the Bootstrap error class to the control group
+            },
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element).closest('.form-group').removeClass('has-error');
+                // set error class to the control group
+            },
+            success: function (label, element) {
+                label.addClass('help-block valid');
+                // mark the current input as valid and display OK icon
+                $(element).closest('.form-group').removeClass('has-error').addClass('has-success').find('.symbol').removeClass('required').addClass('ok');
+                $(element).tooltipster('hide');
+            },
+            submitHandler: function (form) {
+                successHandler2.show();
+                errorHandler2.hide();
+                // submit form
+                ("#form2" ).submit(function( event ) {
+                      //alert( "Handler for .submit() called." );
+                      //event.preventDefault();
+                });
+            }
+        });
+
+
+        
+    };  
    
     return {
         //main function to initiate template pages
@@ -1386,6 +1571,8 @@ var patientElements = function (dosageUnit) {
             
             runPrescription();
             //runDataTable();
+            runPatientChangePasswordValidation();
+            runPrintSetup();
            
         }
     };

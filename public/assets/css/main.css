@@ -50,9 +50,9 @@ h3, .h3 {
 }
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
 	background-color: #FFFFFF;
-	border: 1px solid #c2c2c2;
-	border-radius: 4px!important;
-	color: #858585;
+	border: 1px solid #787878;
+	border-radius: 0px !important;
+	color: #5d5d5d;
 	font-family: inherit;
 	font-size: 14px;
 	line-height: 1.2;
@@ -133,12 +133,13 @@ span.input-help > input {
 }
 select.form-control {
 	background-color: #FFFFFF;
-	border: 1px solid #c2c2c2;
-	border-radius:4px;
-	color: #858585;
+	border: 1px solid #787878;
+	border-radius:0px;
+	color: #4b4b4b;
 }
 select.form-control option {
 	padding: 3px 4px;
+	border-radius: 0;
 }
 .form-control.search-select {
 	padding: 0 !important;
@@ -393,11 +394,20 @@ a.bricky:hover {
 .navbar-tools > ul {
 	list-style: none;
 }
-.navbar-tools > ul > li > a {
+.navbar-tools > ul.dd_profil > li > a {
 	border: 1px solid rgba(255, 255, 255, 0.5);
-    color: #ffffff;
+    color: #fff;
     font-size: 16px;
     line-height: 26px;
+    background: #266382!important;
+}
+.dd_profil > li > a {
+	border: 0px !important;
+}
+ul.dd_profil > li > a:hover, .nav > li > a:focus {
+    background: #266382;
+    text-decoration: none;
+   
 }
 .navbar-tools li.view-all a {
 	padding: 8px 8px 6px !important;
@@ -406,21 +416,21 @@ a.bricky:hover {
 	float: left;
 }
 .navbar-tools .dropdown-menu {
-	background: rgba(255,255,255,0.8);
+	background: rgba(255,255,255,1);
 	border: 1px solid #C7CBD5;
 	border-radius: 0 0 0 0;
 	box-shadow: none;
 	list-style: none outside none;
 	margin: 0;
 	max-width: 300px;
-	min-width: 163px;
+	min-width: 202px;
 	padding: 0;
 	position: absolute;
 	text-shadow: none;
 	top: 100%;
 	z-index: 1000;
 	 font-family: 'Open Sans', sans-serif;
-	 text-align: center;
+	 text-align: left;
 	 font-size: 14px;
 }
 .navbar-tools .drop-down-wrapper {
@@ -438,8 +448,8 @@ ul.notifications li, ul.todo li, ul.posts li {
 	min-width: 260px;
 }
 .navbar-tools > ul > li.dropdown {
-	margin-left: 2px;
-	margin-right: 2px;
+	/*margin-left: 2px;
+	margin-right: 2px;*/
 }
 
 .navbar-tools .dropdown-menu > li > a:hover, .navbar-tools .dropdown-menu > li > a:focus, .navbar-tools .dropdown-submenu:hover > a, .navbar-tools .dropdown-submenu:focus > a, .navbar-tools .drop-down-wrapper li a:hover, .navbar-tools .drop-down-wrapper li a:focus {
@@ -451,8 +461,10 @@ ul.notifications li, ul.todo li, ul.posts li {
     font-size: 14px;
     text-align: center;
     text-decoration: none;
-    width: 162px;
+    width: 200px;
     font-family: 'Open Sans', sans-serif;
+    text-align: left;
+
 }
 .drop-down-wrapper ul > li:last-child a {
 	border-bottom: none;
@@ -478,7 +490,7 @@ ul.notifications li, ul.todo li, ul.posts li {
 	/*border-radius: 0 0 6px 6px;*/
 }
 li.dropdown.current-user .dropdown-toggle {
-	padding: 10px;
+	/*padding: 17px;*/
 }
 li.dropdown.current-user .dropdown-menu li a {
 	border-bottom: none !important;
@@ -1454,7 +1466,24 @@ ul.main-navigation-menu > li > ul.sub-menu > li > ul.sub-menu > li > ul.sub-menu
 }
 .horizontal-menu ul.nav li {
 	position: relative;
+	list-style: none;
 }
+#patient-menu-div ul li{
+	padding: 10px;
+	list-style: none;
+}
+#diagnosis-top-menu-li ul li{
+	padding: 10px;
+}
+#diagnosis-top-menu-li ul li a{
+	padding: 0;
+}
+#patient-menu-div ul > li a {
+	border: 0;
+	}
+	#patient-menu-div ul > li a {
+	padding: 0;
+	}
 .horizontal-menu .dropdown-submenu > a:after {
 	content: "\f105";
 	display: inline-block;
@@ -1643,14 +1672,16 @@ span.star:before {
 	position: relative;
 	top: 1px;
 }
+/*praji change*/
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-	background-color: #FFFFFF;
+	background-color: #418bc8;
 	border-color: #DDDDDD #DDDDDD transparent;
 	border-top: 2px solid #DDDDDD;
-	color: #333333;
+	color: #fff;
 	line-height: 16px;
 	margin-top: -1px;
 	z-index: 12;
+	line-height: 35px;
 }
 
 .nav-tabs > li:first-child > a {
@@ -1666,13 +1697,13 @@ span.star:before {
 	border-color: #DDDDDD;
 	border-radius: 0 0 0 0 !important;
 	color: #999999;
-	line-height: 16px;
+	line-height: 35px;
 	margin-right: -1px;
 	position: relative;
 }
 .tab-content {
 	border: 1px solid #DDDDDD;
-	padding: 16px 12px;
+	padding: 15px 23px;
 	position: relative;
 }
 .tabs-below > .nav-tabs {
@@ -1690,6 +1721,9 @@ span.star:before {
 	border-color: transparent #DDDDDD #DDDDDD;
 	border-top-width: 1px;
 	margin-top: 0;
+}
+.dd_pd_30{
+	padding: 10px 20px 20px 20px;
 }
 .tabs-left > .nav-tabs > li > a, .tabs-right > .nav-tabs > li > a {
 	min-width: 60px;
@@ -1837,28 +1871,31 @@ span.star:before {
 	border-top: 0 none;
 }
 /*bricky*/
+/*praji Change border*/
 .tab-bricky > li.active > a, .tab-bricky > li.active > a:hover, .tab-bricky > li.active > a:focus {
 	border-color: #C83A2A #DDDDDD transparent;
-	border-top: 2px solid #C83A2A;
+	border-top: 2px solid #005a7d;
 }
+
+/*praji Change color*/
 .tab-bricky > li > a:hover {
-	color: #C83A2A;
+	color: #418bca;
 }
 .tab-bricky > li.dropdown.open.active > a:hover, .tab-bricky > li.dropdown.open.active > a:focus {
-	background-color: #C83A2A;
-	border-color: #C83A2A;
+	background-color: #418bca;
+	border-color: #418bca;
 	color: #FFFFFF;
 }
 .tab-bricky > li.open .dropdown-toggle {
-	background-color: #C83A2A;
-	border-color: #C83A2A;
+	background-color: #418bca;
+	border-color: #418bca;
 	color: #FFFFFF;
 }
 .tab-bricky .dropdown-menu > li > a:hover, .tab-bricky .dropdown-menu > li > a:focus {
-	background-color: #C83A2A;
+	background-color: none;
 }
 .tab-bricky .active > a, .tab-bricky .active > a:hover, .tab-bricky .active > a:focus {
-	background-color: #C83A2A;
+	background-color: #418bca;
 }
 .tabs-left > .tab-bricky > li.active > a, .tabs-left > .tab-bricky > li.active > a:focus, .tabs-left > .tab-bricky > li.active > a:hover {
 	border-color: #DDDDDD transparent #DDDDDD #C83A2A;
@@ -1935,10 +1972,11 @@ span.star:before {
 }
 .tab-green .active > a, .tab-green .active > a:hover, .tab-green .active > a:focus {
 	background-color: #3D9400;
-}
+} 
+/*praji Change border*/
 .tabs-left > .tab-green > li.active > a, .tabs-left > .tab-green > li.active > a:focus, .tabs-left > .tab-green > li.active > a:hover {
 	border-color: #DDDDDD transparent #DDDDDD #3D9400;
-	border-left: 2px solid #3D9400;
+	border-left: 2px solid #005a7d;
 }
 .tabs-below > .tab-green > li.active > a, .tabs-below > .tab-green > li.active > a:hover, .tabs-below > .tab-green > li.active > a:focus {
 	border-bottom: 2px solid #3D9400;
@@ -4943,98 +4981,70 @@ td.column-right {
 }
 
 /*prajeesh add classes*/
-.box_2 {
-	background-color: rgba(255,255,255,0.92);
-    border-radius: 5px;
-    box-shadow: 13px 0px 40px 8px rgba(0, 0, 0, 0.80);
-    height: auto;
-    margin-top: -128px;
-    padding: 20px;
-    position: absolute;
-    right: 15%;
-    top: 50%;
-    width: 290px;
-    z-index: 999;
+.box_2 {   
+     width: 48%;
+     float: left;
+     margin-top: 30px; 
+}
+.box_2_main {
+	width: 100%;
+    padding-right: 80px;;
+    border-right: 1px solid #c5c5c5;  
+}
+.box_forget {
+   
+     width: 60%;
+     float: left;
+     margin-top: 30px; 
+}
+.box_2_main_forget {
+	
+	 width: 100%;
+    padding-right: 80px;;
+    border-right: 1px solid #c5c5c5; 
 }
 .box_register{
 
-        	background-color: rgba(255,255,255,0.92);        	
-		    position: absolute;
-		    right: 15%;
-		    top: 50%;
-		    margin-top:-128px;
-		    width: 290px;
-		    z-index: 999;
-		    padding: 20px;
-		   /* border:5px solid #57a8c7 */;
-		   /* opacity:0.97 ;*/
-		    border-radius: 5px;
-		   box-shadow: 13px 0px 40px 8px rgba(0, 0, 0, 0.80);
-
+     width: 100%;
+     margin-top: 30px;
 }
-.box_register_2{
-
-        	background-color: rgba(255,255,255,0.97);        	
-		    position: absolute;
-		    right: 15%;
-		    top: 50%;
-		    margin-top:-160px;
-		    width: 970px;
-		    z-index: 999;
-		    padding: 25px;
-		   /* border:5px solid #57a8c7 */;
-		   /* opacity:0.97 ;*/
-		    border-radius: 5px;
-		   box-shadow: 13px 0px 40px 8px rgba(0, 0, 0, 0.80);
-
+.box_2_register{
+    width: 80%;
+     margin-top: 30px;
+     margin: 0 auto;
 }
-         .box-register-inner{
-		   /* height: 300px;*/
-	/*	    overflow-x: hidden;
-		    overflow-y: scroll;*/
-		   
-		}
-
-         .box-register-inner_2{
-		    height: 350px;
-		    overflow-x: hidden;
-		    overflow-y: scroll;*/
-		    padding: 10px 10px 0 10px;
-		}
-       
-  	.box_admin {
-		background: rgba(255,255,255,0.96);
-		height: auto;
-		position: absolute;
-		width: 720px;
-		z-index: 999;
-		padding: 20px 20px 0 20px;
-		/*border:5px solid #57a8c7 ;*/
-/*	opacity:0.97 ;*/
-		left: 50%;
-		top: 50%;
-		margin-left: -360px;
-		margin-top: -105px;
-        }
-
-
-
+ .box-register-inner_2{
+	height: 350px;
+	overflow-x: hidden;
+	overflow-y: scroll;*/
+	padding: 10px 10px 0 10px;
+}       
+.box_admin {
+	
+	margin-top: 70px;
+ }
+ .box_admin .dd_pd_LR_20{
+ 	margin: 30px 0 10px 0;
+ }
 .inner_wrapper{
 	max-width: 970px;
 	margin: 0 auto;
 }
 .login_div{
 	float: right;
-	margin: 35px 10px 35px 0;
+	margin: 35px 10px 26px 0;
 	font-size: 14px;
-
 	font-weight: 600;
 	text-transform: uppercase;
-
+}
+.login_div2{
+	float: right;
+	margin: 0 10px 15px 0;
+	font-size: 14px;
+	text-transform: uppercase;
 }
 .logo_div{
 	float: left;
-	/*margin-left: 10px;*/
 	height: 72px;
 }
 .dd_pd_0{
@@ -5044,18 +5054,21 @@ td.column-right {
 	margin: 0px;
 }
 .login_HD{
-	font-size: 16px;
+	 color: #333333;
+    font-size: 18px;
+    font-weight: 600;
 }
 .form-group .col-sm-12 .input-icon .dd_input{
 	border:1px solid rgba(135,137,137,0.6);
-	background: none;
-	height: 36px;
+	background: #fff;
+	height: 50px;
 /*	text-align: center;
 	padding: 0;*/
 	margin: 0;
 	color: rgba(0,0,0,0.7);
 	width: 100%;
 	margin: 0 auto;
+	font-size: 16px;
 }
 .dd_mg_B_10{
 	margin-bottom: 10px;
@@ -5070,7 +5083,6 @@ td.column-right {
     background: #428bca;
     color: #fff;
     border-radius: 4px;
-
 }
 .dd_btn_2{
 	display: block;
@@ -5085,9 +5097,8 @@ td.column-right {
     margin-right: 10px;
 }
 .dd_btn_3{
-
     background-color: #f6f6f6;
-    border: 1px solid #cbcbcb;
+    border: 1px solid #787878;
     height: 34px;
     text-align: center;
     width: 72px;
@@ -5097,7 +5108,7 @@ td.column-right {
 }
 .dd_btn_4{
     background-color: #f6f6f6;
-    border: 1px solid #cbcbcb;
+    border: 1px solid #787878;
     height: 34px;
     text-align: center;
     width: 72px;
@@ -5121,13 +5132,12 @@ td.column-right {
 	font-size: 16px;
 }
 .footer_pd{
-	padding: 20px 0;
+	padding: 10px 0;
 }
 .dd_relative{
 	position: relative;
 }
 .footer_ul{
-	padding: 20px 0;
 	margin: 0;
 }
 .footer_ul .footer_li{
@@ -5146,7 +5156,6 @@ td.column-right {
 	border-right: 0 none;
 	color: red;	
 }
-
 .dd_right{
 	float: right;
 }
@@ -5193,7 +5202,6 @@ td.column-right {
 }
 .dd_form_id{
 	width: 100%;
-	height: 34px;
 }
 .dd_form_id_2{
 	border: 1px solid #cbcbcb;
@@ -5213,14 +5221,15 @@ td.column-right {
 .dd_border_right{
 	border-right: 1px solid #cbcbcb;
 }
+
 .dd_margin_0{
 	margin: 0;
 }
 .dd_patient_pd_L{
-	padding-right: 32px;
+	padding-right: 60px;
 }
 .dd_patient_pd_R{
-	padding-left: 39px;
+	padding-left: 60px;
 }
 .nav_height{
 	height: 91%;
@@ -5229,6 +5238,10 @@ td.column-right {
 	float: right;
 	padding: 12px 30px;
 }
+.dd_main_logo ul{
+	left: -107px;
+}
+
 .dd_span_pd_50{
 	padding: 0 20px;
 }
@@ -5306,9 +5319,7 @@ td.column-right {
     color: #e8e8e8;
 }
 .dd_my_from{
-	width: 200px;
-	float: left;
-	margin-left: 14px;
+	width: 100%;
 }
 .dd_my_from_2{
 	width: 180px;
@@ -5316,8 +5327,8 @@ td.column-right {
 	margin-left: 14px;
 }
 .dd_my_btn{
-	width: 90px;
-	float: left;
+	width: 100%;
+	/*float: left;*/
 }
 .dynamic-lmp,.dynamic-preg{
     padding: 20px 20px;
@@ -5459,13 +5470,12 @@ h5, .h5 {
 .dd_remove{
 	width: 100%;
 }
-.footer_li:la
-st-child {
+.footer_li:last-child {
 	border-right: 0;
 }
 .topmenu-active {
     color: #fff;
-    margin-right: 4px;
+    /*margin-right: 4px;*/
 }
 .navbar-brand {
     float: left;
@@ -5477,8 +5487,8 @@ st-child {
 	border-right: 1px solid #ccc;
 }
 .dd_login_header{
-	min-height: 88px;
-	/*background-color: #fff;*/
+	min-height: 82px;
+	background-color: #266383;
 }
 a:hover, a:focus{
 	text-decoration: none;
@@ -5558,6 +5568,14 @@ a:hover, a:focus{
     margin-top: 10px;
     background-size: cover;
 }
+.dd_logo_img_2 {
+    background-image: url("../images/doctors_diary_logo_2.png");
+    background-repeat: no-repeat;
+    height: 62px;
+    width: 144px;
+    margin-top: 10px;
+    background-size: cover;
+}
 .dd_profil{
 	margin-right: 20px;
 	margin-top: 20px;
@@ -5600,7 +5618,7 @@ a:hover, a:focus{
     height: 17px;
     left: 7px;
     position: absolute;
-    top: 9px;
+    top:15px;
     width: 17px;
 }
 .dd_input_icon_name{
@@ -5609,7 +5627,7 @@ a:hover, a:focus{
     height: 17px;
     left: 7px;
     position: absolute;
-    top: 9px;
+    top: 15px;
     width: 17px;
     opacity: 0.8;
 }
@@ -5619,7 +5637,7 @@ a:hover, a:focus{
     height: 17px;
     left: 7px;
     position: absolute;
-    top: 9px;
+    top: 15px;
     width:17px;
     opacity: 0.8;
 }
@@ -5767,6 +5785,7 @@ svg {
 .login_div a {
     color: #fff;
     text-decoration: none;
+    font-weight: 500;
 }
 .login_div a:hover, .login_div a:focus {
     color: #428bca;
@@ -5856,7 +5875,7 @@ svg {
 }
 
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus{
-	background-color: rgba(255,255,255,0.2);
+	background-color: none;
 }
 .dd_logout_li{
 	background-color: background: rgba(255,255,255,0.8);
@@ -5970,14 +5989,6 @@ display: inline;
 	float: left;
 
 }
-/*.dd_nav_div ul li  a:hover{
-	background:rgba(0, 0, 0, 0) url("../images/Patient_icon.png") no-repeat scroll 7px 13px / 21px 21px;
-    font-family: open sans;
-    font-size: 18px;
-    font-weight: 300;
-    padding: 12px 30px;
-
-}*/
 .dd_nav_div ul li  a:hover, .dd_nav_div ul li  a:focus, {
 	background:#005a7e url("../images/Patient_icon.png") no-repeat scroll 7px 13px / 21px 21px;
     font-family: open sans;
@@ -5985,22 +5996,6 @@ display: inline;
     font-weight: 300;
     padding: 12px 30px;
 }
-/* .dd_nav_div ul li  a:active{
- 	background-color: red;
- }*/
-/*.active1{
-	background:rgba(0, 0, 0, 0) url("../images/Patient_icon.png") no-repeat scroll 7px 13px / 21px 21px;
-    font-family: open sans;
-    font-size: 18px;
-    font-weight: 300;
-    padding: 12px 30px;
-    background-color: red;
-
-
-*/}
-
-
-/*Close*/
 
 ul.dd_menu_bd > li:first-child {
     border-left: 1px solid #cccccc;
@@ -6008,18 +6003,27 @@ ul.dd_menu_bd > li:first-child {
 .nav > li > a:hover, .nav > li > a:focus {
     background-color: rgba(255,255,255,0.2);
     text-decoration: none;
+    color: #333333;
 }
+
 .dd_terms{
 	color: #3c3c3c;
 	padding: 6px 5px;
 	text-align: center;
 	
 }
+.dd_terms p,a{
+	font-size:14px; 
+
+	
+}
 .dd_width_surgicalhistory_100{
 	width: 100%;
 }
 .dd_register_Bg_cl .form-control{
-    background: #ededed;
+    background: #fff;
+    height: 50px;
+    border: 1px solid #c5c5c5;
 }
 .box-register-inner_2 .form-control{
     background: #f8f8f8;
@@ -6074,6 +6078,7 @@ ul.dd_menu_bd > li:first-child {
 	color: #666;
 	font-size: 14px;
 	margin-right: 20px;
+	margin-bottom: 10px;
 
 }
 .dd_personal_mg_top{
@@ -6112,7 +6117,7 @@ ul.dd_menu_bd > li:first-child {
     margin-right: 2px;
 }
 .dd_genaral_mg{
-	   border: 1px solid #d5d5d5;
+	   border: 1px solid #c5c5c5;
     margin: 5px 0;
     padding: 10px 20px 5px;
 }
@@ -6130,7 +6135,7 @@ ul.dd_menu_bd > li:first-child {
     top: -3px;
 }
 .dd_font_bold label{
-	color: #4c4c4c;
+	color: #2a2a2a;
     font-weight: 700;
     font-size: 15px;
 }
@@ -6153,7 +6158,7 @@ ul.dd_menu_bd > li:first-child {
     margin-bottom: 7px;
 }
 .has-success .form-control {
-    border-color: #3c763d;
+    border-color: #7d7d7d;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
 }
 .dd_phone_from_bg{
@@ -6171,6 +6176,7 @@ ul.dd_menu_bd > li:first-child {
 }
 .navbar-inverse .nav > li:first-child a {
 	border-left: 1px solid #ccc;
+	list-style: none;
 }
    
 		.input-container { 
@@ -6237,13 +6243,11 @@ ul.dd_menu_bd > li:first-child {
 
 }
 .alert-danger {
-    background-color: 0;
-    border-color: 0;
+  
     color: #a94442;
 }
 .dd_alert{
 	 color: #ff4136;
-	 text-align: center;
 
 
 }
@@ -6289,8 +6293,22 @@ padding-bottom: 0;
 }
 .dd_email_reg_label{
 	margin-bottom: 10px;
-	font-size: 14px;
+	font-size: 16px;
 	color: #3c3c3c;
+}
+.dd_email_reg_label_2{
+	margin-bottom: 10px;
+	font-size: 16px;
+	color: #3c3c3c;
+	width: 50%;
+	float: left;
+}
+.dd_email_reg_label_3{
+	margin-bottom: 10px;
+	font-size: 16px;
+	color: #3c3c3c;
+	width: 33.33%;
+	float: left;
 }
 .dd_mg_B_20{
 	margin-bottom: 20px;
@@ -6344,8 +6362,8 @@ padding-bottom: 0;
     font: inherit;
     margin: 0;
     padding: 5px 2px;
-    border-radius: 4px;
-    border:1px solid #cbcbcb;
+    border-radius: 0;
+    border:1px solid #787878;
     width: 66px;
 }
 .drugs_row input.dd_input_mini {
@@ -6414,8 +6432,8 @@ padding-bottom: 0;
 #diagnosis-menu:hover .pricon.icon-pr-prescriptions {
     background-position: -18px -93px;
 }
-#diagnosis-top-menu-li.active #diagnosis-menu .pricon.icon-pr-prescriptions {
-    background-position: 20px -93px;
+#presc-top-menu-li.active #prescription-menu  .pricon.icon-pr-prescriptions {
+    background-position: -38px -93px;
 }
  .pricon.icon-pr-Diagnosis {
     background-position: 0px -345px;
@@ -6453,6 +6471,7 @@ padding-bottom: 0;
  /*   position: absolute;
     right: -56px;*/
     text-align: right;
+    border: 1px solid #787878;
 }
 .dd_addmore_0_2{
 	margin-right: 10px;
@@ -6485,13 +6504,13 @@ padding-bottom: 0;
 	margin-left: -20px;
 }
 .dd_instruction input{
-	border: 1px solid #0194c8;
-    color: #0194c8;
+	border: 1px solid #858585;
+  /**/  color: #0194c8;
     height: auto;
     padding: 2px 8px;
 }
 .instruction-div1{
-	margin-top: -10px;
+	/*margin-top: -10px;*/
 /*	margin-bottom: 25px;*/
 }
 .dd_praji_mg_right{
@@ -6499,10 +6518,10 @@ padding-bottom: 0;
 }
 .dd_praji_followup input {
 /*padding: 7px 15px 7px 15px;*/
-background-color: #428bca;
+background-color: #fff;
 color: #fff;
 font-weight: bold;
-border:0;
+border:1 none;
 width: 110px;
 
 
@@ -6553,14 +6572,18 @@ height: auto;
 	width: 46%;
 }
 .instruction-div1 .form-control{
-	width: 93%;
+	width: 97%;
 
 }
 .dd_border_table{
-	padding: 20px;
-	border:1px solid #c4c4c4;
+	/*padding: 20px;
+	border:1px solid #dddddd;
 	border-radius: 4px;
-	margin-bottom: 30px;
+	margin-bottom: 30px;*/
+	 border-bottom: 1px solid #bfbfbf;
+
+    margin-bottom: 30px;
+    padding: 20px 20px 30px;
 }
 .presc-inner table{
 	margin-bottom: 0;
@@ -6585,4 +6608,476 @@ height: auto;
 .dd_padding_follw{
 	padding: 0;
 	margin-right: 10px;
+}
+.dd .alert-danger{
+	margin-top: 30px;
+}
+.dd_alert_2{
+	color: #252525;
+}
+.dd1 input{
+	padding: 5px;
+	text-align: center;
+}
+
+.dd_doctor_login{
+	padding-top: 40px;
+}
+.patientlogin_main{
+	float: left;
+}
+.doctorlogin_main{
+	float: left;
+	position: relative;
+	margin-right: 50px;
+}
+.doctor_login {
+	margin-top:20px;
+	left: -45px;
+    margin-top: 20px;
+    position: absolute;
+    top: -39px;
+}
+.patientlogin_main{
+	float: left;
+	position: relative;
+}
+.patient_login {
+	margin-top:20px;
+	left: -45px;
+    margin-top: 20px;
+    position: absolute;
+    top: -39px;
+}
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #fff;
+}
+.dd_logo_responsive{
+	display: none;
+}
+.dd_drlogin_responsive{
+     display: none;
+}
+.doctorlogin_main2{
+	margin-right: 0;
+	float: left;
+	
+}
+.patientlogin_main2{
+	float: left;
+}
+.patientlogin_main2 a{
+	color: #222222;
+}
+.doctorlogin_main2 a{
+	color: #222222;
+}
+.dd_login_mg_30 {
+	margin-top: 20px;
+}
+.dd_dummy a,span{
+	font-size: 14px;
+}
+.dd_patient_ad{
+	float: left;
+}
+.dropdown-toggle .circle-img {
+    border-radius: 100%;
+    float: left;
+    margin-right: 10px;
+}
+.main-navigation-menu li a{
+	height: 50px
+}
+.dd_resp_menu{
+   display: none;
+}
+.dd_sidetab li a{
+	font-size: 14px;
+	color: #505050;
+}
+.dd_year .form-control{
+	background-color:#418bca;
+	color: #fff;
+	border: none;
+}
+.dd_year .form-control option{
+	background-color:#fff;
+	color: #000;
+}
+.dd_plus_font{
+	font-size: 25px;
+	font-weight: bold;
+	color:#418bca ;
+	line-height: 0;
+	margin-right: 10px
+}
+.dd_prev_color {
+	 color: #418bca;
+    font-size: 15px;
+    margin-top: 0px;
+}
+.dd_clear{
+	clear: both;
+}
+.dd_prev_prescription_hd {
+	background-color:#505050;
+	padding: 10px;
+	color: #fff;
+	font-size: 16px;
+}
+.dd_prev_prescription_main{
+	font-size: 15px;
+}
+.dd_border{
+	border: 1px solid #bdbdbd;
+}
+.alert.alert-danger.dd_alert.display-none {
+    margin-top: 20px;
+}
+.morning{
+	width: 69px;
+}
+.noon{
+	width: 69px;
+}
+.night{
+	width: 69px;
+}
+.dd_prev_pre_bt_line{
+	border-bottom: 1px solid #cdcdcd;
+}
+.dd_pd_L_30{
+
+	margin:20px 0;
+	color: #418bca;
+}
+.dd_pd_L_30_2{
+	
+	margin:20px 0;
+	color: #444444;
+	font-size: 13px;
+}
+.btn.btn-primary.pdfopen {
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+.dd_alert_msg{
+	margin-top: 30px;
+}
+.tab-pane .form-group label{
+	font-size: 14px;4
+	color: #444444;
+}
+.dd_diag_hd{
+	font-weight: bold;
+
+}
+.dd_mg_top_30{
+	margin-top: 20px;
+}
+.dd_sidetab li a {
+    display: block;
+    padding: 10px 13px;
+    position: relative;
+    font-size: 14px;
+}
+.thumbnail {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: block;
+    line-height: 1.42857;
+    margin-bottom: 20px;
+    padding: 4px;
+    transition: all 0.2s ease-in-out 0s;
+    width: 160px;
+}
+.dd_thumbnail{
+
+	background-image: url(assets/images/patients/{{$patientData->profile_image_large}});
+	height: 150px;width: 150px;background-size: cover;
+
+}
+table.dataTable.no-footer {
+    border-bottom: 1px solid #dddddd !important;
+}
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: 1px solid #dddddd !important;
+}
+.div.TokenizeMeasure, div.Tokenize ul li span, div.Tokenize ul.TokensContainer li.TokenSearch input {
+    color: #4e4e4e;
+    font-size: 14px !important;  
+}
+.col-sm-12.dd_no_previous {  
+    color: #545454;
+    font-size: 20px;
+    margin: 0 auto;
+    padding: 5px;
+    text-align: center;
+}
+.dd_margin_b_10{
+	margin-bottom: 10px;
+}
+.dd_alert_main .alert-danger{
+	margin-top: 30px;
+
+}
+.dd_alert_main .alert-success{
+	margin-top: 30px;
+	color: #3c763d;
+
+}
+.tab-content .col-sm-12{
+	font-size: 25px;
+	text-align: left;
+	color: #333333;
+
+}
+.tab-content .col-sm-12 .form-horizontal{
+	font-size: 25px;
+	text-align: center;
+	color: #e7383d;
+
+}
+.dd_footer{
+	background: #266383;
+}
+.inner_wrapper_2{
+	padding: 0 50px;
+}
+.dd_doctor_login_main_hd{
+	color: #00234b;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+    padding-top: 164px;
+    padding-left: 10px;
+}
+.dd_login input{
+	border-radius: 0;
+	height: 70px;
+	background: #fff;
+	border: 1px solid #c5c5c5;
+
+}
+.dd_btn_new{
+	height: 50px;
+	 background: #c8393d none repeat scroll 0 0;
+    border-radius: 0px;
+    color: #fff;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    border: 0;
+    font-weight: 600;
+
+}
+.dd_16px{
+	font-size: 15px;
+	font-weight: 600;
+	margin-top: 15px;
+}
+.box_right{
+	float: left;
+	width: 48%;
+	margin-top: 30px;
+	padding-left: 80px;
+}
+.dd_btn_2 a{
+	color: #fff;
+	font-size: 14px;
+	font-weight: 600;
+}
+.doctor_login_main{
+	padding: 10px;
+}
+.dd_doctor_register_main_hd{
+	color: #00234b;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+    padding-top: 164px;
+    margin-bottom: 30px;
+   
+
+}
+.form-group .col-sm-12 .input-icon .dd_input_2 {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid rgba(135, 137, 137, 0.6);
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 16px;
+    height: 50px;
+    margin: 0 auto;
+    width: 50%;
+    float: left;
+    -webkit-appearance:none;
+ 
+
+}
+.form-group .col-sm-12 .input-icon .dd_input_3 {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid rgba(135, 137, 137, 0.6);
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 16px;
+    height: 50px;
+    width: 50%;
+    float: right;
+    border-left: 0;
+    -webkit-appearance:none;
+    
+   
+
+}
+
+.form-group .col-sm-12 .input-icon .dd_input_4{
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid rgba(135, 137, 137, 0.6);
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 16px;
+    height: 50px;
+    width: 36%;
+    float: left;
+    -webkit-appearance:none;
+    
+ 
+
+}
+.form-group .col-sm-12 .input-icon .dd_input_5{
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid rgba(135, 137, 137, 0.6);
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 16px;
+    height: 50px;
+    width: 31%;
+    float: left;
+    border-left: 0;
+    -webkit-appearance:none;
+   
+
+}
+.form-group .col-sm-12 .input-icon .dd_input_6{
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid rgba(135, 137, 137, 0.6);
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 16px;
+    height: 50px;
+    width: 33%;
+    float: left;
+    border-left: 0;
+    -webkit-appearance:none;
+ 
+
+}
+.dd_mg_B_15{
+	margin-bottom: 
+    margin: 0 auto;
+
+}
+.box-register-inner .dd_create{
+	text-align: left;
+
+}
+.dd_btn_new a{
+	color: #fff;
+
+}
+.dd_mg_B_15 select.form-control {
+    background-color: #ffffff;
+    border: 1px solid #cbcbcb;
+    border-radius: 0;
+    -webkit-border-radius:0;
+
+    color: #4b4b4b;
+}
+.dd_doctor_login_main_hd span{
+	font-size: 24px;
+}
+
+
+.inner_wrapper_3 {
+    margin: 0 auto;
+    width: 850px;
+}
+.dd_mg_B_15 .dd_agree p{
+	font-size: 16px;
+	margin: 30px 0;
+
+}
+ .dd_agree p ,a{
+	font-size: 15px;
+}
+.dd_fa_icons{
+	float: right !important;
+}
+.dd_mg_B_15 .input-icon > [class*="fa-"], .input-icon > [class*="clip-"] {
+    bottom: 0;
+    color: #005a7e;
+    display: inline-block;
+    font-size: 14px;
+    right: 5px;
+    line-height: 35px;
+    padding: 0 3px;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+}
+.footer_ul li a{
+	margin: 10px 0;
+}
+.dd_profile_pic_div{
+	width: 100%;
+	margin: 0 auto;
+	display: table;
+	text-align: center;
+}
+.dd_profile_pic{
+	background:  url("../images/patient_profile_L.jpg") center center;
+    display: table;
+    height: 133px;
+    margin: 0 auto;
+    width: 123px;
+    border: 6px solid #cbcbcb;
+    background-size: cover;
+
+
+}
+.dd_btn_home_2 .dd_btn_3 {
+    background-color: #c7393d;
+    border: 0;
+    border-radius: 0;
+    color: #fff;
+    height: 45px;
+    margin-left: 0;
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+    font-weight: 600;
+}
+.dd_my_from div .dd_form_id {
+	height: 45px;
+	background: #fff;
+	border:1px solid #cbcbcb;
+}
+.dd_btn_home_2 .dd_btn_3:hover {
+    background-color: #266382;
+}
+.dd_alert_full{
+	width: 100%;
+	font-size: 16px;
+	margin-top: 20px;
+
+}
+.dd_no_prev_img{
+	background: hsla(0, 0%, 0%, 0) url("../images/no-prev-treatment.jpg") repeat scroll center center / cover ;
+    display: table;
+    height: 430px;
+    margin: 0 auto;
+    text-align: center;
+    width: 300px;
+    margin-top: 20px;
+    border-radius: 30px;
 }

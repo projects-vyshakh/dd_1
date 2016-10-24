@@ -81,14 +81,24 @@ class PatientController extends Controller {
 			    						->leftJoin('countries','patients.country','=','countries.id')
 			    						->where('id_patient','=',"$patientId")->first();
 
-			    $treatmentHistory = DB::table('prescription As p')
+			   /* $treatmentHistory = DB::table('prescription As p')
 			    								->leftJoin('doctors As d','p.id_doctor','=','d.id_doctor')
 			    								->select(DB::Raw('p.*,d.*,p.created_date As pCreatedDate'))
-												->where('p.created_date', DB::raw("(select max(`created_date`) from 						prescription where id_patient='$patientId')"))
+												->where('p.created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
 												->where('p.id_patient','=',$patientId)
-												->get();
-												//var_dump(json_encode($treatmentHistory));
-												//die();
+
+												->get();*/
+
+				
+												
+				$treatmentHistory = DB::table('doctors As d')
+												->leftJoin('prescription As p','d.id_doctor','=','p.id_doctor')
+												->leftJoin('specialization As s','s.id_specialization','=','d.specialization')
+												->orderBy('p.follow_up_date','DESC')
+												->where('p.id_patient','=',$patientId)
+												
+												->get();								
+												
 			//Log::info("Patientdata",array($patientData));
 
 				$doctorDetails = DB::table('prescription As p')
@@ -96,12 +106,14 @@ class PatientController extends Controller {
 												->leftJoin('specialization As s','s.id_specialization','=','d.specialization')
 												->distinct()
 												->select(DB::Raw('p.*,d.*,s.*,p.created_date As pCreatedDate'))
-												->where('p.created_date', DB::raw("(select max(`created_date`) from 						prescription where id_patient='$patientId')"))
+												/*->where('p.created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))*/
 												->where('p.id_patient','=',$patientId)
 
 												->groupBy('d.id_doctor')
 
 												->get();
+												
+											//die();
 											
 
 			return view('patientprofilemanagement',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctors'=>$doctors,'treatmentHistory'=>$treatmentHistory,'doctorDetails'=>$doctorDetails));
@@ -118,12 +130,19 @@ class PatientController extends Controller {
 		$patientId = Session::get('id_patient');
 			
 		$doctorId = Session::get('doctorId');
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+
+		if(!empty($patientId)){
+			$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+			$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 
 		
-		return view('patientprofileprevtreatment',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
-	}	
+			return view('patientprofileprevtreatment',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'patientData'=>$patientPersonalData));
+		}
+		else{
+			return Redirect::to('patientlogin');
+		}	
+	}
+		
 
 	public function patientProfilePreviousTreatmentExtended(){
 		$year = Input::get('year');
@@ -370,40 +389,47 @@ class PatientController extends Controller {
 
 
 	public function showPatientProfileEdit(){
-		$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->lists('business_value', 'business_value');
-		
-		$maritialStatus = DB::table('business_key_details')->where('business_key', '=', 'MARITIAL_STATUS')->lists('business_value', 'business_value');
-		
-		$country =  DB::table('countries')->select('country_name','sortname','id')->orderBy('country_name', 'asc')->lists('country_name', 'id'); 	
-		
-		$state =  DB::table('states')->select('id','state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); 	
-		
-		$city =  DB::table('cities')->select('city_name','state_id')->orderBy('city_name', 'asc')->lists('city_name', 'city_name'); 	
-		    	
+		$patientId = Session::get('id_patient');
 
-		    if(!in_array('', $gender)){
-		     	 array_unshift($gender, '');
-		    }	
-		    if(!in_array('', $maritialStatus)){
-		     	 array_unshift($maritialStatus, '');
-		    } 
-		    if(!in_array('', $country)){
-		     	 array_unshift($country, '');
-		    } 
-		    if(!in_array('', $state)){
-		     	 array_unshift($state, '');
-		    } 
-		    if(!in_array('', $city)){
-		     	 array_unshift($city, '');
-		    }	
+		if(!empty($patientId)){
+			$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->lists('business_value', 'business_value');
+			
+			$maritialStatus = DB::table('business_key_details')->where('business_key', '=', 'MARITIAL_STATUS')->lists('business_value', 'business_value');
+			
+			$country =  DB::table('countries')->select('country_name','sortname','id')->orderBy('country_name', 'asc')->lists('country_name', 'id'); 	
+			
+			$state =  DB::table('states')->select('id','state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); 	
+			
+			$city =  DB::table('cities')->select('city_name','state_id')->orderBy('city_name', 'asc')->lists('city_name', 'city_name'); 	
+			    	
+
+			    if(!in_array('', $gender)){
+			     	 array_unshift($gender, '');
+			    }	
+			    if(!in_array('', $maritialStatus)){
+			     	 array_unshift($maritialStatus, '');
+			    } 
+			    if(!in_array('', $country)){
+			     	 array_unshift($country, '');
+			    } 
+			    if(!in_array('', $state)){
+			     	 array_unshift($state, '');
+			    } 
+			    if(!in_array('', $city)){
+			     	 array_unshift($city, '');
+			    }	
 
 
-		    $patientId = Session::get('id_patient');  		
-		    $patientData = DB::table('patients')
-		    						 ->where('id_patient','=',$patientId)->first();
-		//Log::info("Patientdata",array($patientData));
+			    $patientId = Session::get('id_patient');  		
+			    $patientData = DB::table('patients')
+			    						 ->where('id_patient','=',$patientId)->first();
+			//Log::info("Patientdata",array($patientData));
 
-		return view('patientprofileedit',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData));
+			return view('patientprofileedit',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData));
+		}
+		else{
+			return Redirect::to('patientlogin');
+		}	
 	}
 
 	public function patientProfileEdit(){
@@ -436,6 +462,7 @@ class PatientController extends Controller {
 		(!empty($input['pincode']))?$pincode 				= $input['pincode']:$pincode = "";
 		(!empty($input['phone']))?$phone 					= $input['phone']:$phone = "";
 		(!empty($input['email']))?$email 					= $input['email']:$email = "";	
+		(!empty($input['photo']))?$photo 					= $input['photo']:$photo = "";	
         
 		
 		if($patientExistCheck>0){
@@ -445,9 +472,44 @@ class PatientController extends Controller {
            	   !empty($house) || !empty($street) || !empty($country) || !empty($state) || !empty($pincode) ||
            	   !empty($phone) || !empty($email) ){
 
-           	   	$editedDate = date('Y-m-d');
+           	   	$size    = 300;
+				$dir =   'assets/images/patients/';
+				$newdir= 'assets/images/patients/';
 
-		 		$inputValue = array('first_name'		=>	$firstName,
+				$img = $this->photoUpload($patientId);
+
+				if($img=="error"){
+					return Redirect::to('patientprofileedit')->with(array('error'=>"Invalid file uploads"));
+				}
+				else{
+
+
+				
+
+           	   	$editedDate = date('Y-m-d');
+           	   	if(!empty($img)){
+           	   		$inputValue = array('first_name'		=>	$firstName,
+									'middle_name'		=> 	$middleName,
+									'last_name'			=> 	$lastName,
+									'id_aadhar' 		=>	$aadharNo,
+									'gender' 			=> 	$gender,
+									'dob' 				=> 	$dob,
+									'age' 				=> 	$age,
+									'maritial_status' 	=> 	$marriedStatus,
+									'house_name' 		=> 	$house,
+									'street' 			=> 	$street,
+									'city' 				=> 	$city,
+									'state'   			=> 	$state,
+									'pincode'	 		=> 	$pincode,
+									'country' 			=> 	$country,
+									'phone' 			=> 	$phone,
+									'email' 			=> 	$email,
+									'id_doctor' 		=> 	$doctorId,
+									'profile_image_large' => $img,
+									'edited_date' 		=> $editedDate);
+           	   	}
+           	   	else{
+           	   		$inputValue = array('first_name'		=>	$firstName,
 									'middle_name'		=> 	$middleName,
 									'last_name'			=> 	$lastName,
 									'id_aadhar' 		=>	$aadharNo,
@@ -465,6 +527,8 @@ class PatientController extends Controller {
 									'email' 			=> 	$email,
 									'id_doctor' 		=> 	$doctorId,
 									'edited_date' 		=> $editedDate);
+           	   	}
+		 		
 
 
 
@@ -476,6 +540,7 @@ class PatientController extends Controller {
 		 			else{
 		 				return Redirect::to('patientprofileedit')->with(array('error'=>"No changes to update"));
 		 			}
+		 		}	
 			}
 			else{
 				
@@ -486,7 +551,209 @@ class PatientController extends Controller {
 		
 
 	}
-	
+
+	public function photoUpload($patientId){
+		$path = 'assets/images/patients/';
+		$file_ext   = array('jpg','png','gif','bmp','JPG');
+		$post_ext_split = explode('.',$_FILES['photo']['name']);
+		$post_ext   = end($post_ext_split);
+		$photo_name = $_FILES['photo']['name'];
+		$photo_type = $_FILES['photo']['type'];
+		$photo_size = $_FILES['photo']['size'];
+		$photo_tmp  = $_FILES['photo']['tmp_name'];
+		//echo $photo_tmp;
+		$photo_error= $_FILES['photo']['error'];
+		//move_uploaded_file($photo_tmp,"uploads/".$photo_name);
+		if((($photo_type == 'image/jpeg') || ($photo_type == 'image/gif')   ||
+		   ($photo_type == 'image/png') || ($photo_type == 'image/pjpeg')) &&
+		   ($photo_size < 2000000) && in_array($post_ext,$file_ext)){
+			if($photo_error > 0 ){
+				//echo 'Error '.$photo_error;
+				exit;
+			}else{
+				//echo $photo_name.' Uploaded !';
+			}
+			if(file_exists($path.$photo_name)){
+				//echo 'There is '.$photo_name;
+				return "photoexist";
+			}else{
+				//new photo name and encryption
+				$new_name = explode('.',$photo_name);
+				$photo_name = $patientId.'.'.$new_name[1];
+
+				/*var_dump($new_name);
+				echo $photo_tmp;
+				echo $path.$photo_name;
+				die();*/
+				//move to directory
+				if(move_uploaded_file($photo_tmp,$path.$photo_name)){
+
+					return $photo_name;
+				}
+			}
+		}
+		else{
+			//echo 'The uploaded file has invalid rules';
+			if(!empty($photo_name)){
+				return  "error";
+			}
+			
+		}
+	}
+
+	/*public function resizejpeg($dir, $newdir, $img, $max_w, $max_h, $th_w, $th_h){
+	    // set destination directory
+	    if (!$newdir) $newdir = $dir;
+
+	    // get original images width and height
+	    list($or_w, $or_h, $or_t) = getimagesize($dir.$img);
+
+	    // make sure image is a jpeg
+	    if ($or_t == 2) {
+
+	        // obtain the image's ratio
+	        $ratio = ($or_h / $or_w);
+
+	        // original image
+	        $or_image = imagecreatefromjpeg($dir.$img);
+
+	        // resize image?
+	        if ($or_w > $max_w || $or_h > $max_h) {
+
+	            // resize by height, then width (height dominant)
+	            if ($max_h < $max_w) {
+	                $rs_h = $max_h;
+	                $rs_w = $rs_h / $ratio;
+	            }
+	            // resize by width, then height (width dominant)
+	            else {
+	                $rs_w = $max_w;
+	                $rs_h = $ratio * $rs_w;
+	            }
+
+	            // copy old image to new image
+	            $rs_image = imagecreatetruecolor($rs_w, $rs_h);
+	            imagecopyresampled($rs_image, $or_image, 0, 0, 0, 0, $rs_w, $rs_h, $or_w, $or_h);
+	        }
+	        // image requires no resizing
+	        else {
+	            $rs_w = $or_w;
+	            $rs_h = $or_h;
+
+	            $rs_image = $or_image;
+	        }
+
+	        // generate resized image
+	        imagejpeg($rs_image, $newdir.$img, 100);
+
+	        $th_image = imagecreatetruecolor($th_w, $th_h);
+
+	        // cut out a rectangle from the resized image and store in thumbnail
+	        $new_w = (($rs_w / 2) - ($th_w / 2));
+	        $new_h = (($rs_h / 2) - ($th_h / 2));
+
+	        imagecopyresized($th_image, $rs_image, 0, 0, $new_w, $new_h, $rs_w, $rs_h, $rs_w, $rs_h);
+
+	        // generate thumbnail
+	        imagejpeg($th_image, $newdir.'thumb_'.$img, 100);
+
+	        return true;
+	    } 
+
+	    // Image type was not jpeg!
+	    else {
+	        return false;
+	    }
+    }
+
+    public function dumpPhoto($thumb,$dir){
+  		$thumb = 'thumb_'.$thumb;
+		$img   = $dir.$thumb;
+		$dump  = "<img src=$img />";
+		return $dump;
+	}
+*/
+	public function showPatientChangePassword(){
+		$patientId = Session::get('id_patient');
+
+		if(!empty($patientId)){
+			
+			$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+			return view('patientchangepassword',array('patientData'=>$patientPersonalData));
+		}
+		else{
+			return Redirect::to('patientlogin');
+		}
+	}
+	public function handlePatientChangePassword(){
+		$input = Request::all();
+		
+		$oldPassword = $input['old_password'];
+		$newPassword = $input['new_password'];
+		$cNewPassword = $input['cnew_password'];
+
+		$patientId = Session::get('id_patient');
+
+		if(!empty($patientId)){
+			$pateintData = DB::table('patients')->where('id_patient','=',$patientId)->first();
+			$passwordEncrypted = $pateintData->password;
+			$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
+			
+			
+			$data = base64_decode($passwordEncrypted);
+			$iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
+
+			$decrypted = rtrim(
+			    mcrypt_decrypt(
+			        MCRYPT_RIJNDAEL_128,
+			        hash('sha256', $key, true),
+			        substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)),
+			        MCRYPT_MODE_CBC,
+			        $iv
+			    ),
+			    "\0"
+			);
+
+			if($oldPassword==$decrypted){
+				$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
+				$iv = mcrypt_create_iv(
+				    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
+				    MCRYPT_DEV_URANDOM
+				);
+
+				$encrypted = base64_encode(
+				    $iv .
+				    mcrypt_encrypt(
+				        MCRYPT_RIJNDAEL_128,
+				        hash('sha256', $key, true),
+				       	$newPassword,
+				        MCRYPT_MODE_CBC,
+				        $iv
+				    )
+				);
+
+				$passwordUpdated = DB::table('patients')->where('id_patient','=',$patientId)->update(array('password'=>$encrypted));
+
+				if($passwordUpdated){
+					return Redirect::to('patientchangepassword')->with(array('success'=>"Password changed successfully"));
+					
+				}
+				else{
+					return Redirect::to('patientchangepassword')->with(array('error'=>"Failed to change password"));
+					
+				}
+			
+			}
+			else{
+				return Redirect::to('patientchangepassword')->with(array('error'=>"Wrong old password"));
+			}
+		}
+		else{
+			return Redirect::to('patientlogin');
+		}  
+
+		
+	}
 
 
 }

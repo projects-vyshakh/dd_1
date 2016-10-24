@@ -95,7 +95,7 @@ class DoctorController extends Controller {
 		Session::forget('patientName');
 
 		$doctorId = Session::get('doctorId');
-		
+
 
 		$patientId = Session::get('patientId');
 
@@ -129,8 +129,11 @@ class DoctorController extends Controller {
 			$maritialStatus = DB::table('business_key_details')->where('business_key', '=', 'MARITIAL_STATUS')->lists('business_value', 'business_value');
 			
 			$country =  DB::table('countries')->select('country_name','sortname','id')->orderBy('country_name', 'asc')->lists('country_name', 'id'); 	
+
+			$doctorsList = DB::table('doctors')->select('first_name','last_name','id_doctor')->orderBy('first_name', 'asc')->lists('first_name', 'id_doctor'); 	
 			
-			/*$state =  DB::table('states')->select('id','state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); */	
+			
+			/*$state =  DB::table('states')->select('id','state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); 	*/
 			
 			$city =  DB::table('cities')->select('city_name','state_id')->orderBy('city_name', 'asc')->lists('city_name', 'city_name'); 	
 			    	
@@ -149,8 +152,8 @@ class DoctorController extends Controller {
 			    } */
 			    if(!in_array('', $city)){
 			     	 array_unshift($city, '');
-			    }	
-
+			    }
+			   
 
 			    $patientId = Session::get('patientId');  		
 			    $patientData = DB::table('patients')
@@ -161,7 +164,7 @@ class DoctorController extends Controller {
 			    						 
 			//Log::info("Patientdata",array($patientData));
 
-			return view('patientpersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country,  'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData));
+			return view('patientpersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country,  'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'doctorsList'=>$doctorsList));
 		}
 		
 		
@@ -298,6 +301,7 @@ class DoctorController extends Controller {
 		
 		$obsData 	= DB::table('sp_gynaecology_obs')
 		                                    ->where('id_patient','=',$patientId)
+		                                    ->where('id_doctor','=',$doctorId)
 		                                    ->where('created_date','LIKE','%'.$year.'%')
 										    ->groupBy('created_date')
 										    ->orderBy('created_date','desc')
@@ -310,6 +314,7 @@ class DoctorController extends Controller {
 
 		$pregData   = DB::table('sp_gynaecology_obs_preg')
 		                                    ->where('id_patient','=',$patientId)
+		                                    ->where('id_doctor','=',$doctorId)
 		                                    ->where('created_date','LIKE','%'.$year.'%')
 		                                    ->orderBy('created_date','desc')
 		                                    ->get();
@@ -318,6 +323,7 @@ class DoctorController extends Controller {
 
 		$vitalsData = DB::table('vitals')
 		                            ->where('id_patient','=',$patientId)
+		                           ->where('id_doctor','=',$doctorId)
 		                            ->where('created_date','LIKE','%'.$year.'%')
 		                            ->orderBy('created_date','desc')
 		                            ->get();
@@ -326,6 +332,7 @@ class DoctorController extends Controller {
 
 		$diagnosisData =  DB::table('diagnosis')
 		                            ->where('id_patient','=',$patientId)
+		                            ->where('id_doctor','=',$doctorId)
 		                            ->where('created_date','LIKE','%'.$year.'%')
 		                            ->orderBy('created_date','desc')
 		                            ->get();
@@ -333,6 +340,7 @@ class DoctorController extends Controller {
 
 		$prescMedicineData =  DB::table('prescription')
 		                            ->where('id_patient','=',$patientId)
+		                            ->where('id_doctor','=',$doctorId)
 		                            ->where('created_date','LIKE','%'.$year.'%')
 		                            ->orderBy('created_date','desc')
 		                            ->get();
@@ -476,6 +484,7 @@ class DoctorController extends Controller {
 											->whereIn('created_date', $originalCreatedDate)
 											->where('created_date','LIKE','%'.$year.'%')
 											->where('id_patient','=',$patientId)
+											->where('id_doctor','=',$doctorId)
 											->get();	
 											
 											
@@ -483,6 +492,7 @@ class DoctorController extends Controller {
 											->whereIn('created_date', $originalCreatedDate)
 											->where('created_date','LIKE','%'.$year.'%')
 											->where('id_patient','=',$patientId)
+											->where('id_doctor','=',$doctorId)
 											->get();	
 
 			/*var_dump(json_encode($lmpData));
@@ -492,21 +502,25 @@ class DoctorController extends Controller {
 											->whereIn('created_date', $originalCreatedDate)
 											->where('created_date','LIKE','%'.$year.'%')
 											->where('id_patient','=',$patientId)
+											->where('id_doctor','=',$doctorId)
 											->get();
 		$vitalsData = DB::table('vitals')
 									->whereIn('created_date', $originalCreatedDate)
 									->where('created_date','LIKE','%'.$year.'%')
 									->where('id_patient','=',$patientId)
+									->where('id_doctor','=',$doctorId)
 									->get();
 		$diagnosisData = DB::table('diagnosis')
 									->whereIn('created_date', $originalCreatedDate)
 									->where('created_date','LIKE','%'.$year.'%')
 									->where('id_patient','=',$patientId)
+									->where('id_doctor','=',$doctorId)
 									->get();
 		$prescMedicineData = DB::table('prescription')
 									->whereIn('created_date', $originalCreatedDate)
 									->where('created_date','LIKE','%'.$year.'%')
 									->where('id_patient','=',$patientId)
+									->where('id_doctor','=',$doctorId)
 									->get();
 
 									
@@ -779,7 +793,10 @@ class DoctorController extends Controller {
 	//Diagnosis
 	public function showPatientExamination(){
 		$patientId = Session::get('patientId');
+		$doctorId  = Session::get('doctorId');
+		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+
         
 		$bloodGroup = DB::table('business_key_details')->where('business_key', '=', 'BLOOD_GROUP')->lists('business_value', 'business_value');
 		$diagNormalAbnormal = DB::table('business_key_details')->where('business_key', '=', 'GENERAL_NORMAL_ABNORMAL')->lists('business_value', 'business_value');
@@ -806,10 +823,13 @@ class DoctorController extends Controller {
 		if(!in_array('', $diagYesNo)){
 		     	 array_unshift($diagYesNo, '');
 		}
-		return view('patientexamination',array('bloodGroup'=>$bloodGroup,'diagNormalAbnormal'=>$diagNormalAbnormal,'diagYesNo'=>$diagYesNo,'diagAvafRvrf'=>$diagAvafRvrf,'vitalExist'=>$vitalExist,'diagExam'=>$diagExam,'patientPersonalData'=>$patientPersonalData));
+		return view('patientexamination',array('bloodGroup'=>$bloodGroup,'diagNormalAbnormal'=>$diagNormalAbnormal,'diagYesNo'=>$diagYesNo,'diagAvafRvrf'=>$diagAvafRvrf,'vitalExist'=>$vitalExist,'diagExam'=>$diagExam,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
 	}
 	public function showPatientDiagnosis(){
 		$patientId = Session::get('patientId');
+		$doctorId  = Session::get('doctorId');
+		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
 		$symptomsArray = array();
 		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
      
@@ -825,26 +845,34 @@ class DoctorController extends Controller {
 									->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis where id_patient='$patientId')"))
 									->first();
 
-		return View('patientdiagnosis',array('diseases'=>$diseases,'diag'=>$diag,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData));
+		return View('patientdiagnosis',array('diseases'=>$diseases,'diag'=>$diag,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
 	}
 	public function showPatientLabdata(){
-
-		return View('patientlabdata');
+		$patientId = Session::get('patientId');
+		$doctorId  = Session::get('doctorId');
+		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+		return View('patientlabdata',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
 	}
 
 	public function showPatientPrescManagement(){
 		$patientId = Session::get('patientId');
+		$doctorId  = Session::get('doctorId');
+		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
         
 		$prescGynData = DB::table('prescription_gynaecology')->where('id_patient','=',$patientId)
 											->where('created_date', DB::raw("(select max(`created_date`) from prescription_gynaecology where id_patient='$patientId')"))
 											->where('id_prescription_gynaecology', DB::raw("(select max(`id_prescription_gynaecology`) from prescription_gynaecology where id_patient='$patientId')"))
 											->first();
-		return View('patientprescmanagement',array('prescGynData'=>$prescGynData,'patientPersonalData'=>$patientPersonalData));
+		return View('patientprescmanagement',array('prescGynData'=>$prescGynData,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
 	}
 
 	public function showPatientPrescMedicine(){
 		$patientId = Session::get('patientId');
+		$doctorId  = Session::get('doctorId');
+		
+		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
        
 		$presentDrugStatus = Input::get('present_drug');
@@ -868,7 +896,7 @@ class DoctorController extends Controller {
 								//die();
 
 									
-		return View('patientprescmedicine',array('drugFrequency'=>$drugFrequency,'prescMedicine' => $prescMedicine,'patientPersonalData'=>$patientPersonalData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit));
+		return View('patientprescmedicine',array('drugFrequency'=>$drugFrequency,'prescMedicine' => $prescMedicine,'patientPersonalData'=>$patientPersonalData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit,'doctorData'=>$doctorData));
 									
 		
 
@@ -902,7 +930,7 @@ class DoctorController extends Controller {
 		(!empty($input['pincode']))?$pincode 				= $input['pincode']:$pincode = "";
 		(!empty($input['phone']))?$phone 					= $input['phone']:$phone = "";
 		(!empty($input['email']))?$email 					= $input['email']:$email = "";	
-        
+        (!empty($input['refferedby']))?$refferedby 			= $input['refferedby']:$refferedby = "";
 		
 		if($patientExistCheck>0){
 			//return Redirect::to('patientpersonalinformation')->
@@ -921,6 +949,7 @@ class DoctorController extends Controller {
 									'dob' 				=> 	$dob,
 									'age' 				=> 	$age,
 									'maritial_status' 	=> 	$marriedStatus,
+									'reffered_by'		=>	$refferedby,
 									'house_name' 		=> 	$house,
 									'street' 			=> 	$street,
 									'city' 				=> 	$city,
@@ -967,6 +996,7 @@ class DoctorController extends Controller {
 									'dob' => $dob,
 									'age' => $age,
 									'maritial_status' => $marriedStatus,
+									'reffered_by'		=>	$refferedby,
 									'house_name' => $house,
 									'street' => $street,
 									'city' => $city,
@@ -995,6 +1025,8 @@ class DoctorController extends Controller {
 	public function patientIdSubmit(){
 		$patientId     = Input::get('patient_id');
 		$patientStatus = Input::get('patient_status');
+		$specialization = Session::get('doctorSpecialization');
+		
 
 		if(empty($patientId)){
 			return Redirect::to('doctorhome')->with(array('error'=>'Please fill patient id'));
@@ -1054,7 +1086,19 @@ class DoctorController extends Controller {
 					}
 					else{
 						//echo "Status from old and returns to patient information";
-						return Redirect::to('patientpersonalinformation');
+						switch ($specialization) {
+							case '1':
+								return Redirect::to('patientpersonalinformation');
+								break;
+							case '2':
+								return Redirect::to('cardiopersonalinformation');
+								break;
+							
+							default:
+								# code...
+								break;
+						}
+						
 				
 				    }		
 						
@@ -1066,7 +1110,18 @@ class DoctorController extends Controller {
 					}
 					else{
 						 
-						return Redirect::to('patientpersonalinformation');
+						switch ($specialization) {
+							case '1':
+								return Redirect::to('patientpersonalinformation');
+								break;
+							case '2':
+								return Redirect::to('cardiopersonalinformation');
+								break;
+							
+							default:
+								# code...
+								break;
+						}
 						
 					}
 					
@@ -2240,6 +2295,7 @@ class DoctorController extends Controller {
 
 	public function addPatientPrescMedicine(){
     	$input = Request::all();
+    	
     	$patientId 		= Session::get('patientId');
     	$doctorId 		= Session::get('doctorId');
     	$referenceId 	= Session::get('referenceId');
@@ -2360,19 +2416,6 @@ class DoctorController extends Controller {
 		    	
     	
 
-    	
-	
-
-
-    	
-
-    	
-    		
-    			
-		    
-    		
-
-    	
 
     }
 
@@ -2383,14 +2426,13 @@ class DoctorController extends Controller {
 		//	echo "Reached print data";
 
 		$specialization = Session::get('doctorSpecialization');;
-		$patientId = Session::get('patientId');
-		$doctorId = Session::get('doctorId');
+		$patientId 		= Session::get('patientId');
+		$doctorId 		= Session::get('doctorId');
 
-		$todayDate = date('Y-m-d');
+		$todayDate 		= date('Y-m-d');
+		$splitDate 		= explode('-',$todayDate);
 
-		$splitDate = explode('-',$todayDate);
-
-		$pdfFileName = $patientId."_".$splitDate[0].$splitDate[1].$splitDate[2];
+		$pdfFileName 	= $patientId."_".$splitDate[0].$splitDate[1].$splitDate[2];
 
 		//echo $patientId;
 
@@ -2420,10 +2462,12 @@ class DoctorController extends Controller {
 									->where('id_patient','=',$patientId)
 		                            ->get();
 
+		$printData = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
+
 		                       
 
 
-		$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData);
+		$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData);
 
 
 
@@ -2434,7 +2478,14 @@ class DoctorController extends Controller {
 				$pdf = App::make('dompdf.wrapper');
 		        //$pdf->loadHTML('<h1>Test</h1>');
 		        $view =  View::make('gynprecriptionformat',$parametersArray)->render();
-		         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+
+		       
+		        
+		        $pdf->loadHTML($view)->setWarnings(false)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+
+		        // add the header
+				
+				
 
 		        return $pdfFileName;
 		        
@@ -2443,7 +2494,15 @@ class DoctorController extends Controller {
 				break;
 
 			case '2':
-				echo "";
+				$pdf = App::make('dompdf.wrapper');
+		        //$pdf->loadHTML('<h1>Test</h1>');
+		        $view =  View::make('gynprecriptionformat',$parametersArray)->render();
+		         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+
+		        return $pdfFileName;
+		        
+		    	//return $pdf->stream($pdfFileName.'.'.'pdf');
+		    	//return $pdf->inline();
 				break;
 			
 			default:
@@ -2458,14 +2517,14 @@ class DoctorController extends Controller {
 
 	public function patientPreviousTreatmentPrint(){
 		$input = Request::all();
-		$createdDate = $input['created_date'];
-		$specialization = Session::get('doctorSpecialization');;
-		$patientId = Session::get('patientId');
-		$doctorId = Session::get('doctorId');
-		//echo $createdDate;
-		$todayDate = date('Y-m-d');
 
-		$splitDate = explode('-',$todayDate);
+		$createdDate 	= $input['created_date'];
+		$specialization = Session::get('doctorSpecialization');;
+		$patientId 		= Session::get('patientId');
+		$doctorId 		= Session::get('doctorId');
+		
+		$todayDate 		= date('Y-m-d');
+		$splitDate 		= explode('-',$todayDate);
 
 		$pdfFileName = $patientId."_".$splitDate[0].$splitDate[1].$splitDate[2];
 
@@ -2474,12 +2533,15 @@ class DoctorController extends Controller {
 		$prescriptionData    = DB::table('prescription')
 									->where('created_date','LIKE','%'.$createdDate.'%')
 		                            ->where('id_patient','=',$patientId)
+		                            ->where('id_doctor','=',$doctorId)
 		                            ->get();
+
+		$printData = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
 
 		  //return $prescriptionData;
 		  //die();
 
-		$parametersArray = array('prescriptionData'=>$prescriptionData);
+		$parametersArray = array('prescriptionData'=>$prescriptionData,'printData'=>$printData);
 
 
 		switch ($specialization) {
@@ -2496,7 +2558,15 @@ class DoctorController extends Controller {
 				break;
 
 			case '2':
-				echo "";
+				$pdf = App::make('dompdf.wrapper');
+		        //$pdf->loadHTML('<h1>Test</h1>');
+		        $view =  View::make('previoustreatmentprescprint',$parametersArray)->render();
+		         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+
+		        return $pdfFileName;
+		        
+		    	//return $pdf->stream($pdfFileName.'.'.'pdf');
+		    	//return $pdf->inline();
 				break;
 			
 			default:
@@ -2506,194 +2576,155 @@ class DoctorController extends Controller {
 	}
 
 
-	//Cardio
-	//-------------------------------------------------------------------
+	public function showPrintSetup(){
+		$patientId = Session::get('patientId');
+		$doctorId = Session::get('doctorId');
 
-	public function showCardioMedicalHistory(){
+		if(empty($patientId)){
+			//header('location:doctorlogin');
+			return Redirect::to('logout');
+		}
+		else{
+			
+			   
 
-		$patientId 	= Session::get('patientId');
-		$doctorId  = Session::get('doctorId');
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
-      
+			    		
+			    $patientData 	= DB::table('patients')->where('id_patient','=',$patientId)->get();
+			    $doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+			   	$printData 		= DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
+				
 
-		$medicalHistory = DB::table('cardiac_medical_history')
-									->where('id_patient','=',$patientId)
-									->where('created_date', DB::raw("(select max(`created_date`) from cardiac_medical_history)"))
-									->get();
+				$printUnits = DB::table('business_key_details')->where('business_key', '=', 'PRINT_UNITS')->orderBy('business_value')->lists('business_value', 'business_value');
 
-		$medicalHistoryPresentPastMore = DB::table('cardiac_medical_history_present_past_more')
-													->where('id_patient','=',$patientId)
-													
-													->distinct('illness_name')
-													->get();
-/*
-		$medicalHistoryPresentPastMore = DB::table('medical_history_present_past_more')
-													->where('id_patient','=',$patientId)
-													->get();*/
-
-		$surgeryHistory = DB::table('medical_history_surgical')->where('id_patient','=',$patientId)->get();
-
-		$drugAllergyHistory = DB::table('medical_history_drug_allergy')->where('id_patient','=',$patientId)->get();
-		
-		
-		return view('cardiomedicalhistory',array('medicalHistory'=>$medicalHistory,'medicalHistoryPresentPastMore'=>$medicalHistoryPresentPastMore,'surgeryHistory'=>$surgeryHistory,'drugAllergyHistory'=>$drugAllergyHistory,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+			return view('printsetup',array('patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'printData'=>$printData,'printUnits'=>$printUnits));
+		}
 	}
-
-
-	public function addCardioMedicalHistory(){
-		$input = Request::all();
-    	var_dump(json_encode($input));
-
-    	
 	
-    	$referenceId = Session::get('referenceId');
-	    $patientId   = Session::get('patientId');
-	    $doctorId    = Session::get('doctorId');
-	    $createdDate = date('Y-m-d H:i:s');
-	    $specializationText = '2';
-
-	    //var_dump(json_encode($input));
-	    //die();
-
-	    $patientExistCheck = DB::table('patients')->where('id_patient','=',$patientId)->count();
-
-	    $medicalHistoryExist = DB::table('cardiac_medical_history')
-	    										->where('id_patient','=',$patientId)
-	    										->where('medical_history_reference','=',$referenceId)
-	    										->count();
+	public function addPrintSettings(){
+		$input 				= Request::all();
+		$patientId 			= Session::get('patientId');
+		$specialization 	= Session::get('doctorSpecialization');
+		$doctorId 			= Session::get('doctorId');
+		$referenceId 		= Session::get('referenceId');
+		$createdDate        = date('Y-m-d H:m:s');
+		$doctorExistCheck 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 
 
-	    if($patientExistCheck>0)
-	    {
-	    	
-	    	(!empty($input['father']))?$fatherHistory = $input['father']:$fatherHistory = ['NA'];
-	    	(!empty($input['father_other']))?$fatherHistoryOther = $input['father_other']:$fatherHistoryOther = '';
-	    	(!empty($input['mother']))?$motherHistory = $input['mother']:$motherHistory = ['NA'];
-	    	(!empty($input['mother_other']))?$motherHistoryOther = $input['mother_other']:$motherHistoryOther = '';
-	    	(!empty($input['sibling']))?$siblingHistory = $input['sibling']:$siblingHistory = ['NA'];
-	    	(!empty($input['sibling_other']))?$siblingHistoryOther = $input['sibling_other']:$siblingHistoryOther = '';
-	    	(!empty($input['grandfather']))?$grandfatherHistory = $input['grandfather']:$grandfatherHistory = ['NA'];
-	    	(!empty($input['grandfather_other']))?$grandfatherHistoryOther = $input['grandfather_other']:$grandfatherHistoryOther = '';
-	    	(!empty($input['grandmother']))?$grandmotherHistory = $input['grandmother']:$grandmotherHistory = ['NA'];
-	    	(!empty($input['grandmother_other']))?$grandmotherHistoryOther = $input['grandmother_other']:$grandmotherHistoryOther = '';
-	    	(!empty($input['allergy_general']))?$allergyGeneral = $input['allergy_general'] : $allergyGeneral=['NA'];
-	    	(!empty($input['alcohol']))?$alcohol = $input['alcohol']:$alcohol = "NA";
-    		(!empty($input['tobaco-smoke']))?$tobacoSmoke = $input['tobaco-smoke']:$tobacoSmoke = "NA";
-    		(!empty($input['tobaco-chew']))?$tobacoChew = $input['tobaco-chew']:$tobacoChew = "NA";
-    		(!empty($input['other-social-history']))?$OtherSocialHistory = $input['other-social-history']:$OtherSocialHistory = "NA";
-    		(!empty($input['other_medical_history']))?$otherMedicalHistory = $input['other_medical_history']:$otherMedicalHistory = "";
+		!empty($input['unit'])?$unit 			= $input['unit'] : $unit 			= '';
+		!empty($input['top'])?$marginTop 		= $input['top'] : $marginTop 		= '';
+		!empty($input['bottom'])?$marginBottom 	= $input['bottom'] : $marginBottom 	= '';
+		!empty($input['left'])?$marginLeft 		= $input['left'] : $marginLeft 		= '';
+		!empty($input['right'])?$marginRight 	= $input['right'] : $marginRight 	= '';
 
-    		//Addmore illness
-    		
-    		//Surgery History
-    		(!empty($input['surgery']))?$surgery = $input['surgery']:$surgery = "";
-    		
+		if(!empty($doctorExistCheck)){
 
-    		//Allergy History
-	    	(!empty($input['medication-drug-allergy']))?$allergyMedication = $input['medication-drug-allergy']: $allergyMedication="";
-	    	(!empty($input['reaction-drug-allergy']))?$allergyReaction= $input['reaction-drug-allergy']: $allergyReaction="";
-	    	
-	    	//(!empty($input['allergy_counter']))?$allergyCounter = $input['allergy_counter']:$allergyCounter=0;
+			if(!empty($unit)){
+				switch($unit){
+					case 'cm':
+						$marginTop 		= 36*$marginTop;
+						$marginBottom 	= 36*$marginBottom;
+						$marginLeft 	= 36*$marginLeft;
+						$marginRight	= 36*$marginRight;
+						$status 		= $this->saveUpdatePrintSetup($specialization, $doctorId, $referenceId, $createdDate, $unit, $marginTop, $marginBottom, $marginLeft, $marginRight);
 
-	    	if($medicalHistoryExist>0){
-	    		
-	    		if( !empty($input['father']) || !empty($input['mother']) ||
-		    	   !empty($input['sibling']) || !empty($input['grandfather']) || !empty($input['grandmother']) ||
-		    	   !empty($input['allergy_general']) || !empty($input['alcohol']) || !empty($input['tobaco-smoke']) || !empty($input['tobaco-chew'])  || !empty($input['other-social-history']))
-    			{
-    				$editedDate = date('Y-m-d H:i:s');
-    				$dataArray = array(
-			    					   'history_family_father' => json_encode($fatherHistory),
-			    					   'history_family_father_other' => $fatherHistoryOther,
-			    					   'history_family_mother' => json_encode($motherHistory),
-			    					   'history_family_mother_other' => $motherHistoryOther,
-			    					   'history_family_sibling' => json_encode($siblingHistory),
-			    					   'history_family_sibling_other' => $siblingHistoryOther,
-			    					   'history_family_grandfather' => json_encode($grandfatherHistory),
-			    					   'history_family_grandfather_other' => $grandfatherHistoryOther,
-			    					   'history_family_grandmother' => json_encode($grandmotherHistory),
-			    					   'history_family_grandmother_other' => $grandmotherHistoryOther,
-			    					   'history_allergy_general' =>json_encode($allergyGeneral),
-			    					   'history_social_alcohol' => $alcohol,
-			    					   'history_social_tobacco_smoke' => $tobacoSmoke,
-			    					   'history_social_tobacco_chew' => $tobacoChew,
-			    					   'history_social_other' => $OtherSocialHistory,
-			    					   'history_prev_intervention_anaesthesia' => $otherMedicalHistory,
-			    					   'id_doctor' => $doctorId,
-			    					   'edited_date' => $editedDate);
+						if($status=="update"){
+							return Redirect::to('printsetup')->with(array('success'=>'Data updated successfully'));
+						}
+						if($status=="save"){
+							return Redirect::to('printsetup')->with(array('success'=>'Data saved successfully'));
+						}
+					break;
 
-    				$dataUpdate = DB::table('cardiac_medical_history')
-    												->where('id_patient','=',$patientId)
-    												->where('medical_history_reference','=',$referenceId)
-    												->update($dataArray);
-    			}
+					case 'inches':
+						$marginTop 		= 96*$marginTop;
+						$marginBottom 	= 96*$marginBottom;
+						$marginLeft 	= 96*$marginLeft;
+						$marginRight	= 96*$marginRight;
 
-    			//Add more illness
-    			$this->illnessSurgeryDrugInsert($input,$surgery,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate,$specializationText);
+						$status 		= $this->saveUpdatePrintSetup($specialization, $doctorId, $referenceId, $createdDate, $unit, $marginTop, $marginBottom, $marginLeft, $marginRight);
 
-    			return Redirect::to('cardiomedicalhistory')->with(array('success'=>"Data updated successfully"));
+						if($status=="update"){
+							return Redirect::to('printsetup')->with(array('success'=>'Data updated successfully'));
+						}
+						if($status=="save"){
+							return Redirect::to('printsetup')->with(array('success'=>'Data saved successfully'));
+						}
+					break;
+					case 'mm':
+						$marginTop 		= 4*$marginTop;
+						$marginBottom 	= 4*$marginBottom;
+						$marginLeft 	= 4*$marginLeft;
+						$marginRight	= 4*$marginRight;
 
-	    	}
-	    	else{
-	    		
-	    		if( !empty($input['father']) || !empty($input['mother']) ||
-		    	   !empty($input['sibling']) || !empty($input['grandfather']) || !empty($input['grandmother']) ||
-		    	   !empty($input['allergy_general']) || !empty($input['alcohol']) || !empty($input['tobaco-smoke']) || !empty($input['tobaco-chew'])  || !empty($input['other-social-history']))
-    			{
+						$status 		= $this->saveUpdatePrintSetup($specialization, $doctorId, $referenceId, $createdDate, $unit, $marginTop, $marginBottom, $marginLeft, $marginRight);
 
-    				echo "MedicalEx<0"; 
-	    			//Menstrual History, Present & Past, Family History, General Allergy, Social History and Other
-	    			$dataArray = array(
-			    					   'medical_history_reference' => $referenceId,
-			    					   'history_family_father' => json_encode($fatherHistory),
-			    					   'history_family_father_other' => $fatherHistoryOther,
-			    					   'history_family_mother' => json_encode($motherHistory),
-			    					   'history_family_mother_other' => $motherHistoryOther,
-			    					   'history_family_sibling' => json_encode($siblingHistory),
-			    					   'history_family_sibling_other' => $siblingHistoryOther,
-			    					   'history_family_grandfather' => json_encode($grandfatherHistory),
-			    					   'history_family_grandfather_other' => $grandfatherHistoryOther,
-			    					   'history_family_grandmother' => json_encode($grandmotherHistory),
-			    					   'history_family_grandmother_other' => $grandmotherHistoryOther,
-			    					   'history_allergy_general' =>json_encode($allergyGeneral),
-			    					   'history_social_alcohol' => $alcohol,
-			    					   'history_social_tobacco_smoke' => $tobacoSmoke,
-			    					   'history_social_tobacco_chew' => $tobacoChew,
-			    					   'history_social_other' => $OtherSocialHistory,
-			    					   'history_prev_intervention_anaesthesia' => $otherMedicalHistory,
-			    					   'id_patient' => $patientId,
-			    					   'id_doctor' => $doctorId,
-			    					   'created_date' => $createdDate);
+						if($status=="update"){
+							return Redirect::to('printsetup')->with(array('success'=>'Data updated successfully'));
+						}
+						if($status=="save"){
+							return Redirect::to('printsetup')->with(array('success'=>'Data saved successfully'));
+						}
+					break;
 
-    				$dataInsert = DB::table('cardiac_medical_history')->insert($dataArray);
-	    		}
-	    		
+					default :
+				}
 
-	    		$this->illnessSurgeryDrugInsert($input,$surgery,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate,$specializationText);
-
-	    		//return Redirect::to('cardiomedicalhistory')->with(array('success'=>"Data saved successfully"));
-
-	    	}
-
-      	
-	    }
-	    else{
-	    	return Redirect::to('cardiomedicalhistory')->with(array('error'=>"Please save patient personal information"));
-	    }	
-
-
+			}
+			else{
+				return Redirect::to('printsetup')->with(array('error'=>'Please enter correct unit'));
+			}
+			
+		}
+		else{
+			return Redirect::to('printsetup')->with(array('error'=>'Invalid doctor'));
+		}
 	}
 
+	public function saveUpdatePrintSetup($specialization, $doctorId, $referenceId, $createdDate, $unit, $marginTop, $marginBottom, $marginLeft, $marginRight){
 
+		$printSettingsExists = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
+			if(!empty($printSettingsExists)){
+				$printData = array('margin_top'=>$marginTop,
+								   'margin_bottom'=>$marginBottom,
+								   'margin_left'=>$marginLeft,
+								   'margin_right'=>$marginRight,
+								   'id_reference_settings'=>$referenceId,
+								   'unit'=>$unit,
+								   'edited_date'=>$createdDate);	
 
+				$printDataUpdate = DB::table('print_settings')->where('id_doctor','=',$doctorId)->update($printData);
+				return "update";
+				
+			}
+			else{
+				$printData = array('margin_top'=>$marginTop,
+								   'margin_bottom'=>$marginBottom,
+								   'margin_left'=>$marginLeft,
+								   'margin_right'=>$marginRight,
+								   'id_doctor'=>$doctorId,
+								   'id_reference_settings'=>$referenceId,
+								   'id_specialization'=>$specialization ,
+								   'unit'=>$unit,
+								   'created_date'=>$createdDate);
+				$printInsert = DB::table('print_settings')->insert($printData);
+				return "save";
+			}
+	}
 
+	public function fetchPrintSetupData(){
+		$doctorId 			= Session::get('doctorId');
+
+		$printData = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
+
+		return json_encode($printData);
+	}
 
 	public function showMigration(){
 		$str = file_get_contents('http://localhost/doctorsdiary1/public/Diagnosis.json');
 		$json = json_decode($str, true);
 
 		//var_dump(json_encode($json));
+
 		//return view('migration');
 
 
@@ -2803,7 +2834,7 @@ class DoctorController extends Controller {
 										      'edited_date' 		=> $updatedDate[0]
 										     );
 
-								//DB::table('sp_gynaecology_obs_preg')->insert($pregData);
+								DB::table('sp_gynaecology_obs_preg')->insert($pregData);
 								
 							}
 
@@ -2905,7 +2936,7 @@ class DoctorController extends Controller {
 		    									
 		    									);
 
-						//DB::table('prescription')->insert($insertValue);
+							DB::table('prescription')->insert($insertValue);
 							
 						}
 					

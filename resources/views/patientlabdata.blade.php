@@ -2,6 +2,7 @@
 
 
 
+
 if(!empty($patientPersonalData)){
 	$firstName 	     			= $patientPersonalData->first_name;
 	$lastName        			= $patientPersonalData->last_name;
@@ -12,9 +13,13 @@ else{
 	$newPatientId = Session::get('patientId'); 
 	$patientName = "";
 }
-
+if(!empty($doctorData)){
+	$doctorSpecialization = $doctorData->specialization;
+}
 
 ?>
+
+
 @section('head')
 	 {!!Html::style('assets/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css')!!}
 	 {!!Html::style('assets/plugins/select2/select2.css')!!} 
@@ -25,7 +30,7 @@ else{
 
 
 @stop
-@extends('layouts.master', ['patientName' =>$patientName])
+@extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
 @section('main')
 
 	<body class="error-full-page">

@@ -81,7 +81,8 @@ if(!empty($medicalHistory)){
 		$tobacoChew = $medicalHistoryVal->history_social_tobacco_chew;
 		$otherSocial = $medicalHistoryVal->history_social_other;
 
-		$otherHistory = $medicalHistoryVal->history_prev_intervention_anaesthesia;
+		$anaesthesiaHistory = $medicalHistoryVal->history_prev_intervention_anaesthesia;
+		$otherMedicalHistory = $medicalHistoryVal->history_other;
 
 	}	
 
@@ -438,86 +439,6 @@ if(!empty($medicalHistory)){
 								{!! Form::text('illness_medication10', Input::old('medication_thyroid'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
 							</div>
 						</div>
-
-						<div class="form-group">
-						    {!! Form::label('ihd', 'IHD (Ischaemic Heart Disease)', $attributes = array('class'=>'col-sm-2'));  !!}
-						     {!! Form::hidden('illness_name11', "IHD (Ischaemic Heart Disease)", $attributes = array('class'=>'form-control ihd_text'));  !!}		
-							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status11', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>
-							</div>
-							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status11', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>
-							</div>
-							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status11', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
-							</div>
-							<div class="col-sm-4" >
-								{!! Form::text('illness_medication11', Input::old('medication_ihd'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
-							</div>
-						</div>
-
-						<div class="form-group">
-						    {!! Form::label('coad', 'COAD (Chronic Obstructive Airways Disease)', $attributes = array('class'=>'col-sm-2'));  !!}
-						     {!! Form::hidden('illness_name12', "IHD (Ischaemic HeartDisease)", $attributes = array('class'=>'form-control ihd_text'));  !!}		
-							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status12', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>
-							</div>
-							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status12', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>
-							</div>
-							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status12', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
-							</div>
-							<div class="col-sm-4" >
-								{!! Form::text('illness_medication12', Input::old('medication_ihd'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
-							</div>
-						</div>
-
-
-						<div class="form-group">
-						    {!! Form::label('att', 'ATT (Tuberculosis)', $attributes = array('class'=>'col-sm-2'));  !!}
-						     {!! Form::hidden('illness_name13', "ATT (Tuberculosis)", $attributes = array('class'=>'form-control ihd_text'));  !!}		
-							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status13', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>
-							</div>
-							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status13', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>
-							</div>
-							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status13', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
-							</div>
-							<div class="col-sm-4" >
-								{!! Form::text('illness_medication13', Input::old('medication_att'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
-							</div>
-						</div>
-
 						@endif
 					</div>
 
@@ -950,10 +871,10 @@ if(!empty($medicalHistory)){
 
 						<div class="col-sm-12">
 							@if(!empty($medicalHistory))
-							<textarea name="other_medical_history" class="form-control" rows="10" cols="40" >{{$otherHistory}}</textarea>
+							<textarea name="anaesthesia" class="form-control" rows="10" cols="40" >{{$anaesthesiaHistory}}</textarea>
 								
 							@else
-								{!! Form::textarea('other_medical_history',null,['class'=>'form-control', 'rows' => 10, 'cols' => 40]) !!}
+								{!! Form::textarea('anaesthesia',null,['class'=>'form-control', 'rows' => 10, 'cols' => 40]) !!}
 								
 								
 							@endif
@@ -1492,40 +1413,18 @@ if(!empty($medicalHistory)){
 
 					</div>
 					<div class="form-group">
-						<div class="col-sm-3">
-							{!! Form::label('apetite', 'Apetite', $attributes = array('class'=>''));  !!}	
+						<div class="col-sm-12">
+							@if(!empty($medicalHistory))
+							<textarea name="other_medical_history" class="form-control" rows="10" cols="40" >{{$otherMedicalHistory}}</textarea>
+								
+							@else
+								{!! Form::textarea('other_medical_history',null,['class'=>'form-control', 'rows' => 10, 'cols' => 40]) !!}
+								
+								
+							@endif
 						</div>
-						<div class="col-sm-3">
-							{!! Form::label('sleep', 'Sleep', $attributes = array('class'=>''));  !!}	
-						</div>
-						<div class="col-sm-3">
-							{!! Form::label('stool', 'Stool', $attributes = array('class'=>''));  !!}	
-						</div>
-						<div class="col-sm-3">
-							{!! Form::label('urine', 'Urine', $attributes = array('class'=>''));  !!}	
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-1">
-							<label class="radio-inline">
-								<input type="radio" value="Normal" name="other-history1" class="other-apetite">
-								Normal
-							</label>
-						</div>	
-						<div class="col-sm-1">
-							<label class="radio-inline">
-								<input type="radio" value="Past" name="other-history1" class="other-apetite">
-								Upnormal
-							</label>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-3">
-							<textarea name="other_history_comments1" class="form-control" rows="5" cols="30" ></textarea>
-							
-						</div>
-					</div>
-
+					</div>	
+					
 					<hr>
 
 					<div class="form-group">
