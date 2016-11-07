@@ -837,7 +837,7 @@ if(!empty($medicalHistory)){
 						@if(!empty($surgeryHistory))
 							@foreach($surgeryHistory as $surgeryHistoryVal)			
 								<div class="form-group">
-								 	  <div class="col-sm-10">
+								 	  <div class="col-sm-12">
 										<span>
 											{!! Form::text('surgery[]',  $surgeryHistoryVal->surgery_name, $attributes = array('class'=>'form-control surgicalhistory','placeholder' => '','disabled'=>'disabled'));  !!}
 											
@@ -848,7 +848,7 @@ if(!empty($medicalHistory)){
 						@else
 								<div class="form-group">
 								    <!-- {!! Form::label('surgery', 'Surgery', $attributes = array('class'=>'col-sm-2'));  !!} -->	
-								    <div class="col-sm-10">
+								    <div class="col-sm-12">
 										<span >
 											{!! Form::text('surgery[]', Input::old('surgery'), $attributes = array('class'=>'form-control surgicalhistory','placeholder' => 'Surgery'));  !!}
 											
@@ -1170,7 +1170,7 @@ if(!empty($medicalHistory)){
 						@if(!empty($drugAllergyHistory))
 							@foreach($drugAllergyHistory as $drugAllergyHistoryVal)
 							<div class="form-group">
-							    <div class="col-sm-5">
+							    <div class="col-sm-6">
 							    <div class="dd_top_mt">Medication</div>
 									<span >
 										{!! Form::text('medication-drug-allergy[]', $drugAllergyHistoryVal->drug_name, $attributes = array('class'=>'form-control medication-drug-allergy allergy-validation-class','disabled'=>'disabled'));  !!}
@@ -1178,7 +1178,7 @@ if(!empty($medicalHistory)){
 									</span>
 								</div>
 								 <!-- {!! Form::label('reaction-drug-allergy', 'Reaction', $attributes = array('class'=>'col-sm-2 '));  !!}-->
-							    <div class="col-sm-5">
+							    <div class="col-sm-6">
 							    <div class="dd_top_mt">Reaction</div>
 									<span >
 										{!! Form::text('reaction-drug-allergy[]', $drugAllergyHistoryVal->reaction, $attributes = array('class'=>'form-control reaction-drug-allergy allergy-validation-class','disabled'=>'disabled'));  !!}
@@ -1189,7 +1189,7 @@ if(!empty($medicalHistory)){
 							@endforeach
 						@else
 							<div class="form-group">
-							    <div class="col-sm-5">
+							    <div class="col-sm-6">
 							     <div class="dd_top_mt">Medication</div>
 									<span class="">
 										{!! Form::text('medication-drug-allergy[]', Input::old('medication-drug-allergy'), $attributes = array('class'=>'form-control medication-drug-allergy allergy-validation-class'));  !!}
@@ -1197,7 +1197,7 @@ if(!empty($medicalHistory)){
 									</span>
 								</div>
 								 <!-- {!! Form::label('reaction-drug-allergy', 'Reaction', $attributes = array('class'=>'col-sm-2 '));  !!}-->
-							    <div class="col-sm-5">
+							    <div class="col-sm-6">
 							    <div class="dd_top_mt">Reaction</div>
 									<span class="">
 										{!! Form::text('reaction-drug-allergy[]', Input::old('reaction-drug-allergy'), $attributes = array('class'=>'form-control reaction-drug-allergy allergy-validation-class'));  !!}

@@ -254,11 +254,11 @@ class CardiologyController extends Controller {
 									
 				$patientPersonalInfoSave = DB::table('patients')->insert($inputValue);
 				if($patientPersonalInfoSave){
-					//return Redirect::to('patientpersonalinformation')->with(array('success'=>'Data saved successfully'));
+					return Redirect::to('cardiopersonalinformation')->with(array('success'=>'Data saved successfully'));
 				}
 			}
 			else{
-				//return Redirect::to('patientpersonalinformation')->with(array('success'=>'Data saved successfully'));
+				return Redirect::to('cardiopersonalinformation')->with(array('success'=>'Data saved successfully'));
 			}
 
 		}
@@ -399,7 +399,7 @@ class CardiologyController extends Controller {
 		    	   !empty($input['allergy_general']) || !empty($input['alcohol']) || !empty($input['tobaco-smoke']) || !empty($input['tobaco-chew'])  || !empty($input['other-social-history']))
     			{
 
-    				echo "MedicalEx<0"; 
+    				//echo "MedicalEx<0"; 
 	    			//Menstrual History, Present & Past, Family History, General Allergy, Social History and Other
 	    			$dataArray = array(
 			    					   'medical_history_reference' => $referenceId,
@@ -430,7 +430,7 @@ class CardiologyController extends Controller {
 
 	    		$this->illnessSurgeryDrugInsert($input,$surgery,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate,$specializationText);
 
-	    		//return Redirect::to('cardiomedicalhistory')->with(array('success'=>"Data saved successfully"));
+	    		return Redirect::to('cardiomedicalhistory')->with(array('success'=>"Data saved successfully"));
 
 	    	}
 

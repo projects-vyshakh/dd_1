@@ -8,7 +8,7 @@
     <!-- start: HEAD -->
     <head>
 
-        <title>Doctor's Diary | Login</title>
+        <title>Doctor's Diary | Home</title>
         <!-- start: META -->
         <meta charset="utf-8" />
         <!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
@@ -212,11 +212,7 @@
                                                 
                                             </div>
                                         </div> 
-
-
-
-                        
-                                    </div>
+                                  </div>
 
 
 
@@ -224,6 +220,7 @@
                         </div>
 
                     </div>
+
         
                     <div class="col-sm-6 dd_patient_pd_R">
                         <div class="row">
@@ -266,7 +263,7 @@
                                
                               ?>
                               @if(!empty($error))
-                                <div class="dd_alert dd_abs col-sm-12 display-none" style="display: block;">
+                                <div class="dd_alert dd_abs col-sm-6 display-none" style="display: block;">
                                   <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
                                           {{$error}}
                                 </div>

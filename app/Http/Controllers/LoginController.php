@@ -245,108 +245,264 @@ class LoginController extends Controller {
 		return Redirect::to('patientlogin');
 	}
 
-	public function showForgetPassword(){
-		return View('forgetpassword');
+
+	public function showDoctorForgetPassword(){
+		return View('doctorforgetpassword');
 	}
 
-	public function handleForgetPassword(){
-		$email = Input::get('email');
-		$currentPath = Session::get('currentPath');
+	public function handleDoctorForgetPassword(){
+		$input 		= Input::get('email_mobile');
+		
+		$otpCode 	= DBUtils::generate_otp_forgetpassword();
+		$doctorData = DB::table('doctors')
+									->where('email','=',$input)
+									->where('registration_status','=',"1")
+									->where('status','=',"1")
+									->first();
 
-		if($currentPath=="doctorlogin"){
-			$doctorData = DB::table('doctors')->where('email','=',$email)->first();
-			if(!empty($doctorData)){
-				Session::put('doctorEmail',$email);
-				//return Redirect::to('addnewpassword');
-				$otpCode = DBUtils::generate_random_password();
-				
-				
-				$to      = 'vyshakhps1988@gmail.com';
-				$subject = 'OTP for password change';
-				$message = 'OTP :'.$otpCode;
-				$headers = 'From: cipher.infos@gmail.com' . "\r\n" .
-				'Reply-To: vyshakhps1988@gmail.com' . "\r\n" .
-				    'X-Mailer: PHP/' . phpversion();
+									
 
-				if(mail($to, $subject, $message, $headers))
-				{
-					DB::table('doctors')->where('email','=',$email)->update(array('otp'=>$otpCode));
-					return Redirect::to('showdoctorotpcheck')->with(array('success'=>'An OTP has sent to you email. Please check your email'));
-				}
-				else{
-				}
-				Session::flush('currentPath');
+		if(!empty($doctorData)){
+			Session::put('otpCheckTrue','true');
+			$to      = $input;
+			$subject = 'OTP for password change';
+			$message = 'OTP :'.$otpCode;
+			$headers = 'From: cipher.infos@gmail.com' . "\r\n" .
+			'Reply-To: vyshakhps1988@gmail.com' . "\r\n" .
+			    'X-Mailer: PHP/' . phpversion();
+
+			if(mail($to, $subject, $message, $headers))
+			{
+				DB::table('doctors')->where('email','=',$input)->update(array('otp'=>$otpCode));
 				
+				return Redirect::to('doctorotpcheck')->with(array('success'=>'An OTP has sent to your mobile number. Please check your messages'));
+
 			}
 			else{
-				return Redirect::to('forgetpassword')->withInput()->with(array('error'=>'Invalid email id'));
-			}
-
-		}
-		elseif ($currentPath=="patientlogin") {
-			$patientData = DB::table('patients')->where('email','=',$email)->first();
-			if(!empty($patientData)){
-				Session::put('patientEmail',$email);
-				//return Redirect::to('addnewpassword');
-				$otpCode = DBUtils::generate_random_password();
-				
-				
-				$to      = 'vyshakhps1988@gmail.com';
-				$subject = 'OTP for password change';
-				$message = 'OTP :'.$otpCode;
-				$headers = 'From: cipher.infos@gmail.com' . "\r\n" .
-				'Reply-To: vyshakhps1988@gmail.com' . "\r\n" .
-				    'X-Mailer: PHP/' . phpversion();
-
-				/*if(mail($to, $subject, $message, $headers))
-				{*/
-					DB::table('patients')->where('email','=',$email)->update(array('otp'=>$otpCode));
-					return Redirect::to('showdoctorotpcheck')->with(array('success'=>'An OTP has sent to you email. Please check your email'));
-				/*}
-				else{
-				}*/
-				Session::flush('currentPath');
-			}
-			else{
-				return Redirect::to('forgetpassword')->withInput()->with(array('error'=>'Invalid email id'));
-			}
-		}
-
-		
-		
-		
-
-	}
-	public function showDoctorOtpCheck(){
-		
-		return view('showdoctorotpcheck');
-	}
-	public function handleDoctorOtpCheck(){
-		$otpCode = Input::get('otp');
-		
-		$otpExistCheck = DB::table('doctors')->where('otp','=',$otpCode)->first();
-
-		if(!empty($otpExistCheck)){
-			Session::put('otp',$otpCode);
-			return Redirect::to('addnewpassword');
+				return Redirect::to('doctorforgetpassword')->with(array('error'=>'Failed to send OTP'));
+			}	
 		}
 		else{
-			return Redirect::to('showdoctorotpcheck')->with(array('error'=>"Invalid OTP"));
+			return Redirect::to('doctorforgetpassword')->with(array('error'=>'Either invalid doctor or doctor not registered'));
+		}
+
+
+	}
+
+
+
+
+	public function showPatientForgetPassword(){
+		return View('patientforgetpassword');
+	}
+
+	public function handlePatientForgetPassword(){
+		$input = Input::get('email_mobile');
+		//$currentPath = "doctorlogin";
+		$otpCode = DBUtils::generate_otp_forgetpassword();
+		
+		$patientData 	= DB::table('patients')->where('phone','=',$input)->first();
+		
+										
+								
+
+
+
+		if(!empty($patientData)){
+			$registrationStatus = $patientData->registration_status;
+			if($registrationStatus>0){
+				$authKey = "117220A1EZexOee4576b74bc";
+
+				//Multiple mobiles numbers separated by comma
+				$mobileNumber = $input;
+
+				//Sender ID,While using route4 sender id should be 6 characters long.
+				$senderId = "DDIARY";
+
+				//Your message to send, Add URL encoding here.
+				$message = urlencode("Doctors Diary - Your OTP is"." ".$otpCode);
+				
+				
+				//Define route 
+				$route = "route4"; //if route1 is used then msg will send as promotional
+				//Prepare you post parameters
+				$postData = array(
+				    'authkey' 	=> $authKey,
+				    'mobiles' 	=> $mobileNumber,
+				    'message' 	=> $message,
+				    'sender' 	=> $senderId,
+				    'route' 	=> $route
+				);
+
+				//API URL
+				$url="https://control.msg91.com/api/sendhttp.php";
+
+				// init the resource
+				$ch = curl_init();
+				curl_setopt_array($ch, array(
+				    CURLOPT_URL => $url,
+				    CURLOPT_RETURNTRANSFER => true,
+				    CURLOPT_POST => true,
+				    CURLOPT_POSTFIELDS => $postData
+				    //,CURLOPT_FOLLOWLOCATION => true
+				));
+
+
+				//Ignore SSL certificate verification
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+
+				//get response
+				$output = curl_exec($ch);
+
+				//Print error if any
+				if(curl_errno($ch))
+				{
+				    echo 'error:' . curl_error($ch);
+				}
+
+				curl_close($ch);
+
+				Session::put('patientOtpCheckTrue','true');
+				
+				DB::table('patients')->where('phone','=',$input)->update(array('otp_generated'=>$otpCode));
+				
+				return Redirect::to('patientotpcheck')->with(array('success'=>'An OTP has sent to your mobile number. Please check your messages'));	
+
+			}
+			else{
+				return Redirect::to('patientforgetpassword')->with(array('error'=>'Invalid patient or patient not activated'));
+			}
+				
+				
+			
+		}
+		else{
+			return Redirect::to('patientforgetpassword')->with(array('error'=>'Mobile number not registered'));
+		}
+
+	
+	}
+
+
+	
+	public function showDoctorOtpCheck(){
+		$doctorForgetPasswordStatus = Session::get('otpCheckTrue');
+
+		if(!empty($doctorForgetPasswordStatus)){
+			return view('doctorotpcheck');
+		}
+		else{
+			return Redirect::to('doctorlogin');
+		}
+		
+	}
+	public function handleDoctorForgetOtpCheck(){
+		
+
+		Session::put('addnewPasswordTrue','true');
+
+		/*if(!empty($doctorForgetPasswordStatus)){
+
+		}*/
+		$otpCode = Input::get('doctor_otp');
+		
+		
+		//echo $otpCode;
+		$doctorOtpExistCheck = DB::table('doctors')->where('otp','=',$otpCode)->first();
+		//var_dump($doctorOtpExistCheck);
+		//die();
+
+		if(!empty($doctorOtpExistCheck)){
+			//return view('addnewpassword',array('doctorData'=>$doctorOtpExistCheck));
+			$patientData = "";
+			return Redirect::to('doctoraddnewpassword')->with(array('doctorData'=>$doctorOtpExistCheck,'patientData'=>$patientData));
+
+		}
+		else{
+			
+			return Redirect::to('doctorotpcheck')->with(array('error'=>"Invalid OTP"));
 		}
 	}
-	public function showAddNewPassword(){
-		return view('addnewpassword');
-	}
-	public function handleAddNewPassword(){
+
+	public function showPatientOtpCheck()
+	{
+		$patentOtpCheckTrue = Session::get('patientOtpCheckTrue');
+
+		if(!empty($patientOtpCheckTrue)){
+			return view('patientotpcheck');
+		}
+		else{
+			return Redirect::to('patientlogin');
+		}
 		
-			$password = Input::get('password');
-			$cPassword = Input::get('cpassword');
-			$doctorEmail = Session::get('doctorEmail');
+	}
 
-			$doctorData = DB::table('doctors')->where('email','=',$doctorEmail)->first();
+	public function handlePatientForgetOtpCheck(){
+		$otpCode = Input::get('patient_otp');
+		
+		Session::put('patientAddnewPasswordTrue','true');
 
+		if(!empty($otpCode)){
+			//OTP exist check
+			$patientOtpExistCheck = DB::table('patients')->where('otp_generated','=',$otpCode)->first();
+
+			//var_dump($otpExistCheck);
+			if(!empty($patientOtpExistCheck)){
+				Session::flush('patientOtpCheckTrue');
+				$doctorData = "";
+				return Redirect::to('patientaddnewpassword')->with(array('doctorData'=>$doctorData,'patientData'=>$patientOtpExistCheck));
+			}
+			else{
+				return Redirect::to('patientotpcheck')->with(array('error'=>"Invalid OTP"));
+			}
+
+			
+			
+		}
+		else{
+			return Redirect::to('patientotpcheck')->with(array('error'=>"Invalid OTP"));
+		}
+	}
+
+
+
+	public function showDoctorAddNewPassword(){
+		$doctorForgetNewPasswordStatus = Session::get('addnewPasswordTrue');
+
+		if(!empty($doctorForgetPasswordStatus)){
+
+			return view('doctoraddnewpassword');
+		}
+		else{
+			return Redirect::to('doctorlogin');
+		}
+	}
+	public function handleDoctorAddNewPassword(){
+		
+			$password 			= Input::get('password');
+			$cPassword 			= Input::get('cpassword');
+			$doctorPatientId 	= Input::get('doctor_patient_id');
+
+			//echo $doctorPatientId;
+
+			//$doctorEmail = Session::get('doctorEmail');
+
+			$doctorData = DB::table('doctors')
+										->where('id_doctor','=',$doctorPatientId)
+										->where('registration_status','=',"1")
+										->where('status','=',"1")
+										->first();
+
+										
+
+			
 			if(!empty($doctorData)){
-				if(($password==$cPassword) && !empty($doctorEmail)){
+				$currentUser = "doctor";
+				
+
+				if($password==$cPassword){
 					$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
 							$iv = mcrypt_create_iv(
 							    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
@@ -364,29 +520,106 @@ class LoginController extends Controller {
 							    )
 							);
 
-							$passwordUpdate = DB::table('doctors')->where('email','=',$doctorEmail)->update(array('password'=>$encrypted));
-							if($passwordUpdate){
-								DB::table('doctors')->where('email','=',$doctorEmail)->update(array('otp'=>''));
-								Session::flush('doctorEmail');
-								Session::flush('otp');
-								return Redirect::to('doctorlogin')->with(array('success'=>"Successfully changed the password. Please login here"));
-							}
-							else{
-								return Redirect::to('forgetpassword')->with(array('error'=>"Failed to update your new password"));
-							}
-				}
-				else{
-					return Redirect::to('addnewpassword')->with(array('error'=>"Either password do not match or invalid email"));
-				}
-			}
-			else{
-				return Redirect::to('addnewpassword')->with(array('error'=>"No doctors exist with".$doctorEmail));
-			}
 
-		
+					$passwordUpdate = DB::table('doctors')->where('id_doctor','=',$doctorPatientId)->update(array('password'=>$encrypted));
+					if($passwordUpdate){
+						Session::flush('addnewPasswordTrue');
+						DB::table('doctors')->where('id_doctor','=',$doctorPatientId)->update(array('otp'=>''));
+						
+						return Redirect::to('doctorlogin')->with(array('success'=>"Successfully changed the password. Please login here"));
+					}
+					else{
+						return Redirect::to('doctorforgetpassword')->with(array('error'=>"Failed to update the password"));
+						
+					}
+				}
+
+
+				
+			}
+			
 		
 		
 	}
+
+	public function showPatientAddNewPassword(){
+		$patientAddNewPasswordStatus = Session::get('pateintAddnewPasswordTrue');
+
+		if(!empty($patientAddNewPasswordStatus)){
+			return view('patientaddnewpassword');
+		}
+		else{
+			return Redirect::to('patientlogin');
+		}
+		
+	}
+	public function handlePatientAddNewPassword(){
+		
+			$password 			= Input::get('password');
+			$cPassword 			= Input::get('cpassword');
+			$doctorPatientId 	= Input::get('doctor_patient_id');
+
+		
+			
+
+										
+
+			$patientData = DB::table('patients')
+										->where('id_patient','=',$doctorPatientId)
+										->where('registration_status','=',"1")
+										->first();
+
+			
+			if(!empty($patientData)){
+				
+
+				if($password==$cPassword){
+					$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
+							$iv = mcrypt_create_iv(
+							    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
+							    MCRYPT_DEV_URANDOM
+							);
+
+							$encrypted = base64_encode(
+							    $iv .
+							    mcrypt_encrypt(
+							        MCRYPT_RIJNDAEL_128,
+							        hash('sha256', $key, true),
+							       	$password,
+							        MCRYPT_MODE_CBC,
+							        $iv
+							    )
+							);
+
+
+					$passwordUpdate = DB::table('patients')->where('id_patient','=',$doctorPatientId)->update(array('password'=>$encrypted));
+					
+
+					if($passwordUpdate){
+						DB::table('patients')->where('id_patient','=',$doctorPatientId)->update(array('otp_generated'=>''));
+						
+						return Redirect::to('patientlogin')->with(array('success'=>"Successfully changed the password. Please login here"));
+					}
+					else{
+						return Redirect::to('patientforgetpassword')->with(array('error'=>"Failed to update the password"));
+						
+						
+					}
+				}
+
+
+				
+			}
+			
+		
+		
+	}
+
+
+
+
+	
+
 	public function showDoctorRegister(){
 		//echo "Regsiter page";
 		$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->lists('business_value', 'business_value');
@@ -403,7 +636,7 @@ class LoginController extends Controller {
 
 		$specialization =  DB::table('specialization')->select('specialization_name','id_specialization')->orderBy('specialization_name', 'asc')->lists('specialization_name', 'specialization_name'); 	
 		    	
-
+			
 		   /* if(!in_array('', $gender)){
 		     	 array_unshift($gender, '');
 		    }	
@@ -413,9 +646,7 @@ class LoginController extends Controller {
 		    /*if(!in_array('', $country)){
 		     	 array_unshift($country, '');
 		    } 
-		    if(!in_array('', $state)){
-		     	 array_unshift($state, '');
-		    } 
+		    
 		    if(!in_array('', $city)){
 		     	 array_unshift($city, '');
 		    }	  	*/	
@@ -708,37 +939,7 @@ class LoginController extends Controller {
 		return Redirect::to('patientotpcheck')->with(array('success'=>"An OTP has sent to your registered mobile. Please specify the OTP in below box"));
 	}
 
-	public function showPatientOtpCheck()
-	{
-		return view('patientotpcheck');
-	}
 
-	public function handlePatientOtpCheck(){
-		$otpCode = Input::get('otp_code');
-		
-
-		if(!empty($otpCode)){
-			//OTP exist check
-			$otpExistCheck = DB::table('patients')->where('otp_generated','=',$otpCode)->first();
-			if(!empty($otpExistCheck)){
-				Session::put('otpCode',$otpCode);
-				if(($otpExistCheck->otp_generated==$otpCode) && $otpExistCheck->registration_status==0){
-					return Redirect::to('patientsetnewpassword');
-					
-				}
-				else{
-					return Redirect::to('patientotpcheck')->with(array('error'=>"Invalid OTP / OTP already used"));
-				}
-			}
-			else{
-				return Redirect::to('patientotpcheck')->with(array('error'=>"Invalid OTP"));
-			}
-			
-		}
-		else{
-			return Redirect::to('patientotpcheck')->with(array('error'=>"Please fill the empty field"));
-		}
-	}
 	public function showPatientSetNewPassword(){
 		return view('patientsetnewpassword');
 	}

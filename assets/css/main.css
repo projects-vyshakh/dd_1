@@ -386,7 +386,7 @@ a.bricky:hover {
 	font-size: 25px;
 	min-width: 218px;
 /*	text-align: center;*/
-	/*margin-top: 11px;*/
+	margin-top: 11px;
 }
 .navbar > .container .navbar-brand i, .logo i {
 	font-size: 20px;
@@ -453,10 +453,10 @@ ul.notifications li, ul.todo li, ul.posts li {
 }
 
 .navbar-tools .dropdown-menu > li > a:hover, .navbar-tools .dropdown-menu > li > a:focus, .navbar-tools .dropdown-submenu:hover > a, .navbar-tools .dropdown-submenu:focus > a, .navbar-tools .drop-down-wrapper li a:hover, .navbar-tools .drop-down-wrapper li a:focus {
-	 background-color: #005a7e !important;
+/*	 background-color: #005a7e !important;*/
     background-image: none;
-    border:1px solid #005a7e;
-    color: #fff;
+    border-bottom:1px solid #005a7e;
+   /* color: #fff;*/
     filter: none;
     font-size: 14px;
     text-align: center;
@@ -1313,7 +1313,7 @@ ul.main-navigation-menu > li > a {
 	font-size: 14px;
 	font-weight: 300;
 	margin: 0;
-	padding: 14px 20px 10px 45px;
+	padding: 15px 20px 10px 49px;
 	position: relative;
 	text-decoration: none;
 position: relative;
@@ -1703,7 +1703,7 @@ span.star:before {
 }
 .tab-content {
 	border: 1px solid #DDDDDD;
-	padding: 15px 23px;
+	/*padding: 0 23px;*/
 	position: relative;
 }
 .tabs-below > .nav-tabs {
@@ -4981,65 +4981,51 @@ td.column-right {
 }
 
 /*prajeesh add classes*/
-.box_2 {
-   
+.box_2 {   
      width: 48%;
      float: left;
      margin-top: 30px; 
 }
 .box_2_main {
-	
-	 width: 100%;
+	width: 100%;
     padding-right: 80px;;
-    border-right: 1px solid #c5c5c5;
-  
+    border-right: 1px solid #c5c5c5;  
 }
-
 .box_forget {
    
      width: 60%;
      float: left;
      margin-top: 30px; 
 }
-
 .box_2_main_forget {
 	
 	 width: 100%;
     padding-right: 80px;;
-    border-right: 1px solid #c5c5c5;
-  
+    border-right: 1px solid #c5c5c5; 
 }
 .box_register{
 
      width: 100%;
      margin-top: 30px;
-
 }
 .box_2_register{
-
     width: 80%;
      margin-top: 30px;
      margin: 0 auto;
-
 }
-
  .box-register-inner_2{
 	height: 350px;
 	overflow-x: hidden;
 	overflow-y: scroll;*/
 	padding: 10px 10px 0 10px;
-}
-       
+}       
 .box_admin {
 	
 	margin-top: 70px;
-
  }
  .box_admin .dd_pd_LR_20{
- 	margin: 30px 0;
-
+ 	margin: 30px 0 10px 0;
  }
-
 .inner_wrapper{
 	max-width: 970px;
 	margin: 0 auto;
@@ -5049,7 +5035,7 @@ td.column-right {
 	margin: 35px 10px 26px 0;
 	font-size: 14px;
 	font-weight: 600;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 }
 .login_div2{
 	float: right;
@@ -5097,7 +5083,6 @@ td.column-right {
     background: #428bca;
     color: #fff;
     border-radius: 4px;
-
 }
 .dd_btn_2{
 	display: block;
@@ -5112,7 +5097,6 @@ td.column-right {
     margin-right: 10px;
 }
 .dd_btn_3{
-
     background-color: #f6f6f6;
     border: 1px solid #787878;
     height: 34px;
@@ -5172,7 +5156,6 @@ td.column-right {
 	border-right: 0 none;
 	color: red;	
 }
-
 .dd_right{
 	float: right;
 }
@@ -5660,45 +5643,45 @@ a:hover, a:focus{
 }
 
 .dd_input_icon_patientpersonalinformation{
-   background: rgba(0, 0, 0, 0) url("../images/personal-infermation.png") repeat scroll 0 0 / cover ;
+   background: rgba(0, 0, 0, 0) url("../images/icons/personal_information.svg") repeat scroll 0 0 / cover ;
     display: inline-block;
-    height: 23px;
+    height: 27px;
     left: 13px;
     position: absolute;
-    top: 13px;
-    width: 23px;
+    top: 9px;
+    width: 27px;
  
 }
 .dd_input_icon_Obstetrics{
 
-	background: rgba(0, 0, 0, 0) url("../images/Obstric_History.png") repeat scroll 0 0 / cover ;
+	background: rgba(0, 0, 0, 0) url("../images/icons/obstetrics_history.svg") repeat scroll 0 0 / cover ;
     display: inline-block;
-    height: 23px;
+    height: 27px;
     left: 13px;
     position: absolute;
-    top: 13px;
-    width: 23px;
+    top: 9px;
+    width: 27px;
 
 }
 .dd_input_icon_Medical_History{
-	background: rgba(0, 0, 0, 0) url("../images/medical_history.png") repeat scroll 0 0 / cover ;
+	background: rgba(0, 0, 0, 0) url("../images/icons/medical_history.svg") repeat scroll 0 0 / cover ;
     display: inline-block;
-    height: 23px;
+    height: 27px;
     left: 13px;
     position: absolute;
-    top: 13px;
-    width: 23px;
+    top: 9px;
+    width: 27px;
 
 }
 .dd_input_icon_Previous_Treatments{
 
-	background: rgba(0, 0, 0, 0) url("../images/Prev_Treatment.png") repeat scroll 0 0 / cover ;
+	background: rgba(0, 0, 0, 0) url("../images/icons/previous_treatment.svg") repeat scroll 0 0 / cover ;
     display: inline-block;
-    height: 23px;
+    height: 27px;
     left: 13px;
     position: absolute;
     top: 13px;
-    width: 23px;
+    width: 27px;
 
 }
 
@@ -5730,44 +5713,57 @@ a:hover, a:focus{
     height: 23px;
     left: 13px;
     position: absolute;
-    top: 15px;
+    top: 9px;
     width: 23px;
   
 
 }
 
 .dd_input_icon_Examination{
-   background: rgba(0, 0, 0, 0) url("../images/examination.png") repeat scroll 0 0 / cover ;
+   background: rgba(0, 0, 0, 0) url("../images/icons/examination.svg") repeat scroll 0 0 / cover ;
     display: inline-block;
-    height: 23px;
+    height: 27px;
     left: 13px;
     position: absolute;
-    top: 13px;
-    width: 23px;
+    top: 9px;
+    width: 27px;
   
 }
 .dd_input_icon_Lab_Data{
-   background: rgba(0, 0, 0, 0) url("../images/lab_icon.png") repeat scroll 0 0 / cover ;
+   background: rgba(0, 0, 0, 0) url("../images/icons/lab_data.svg") repeat scroll 0 0 / cover ;
     display: inline-block;
-    height: 21px;
+    height: 27px;
     left: 13px;
     position: absolute;
     top: 13px;
-    width: 21px;
+    width: 27px;
   
 
 }
 .dd_input_icon_Diagnosis{
-   background: rgba(0, 0, 0, 0) url("../images/Diagnosis_icon.png") repeat scroll 0 0 / cover ;
+   background: rgba(0, 0, 0, 0) url("../images/icons/diagnosis.svg") repeat scroll 0 0 / cover ;
     display: inline-block;
-    height: 23px;
+    height: 27px;
     left: 13px;
     position: absolute;
     top: 13px;
-    width: 23px;
+    width: 27px;
 
 
 }
+.dd_dashboard{
+   background: rgba(0, 0, 0, 0) url("../images/icons/dashboard.svg") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 27px;
+    left: 13px;
+    position: absolute;
+    top: 13px;
+    width: 27px;
+
+
+}
+
+
 svg {
 
   fill: currentColor;
@@ -5803,6 +5799,8 @@ svg {
     color: #fff;
     text-decoration: none;
     font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.7);
+    padding: 5px 10px;
 }
 .login_div a:hover, .login_div a:focus {
     color: #428bca;
@@ -5844,24 +5842,24 @@ svg {
 }
 .dd_input_icon_Management{
 
-	background: rgba(0, 0, 0, 0) url("../images/Management_icon.png") repeat scroll 0 0 / cover ;
+	background: rgba(0, 0, 0, 0) url("../images/icons/management.svg") repeat scroll 0 0 / cover ;
     display: inline-block;
-    height: 23px;
+    height: 30px;
     left: 13px;
     position: absolute;
-    top: 13px;
-    width: 23px;
+    top: 9px;
+    width: 30px;
 
 }
 .dd_input_icon_Medicine{
 
-	background: rgba(0, 0, 0, 0) url("../images/Medicine_icon.png") repeat scroll 0 0 / cover ;
+	background: rgba(0, 0, 0, 0) url("../images/icons/prescription.svg") repeat scroll 0 0 / cover ;
     display: inline-block;
-    height: 23px;
+    height: 30px;
     left: 13px;
     position: absolute;
-    top: 13px;
-    width: 23px;
+    top: 9px;
+    width: 30px;
 
 }
 .dd_menu_a{
@@ -6192,7 +6190,7 @@ ul.dd_menu_bd > li:first-child {
 
 }
 .navbar-inverse .nav > li:first-child a {
-	border-left: 1px solid #ccc;
+	/*border-left: 1px solid #ccc;*/
 	list-style: none;
 }
    
@@ -6379,8 +6377,8 @@ padding-bottom: 0;
     font: inherit;
     margin: 0;
     padding: 5px 2px;
-    border-radius: 4px;
-    border:1px solid #cbcbcb;
+    border-radius: 0;
+    border:1px solid #787878;
     width: 66px;
 }
 .drugs_row input.dd_input_mini {
@@ -6439,37 +6437,41 @@ padding-bottom: 0;
 	float: right;
 }
 .pricon {
-    background-image: url("../images/left-nav-sprite-v3.png");
-    height: 20px;
-    width: 19px;
+   background-image: url("../images/left-nav-sprite-v1.png");
+    float: left;
+    height: 26px;
+    margin-right: 5px;
+    margin-top: 2px;
+    width: 26px;
 }
+
  .pricon.icon-pr-prescriptions {
-    background-position: 1px -93px;
+    background-position:-3px -300px;
 }
-#diagnosis-menu:hover .pricon.icon-pr-prescriptions {
-    background-position: -18px -93px;
+#presc-top-menu-li:hover .pricon.icon-pr-prescriptions {
+    background-position:-3px -300px;
 }
 #presc-top-menu-li.active #prescription-menu  .pricon.icon-pr-prescriptions {
-    background-position: -38px -93px;
+     background-position: -35px -300px;
 }
  .pricon.icon-pr-Diagnosis {
-    background-position: 0px -345px;
+    background-position: -3px -231px;
 }
 #diagnosis-menu:hover .pricon.icon-pr-Diagnosis {
-    background-position: -19px -345px;
+    background-position:-3px -231px;
 }
 #diagnosis-top-menu-li.active #diagnosis-menu .pricon.icon-pr-Diagnosis {
-    background-position: 23px -345px;
+     background-position: 32px -231px;
 }
  .pricon.icon-pr-patient {
-    background-position: -1px -365px;
+    background-position: -3px -265px;
 }
 #patient-menu:hover .pricon.icon-pr-patient {
-    background-position: -1px -365px;
+    background-position: -3px -265px;
 }
 
 #patient-top-menu-li.active #patient-menu .pricon.icon-pr-patient {
-    background-position: 23px -365px;
+    background-position: -35px -265px;
 }
 .dd_print{
 	   background-color: #428bca;
@@ -6488,6 +6490,7 @@ padding-bottom: 0;
  /*   position: absolute;
     right: -56px;*/
     text-align: right;
+    border: 1px solid #787878;
 }
 .dd_addmore_0_2{
 	margin-right: 10px;
@@ -6645,7 +6648,7 @@ height: auto;
 .doctorlogin_main{
 	float: left;
 	position: relative;
-	margin-right: 50px;
+	/*margin-right: 50px;*/
 }
 .doctor_login {
 	margin-top:20px;
@@ -6691,9 +6694,9 @@ height: auto;
 .dd_login_mg_30 {
 	margin-top: 20px;
 }
-.dd_dummy a,span{
+/*.dd_dummy a,span{
 	font-size: 14px;
-}
+}*/
 .dd_patient_ad{
 	float: left;
 }
@@ -6716,6 +6719,7 @@ height: auto;
 	background-color:#418bca;
 	color: #fff;
 	border: none;
+
 }
 .dd_year .form-control option{
 	background-color:#fff;
@@ -6798,6 +6802,10 @@ height: auto;
     position: relative;
     font-size: 14px;
 }
+.dd_sidetab{
+	margin-right: 30px;
+} 
+
 .thumbnail {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -6845,6 +6853,12 @@ table.dataTable thead th, table.dataTable thead td {
 
 }
 .tab-content .col-sm-12{
+	font-size: 25px;
+	text-align: left;
+	color: #333333;
+
+}
+.tab-content .col-sm-12 .form-horizontal{
 	font-size: 25px;
 	text-align: center;
 	color: #e7383d;
@@ -7018,9 +7032,7 @@ table.dataTable thead th, table.dataTable thead td {
 
 }
  .dd_agree p ,a{
-	font-size: 16px;
-
-
+	font-size: 15px;
 }
 .dd_fa_icons{
 	float: right !important;
@@ -7074,10 +7086,98 @@ table.dataTable thead th, table.dataTable thead td {
 	background: #fff;
 	border:1px solid #cbcbcb;
 }
-.core-box .heading .dd_abs{
-	font-size: 15px;
-
-}
 .dd_btn_home_2 .dd_btn_3:hover {
     background-color: #266382;
+}
+.dd_alert_full{
+	width: 100%;
+	font-size: 16px;
+	margin-top: 20px;
+
+}
+.dd_no_prev_img{
+	background: hsla(0, 0%, 0%, 0) url("../images/no-prev-treatment.jpg") repeat scroll center center / cover ;
+    display: table;
+    height: 430px;
+    margin: 0 auto;
+    text-align: center;
+    width: 300px;
+    margin-top: 20px;
+    border-radius: 30px;
+}
+.dd_padding_left_50{
+	padding-left: 50px !important;
+}
+.dd_myprofile {
+    background: hsla(0, 0%, 0%, 0) url("../images/icons/my_profile.svg") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 25px;
+    left: 13px;
+    position: absolute;
+    top: 9px;
+    width: 25px;
+}
+.dd_change_password {
+    background: hsla(0, 0%, 0%, 0) url("../images/icons/change_password.svg") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 25px;
+    left: 13px;
+    position: absolute;
+    top: 9px;
+    width: 25px;
+}
+.dd_logout {
+    background: hsla(0, 0%, 0%, 0) url("../images/icons/logout.svg") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 25px;
+    left: 13px;
+    position: absolute;
+    top: 9px;
+    width: 25px;
+}
+
+.patient_settings li:hover a .dd_myprofile_hover.Log_Out {
+    background: hsla(0, 0%, 0%, 0) url("../images/icons/logout_2.svg") repeat scroll 0 0 / cover !important;
+    display: inline-block;
+    height: 25px;
+    left: 13px;
+    position: absolute;
+    top: 9px;
+    width: 25px; 
+}
+
+.praji_nav .nav > li > a {
+    display: block;
+    padding: 15px;
+    position: relative;
+}
+.dd_patient_add_pd_left{
+	padding-left: 30px !important;
+}
+.dd_font_left{
+	text-align: left;
+}
+table.dataTable thead .sorting::after {
+    content: none !important;
+    opacity: 0.2;
+}
+table.dataTable thead .sorting_asc::after {
+    content: none !important;
+}
+.dd_dummy_year .dd_year .form-control {
+	 margin-left: 6px;
+    width: 99px;
+
+}
+.dd_prev_margine{
+	margin: -12px;
+}
+.dd_border_none{
+	border: 0;
+}
+.dd_prev_margine  .nav-tabs{
+	margin-right: 30px;
+}
+.dd_regi_pd{
+	padding-top: 15px;
 }

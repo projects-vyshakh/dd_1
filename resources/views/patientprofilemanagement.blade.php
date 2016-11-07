@@ -44,7 +44,7 @@ else{
 			<div class="tabbable">
 				<div class="row">
 					<div class="col-sm-12">
-						<div class="form-group">
+						<div class="form-group dd_patient_dd">
 							<div class="col-sm-2">
 								<div class="user-image">
 									<div class="fileupload-new thumbnail">
@@ -59,7 +59,7 @@ else{
 								</div>
 							</div>
 							
-							<div class="col-sm-10">
+							<div class="col-sm-10 dd_patient_add_pd_left">
 								<div class="table table-condensed table-hover">
 									<div class="dd_personal">
 										<div class="dd_personal_main">
@@ -67,7 +67,7 @@ else{
 											<div class="dd_personal_name"><font color="#005a7e">{{$patientName}} </div>
 											<!-- <div class="dd_personal_id dd_personal_mg_top_Id">{{$patientData->id_patient}}</div> -->
 										</div>
-										<div class="dd_personal_id dd_personal_mg_top_Id" ><strong>ID : <font color="#005a7e">{{$patientData->id_patient}}</font></strong></div>
+										<div class="dd_personal_id dd_personal_mg_top_Id" ><strong>Patient ID: <font color="#005a7e">{{$patientData->id_patient}}</font></strong></div>
 										<div class="dd_personal_main dd_personal_mg_top">
 											@if(!empty($patientData->phone))
 											<div class="dd_personal_phone"><i class="fa fa-phone-square" aria-hidden="true"></i>
@@ -89,13 +89,15 @@ else{
 											</div>
 										</div>
 										<div class="col-sm-12 dd_mg_personal_15px dd_personal_mg_top">
-											<div class="dd_personal_gender">Gender :{{$patientData->gender}}</div>
-											<div class="dd_personal_gender">Age :{{$patientData->age}}</div>
-											<div class="dd_personal_gender">Maritial Status :{{$patientData->maritial_status}}</div>
+											<div class="dd_personal_gender">Gender: {{$patientData->gender}}</div>
+											<div class="dd_personal_gender">Age: {{$patientData->age}}</div>
+											<div class="dd_personal_gender">Maritial Status: {{$patientData->maritial_status}}</div>
 										</div>
 									</div>
 								</div>
 							</div>
+
+							<div class="dd_clear"></div>
 						</div>	
 					</div> 
 					<div class="form-group">
@@ -144,7 +146,7 @@ else{
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="col-sm-12">
-				<h3>Consultant Details</h3>
+				<h3>Consultation Details</h3>
 				
 			</div>
 		</div>

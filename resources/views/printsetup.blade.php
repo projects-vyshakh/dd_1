@@ -235,7 +235,7 @@ if(!empty($printData)){
 	<script>
 		$(document).ready(function() {
 			Main.init();
-			patientElements.init();
+			//patientElements.init();
 			generalSettings.init();
 			
 

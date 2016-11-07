@@ -24,7 +24,7 @@ body, .main-container, .footer, .main-navigation, ul.main-navigation-menu > li >
 }
 
 .navbar-inverse .nav > li > a {
-	 border-right: 1px solid #cbcbcb;
+	/* border-right: 1px solid #cbcbcb;*/
     color: #5e5e5e;
     font-family: open sans;
     font-weight: 300;

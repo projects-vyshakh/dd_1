@@ -77,7 +77,7 @@ var Login = function () {
         });
     };
     var runLoginValidator = function () {
-        var form = $('.form-login');
+        var form = $('#login');
         var errorHandler = $('.errorHandler', form);
  
 
@@ -113,8 +113,11 @@ var Login = function () {
             },
             messages: {
                 email : "Please type a valid email",
-                password  : "Please type correct password",
-                //cpassword : {"Password not matching"},
+                password  : "Please type a valid password",
+                cpassword : {
+                    required : "Please type a valid confirm password",
+                    equalTo : "Password must be same as above",
+                },
                 id_patient : "Please type valid Patient ID",
                 mobile : "Please type a valid mobile number",
                 otp_code : "Please type a valid OTP",
@@ -129,42 +132,7 @@ var Login = function () {
             }
         });
     };
-    var runForgotValidator = function () {
-        var form2 = $('.form-forgot');
-        var errorHandler2 = $('.errorHandler', form2);
-        form2.validate({
-            rules: {
-                email: {
-                    required: true
-                },
-                 password: {
-                    //minlength: 6,
-                    required: true,
-                },
-                cpassword : {
-                    required : true,
-                    equalTo : "#password",
-                    //minlength: 6,
-                },
-                otp : {
-                    required : true,
-                }
-            },
-            messages: {
-                //email : "Please specify valid Email",
-                password  : "Please specify a password",
-                /*cpassword : "Please specify a passwordg",*/
-                
-            },    
-            submitHandler: function (form) {
-                errorHandler2.hide();
-                form2.submit();
-            },
-            invalidHandler: function (event, validator) { //display error alert on form submit
-                errorHandler2.show();
-            }
-        });
-    };
+   
     var runRegisterValidator = function () {
         var form3 = $('.form-register');
         var errorHandler3 = $('.errorHandler', form3);
@@ -218,7 +186,125 @@ var Login = function () {
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
         return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     };
-    
+
+
+
+    var runDoctorSignUpValidator = function () {
+
+        $( "#country option:selected" ).val('101').text('India');
+        /*Dynamically adding state responding to country and also keeping selected value of state*/
+            var stateHidden = $('#state-hidden').val();
+            var countryId  = $( "#country option:selected" ).val();
+            
+            $.ajax({
+                type: "POST",
+                url: "getState",
+                data: "country_id="+ countryId ,
+                success: function(data){
+                    $('#state').empty();
+                    $('#state').append('<option value="0"></option>');
+                    for(var s=0;s<data.length;s++){
+
+                        $('#state').append('<option value='+data[s].state_name+'>'+data[s].state_name+'</option>');
+                        //$('#state').val(data[0].state_name).prop("selected", true);
+
+                    }
+                }
+            });
+
+            $( "#country").change(function(){
+                var countryId  = $( "#country option:selected" ).val();
+                $.ajax({
+                type: "POST",
+                url: "getState",
+                data: "country_id="+ countryId ,
+                success: function(data){
+                    $('#state').empty();
+                    $('#state').append('<option value="0"></option>');
+                    for(var s=0;s<data.length;s++){
+
+                        $('#state').append('<option value='+data[s].state_name+'>'+data[s].state_name+'</option>');
+                        //$('#state').val("Uttar Pradhesh").attr("selected", "selected");
+                        
+                       
+                    }
+                }
+            });
+            })
+
+
+        var form = $('#doctor-signup');
+        var errorHandler = $('.errorHandler', form);
+ 
+        $.validator.addMethod("stateNotEquals", function(value, element, arg){
+            
+          return arg!= value;
+        }, "Please select a state");
+
+        form.validate({
+            rules: {
+                email: {
+                    required: true,
+                    email :true
+                },
+                password: {
+                    //minlength: 6,
+                    required: true
+                },
+                cpassword: {
+                    //minlength: 6,
+                    required: true,
+                    equalTo : "#password",
+                },
+                first_name : {
+                    required : true,
+                    //minlength : 3
+                },
+                last_name : {
+                    required : true,
+                    //minlength : 3
+                },
+                phone : {
+                    required : true,
+                    number : true,
+                },
+                state : {
+                    stateNotEquals : 0 ,
+                },
+
+                
+            },
+            messages: {
+                email : "Please type a valid email",
+                password  : "Please type a valid password",
+                cpassword : {
+                    required : "Please type a valid confirm password",
+                    equalTo : "Password must be same as above",
+                },
+                first_name : {
+                    required : "Please type your first name",
+                    //minlength : 3
+                },
+                last_name : {
+                    required : "Please type your last name",
+                    //minlength : 3
+                },
+                phone : {
+                    required : "Please type a valid mobile number",
+                    number : "Please type a valid mobile number",
+                },
+                
+            },    
+            submitHandler: function (form) {
+                errorHandler.hide();
+                form.submit();
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                errorHandler.show();
+            }
+        });
+    };
+  
     
     return {
         //main function to initiate template pages
@@ -226,8 +312,8 @@ var Login = function () {
             runLoginButtons();
             runSetDefaultValidation();
             runLoginValidator();
-            runForgotValidator();
-            runRegisterValidator();
+            runDoctorSignUpValidator();
+            
         }
     };
 }();

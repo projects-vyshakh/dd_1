@@ -184,7 +184,11 @@ if(!empty($doctorData)){
 									{!! Form::label('refferedby', 'Referred By', $attributes = array('class'=>'col-sm-4 '));  !!}
 									<div class="col-sm-8">
 										<span class="">
-											{!! Form::text('refferedby',$refferedBy, $attributes = array('class'=>'form-control', 'placeholder' => ''));  !!}
+											@if(!empty($refferedBy))
+												{!! Form::text('refferedby',$refferedBy, $attributes = array('class'=>'form-control', 'placeholder' => ''));  !!}
+											@else
+												{!! Form::text('refferedby',Input::old('refferedby'), $attributes = array('class'=>'form-control', 'placeholder' => ''));  !!}
+											@endif
 										</span>
 									</div>
 								</div>

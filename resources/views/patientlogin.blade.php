@@ -85,7 +85,7 @@
 	<!-- start: BODY -->
 	<?php
 		$currentPath = Route::getCurrentRoute()->getPath();
-		Session::put('currentPath',$currentPath);
+		//echo $currentPath;
 	?>
 	<body style="background-color:#f9f9f9">
 		<div class=" navbar-fixed-top resize-login dd_login_header"><!-- navbar-fixed-top -->
@@ -100,15 +100,15 @@
 							</div>
 								<div class="login_div">
 								<div class="doctorlogin_main">
-									<span class="doctor_login"><img src="assets/images/doctor_icon.png"></span>
+									<!-- <span class="doctor_login"><img src="assets/images/doctor_icon.png"></span> -->
 
-										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #a5eefd " @endif>Doctor Login</a>&nbsp;  &nbsp;
+										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #a9f2ff" @endif>Doctor Login</a>&nbsp;  &nbsp;
 
 								</div>
 		        		 		<div class="patientlogin_main"> 		
-		        		 		 	<span class="patient_login"><img src="assets/images/patient_icon.png">
-		        		 		 	</span>	        		 		 	
-		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #a5eefd" @endif>
+		        		 		 	<!-- <span class="patient_login"><img src="assets/images/patient_icon.png">
+		        		 		 	</span>	 -->        		 		 	
+		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #a9f2ff" @endif>
 		        		 		 		Patient Login
 		        		 		 	</a>
 		        		 		</div>
@@ -133,39 +133,94 @@
 	        <!-- Add Arrows -->
 	  <!--       <div class="swiper-button-next swiper-button-white"></div>
 	        <div class="swiper-button-prev swiper-button-white"></div> -->
-	        <div class="inner_wrapper_3 ">
-				<div class="dd_doctor_login_main_hd">
-					<span>Sign in or create an account</span></div>
-						<div class="doctor_login_main">
-	       					<div class="box_2">
-					 			<div class="box_2_main">
-			        			<!-- <div class="main-login"> -->
-			        				<div>
-										<div class="dd_logo_responsive">
-											<img src="assets/images/logo-mob.png" alt="">	        	
-										</div>
-				        				<div class="dd_drlogin_responsive">
-											<div class="login_div2">
-												<div class="doctorlogin_main2">								
-													<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" style="color:#c7393d; " @endif>Doctor Login</a>&nbsp; | &nbsp;
-												</div>
-												<div class="patientlogin_main2"> 		
-		        		 		         		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" style="color:#c7393d " @endif>
-						        		 		 		Patient Login
-						        		 		 	</a>
-						        		 		</div>
-					        		 		</div>
-				        				</div>
+	        <div class="inner_wrapper_3">
 
-										<div class="logo">
-						        			<span class="login_HD dd_signfont">Sign into your account</span>
-						        		</div>
+	        <div class="dd_doctor_login_main_hd">
 
-						        		 
+	        <span>Sign in or create an account</span></div>
+
+	        <div class="doctor_login_main">
+	       
+
+					<div class="box_2">
+					 <div class="box_2_main">
+			        	<!-- <div class="main-login"> -->
+			        	<div>
+
+			        	<div class="dd_logo_responsive">
+
+				        		<img src="assets/images/logo-mob.png" alt="">			        		
+				        	</div>
+				        	<div class="dd_drlogin_responsive">
+
+				        				<div class="login_div2">
+								<div class="doctorlogin_main2">								
+
+										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+
+								</div>
+		        		 		<div class="patientlogin_main2"> 		
+		        		 		         		 		 	
+		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
+		        		 		 		Patient Login
+		        		 		 	</a>
+		        		 		</div>
+	        		 		</div>
+				        	
+				        			        		
+				        	</div>
+
+
+			   
+
+
+			        		<div class="logo">
+			        			<span class="login_HD dd_signfont">Sign into your account</span>
+			        		</div>
+
+			        		<div class=" dd_relative">
+		                        <div class="heading ">
+		                              <?php $error = Session::get('error');
+		                                $success = Session::get('success');
+		                                Session::forget('error');
+		                                Session::forget('success');
+		                               
+		                              ?>
+		                              @if(!empty($error))
+		                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
+		                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+		                                          {{$error}}
+		                                </div>
+		                              @elseif(!empty($success))
+		                                <div class="dd_alert_2 display-none" style="display: block;">
+		                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+		                                          {{$success}}
+		                                </div>
+		                              @endif
+		                                    
+		                        </div>
+		                    </div> 
 			        		<div class="box-login " style="display: block;">
 			        			<div class="row">
 			        				<div class="col-sm-12">
-										
+										<?php 
+											$error = Session::get('error');
+								            $success = Session::get('success');
+							                Session::forget('error');
+							                Session::forget('success');
+							        
+								        ?>
+							          	@if(!empty($error))
+								            <div class="alert alert-danger display-none" style="display: block;">
+								              <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+								                {{$error}}
+								            </div>
+							          	@elseif(!empty($success))
+								            <div class="alert alert-success display-none" style="display: block;">
+								              <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+								                {{$success}}
+								            </div>
+							          	@endif
 			        					{!! Form::open(array('route' => 'handlePatientLogin', 'role'=>'form', 'id'=>'login', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
 					        				<div class="form-group">
 												<div class="col-sm-12 dd_login">
@@ -183,40 +238,15 @@
 
 													</span>
 												</div>
-											</div>
-
-											<div class=" dd_relative">
-						                        <div class="heading ">
-						                              <?php $error = Session::get('error');
-						                                $success = Session::get('success');
-						                                Session::forget('error');
-						                                Session::forget('success');
-						                               
-						                              ?>
-						                              @if(!empty($error))
-						                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
-						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-						                                          {{$error}}
-						                                </div>
-						                              @elseif(!empty($success))
-						                                <div class="dd_alert_2 display-none" style="display: block;">
-						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-						                                          {{$success}}
-						                                </div>
-						                              @endif
-						                                    
-						                        </div>
-					                    	</div>
-
+					        				</div>
 					        				<div class="form-group dd_mg_B_10">
 					        					<div class="col-sm-12 dd_mg_B_T_10">
-
 													<span class="input-icon ">
 														<button type="submit" class="btn btn-primary btn-block dd_btn_new">Login</button>
 													</span>
 												</div>
 												<div class="col-sm-12">
-													<p><a href="forgetpassword" class="dd_textalign_center dd_16px">Forgot Password?</a></p>
+													<p><a href="patientforgetpassword" class="dd_textalign_center dd_16px">Forgot Password?</a></p>
 												</div>
 					        				</div>
 					        			<!-- 	<div class="form-group dd_mg_B_10">
@@ -246,17 +276,13 @@
 
 
 			        		<div class="logo">
-			        			<span class="login_HD dd_signfont">New to Doctors Diary?</span>
+			        			<span class="login_HD dd_signfont">New to Doctor's Diary?</span>
 			        		</div>
-
-
-						<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
-												<!-- <span class="dd_color_light_bl">New User ?</span> -->
-													<span class="input-icon ">
-														<button type="submit" class="btn btn-primary btn-block dd_btn_new">
-														<a href="doctorlogin" class=""> Register Now</a>
-														</button>
-													</span>
+							<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
+								<span class="input-icon ">
+									<a href="doctorsignup" class="btn btn-primary btn-block dd_btn_new dd_patient_reg patient-register-btn dd_regi_pd"> Register Now</a>
+														
+								</span>
 						</div>
 						
 

@@ -15,6 +15,24 @@ class DBUtils {
   
     	return $password;
   	}
+
+  	//Used in forget password
+  	public static function generate_otp_forgetpassword($length = 8) {
+	    $alphabets = range('A','Z');
+	    $numbers = range('0','9');
+	    //$additional_characters = array('_','.');
+	    $final_array = array_merge($alphabets,$numbers);
+	         
+	    $password = '';
+	  
+	    while($length--) {
+	      $key = array_rand($final_array);
+	      $password .= $final_array[$key];
+	    }
+  
+    	return $password;
+  	}
+  	
   	public static function generate_otp($length = 4) {
 	    $length = 4;
    		$numbers = range('0','9');

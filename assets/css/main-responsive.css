@@ -35,10 +35,10 @@
 		margin-left: -375px !important;
 	}
 	.main-content {
-		margin-left: 35px !important;
+		margin-left: 47px !important;
 	}
 	.main-navigation {
-		width: 35px !important;
+		width: 47px !important;
 	}
 	ul.main-navigation-menu > li:first-child > a {
 		border-top: none !important;
@@ -486,13 +486,13 @@
 @media (min-width: 768px) {
 	.main-navigation {
 		position: absolute;
-		width: 235px;
+		width: 237px;
 	}
 	.navbar-collapse.in {
 		overflow-y: visible;
 	}
 	.main-content {
-		margin-left: 235px;
+		margin-left: 237px;
 	}
 	.page-full-width .main-content {
     	margin-left: 0 !important;

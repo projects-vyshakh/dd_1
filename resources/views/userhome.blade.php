@@ -6,7 +6,7 @@
     {!!Html::style('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')!!}
 
 @stop
-@extends('layouts.master')
+@extends('layouts.master',['patientName'=>"Vyshakh"])
 <style>
 	.loader 
 	{

@@ -2013,6 +2013,26 @@ class DoctorController extends Controller {
 
 	    	DB::table('symptoms')->insert($newSymptomsArray);
 
+
+	    	//Adding Diseasess
+	    	$newDiseasesArray = array();
+	    	$diseasesExist =  DB::table('diseases')->orderBy('disease_name')->lists('disease_name');
+	    	
+	    	foreach($diseases as $index=>$diseasesVal){
+	    		
+	    		if(in_array($diseasesVal, $diseasesExist)){
+
+	    		}
+	    		else{
+	    			$insertData = array('disease_name'=>$diseasesVal);
+	    			array_push($newDiseasesArray,$insertData);
+	    		}
+	    	}
+
+	    	DB::table('diseases')->insert($newDiseasesArray);
+
+
+
 	    			
 	    	if(!empty($diagExistCheck)){
 	    		$diagData = array('diag_symptoms'=>json_encode($symptoms),
@@ -2369,11 +2389,13 @@ class DoctorController extends Controller {
 			    	if($printData=="printTrue"){
 			    		if(in_array(1, $flagArray)){
 				    		if($defaultCount>$extraCount){
+				    			//echo "Inside Default>extra";
 				    			$prescriptionSave = DB::table('prescription')->insert($multi);
 				    			$pdfFileName = $this->patientPrescPrint();
 				    			return $pdfFileName;
 				    		}
 				    		else{
+				    			//echo "Default<extra";
 				    			$pdfFileName = $this->patientPrescPrint();
 				    			return $pdfFileName;
 				    		}

@@ -229,16 +229,16 @@ var patientElements = function (dosageUnit) {
                 
             },
             messages: {
-                first_name  : "Please specify first name",
-                last_name   : "Please specify last name",
-                dob         : "Please specify date of birth",
-                age         : "Please specify age",
-               /* house       : "Please specify house name/no",
-                street      : "Please specify street",*/
-                country     : "Please specify country",
-                state       : "Please specify state",
-                city        : "Please specify city",
-                phone       : "Please specify phone number",
+                first_name  : "Please type first name",
+                last_name   : "Please type last name",
+                dob         : "Please type date of birth",
+                age         : "Please type age",
+               /* house       : "Please type house name/no",
+                street      : "Please type street",*/
+                country     : "Please type country",
+                state       : "Please type state",
+                city        : "Please type city",
+                phone       : "Please type phone number",
                 email   : {
                     email: "Your email address must be in the format of name@domain.com"
                 },
@@ -294,24 +294,25 @@ var patientElements = function (dosageUnit) {
         $.validator.addMethod("maritialStatusNotEquals", function(value, element, arg){
             
           return arg != value;
-        }, "Please specify maritial status");
+        }, "Please type maritial status");
         $.validator.addMethod("valueNotEquals", function(value, element, arg){
             
           return arg != value;
-        }, "Please specify gender");
+        }, "Please type gender");
         $.validator.addMethod("countryNotEquals", function(value, element, arg){
           return arg != value;
-        }, "Please specify country");
+        }, "Please type country");
         $.validator.addMethod("stateNotEquals", function(value, element, arg){
           return arg != value;
-        }, "Please specify state");
+        }, "Please type state");
         $.validator.addMethod("cityNotEquals", function(value, element, arg){
           return arg != value;
-        }, "Please specify city");
+        }, "Please type city");
 
         $.validator.addMethod("regex",function(value,element,regexp){
-                var re= new RegExp(regexp);
-                return this.optional(element) || re.test(value);
+                //var re= new RegExp(regexp);
+               // return this.optional(element) || re.test(value);
+               //alert(value);
         },"Enter only characters from A-z");
 
         form2.validate({
@@ -391,20 +392,20 @@ var patientElements = function (dosageUnit) {
                 
             },
             messages: {
-                /*first_name  : "Please specify first name",*/
-                /*last_name   : "Please specify last name",*/
-                aadhar_no   : "Please specify valid Aadhar No (UID must be 12 digit)",
-                dob         : "Please specify a valid year between 1900 -"+new Date().getFullYear().toString(),
-                age         : "Please specify valid age",
-                maritial_status : "Please specify maritial status",
-               /* house       : "Please specify house name/no",
-                street      : "Please specify street",*/
-                country     : "Please specify country",
-                state       : "Please specify state",
-                city        : "Please specify city",
-                phone       : "Please specify valid phone number",
+                /*first_name  : "Please type first name",*/
+                /*last_name   : "Please type last name",*/
+                aadhar_no   : "Please type valid Aadhar No (UID must be 12 digit)",
+                dob         : "Please type a valid year between 1900 -"+new Date().getFullYear().toString(),
+                age         : "Please type valid age",
+                maritial_status : "Please type maritial status",
+               /* house       : "Please type house name/no",
+                street      : "Please type street",*/
+                country     : "Please type country",
+                state       : "Please type state",
+                city        : "Please type city",
+                phone       : "Please type valid phone number",
                 email   : {
-                    email: "Please specify a valid email address"
+                    email: "Please type a valid email address"
                 },
                 
             },
@@ -496,8 +497,8 @@ var patientElements = function (dosageUnit) {
                 
             },
             messages: {
-                menarche    : "Please specify a valid number",
-                menopause   : "Please specify a valid number",
+                menarche    : "Please type a valid number",
+                menopause   : "Please type a valid number",
                 
                 
             },
@@ -687,7 +688,7 @@ var patientElements = function (dosageUnit) {
 
                 return false;
            }
-        }, "Please specify lmp flow");   
+        }, "Please type lmp flow");   
 */
        /* $.validator.addMethod("checkEmptyLmpFlow", function(value, element, arg){
             console.log("Arg"+arg);
@@ -698,7 +699,7 @@ var patientElements = function (dosageUnit) {
            if(arg==''){
                 return true;
            }
-        }, "Please specify lmp flow");  */
+        }, "Please type lmp flow");  */
        
 
         form2.validate({
@@ -739,15 +740,15 @@ var patientElements = function (dosageUnit) {
             },
             messages: {
                
-                married_life  : "Please specify a valid number",
-                gravida : "Please specify a valid number",
-                para : "Please specify a valid number",
-                living : "Please specify a valid number",
-                abortion : "Please specify a valid number",
-                'days[]' : "Please specify a valid number",
-                'cycle[]' : "Please specify a valid number",
-                'years[]' : "Please specify a valid number",
-                'weeks[]' : "Please specify a valid number",
+                married_life  : "Please type a valid number",
+                gravida : "Please type a valid number",
+                para : "Please type a valid number",
+                living : "Please type a valid number",
+                abortion : "Please type a valid number",
+                'days[]' : "Please type a valid number",
+                'cycle[]' : "Please type a valid number",
+                'years[]' : "Please type a valid number",
+                'weeks[]' : "Please type a valid number",
                 
                
             },
@@ -913,16 +914,16 @@ var patientElements = function (dosageUnit) {
             },
             messages: {
                
-                weight  : "Please specify a valid number",
-                height : "Please specify a valid number",
-                para : "Please specify a valid number",
-                living : "Please specify a valid number",
-                abortion : "Please specify a valid number",
-                'days[]' : "Please specify a valid number",
-                'cycle[]' : "Please specify a valid number",
-                'years[]' : "Please specify a valid number",
-                'weeks[]' : "Please specify a valid number",
-                 gestational_age : "Please specify a valid number",
+                weight  : "Please type a valid number",
+                height : "Please type a valid number",
+                para : "Please type a valid number",
+                living : "Please type a valid number",
+                abortion : "Please type a valid number",
+                'days[]' : "Please type a valid number",
+                'cycle[]' : "Please type a valid number",
+                'years[]' : "Please type a valid number",
+                'weeks[]' : "Please type a valid number",
+                 gestational_age : "Please type a valid number",
                
             },
             invalidHandler: function (event, validator) { //display error alert on form submit
@@ -1035,11 +1036,11 @@ var patientElements = function (dosageUnit) {
             
             messages: {
                
-                'drugs[]'  : "Please specify drug name", 
-                'dosage[]' :   "Please specify dosage",
-                'start_date[]'    :    "Please specify medicine start date",
+                'drugs[]'  : "Please type drug name", 
+                'dosage[]' :   "Please type dosage",
+                'start_date[]'    :    "Please type medicine start date",
                  /*'morning' : "Please enter a valid number",*/
-                 /*'followup_date' : "Please specify followup date",*/
+                 /*'followup_date' : "Please type followup date",*/
                
             },
             invalidHandler: function (event, validator) { //display error alert on form submit
@@ -1388,16 +1389,16 @@ var patientElements = function (dosageUnit) {
                 
             },
             messages: {
-                old_password  : "Please specify old password",
-                new_password   : "Please specify new password",
-                dob         : "Please specify date of birth",
-                age         : "Please specify age",
-               /* house       : "Please specify house name/no",
-                street      : "Please specify street",*/
-                country     : "Please specify country",
-                state       : "Please specify state",
-                city        : "Please specify city",
-                phone       : "Please specify phone number",
+                old_password  : "Please type old password",
+                new_password   : "Please type new password",
+                dob         : "Please type date of birth",
+                age         : "Please type age",
+               /* house       : "Please type house name/no",
+                street      : "Please type street",*/
+                country     : "Please type country",
+                state       : "Please type state",
+                city        : "Please type city",
+                phone       : "Please type phone number",
                 email   : {
                     email: "Your email address must be in the format of name@domain.com"
                 },
@@ -1476,16 +1477,16 @@ var patientElements = function (dosageUnit) {
                 
             },
             messages: {
-                old_password  : "Please specify old password",
-                new_password   : "Please specify new password",
-                dob         : "Please specify date of birth",
-                age         : "Please specify age",
-               /* house       : "Please specify house name/no",
-                street      : "Please specify street",*/
-                country     : "Please specify country",
-                state       : "Please specify state",
-                city        : "Please specify city",
-                phone       : "Please specify phone number",
+                old_password  : "Please type old password",
+                new_password   : "Please type new password",
+                dob         : "Please type date of birth",
+                age         : "Please type age",
+               /* house       : "Please type house name/no",
+                street      : "Please type street",*/
+                country     : "Please type country",
+                state       : "Please type state",
+                city        : "Please type city",
+                phone       : "Please type phone number",
                 email   : {
                     email: "Your email address must be in the format of name@domain.com"
                 },
@@ -1525,6 +1526,191 @@ var patientElements = function (dosageUnit) {
 
         
     };  
+
+
+
+
+    //Cardiology Validations
+    //--------------------------------------------------------------------------------------
+    var runCardioAddPatient = function () {
+        var form2           = $('#addCardioPersonalInformation');
+        var errorHandler2   = $('.errorHandler', form2);
+        var successHandler2 = $('.successHandler', form2);
+        /*$.validator.addMethod("getEditorValue", function () {
+            $("#editor1").val($('.summernote').code());
+            if ($("#editor1").val() != "" && $("#editor1").val() != "<br>") {
+                $('#editor1').val('');
+                return true;
+            } else {
+                return false;
+            }
+        }, 'This field is required.');*/
+        $.validator.addMethod("maritialStatusNotEquals", function(value, element, arg){
+            
+          return arg != value;
+        }, "Please type maritial status");
+        $.validator.addMethod("valueNotEquals", function(value, element, arg){
+            
+          return arg != value;
+        }, "Please type gender");
+        $.validator.addMethod("countryNotEquals", function(value, element, arg){
+          return arg != value;
+        }, "Please type country");
+        $.validator.addMethod("stateNotEquals", function(value, element, arg){
+          return arg != value;
+        }, "Please type state");
+        $.validator.addMethod("cityNotEquals", function(value, element, arg){
+          return arg != value;
+        }, "Please type city");
+
+        $.validator.addMethod("regex",function(value,element,regexp){
+                var re= new RegExp(regexp);
+                return this.optional(element) || re.test(value);
+        },"Enter only characters from A-z");
+
+        form2.validate({
+            errorElement: "span", // contain the error msg in a small tag
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) { // render error placement for each input type
+                if (element.attr("type") == "radio" || element.attr("type") == "checkbox") { // for chosen elements, need to insert the error after the chosen container
+                    error.insertAfter($(element).closest('.form-group').children('div').children().last());
+                } else if (element.hasClass("ckeditor")) {
+                    error.appendTo($(element).closest('.form-group'));
+                } else {
+                    error.insertAfter(element);
+                    // for other inputs, just perform default behavior
+                }
+            },
+            ignore: "",
+            rules: {
+                first_name: {
+                    minlength: 3,
+                    required: true,
+                    regex:"^[a-zA-Z- ]+$"
+                },
+                middle_name : {
+                    regex:"^[a-zA-Z- ]+$"
+                },
+                last_name: {
+                    
+                    //required: true,
+                    regex:"^[a-zA-Z- ]+$"
+                },
+                aadhar_no: {
+                    number    : true,
+                    minlength : 12,
+                    maxlength : 12,
+                    
+                },
+                gender : {
+                    valueNotEquals : 0
+                },
+                dob: {
+                    required: true,
+                    number : true,
+                    range: [1900, new Date().getFullYear().toString()],
+                    minlength : 4,
+                    maxlength : 4,
+                },
+                age: {
+                    required: true,
+                    number : true,
+                    maxlength : 3
+                },
+                maritial_status : {
+                    maritialStatusNotEquals : 0
+                },
+                /*house: {
+                    required: true
+                },
+                street: {
+                    required: true
+                },*/
+                /*country : {
+                    countryNotEquals : 0
+                },*/
+                state : {
+                    stateNotEquals : 0
+                },
+                city : {
+                    cityNotEquals : 0
+                },
+                phone: {
+                    required : true,
+                    number : true
+                },
+                email: {
+                    
+                    email : true
+                },
+                
+            },
+            messages: {
+                first_name  : {
+                                    required    : "Please type your first name",
+                                    minlength   : "First name must be atleast 3 characters long",
+                                    regex       : "Please type only characters"
+                },
+                last_name  : {
+                                    required    : "Please type your last name",
+                                    regex       : "Please type only characters"
+                },
+               
+                aadhar_no   : {
+                                number    : "Please type only digits",
+                                minlength : "Aadhar number must be atleast 12digits",
+                                maxlength : "Aadhar number do not exceeds 12digits",
+                                
+                },
+                dob         : "Please type a valid year between 1900 -"+new Date().getFullYear().toString(),
+                age         : "Please type valid age",
+                maritial_status : "Please type maritial status",
+               /* house       : "Please type house name/no",
+                street      : "Please type street",*/
+                country     : "Please type country",
+                state       : "Please type state",
+                city        : "Please type city",
+                phone       : "Please type valid phone number",
+                email   : {
+                    email: "Please type a valid email address"
+                },
+                
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                successHandler2.hide();
+                errorHandler2.show();
+            },
+            highlight: function (element) {
+                $(element).closest('.help-block').removeClass('valid');
+                // display OK icon
+                $(element).closest('.form-group').removeClass('has-success').addClass('has-error').find('.symbol').removeClass('ok').addClass('required');
+                // add the Bootstrap error class to the control group
+            },
+            unhighlight: function (element) { // revert the change done by hightlight
+                $(element).closest('.form-group').removeClass('has-error');
+                // set error class to the control group
+            },
+            success: function (label, element) {
+                label.addClass('help-block valid');
+                // mark the current input as valid and display OK icon
+                $(element).closest('.form-group').removeClass('has-error').addClass('has-success').find('.symbol').removeClass('required').addClass('ok');
+            },
+            submitHandler: function (form) {
+                successHandler2.show();
+                errorHandler2.hide();
+                // submit form
+                ("#form2" ).submit(function( event ) {
+                      //alert( "Handler for .submit() called." );
+                      //event.preventDefault();
+                });
+            }
+        });
+     
+    };
+
+
+
+
    
     return {
         //main function to initiate template pages
@@ -1573,6 +1759,9 @@ var patientElements = function (dosageUnit) {
             //runDataTable();
             runPatientChangePasswordValidation();
             runPrintSetup();
+
+
+            runCardioAddPatient();
            
         }
     };

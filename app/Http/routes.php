@@ -27,12 +27,28 @@ Route::get('blade', function ()
 	return view('page',array('name' => 'The Raven'));
 });
 
-Route::get('forgetpassword',  array('as' => 'forgetpassword', 'uses' => 'LoginController@showForgetPassword'));
-Route::post('handleForgetPassword',  array('as' => 'handleForgetPassword', 'uses' => 'LoginController@handleForgetPassword'));
-Route::post('handleAddNewPassword',  array('as' => 'handleAddNewPassword', 'uses' => 'LoginController@handleAddNewPassword'));
-Route::get('showdoctorotpcheck',  array('as' => 'showdoctorotpcheck', 'uses' => 'LoginController@showDoctorOtpCheck'));
-Route::get('addnewpassword',  array('before'=>'isDoctorOtpCreated','as' => 'addnewpassword', 'uses' => 'LoginController@showAddNewPassword'));
-Route::post('handleDoctorOtpCheck',  array('as' => 'handleDoctorOtpCheck', 'uses' => 'LoginController@handleDoctorOtpCheck'));
+Route::get('doctorforgetpassword',  array('as' => 'doctorforgetpassword', 'uses' => 'LoginController@showDoctorForgetPassword'));
+Route::post('handleDoctorForgetPassword',  array('as' => 'handleDoctorForgetPassword', 'uses' => 'LoginController@handleDoctorForgetPassword'));
+
+Route::get('patientforgetpassword',  array('as' => 'patientforgetpassword', 'uses' => 'LoginController@showPatientForgetPassword'));
+Route::post('handlePatientForgetPassword',  array('as' => 'handlePatientForgetPassword', 'uses' => 'LoginController@handlePatientForgetPassword'));
+
+Route::get('doctorotpcheck',  array('as' => 'doctorotpcheck', 'uses' => 'LoginController@showDoctorOtpCheck'));
+Route::post('handleDoctorForgetOtpCheck',  array('as' => 'handleDoctorForgetOtpCheck', 'uses' => 'LoginController@handleDoctorForgetOtpCheck'));
+
+
+Route::get('patientotpcheck',  array('as' => 'patientotpcheck', 'uses' => 'LoginController@showPatientOtpCheck'));
+Route::post('handlePatientForgetOtpCheck',  array('as' => 'handlePatientForgetOtpCheck', 'uses' => 'LoginController@handlePatientForgetOtpCheck'));
+
+
+Route::get('doctoraddnewpassword',  array('as' => 'doctoraddnewpassword', 'uses' => 'LoginController@showDoctorAddNewPassword'));
+Route::post('handleDoctorAddNewPassword',  array('as' => 'handleDoctorAddNewPassword', 'uses' => 'LoginController@handleDoctorAddNewPassword'));
+
+Route::get('patientaddnewpassword',  array('as' => 'patientaddnewpassword', 'uses' => 'LoginController@showPatientAddNewPassword'));
+Route::post('handlePatientAddNewPassword',  array('as' => 'handlePatientAddNewPassword', 'uses' => 'LoginController@handlePatientAddNewPassword'));
+
+
+
 Route::get('doctorlogin',  array('as' => 'doctorlogin', 'uses' => 'LoginController@showDoctorLogin'));
 Route::get('patientlogin',  array('as' => 'patientlogin', 'uses' => 'LoginController@showPatientLogin'));
 Route::get('logout',  array('as' => 'logout', 'uses' => 'LoginController@showLogout'));
@@ -47,8 +63,9 @@ Route::get('patientlogout',  array('as' => 'patientlogout', 'uses' => 'LoginCont
 
 Route::get('patientregistercheckid', array('as' => 'patientregistercheckid', 'uses' => 'LoginController@showPatientIdCheckForActivate')); 
 Route::post('handlePatientIdCheckForActivate', array('as' => 'handlePatientIdCheckForActivate','uses' => 'LoginController@handlePatientIdCheckForActivate'));
-Route::get('patientotpcheck', array('before'=>'isPatientLoggedIn','as' => 'patientotpcheck', 'uses' => 'LoginController@showPatientOtpCheck'));
-Route::post('handlePatientOtpCheck', array('as' => 'handlePatientOtpCheck', 'uses' => 'LoginController@handlePatientOtpCheck'));
+/*Route::get('patientotpcheck', array('before'=>'isPatientLoggedIn','as' => 'patientotpcheck', 'uses' => 'LoginController@showPatientOtpCheck'));*/
+/*Route::post('handlePatientOtpCheck', array('as' => 'handlePatientOtpCheck', 'uses' => 'LoginController@handlePatientOtpCheck'));*/
+
 Route::get('patientsetnewpassword', array('before'=>'isPatientLoggedIn','as' => 'patientsetnewpassword', 'uses' => 'LoginController@showPatientSetNewPassword'));
 Route::post('handlePatientSetnewPassword', array('as' => 'handlePatientSetnewPassword', 'uses' => 'LoginController@handlePatientSetnewPassword'));
 
@@ -164,6 +181,7 @@ Route::any('handleDiagnosisDataMigration', array('as'=>'handleDiagnosisDataMigra
 Route::any('handleMedicalDataMigration', array('as'=>'handleMedicalDataMigration','uses'=>'UserController@showMedicalDataMigration'));
 Route::any('handleDoctorsDataMigration', array('as'=>'handleDoctorsDataMigration','uses'=>'UserController@showDoctorsDataMigration'));
 Route::any('handlePatientsDataMigration', array('as'=>'handlePatientsDataMigration','uses'=>'UserController@showPatientsDataMigration'));
+Route::any('handleUserDataMigration', array('as'=>'handleUserDataMigration','uses'=>'UserController@handleUserDataMigration'));
 
 
 //Services

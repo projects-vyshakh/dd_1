@@ -14,6 +14,14 @@ if(!empty($doctorData)){
 	$doctorSpecialization = $doctorData->specialization;
 }
 
+
+if(!empty($prescMedicine)){
+	foreach($prescMedicine as $index=>$prescMedicineVal){
+
+	}
+}
+
+
 ?>
 @section('head')
 	{!!Html::style('assets/plugins/datepicker/css/datepicker.css')!!}
@@ -426,6 +434,7 @@ if(!empty($doctorData)){
 		
 		{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 		{!!Html::script('assets/js/patient-personal-information.js')!!}
+		{!!Html::script('assets/js/patientprescmedicine.js')!!}
 		{!!Html::script('assets/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')!!}
 
 		{!!Html::script('assets/plugins/bootstrap-modal/js/bootstrap-modal.js')!!}
@@ -443,7 +452,7 @@ if(!empty($doctorData)){
 			Main.init();
 			patientElements.init(dosageUnit);
 			UIModals.init();
-
+			patientPrescMedicine.init();
 			
 
 			$('.pdfopen').click(function(){

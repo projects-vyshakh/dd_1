@@ -56,7 +56,7 @@
 				</div>
 			{!! Form::close() !!}
 
-			{!! Form::open(array('route' => 'handleDoctorsDataMigration', 'role'=>'form', 'id'=>'handleDiagnosisDataMigration', 'class'=>'form-horizontal','novalidate'=>'novalidate','enctype'=>'multipart/form-data')) !!}
+			{!! Form::open(array('route' => 'handleUserDataMigration', 'role'=>'form', 'id'=>'handleUserDataMigration', 'class'=>'form-horizontal','novalidate'=>'novalidate','enctype'=>'multipart/form-data')) !!}
 				<div class="form-group">
 					<div class="col-sm-4">
 						{!! Form::label('doctors_json', 'Upload Doctors Data', $attributes = array('class'=>''));  !!}	

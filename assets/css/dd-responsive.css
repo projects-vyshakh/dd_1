@@ -21,9 +21,24 @@
     margin-right: 20px;
     width: 203px;
 }
+.dd_patient_add_pd_left{
+    padding-left: 60px !important;
+}
 
 }
 @media only screen and (max-width: 1000px){
+
+    .dd_patient_dd .col-sm-2{
+        width: 100% !important;
+
+    }
+       .dd_patient_dd .col-sm-10{
+        width: 100% !important;
+
+    }
+    .dd_patient_add_pd_left{
+        padding-left: 20px !important;
+    }
 
 .navbar-tools > ul > li > a {
      border: 0;
@@ -240,6 +255,10 @@
 
 @media only screen and (max-width: 767px){
 
+.thumbnail {
+    width: 193px;
+}
+
 .inner_wrapper_3 {
     margin: 0 auto;
     width: 100%;
@@ -290,6 +309,11 @@
 }
 .navbar-inverse .nav > li > a {
      border-right: 0; 
+     height: 50px;
+}
+.dd_menu_main_L {
+    position: absolute;
+    top: 28px;
 }
 .dd_col_size .col-sm-1 {
     width: 100%;

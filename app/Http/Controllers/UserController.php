@@ -215,42 +215,63 @@ class UserController extends Controller {
 							$pregnancyHealth = explode(',',$pregnancyHealth);
 							$pregnancyType = explode(',',$pregnancyType);
 
+							//echo $patientId."---";
+							
+
 							foreach($pregnancyKind as $index=> $pregnancyKindVal){
 								
-								(isset($pregnancyKind[$index]))?$pregnancyKind = $pregnancyKind[$index]: $pregnancyKind = "";
+								//(isset($pregnancyKind[$index]))?$pregnancyKind = $pregnancyKind[$index]: $pregnancyKind = "";
 								
-								(isset($pregnancyType[$index]))?$pregnancyType= $pregnancyType[$index]: $pregnancyType = "";
 								
-								(isset($pregnancyTerm[$index]))?$pregnancyTerm = $pregnancyTerm[$index]: $pregnancyTerm = "";
+								//(isset($pregnancyType[$index]))?$pregnancyType= $pregnancyType[$index]: $pregnancyType = "";
 								
-								(isset($pregnancyAbortion[$index]))?$pregnancyAbortion = $pregnancyAbortion[$index]: $pregnancyAbortion = "";
 								
-								(isset($pregnancyHealth[$index]))?$pregnancyHealth = $pregnancyHealth[$index]: $pregnancyHealth = "";
+								//(isset($pregnancyTerm[$index]))?$pregnancyTerm = $pregnancyTerm[$index]: $pregnancyTerm = "";
+								
+								
+								//(isset($pregnancyAbortion[$index]))?$pregnancyAbortion = $pregnancyAbortion[$index]: $pregnancyAbortion = "";
+								
+								//(isset($pregnancyHealth[$index]))?$pregnancyHealth = $pregnancyHealth[$index]: $pregnancyHealth = "";
+								
 
 								
-								(isset($pregnancyYear[$index]))?$pregnancyYear = $pregnancyYear[$index]: $pregnancyYear = "";
+								//(isset($pregnancyYear[$index]))?$pregnancyYear = $pregnancyYear[$index]: $pregnancyYear = "";
+								
+								
 									
 								
-								(isset($pregnancyWeek[$index]))?$pregnancyWeek = $pregnancyWeek[$index]: $pregnancyWeek = "";
+								//(isset($pregnancyWeek[$index]))?$pregnancyWeek = $pregnancyWeek[$index]: $pregnancyWeek = "";
 								
-								(isset($pregnancyGender[$index]))?$pregnancyGender = $pregnancyGender[$index]: $pregnancyGender = "";
+								//(isset($pregnancyGender[$index]))?$pregnancyGender = $pregnancyGender[$index]: $pregnancyGender = "";
 								
-							
-								$pregData = array('id_patient' 			=> $patientId,
-										      
-										      'obs_preg_kind' 		=> $pregnancyKind,
-										      'obs_preg_type' 		=> $pregnancyType,
-										      'obs_preg_term' 		=> $pregnancyTerm,
-										      'obs_preg_abortion' 	=> $pregnancyAbortion,
-										      'obs_preg_health' 	=> $pregnancyHealth,
-										      'obs_preg_gender' 	=> $pregnancyGender,
-										      'obs_preg_years' 		=> $pregnancyYear,
-										      'obs_preg_weeks' 		=> $pregnancyWeek,
-										      'created_date' 		=> $createdDate[0]." ".$createdTime[0],
-										      'edited_date' 		=> $updatedDate[0]
-										     );
+									
 
-								//DB::table('sp_gynaecology_obs_preg')->insert($pregData);
+								if(empty($pregnancyKind[$index]) && empty($pregnancyType[$index]) && empty($pregnancyTerm[$index]) && empty($pregnancyAbortion[$index]) && empty($pregnancyHealth[$index]) && empty($pregnancyGender[$index]) && empty($pregnancyYear[$index]) && empty($pregnancyWeek[$index]) ){
+
+								}
+								else{
+									$pregData = array('id_patient' 			=> $patientId,
+											      
+											      'obs_preg_kind' 		=> $pregnancyKind[$index],
+											      'obs_preg_type' 		=> $pregnancyType[$index],
+											      'obs_preg_term' 		=> $pregnancyTerm[$index],
+											      'obs_preg_abortion' 	=> $pregnancyAbortion[$index],
+											      'obs_preg_health' 	=> $pregnancyHealth[$index],
+											      'obs_preg_gender' 	=> $pregnancyGender[$index],
+											      'obs_preg_years' 		=> $pregnancyYear[$index],
+											      'obs_preg_weeks' 		=> $pregnancyWeek[$index],
+											      'created_date' 		=> $createdDate[0]." ".$createdTime[0],
+											      'edited_date' 		=> $updatedDate[0]
+											     );
+
+									DB::table('sp_gynaecology_obs_preg')->insert($pregData);
+
+								}
+								
+
+
+
+								
 								
 							}
 
@@ -322,7 +343,7 @@ class UserController extends Controller {
 										  'created_date' 		=> $createdDate[0]." ".$createdTime[0],
 										  'edited_date' 		=> $updatedDate[0]);
 
-						//DB::table('sp_gynaecology_obs')->insert($obsData);
+						DB::table('sp_gynaecology_obs')->insert($obsData);
 
 						/*Vitals Data*/
 						(isset($jsonData['weight']))?$weight = $jsonData['weight']: $weight = "";
@@ -361,7 +382,7 @@ class UserController extends Controller {
 			    							'created_date' => $createdDate[0]." ".$createdTime[0],
 			    							'edited_date' 				=> $updatedDate[0]);
 
-						//DB::table('vitals')->insert($vitalsData);
+						DB::table('vitals')->insert($vitalsData);
 
 
 						/*Diagnosis Examination*/
@@ -564,7 +585,7 @@ class UserController extends Controller {
 		    									
 		    									);
 
-							//DB::table('prescription')->insert($insertValue);
+							DB::table('prescription')->insert($insertValue);
 							
 						}
 					
@@ -598,7 +619,7 @@ class UserController extends Controller {
 										   	'created_date' => $originalCreatedDate,
 										   	'edited_date'=>$editedDate[0]
 										  );
-					//DB::table('prescription_gynaecology')->insert($prescGynData);
+					DB::table('prescription_gynaecology')->insert($prescGynData);
 
 	/*				$prescGynData = array(	'line_of_treatment' => $prescLineOfTreatment[0],
 										   	'line_of_treatment_detail' => $prescLineOfTreatment[1],
@@ -805,7 +826,7 @@ class UserController extends Controller {
 				/*---------------------------------------------------------------------------------------------------*/
 
 				/*Social History*/
-			/*	(isset($jsonData['socialHistoryStatus']))?$socialHistoryStatus = $jsonData['socialHistoryStatus']: $socialHistoryStatus = "";
+				/*(isset($jsonData['socialHistoryStatus']))?$socialHistoryStatus = $jsonData['socialHistoryStatus']: $socialHistoryStatus = "";
 
 				if(!empty($socialHistoryStatus)){
 					$socialHistoryStatus = implode(',', $socialHistoryStatus);
@@ -839,8 +860,8 @@ class UserController extends Controller {
 				/*Social History ends*/
 				//-------------------------------------------------------------------------------------------------
 				
-				/*Allergy History*/
-				/*(isset($jsonData['Allergy_History']))?$allergyHistory = $jsonData['Allergy_History']: $allergyHistory = ["NA"];
+				/*Allergy History*/ //Removes /0026
+				(isset($jsonData['Allergy_History']))?$allergyHistory = $jsonData['Allergy_History']: $allergyHistory = ["NA"];
 				
 				$allergyHistory = implode(',', $allergyHistory);
 				$allergyHistory = explode(',', $allergyHistory);
@@ -872,7 +893,7 @@ class UserController extends Controller {
 											'created_date' => $createdDate[0],
 								   			'edited_date'=>$updatedDate[0]);
 					DB::table('medical_history')->insert($allergyHistoryData);
-				}*/
+				}
 				
 				
 
@@ -894,7 +915,7 @@ class UserController extends Controller {
 					foreach($surgeryHistory as $index=>$surgeryHistoryVal){
 						if(!empty($surgeryHistoryVal)){
 							$surgeryData = array('surgery_name'=>$surgeryHistoryVal,'id_patient'=>$patientId,'created_date' => $createdDate[0],'edited_date'=>$updatedDate[0]);
-							//DB::table('medical_history_surgical')->insert($surgeryData);
+							DB::table('medical_history_surgical')->insert($surgeryData);
 						}
 						
 					}
@@ -940,7 +961,7 @@ class UserController extends Controller {
 									$drugAllergyData = array('drug_name'=>$medicationExplode[$e],
 														 'reaction'=>$reactionExplode[$e],
 														 'id_patient'=>$patientId,
-														 ,'created_date' => $createdDate[0],'edited_date'=>$updatedDate[0]);
+														 'created_date' => $createdDate[0],'edited_date'=>$updatedDate[0]);
 									if(!empty($medicationExplode[$e])){
 										DB::table('medical_history_drug_allergy')->insert($drugAllergyData);
 									}
@@ -961,13 +982,152 @@ class UserController extends Controller {
 				//---------------------------------------------------------------------------------------------------
 
 
+				//Present Past Starts
+				//-----------------------------------------------------------------------------
+				/*(isset($jsonData['majorIllness']))?$majorIllness = $jsonData['majorIllness']: $majorIllness = [""];
+				(isset($jsonData['majorIllnessStatus']))?$majorIllnessStatus = $jsonData['majorIllnessStatus']: $majorIllnessStatus = [""];
+				echo $patientId;
+				echo "</br>";
+				
+				
+				$majorIllness 		= explode(',',$majorIllness[0]);
+				$majorIllnessStatus = explode(',',$majorIllnessStatus[0]);
+
+				
 
 
+				foreach($majorIllnessStatus as $i=>$majorIllnessStatusVal){
+					if(isset($majorIllnessStatus[$i])){
+						$illnessStatus = explode("&",$majorIllnessStatus[$i]);
+						
+
+						if(!isset($illnessStatus[0])){
+							$status = "NA";
+						}
+						else{
+							$status = $illnessStatus[0];
+							if($status=="Nil" || $status=="N/A"){
+								$status = "NA";
+							}
+							else{
+								$status = $status;
+							}
+						}
+
+						if(!isset($illnessStatus[1])){
+							$medication = "";
+						}
+						else{
+							$medication = $illnessStatus[1];
+							if($medication=="Nil" | $medication=="N/A"){
+								$medication = "";
+							}
+							else{
+								$medication = $medication;
+							}
+						}
+
+						
+						
+					
+					}
+					echo "illness name-->".$majorIllness[$i]."|"." ";
+					echo "Status----->".$status."|"." ";
+					echo "Medication---->".$medication."|"." ";
+					echo "</br>";
+
+					$presentPastData = array('id_patient' => $patientId,
+											 'illness_name'=>$majorIllness[$i],
+											 'illness_status'=>$status,
+											 'medication'=>$medication,
+											 'created_date' => $createdDate[0],
+											 'edited_date'=>$updatedDate[0]);
+
+					DB::table('medical_history_present_past_more')->insert($presentPastData);
+
+				}
+*/
+				//Present Past ends
+				//---------------------------------------------------------------------------------------
+
+				//patient personal information starts
+				//--------------------------------------------------------------------------------------
+
+				/*(isset($jsonData['firstName']))?$firstName = $jsonData['firstName']: $firstName = "";
+				(isset($jsonData['lastName']))?$lastName = $jsonData['lastName']: $lastName = "";
+				(isset($jsonData['middleName']))?$middleName = $jsonData['middleName']: $middleName = "";
+				(isset($jsonData['aadharnumber']))?$aadhar = $jsonData['aadharnumber']: $aadhar = "";
+				(isset($jsonData['sex']))?$gender = $jsonData['sex']: $gender = "";
+				(isset($jsonData['dob']))?$dob = $jsonData['dob']: $dob = "";
+				(isset($jsonData['maritalStatus']))?$maritalStatus = $jsonData['maritalStatus']: $maritalStatus = "";
+				(isset($jsonData['streetName']))?$streetName = $jsonData['streetName']: $streetName = "";
+				(isset($jsonData['cityName']))?$cityName = $jsonData['cityName']: $cityName = "";
+				(isset($jsonData['state']))?$state = $jsonData['state']: $state = "";
+				(isset($jsonData['pinCode']))?$pinCode = $jsonData['pinCode']: $pinCode = "";
+				(isset($jsonData['country']))?$country = $jsonData['country']: $country = "";
+				(isset($jsonData['phoneNumber']))?$phoneNumber = $jsonData['phoneNumber']: $phoneNumber = "";
+				(isset($jsonData['email']))?$email = $jsonData['email']: $email = "";
 
 
+				$splitYear = explode('-',$dob);
 
+				if(empty($splitYear[1])){
+					$year = $splitYear[0];
+				}
+				else{
+					$year = $splitYear[2];
+				}
 
+				$currentYear =  date("Y");
+				$age = $currentYear - $year;
+				
 
+				($country=="India")?$countryCode = "101" : $countryCode = "";
+
+				if($firstName=="Mr" || $firstName=="Mrs" || $firstName=="Ms" || $firstName=="Mrs." || $firstName=="mrs" || $firstName=="mrs." || $firstName=="Miss" || $firstName=="miss" || $firstName=="Dr" ){
+					if(!empty($middleName)){
+						$firstName = $middleName;
+					}
+					else{
+						$firstName = $lastName;
+						$lastName = "";
+					}
+					
+				}
+				
+				echo $firstName;
+				echo "</br>";
+
+				$patientIdExist = DB::table('patients')->where('id_patient','=',$patientId)->first();
+
+				if(empty($patientIdExist)){
+					//echo "V";
+					$patientData = array('first_name'=>$firstName,
+									'middle_name'=> $middleName,
+									'last_name'=> $lastName,
+									'id_aadhar' =>	$aadhar,
+									'gender' => $gender,
+									'dob' => $year,
+									'age' => $age,
+									'maritial_status' => $maritalStatus,
+									'street' => $streetName,
+									'city' => $cityName,
+									'state' => $state,
+									'pincode' => $pinCode,
+									'country' => $countryCode,
+									'phone' => $phoneNumber,
+									'email' => $email,
+									'id_patient'=>$patientId,
+									'created_date' => $createdDate[0],
+									'edited_date'=>$updatedDate[0]);
+
+					DB::table('patients')->insert($patientData);
+				}
+*/
+				
+
+				//patient personal information ends
+				//--------------------------------------------------------------------------------------
 			}
 
 
@@ -976,4 +1136,117 @@ class UserController extends Controller {
 		}
 
     }
+
+
+    public function handleUserDataMigration(){
+    	//var_dump($_FILES['diagnosis_json']);
+    	
+    	
+    	$file_tmp =$_FILES['doctors_json']['tmp_name'];
+		$file_name = $_FILES['doctors_json']['name'];
+		$fileExist = 'assets/jsonfiles/'.$file_name;
+
+		if (file_exists($fileExist)) {
+		   move_uploaded_file($file_tmp,"assets/jsonfiles/".$file_name);
+		   chmod('assets/jsonfiles/'.$file_name, 0777);
+		} 
+		else {
+		    //mkdir("assets/jsonfiles", 0777);
+		    chmod('assets/jsonfiles/', 0777);
+		    move_uploaded_file($file_tmp,"assets/jsonfiles/".$file_name);
+		   	chmod('assets/jsonfiles/'.$file_name, 0777);
+
+		}
+
+		$str = file_get_contents('assets/jsonfiles/'.$file_name);
+		$json = json_decode($str, true);
+
+		foreach($json as $index=> $val){
+
+			
+			$newVal = (object) $val;
+
+			foreach($newVal as $index=> $input){
+			
+				$firstName 				= $input['firstName'];
+				$lastName 				= $input['lastName'];
+				$accredition 			= $input['accredition'];
+				$city 					= $input['city'];
+				$country 				= $input['country'];
+				$imaRegisterNo 			= $input['docRegistrationNumber'];
+				$email 					= $input['email'];
+				$password 				= $input['password'];
+				$phone 					= $input['phone'];
+				$pincode 				= $input['pincode'];
+				$qualification 			= $input['qualification'];
+				$specialization 		= $input['specialization'];
+				$state 					= $input['state'];
+				$street  				= $input['street'];
+				$superSpecialization 	= $input['superSpecialization'];
+
+				$createdDate 	= $input['createdAt'];
+				$updatedDate 	= $input['updatedAt'];
+
+
+
+				$createdDate = preg_split( '/(T| Z)/', $createdDate);
+				$createdTime = explode(".",$createdDate[1]);
+
+						
+
+				if(!empty($updatedDate)){
+					$updatedDate = preg_split( '/(T| Z)/', $updatedDate);
+				}
+				else{
+					$updatedDate = "";
+				}
+
+				$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
+
+		
+				$iv = mcrypt_create_iv(
+				    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
+				    MCRYPT_DEV_URANDOM
+				);
+
+				$encrypted = base64_encode(
+				    $iv .
+				    mcrypt_encrypt(
+				        MCRYPT_RIJNDAEL_128,
+				        hash('sha256', $key, true),
+				       	$password,
+				        MCRYPT_MODE_CBC,
+				        $iv
+				    )
+				);
+				
+
+				$regsiterValues = array('first_name' 				=> $firstName,
+										'last_name' 				=> $lastName,
+										'accredition' 				=> $accredition,
+										'city' 						=> $city,
+										'country' 					=> $country,
+										'doctor_registration_no' 	=> $imaRegisterNo,
+										'email' 					=> $email,
+										'password' 					=> $encrypted,
+										'phone' 					=> $phone,
+										'pincode' 					=> $pincode,
+										'street' 					=> $street,
+										'state' 					=> $state,
+										'qualification' 			=> json_encode($qualification),
+										'specialization' 			=> $specialization,
+										'super_specialization' 		=> $superSpecialization,
+										'registration_status'		=>1,
+										'created_date' 				=> $createdDate[0],
+										'edited_date'				=>$updatedDate[0]);
+				
+
+			 	DB::table('doctors')->insert($regsiterValues);
+
+				
+			}
+		}
+
+		
+	}
 }
