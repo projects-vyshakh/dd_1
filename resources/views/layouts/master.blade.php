@@ -27,7 +27,7 @@ $todayDate = date('d-M-Y');
     <meta name="_token" content="{!! csrf_token() !!}"/>
     <link rel="shortcut icon" href="assets/images/logo-mob.png" type="image/x-icon">
     <!-- <meta content="authenticity_token" name="csrf-param"> -->
-    @if($currentPath=="patientpersonalinformation" || $currentPath=="cardiopersonalinformation")<title>Patient Personal Information</title> @endif
+     @if($currentPath=="patientpersonalinformation" || $currentPath=="cardiopersonalinformation")<title>Patient Personal Information</title> @endif
     @if($currentPath=="patientobstetricshistory")<title>Patient Obstetrics History</title> @endif
     @if($currentPath=="patientmedicalhistory" || $currentPath=="cardiomedicalhistory")<title>Patient Medical History</title> @endif
     @if($currentPath=="patientprevioustreatment" || $currentPath == 'cardioprevioustreatment')<title>Patient Previous Treatments</title> @endif
@@ -58,19 +58,6 @@ $todayDate = date('d-M-Y');
     {!!Html::style('assets/css/theme_light.css',array('id'=>'skin_color'))!!}
     {!!Html::style('assets/css/print.css',array('media' => 'print')) !!}
     {!!Html::style('assets/css/dd-responsive.css')!!}
-
-    <style>
-        .loader 
-        {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 9999;
-            background: url('assets/images/page_loading.gif') 50% 50% no-repeat rgb(249,249,249);
-        }
-    </style>
      
     @yield('head')
    
@@ -83,7 +70,6 @@ $todayDate = date('d-M-Y');
 </head>
 
 <body >
-    <div class="loader"></div>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -121,7 +107,11 @@ $todayDate = date('d-M-Y');
                                 <a href="patientpersonalinformation" id="patient-menu">
                                  <i class="icon pricon icon-pr-patient" ng-show="navOption.key"></i>
                                <!--  <img src="assets/images/Patient.png"> -->
+
+                               <span class="dd_menu_main_L">
                                     Patient
+
+                                    </span>
                                 </a>
                                 <div class="dd_resp_menu" id="patient-menu-div">
                                     <ul class="sub-menu" style="display:block">
@@ -151,7 +141,10 @@ $todayDate = date('d-M-Y');
                                  <a href="cardiopersonalinformation" id="patient-menu">
                                  <i class="icon pricon icon-pr-patient" ng-show="navOption.key"></i>
                                <!--  <img src="assets/images/Patient.png"> -->
+                                       <span class="dd_menu_main_L">
                                     Patient
+
+                                    </span>
                                 </a>
                                 <div class="dd_resp_menu" id="patient-menu-div">
                                     <ul class="sub-menu" style="display:block">
@@ -185,7 +178,11 @@ $todayDate = date('d-M-Y');
                                 <a href="patientexamination" id="diagnosis-menu">
                                 <!-- <img src="assets/images/Diagnosis.png"> -->
                                     <i class="icon pricon icon-pr-Diagnosis" ng-show="navOption.key"></i>
+                                    
+                                       <span class="dd_menu_main_L">
                                     Diagnosis
+
+                                    </span>
                                 </a>
                                 <div class="dd_resp_menu" id="diagnosis-menu-div">
                                     <ul class="sub-menu" style="display:block">
@@ -209,8 +206,12 @@ $todayDate = date('d-M-Y');
                             @elseif($specialization==2)
                                  <a href="cardioexamination" id="diagnosis-menu">
                                 <!-- <img src="assets/images/Diagnosis.png"> -->
-                                    <i class="icon pricon icon-pr-Diagnosis" ng-show="navOption.key"></i>
+                                <i class="icon pricon icon-pr-Diagnosis" ng-show="navOption.key"></i>
+                                <span class="dd_menu_main_L">
                                     Diagnosis
+                               </span>
+
+
                                 </a>
                                 <div class="dd_resp_menu" id="diagnosis-menu-div">
                                     <ul class="sub-menu" style="display:block">
@@ -240,7 +241,11 @@ $todayDate = date('d-M-Y');
                                     <!-- <img src="assets/images/Diagnosis.png"> -->
                                         <i class="icon pricon icon-pr-prescriptions" ng-show="navOption.key"></i>
 
-                                        Prescription
+                                        
+                                    <span class="dd_menu_main_L">
+                                            Prescription
+
+                                    </span>
                                     </a>
                                     <div class="dd_resp_menu" id="prescription-menu-div">
                                         <ul class="sub-menu" style="display:block">
@@ -261,7 +266,10 @@ $todayDate = date('d-M-Y');
                                 <!-- <img src="assets/images/Diagnosis.png"> -->
                                     <i class="icon pricon icon-pr-prescriptions" ng-show="navOption.key"></i>
 
-                                    Prescription
+                                       <span class="dd_menu_main_L">
+                                            Prescription
+
+                                    </span>
                                     </a>
                                     <div class="dd_resp_menu" id="prescription-menu-div">
                                         <ul class="sub-menu" style="display:block">
@@ -279,17 +287,10 @@ $todayDate = date('d-M-Y');
                                     </div>
                                 @endif
                             </li>
-                            <!-- <li id="settings-top-menu-li" @if($currentPath == 'doctorsettings' || $currentPath == 'printsetup')) class="active" @endif>
-                                @if($specialization==1 || $specialization==2 )
-                                    <a href="printsetup" id="printsetup-menu">
-                                    <img src="assets/images/Diagnosis.png">
-                                        <i class="icon pricon icon-pr-prescriptions" ng-show="navOption.key"></i>
+                            <li id="settings-top-menu-li" @if($currentPath == 'printsetup') class="active" @endif>
 
-                                       Settings
-                                    </a>
-                                @endif
 
-                            </li> -->
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -303,11 +304,41 @@ $todayDate = date('d-M-Y');
                  <div class="dd_main_logo">
                  <!-- start: USER DROPDOWN -->
                         <li class="dropdown" style="list-style: none;">
-                            <a  href="printsetup">
+                            <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
                                 <img src="assets/images/logo.png" height="40px" style="display:block">  
                                 
                             </a>
-                           
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <!-- <a href="" class="dd_settings">
+                                        <i class="clip-dd-user"></i>
+                                        <span>&nbsp;My Profile</span>
+                                    </a> -->
+                                </li>
+                                 <li>
+                                    <a href="printsetup" class="dd_settings">
+                                        <i class="clip-dd-settings"></i>
+                                        <span>&nbsp;Settings</span>
+                                    </a>
+                                </li>
+                                <!--<li>
+                                    <a href="pages_messages.html">
+                                        <i class="clip-bubble-4"></i>
+                                        &nbsp;My Messages (3)
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="utility_lock_screen.html"><i class="clip-locked"></i>
+                                        &nbsp;Lock Screen </a>
+                                </li>
+                                <li>
+                                    <a href="login_example1.html">
+                                        <i class="clip-exit"></i>
+                                        &nbsp;Log Out
+                                    </a>
+                                </li> -->
+                            </ul>
                         </li>
                         <!-- end: USER DROPDOWN -->
                    
@@ -315,7 +346,7 @@ $todayDate = date('d-M-Y');
             @endif
                
 
-            <div class="navbar-tools">
+            <div class="navbar-tools praji_nav">
 
                     <!-- start: TOP NAVIGATION MENU -->
                 @if($currentPath!="patientpersonalinformation" &&$currentPath!="patientobstetricshistory" &&     $currentPath!="patientmedicalhistory" && $currentPath!="patientprevioustreatment" &&$currentPath!="patientexamination" &&$currentPath!="patientlabdata" && $currentPath!="patientdiagnosis" && $currentPath!="patientprescmanagement" && $currentPath!="patientprescmedicine" &&
@@ -643,8 +674,8 @@ $todayDate = date('d-M-Y');
                                 <div class="horizontal-menu navbar-collapse collapse">
                                     <ul class="nav navbar-nav">
                                         <li id="patient-top-menu-li"  @if($currentPath == 'patientpersonalinformation' || $currentPath == 'patientobstetricshistory' || $currentPath == 'patientmedicalhistory' || $currentPath == 'patientprevioustreatment') class="active" @endif >
-                                            <a href="#" id="patient-menu">
-                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            <a href="#" id="patient-menu" class="dd_padding_left_50">
+                                            <i class="dd_dashboard" aria-hidden="true"></i>
              
                                            <!--  <img src="assets/images/Patient.png"> -->
                                                 Dashboard
@@ -666,25 +697,21 @@ $todayDate = date('d-M-Y');
                                 <!-- <img src="assets/images/patient_profile_s.jpg" class="circle-img" alt="">
                                 -->
                                 <img src="assets/images/patients/{{$patientData->profile_image_large}}" alt="" height="30px" width="30px" class="circle-img">
-                                <span class="username">
-                                    @if(!empty($patientName))
-                                        {{strtoupper($patientName)}}
-                                    @endif
-                                </span>
+                                <span class="username">{{strtoupper($patientName)}}</span>
                                 <i class="clip-chevron-down"></i>
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu patient_settings" >
                                 
                                     <li>
-                                        <a href="patientprofileedit">
-                                            <i class="clip-user-2"></i>
+                                        <a href="patientprofileedit" class="dd_padding_left_50 My_Profile">
+                                            <i class="dd_myprofile dd_myprofile_hover"></i>
                                             &nbsp;My Profile
                                         </a>
                                     </li>
                                     
-                                    <li>
-                                        <a href="patientchangepassword">
-                                            <i class="clip-calendar"></i>
+                                    <li class="dd_relative">
+                                        <a href="patientchangepassword" class="dd_padding_left_50 Change_Password">
+                                            <i class="dd_change_password"></i>
                                             &nbsp;Change Password
                                         </a>
                                     </li>
@@ -702,9 +729,9 @@ $todayDate = date('d-M-Y');
                                     <a href="utility_lock_screen.html"><i class="clip-locked"></i>
                                         &nbsp;Lock Screen </a>
                                 </li> -->
-                                <li>
-                                    <a href="patientlogout">
-                                        <i class="clip-exit"></i>
+                                <li class="dd_relative">
+                                    <a href="patientlogout" class="dd_padding_left_50 Log_Out">
+                                        <i class="dd_logout"></i>
                                         &nbsp;Log Out
                                     </a>
                                 </li>
@@ -731,7 +758,7 @@ $todayDate = date('d-M-Y');
                         <i class="clip-chevron-left"></i>
                         <i class="clip-chevron-right"></i>
                     </div>
-                    @if($currentPath == 'patientpersonalinformation' || $currentPath == 'patientobstetricshistory' || $currentPath == 'patientmedicalhistory' || $currentPath == 'patientprevioustreatment' || $currentPath == 'cardiopersonalinformation' || $currentPath == 'cardiomedicalhistory' || $currentPath == 'cardioprevioustreatment')
+                    @if($currentPath == 'patientpersonalinformation' || $currentPath == 'patientobstetricshistory' || $currentPath == 'patientmedicalhistory' || $currentPath == 'patientprevioustreatment' || $currentPath == 'cardiopersonalinformation' || $currentPath == 'cardiomedicalhistory' || $currentPath == 'cardioprevioustreatment' || $currentPath== 'printsetup')
                     <!-- Patient side menu starts -->
                     <div id="patient-side-menu">
                         <ul class="main-navigation-menu">
@@ -854,11 +881,44 @@ $todayDate = date('d-M-Y');
                     @endif   
                     <!-- Diagnosis side menu ends --> 
 
+                     <!-- User Side Menus Starts -->
+                     @if(($currentPath == 'userhome' || $currentPath == 'userjsonimport'))
+                         <div id="user-side-menu">
+                            <ul class="main-navigation-menu">
+                                <li @if($currentPath == 'userhome') class="active open" @endif>
+                                    <a href="userpersonalinformation">
+                                     <span class="dd_input_icon_Management"></span>
+                                        <span class="title"> Personal Information </span><span class="selected"></span>
+                                    </a>
+                                </li>
+                                <li @if($currentPath=='userjsonimport') class="active " @endif>
+                                    <a href="javascript:void(0)">
+                                  
+                                        <span class="dd_input_icon_Medicine"></span>
+                                        <span class="title"> Import </span><span class="selected"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li  @if($currentPath == 'userjsonimport') class="active open" @endif>
+                                            <a href="userjsonimport">
+                                                <span class="title"> Json Files </span>
+                                                <!-- <span class="badge badge-new">new</span> -->
+                                            </a>
+                                        </li>
+                                       
+                                        
+                                    </ul>        
+                                </li>
+                               
+                        
+                            </ul>
+                        </div>
+                    @endif
+
                     <!-- Prescription side menu starts -->
                     @if(($currentPath == 'patientprescmanagement') || ($currentPath == 'patientprescmedicine'))
                     <!-- Diagbreadcrumbmenu"> -->
                         @if($specialization=="1")
-                            <div id="presc-side-menu">
+                            <div id="diagnosis-side-menu">
                                 <ul class="main-navigation-menu">
                                     <li @if($currentPath == 'patientprescmanagement') class="active open" @endif>
                                         <a href="patientprescmanagement">
@@ -900,38 +960,7 @@ $todayDate = date('d-M-Y');
                     @endif   
                     <!-- Diagnosis side menu ends -->     
 
-                    <!-- Prescription side menu starts -->
-                    @if(($currentPath == 'printsetup'))
-                        @if($specialization=="1")
-                            <div id="settings-side-menu">
-                                <ul class="main-navigation-menu">
-                                   
-                                    <li @if($currentPath == 'printsetup') class="active open" @endif>
-                                        <a href="printsetup">
-                                      <!--   <i class="clip-home-3"></i> -->
-                                       <span class="dd_input_icon_Medicine"></span>
-                                            <span class="title"> Print Setup </span><span class="selected"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        @elseif($specialization=="2")
-                            
-                            <div id="settings-side-menu">
-                                <ul class="main-navigation-menu">
-                                   
-                                    <li @if($currentPath == 'printsetup') class="active open" @endif>
-                                        <a href="printsetup">
-                                      <!--   <i class="clip-home-3"></i> -->
-                                       <span class="dd_input_icon_Medicine"></span>
-                                            <span class="title"> Print Setup </span><span class="selected"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        @endif
 
-                    @endif
 
                     <!-- Patient Prfofile Management side menu starts -->
                     @if(($currentPath == 'patientprofilemanagement') || ($currentPath == 'patientprofileprevtreatment') || ($currentPath == 'patientprofileedit' || $currentPath=='patientchangepassword'))
@@ -964,39 +993,6 @@ $todayDate = date('d-M-Y');
                     <!-- Diagnosis side menu ends -->  
 
 
-                    <!-- User Side Menus Starts -->
-                     @if(($currentPath == 'userhome' || $currentPath == 'userjsonimport'))
-                         <div id="user-side-menu">
-                            <ul class="main-navigation-menu">
-                                <li @if($currentPath == 'userhome') class="active open" @endif>
-                                    <a href="userpersonalinformation">
-                                     <span class="dd_input_icon_Management"></span>
-                                        <span class="title"> Personal Information </span><span class="selected"></span>
-                                    </a>
-                                </li>
-                                <li @if($currentPath=='userjsonimport') class="active " @endif>
-                                    <a href="javascript:void(0)">
-                                  
-                                        <span class="dd_input_icon_Medicine"></span>
-                                        <span class="title"> Import </span><span class="selected"></span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li  @if($currentPath == 'userjsonimport') class="active open" @endif>
-                                            <a href="userjsonimport">
-                                                <span class="title"> Json Files </span>
-                                                <!-- <span class="badge badge-new">new</span> -->
-                                            </a>
-                                        </li>
-                                       
-                                        
-                                    </ul>        
-                                </li>
-                               
-                        
-                            </ul>
-                        </div>
-                    @endif   
-
 
                 </div>    
             </div>
@@ -1009,17 +1005,15 @@ $todayDate = date('d-M-Y');
                                     @if($currentPath == 'patientprofilemanagement' || $currentPath == 'patientprofileprevtreatment' || $currentPath == 'patientprofileedit' || $currentPath == 'patientchangepassword')
                                     @else
                                         <a style="font-size: 14px;text-decoration: none;float: left">
-                                            @if(!empty($patientId))
-                                                PATIENT ID: {{strtoupper($patientId)}} 
-                                            @endif
+                                            PATIENT ID: {{strtoupper($patientId)}}
+                                           
                                         </a>
                                     @endif
                                 </div>
                                 <div class="">
                                     <a style="font-size: 14px;text-decoration: none;float: right">
-                                            @if(!empty($patientName))
-                                                PATIENT NAME:  {{strtoupper($patientName)}}
-                                            @endif
+                                            
+                                            PATIENT NAME: {{strtoupper($patientName)}}
                                     </a>
                                     <!-- <a style="font-size: 14px;float:right;text-decoration: none">TODAY : {{$todayDate}}</a> -->
                                 </div>
@@ -1088,22 +1082,6 @@ $todayDate = date('d-M-Y');
     });
     jQuery(document).ready(function() {
         masterElements.init();
-
-        //----------------------------------------------------
-        //Hiding the settings top menu, if other links
-       /* var pathname = window.location.pathname; 
-        var split = pathname.split("/");
-        var currentUrl = split[2];
-
-        if(currentUrl!="printsetup"){
-            $('#settings-top-menu-li').hide();
-        }*/
-        //-----------------------------------------------------
-
-        //Page Loader closing
-        $(window).load(function() {
-            $(".loader").fadeOut("fast");
-        })
     });
   </script>
   

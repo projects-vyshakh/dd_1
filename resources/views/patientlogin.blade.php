@@ -203,29 +203,12 @@
 			        		<div class="box-login " style="display: block;">
 			        			<div class="row">
 			        				<div class="col-sm-12">
-										<?php 
-											$error = Session::get('error');
-								            $success = Session::get('success');
-							                Session::forget('error');
-							                Session::forget('success');
-							        
-								        ?>
-							          	@if(!empty($error))
-								            <div class="alert alert-danger display-none" style="display: block;">
-								              <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-								                {{$error}}
-								            </div>
-							          	@elseif(!empty($success))
-								            <div class="alert alert-success display-none" style="display: block;">
-								              <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-								                {{$success}}
-								            </div>
-							          	@endif
+										
 			        					{!! Form::open(array('route' => 'handlePatientLogin', 'role'=>'form', 'id'=>'login', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
 					        				<div class="form-group">
 												<div class="col-sm-12 dd_login">
 													<span class="input-icon ">
-														{!! Form::text('id_patient', null, $attributes = array('class'=>'form-control dd_input','placeholder' => 'Patient ID', 'id'=>'id_patient'));  !!}
+														{!! Form::text('id_patient', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Patient ID', 'id'=>'id_patient'));  !!}
 														<span class="dd_input_icon_name"></span> 
 													</span>
 												</div>
@@ -233,12 +216,34 @@
 					        				<div class="form-group dd_mg_B_10">
 					        					<div class="col-sm-12 dd_login">
 													<span class="input-icon dd_relative">
-														{!! Form::password('password', array('placeholder'=>'Password', 'class'=>'form-control dd_input', 'id'=>'password' ) ) !!}
+														{!! Form::password('password', array('placeholder'=>'Password', 'class'=>'form-control dd_input dd_login_main', 'id'=>'password' ) ) !!}
 														<span class="dd_input_icon"></span>
 
 													</span>
 												</div>
 					        				</div>
+					        				<div class=" dd_relative">
+						                        <div class="heading ">
+						                              <?php $error = Session::get('error');
+						                                $success = Session::get('success');
+						                                Session::forget('error');
+						                                Session::forget('success');
+						                               
+						                              ?>
+						                              @if(!empty($error))
+						                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
+						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+						                                          {{$error}}
+						                                </div>
+						                              @elseif(!empty($success))
+						                                <div class="dd_alert_2 display-none" style="display: block;">
+						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+						                                          {{$success}}
+						                                </div>
+						                              @endif
+						                                    
+						                        </div>
+						                    </div> 
 					        				<div class="form-group dd_mg_B_10">
 					        					<div class="col-sm-12 dd_mg_B_T_10">
 													<span class="input-icon ">

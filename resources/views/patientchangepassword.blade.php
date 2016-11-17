@@ -86,7 +86,7 @@ else{
 							</div>
 							<div class="form-group">
 								<div class="col-sm-8">
-									<button type="submit" class="btn btn-primary btn-block dd_save "><!-- <i class="fa fa-floppy-o"></i> --> Change</button>
+									<button type="submit" class="btn btn-primary btn-block dd_save_pass "><!-- <i class="fa fa-floppy-o"></i> --> Change</button>
 								</div>
 								
 							</div>

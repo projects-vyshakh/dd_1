@@ -75,6 +75,20 @@ else{
 	$comments = "";
 }
 
+if(!empty($printData)){
+	$marginTop 		= $printData->margin_top;
+	$marginBottom 	= $printData->margin_bottom;
+	$marginLeft 	= $printData->margin_left;
+	$marginRight 	= $printData->margin_right;
+	
+
+}
+else{
+	$marginTop 		= 0;
+	$marginBottom 	= 0;
+	$marginLeft 	= 0;
+	$marginRight 	= 0;
+}
 
 
 ?>
@@ -308,10 +322,10 @@ else{
 				}
 				
 				.full-cover{
-					margin-top: 	<?php echo $printData->margin_top."px"; ?> ;
-					margin-bottom: 	<?php echo $printData->margin_bottom."px"; ?> ;
-					margin-left:	<?php echo $printData->margin_left."px"; ?> ;
-					margin-right:	<?php echo $printData->margin_right."px"; ?> ;
+					margin-top: 	<?php echo $marginTop."px"; ?> ;
+					margin-bottom: 	<?php echo $marginBottom."px"; ?> ;
+					margin-left:	<?php echo $marginLeft."px"; ?> ;
+					margin-right:	<?php echo $marginRight."px"; ?> ;
 
 				}
 
@@ -569,77 +583,7 @@ else{
 			
 						
 					
-					<!-- <tr >
-						
-						<th colspan="3" class="bordered">DESCRIPTION</th>
-						<th class="bordered">AMOUNT</th>
-					</tr>
-					<tr >
-						<td class="bordered-sides" colspan="3"> Package </td>
-						<td class="bordered-sides"></td>
-					</tr>
-					
-					<tr>
-						<td class="bordered-sides" colspan="3">Total Amount </td>
-						<td class="bordered-sides amount"></td>
-					</tr>
-					
-					
-							
-					<tr>
-						<td class="bordered-sides" colspan="3">Advance Amount </td>
-						<td class="bordered-sides amount"></td>
-					</tr>
-					
-					
-					
-					
-					
-					<tr>
-						<td class="bordered-sides" colspan="3">Balance Amount  </td>
-						<td class="bordered-sides amount"></td>
-					</tr>
-					
-					
-					<tr class="bold">
-						<td class="bordered-left-bottom" colspan="2"></td>
-						<td class="bordered">Total Amount Received</td>
-						<td class="bordered amount">
-							
-						</td>
-					
-					</tr>
-					<tr>
-						<td colspan="4" class="address-col">Amount received in words : </td>
-					</tr>
-					<tr>
-						<td colspan="4">Make all DD payable to <b>Esteem Holidays Pvt Ltd</b></td>
-					</tr>
-					<tr>
-						<td colspan="4">Online payment (NEFT/RTGS) details as below </td>
-					</tr>
-					<tr>
-						<td colspan="2">Account Number</td>
-						<td colspan="2" class="bold">50200004750712</td>
-					</tr>
-					<tr>
-						<td colspan="2">Account Name</td>
-						<td colspan="2" class="bold">Esteem Holidays Pvt Ltd</td>
-					</tr>
-					<tr>
-						<td colspan="2">Account Type</td>
-						<td colspan="2">Current</td>
-					</tr>
-					<tr>
-						<td colspan="2">Bank &amp; Branch</td>
-						<td colspan="2">HDFC Bank, Kakkanad, Ernakulam</td>
-					</tr>
-					<tr>
-						<td colspan="2">IFSC Code</td>
-						<td colspan="2" class="bold">HDFC0000684</td>
-					</tr>
-					
-				</table> -->
+				
 				
 		</div>
 	

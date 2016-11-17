@@ -160,7 +160,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 	  					</div>
 
 	  					<div class="logo">
-	  						<span class="login_HD dd_signfont">We'll sms you a link to make a brand new password. </span>
+	  						<span class="login_HD dd_signfont">We'll email or sms you a link to make a brand new password. </span>
 	  					</div>
 
 	  					<div class=" dd_relative">
@@ -193,8 +193,8 @@ $currentPath = Route::getCurrentRoute()->getPath();
 	  								<div class="form-group">
 	  									<div class="col-sm-12 dd_login">
 	  										<span class="input-icon ">
-	  											{!! Form::text('email_mobile', null, $attributes = array('class'=>'form-control dd_input','placeholder' => 'Mobile', 'id'=>'email'));  !!}
-	  											<span class="dd_input_icon_name"></span> 
+	  										{!! Form::text('email_mobile', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Mobile', 'id'=>'email'));  !!}
+	  											<span class="dd_input_phone"></span> 
 	  										</span>
 	  									</div>
 	  								</div>
@@ -231,13 +231,17 @@ $currentPath = Route::getCurrentRoute()->getPath();
 	  			<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
 	  				<!-- <span class="dd_color_light_bl">New User ?</span> -->
 	  				<span class="input-icon ">
-	  					<a href="patientlogin" class="btn btn-primary btn-block dd_btn_new patient-login-btn"> Login Now</a>
-	  					
-	  					
-	  				</span>
+	  					<button type="submit" class="btn btn-primary btn-block dd_btn_new">
+	  						<a href="doctorsignup" class=""> Login Now</a></button>
+	  					</span>
+	  				</div>
+
+
 	  			</div>
 
 
+
+	  			<div class="dd_clear"></div>
 	  		</div>
 
 
@@ -246,44 +250,39 @@ $currentPath = Route::getCurrentRoute()->getPath();
 	  	</div>
 
 
+	  	<footer>
+	  		<div class="navbar-fixed-bottom dd_footer" style="z-index: 20000; bottom: 0;">
+	  			<div class="container " style="height:">
+	  				<div class="row">
+	  					<div class="col-sm-12">
+	  						<div class="inner_wrapper_2">
+	  							<div class="footer_div footer_pd dd_left ">
+	  								&copy 2016 Doctor's Diary | Powered by Brainpan <!-- Innovations.  -->
+	  							</div>
+	  							<div class="footer_div_2 dd_right">
+	  								<ul class="footer_ul">
+	  									<li class="footer_li">
+	  										<a href="" class="footer_a">Terms & Conditions</a>	
+	  									</li>
+	  									<li class="footer_li">
+	  										<a href="" class="footer_a">Blog</a>
+	  									</li>
+	  									<li class="footer_li">
+	  										<a href="" class="footer_a">Career</a>
+	  									</li>
+	  									<li class="footer_li">
+	  										<a href="" class="footer_a">About Us</a>
+	  									</li>
 
-	  	<div class="dd_clear"></div>
-	  </div>
+	  								</ul>
 
-
-	  <footer>
-	  	<div class="navbar-fixed-bottom dd_footer" style="z-index: 20000; bottom: 0;">
-	  		<div class="container " style="height:">
-	  			<div class="row">
-	  				<div class="col-sm-12">
-	  					<div class="inner_wrapper_2">
-	  						<div class="footer_div footer_pd dd_left ">
-	  							&copy 2016 Doctor's Diary | Powered by Brainpan <!-- Innovations.  -->
-	  						</div>
-	  						<div class="footer_div_2 dd_right">
-	  							<ul class="footer_ul">
-	  								<li class="footer_li">
-	  									<a href="" class="footer_a">Terms & Conditions</a>	
-	  								</li>
-	  								<li class="footer_li">
-	  									<a href="" class="footer_a">Blog</a>
-	  								</li>
-	  								<li class="footer_li">
-	  									<a href="" class="footer_a">Career</a>
-	  								</li>
-	  								<li class="footer_li">
-	  									<a href="" class="footer_a">About Us</a>
-	  								</li>
-
-	  							</ul>
-
+	  							</div>
 	  						</div>
 	  					</div>
 	  				</div>
 	  			</div>
 	  		</div>
-	  	</div>
-	  </footer>
+	  	</footer>
 
 
 
@@ -293,10 +292,10 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
 
 
-	  
+	  	
 
 
-	  <!-- start: MAIN JAVASCRIPTS -->
+	  	<!-- start: MAIN JAVASCRIPTS -->
 		<!--[if lt IE 9]>
 		<script src="assets/plugins/respond.min.js"></script>
 		<script src="assets/plugins/excanvas.min.js"></script>
@@ -329,10 +328,6 @@ $currentPath = Route::getCurrentRoute()->getPath();
 				//Main.init();
 				forgetPassword.init();
 				
-				$('.patient-login-btn').click(function(e){
-					e.preventDefault();
-					window.location.href = "patientlogin";
-				})
 				
 			});
 		</script>

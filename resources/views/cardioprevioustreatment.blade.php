@@ -106,8 +106,8 @@ for($startYear;$startYear>=$endYear;$startYear--){
 			<h1>Patient Previous Treatments <small></small></h1>
 		</div>
 		
-		<div class="row " style="margin-bottom:20px;">
-			<div class="col-sm-2 dd_year">
+		<div class="dd_dummy_year " style="margin-bottom:20px;">
+			<div class="dd_year">
 				{!! Form::select('year', $yearArray, null , $attributes = array('class' => 'form-control year ','id'=>'year')); !!}
 				<!-- <i class="fa fa-sort-desc" aria-hidden="true"></i> -->
 			</div>

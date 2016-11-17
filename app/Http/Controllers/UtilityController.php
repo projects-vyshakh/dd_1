@@ -1,9 +1,21 @@
 <?php namespace App\Http\Controllers;
+use Input;
 use DB;
 use Log;
-use Input;
 use App\Quotation;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Session;
+use Request;
+use App\classes\DBUtils;
+use App\classes\DOMPDF;
+use Carbon\Carbon;
+use App\classes\DBAuth;
+use App;
+use PDF;
+use View;
 
+use App\Models\PrescriptionModel;
 
 class UtilityController extends Controller {
 
@@ -58,7 +70,109 @@ class UtilityController extends Controller {
 	  
 	    return $password;
     }
-  
+  	
+  	public function handleSharedPrescription($sharedId){
+  		$prescriptionData = PrescriptionModel::where('id_share_prescription',$sharedId)->get();
+  		//var_dump($prescriptionData);
+
+  		//	echo "Reached print data";
+
+		foreach($prescriptionData as $prescriptionDataVal){
+			//var_dump(json_encode($prescriptionDataVal));
+		}
+
+		$patientId 		= $prescriptionDataVal->id_patient;
+		$doctorId		= $prescriptionDataVal->id_doctor;
+		$todayDate 		= date('Y-m-d');
+		$splitDate 		= explode('-',$todayDate);
+
+		$pdfFileName 	= $patientId."_".$splitDate[0].$splitDate[1].$splitDate[2];
+
+		$doctorPersonalData  = DB::table('doctors As d')
+                                            ->leftJoin('specialization As s','d.specialization','=','s.id_specialization')
+		                                     ->where('d.id_doctor','=',$doctorId)->first();
+
+		$patientPersonalData = DB::table('patients')
+		                                   ->where('patients.id_patient','=',$patientId)->first();
+
+		
+		
+		
+		            
+		$vitalsData = DB::table('vitals')
+		                            ->where('id_vitals', DB::raw("(select max(`id_vitals`) from vitals where id_patient='$patientId')"))
+		                            ->where('id_patient','=',$patientId)
+		                            ->first();
+
+		$diagnosisData = DB::table('diagnosis')
+		                            ->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis where id_patient='$patientId')"))
+		                            ->where('id_patient','=',$patientId)
+		                            ->first();
+
+		/*$prescriptionData    = DB::table('prescription')
+											->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
+		                            ->where('id_patient','=',$patientId)
+		                            ->get();*/
+
+		$medicalHistoryData =  DB::table('medical_history_present_past_more')
+									->where('id_patient','=',$patientId)
+		                            ->get();
+
+		$printData = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
+
+		   
+		$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData);
+
+
+		/*$parametersArray = array('printData'=>$printData,'prescriptionData'=>$prescriptionData,'doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData);*/
+
+
+			$pdf 		= App::make('dompdf.wrapper');
+		 	$view 		=  View::make('gynprecriptionformat',$parametersArray)->render();
+		 	$pdf->loadHTML($view);
+		 	//$pdf->stream();
+		 	return $pdf->stream();;
+
+		/*switch ($specialization) {
+			case '1':
+				$pdf = App::make('dompdf.wrapper');
+		        //$pdf->loadHTML('<h1>Test</h1>');
+		        $view =  View::make('gynprecriptionformat',$parametersArray)->render();
+
+		       
+		        
+		        $pdf->loadHTML($view)->setWarnings(false)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+
+		        // add the header
+				
+				
+
+		        return $pdfFileName;
+		        
+		    	//return $pdf->stream($pdfFileName.'.'.'pdf');
+		    	//return $pdf->inline();
+				break;
+
+			case '2':
+				$pdf = App::make('dompdf.wrapper');
+		        //$pdf->loadHTML('<h1>Test</h1>');
+		        $view =  View::make('gynprecriptionformat',$parametersArray)->render();
+		         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+
+		        return $pdfFileName;
+		        
+		    	//return $pdf->stream($pdfFileName.'.'.'pdf');
+		    	//return $pdf->inline();
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+*/
+
+
+  	}
 
 
   

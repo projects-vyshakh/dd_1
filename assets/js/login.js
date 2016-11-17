@@ -190,11 +190,12 @@ var Login = function () {
 
 
     var runDoctorSignUpValidator = function () {
+        
 
         $( "#country option:selected" ).val('101').text('India');
         /*Dynamically adding state responding to country and also keeping selected value of state*/
             var stateHidden = $('#state-hidden').val();
-            var countryId  = $( "#country option:selected" ).val();
+            var countryId   = $( "#country option:selected" ).val();
             
             $.ajax({
                 type: "POST",
@@ -240,7 +241,11 @@ var Login = function () {
             
           return arg!= value;
         }, "Please select a state");
-
+        $.validator.addMethod("needsSelection", function (value, element) {
+                    var count = $(element).find('option:selected').length;
+                    return count > 0;
+                });
+       
         form.validate({
             rules: {
                 email: {
@@ -271,6 +276,9 @@ var Login = function () {
                 state : {
                     stateNotEquals : 0 ,
                 },
+                
+                qualification  :   { needsSelection: false, required:true },
+                
 
                 
             },
@@ -293,6 +301,8 @@ var Login = function () {
                     required : "Please type a valid mobile number",
                     number : "Please type a valid mobile number",
                 },
+                
+
                 
             },    
             submitHandler: function (form) {

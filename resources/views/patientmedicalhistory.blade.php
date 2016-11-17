@@ -1423,7 +1423,7 @@ if(!empty($medicalHistory)){
 					<div class="form-group">
 						<div class="col-sm-10"></div>
 						<div class="col-sm-12">
-							<button type="submit" class="btn btn-primary btn-block btn-medical-save dd_save"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+							<button type="submit" class="btn btn-primary btn-block btn-medical-save dd_save"><!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->Save</button>
 						</div>
 					</div>
 					

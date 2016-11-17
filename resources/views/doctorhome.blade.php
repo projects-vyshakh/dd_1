@@ -86,6 +86,7 @@
     <?php
         $currentPath = Route::getCurrentRoute()->getPath();
         //echo $currentPath;
+
     ?>
     <body style="background-color:#f9f9f9">
         <div class=" resize-login dd_login_header"><!-- navbar-fixed-top -->
@@ -94,7 +95,7 @@
                     <div class="row dd_mg_0">
                         <div class="col-sm-12 dd_pd_0">
                             <div class="logo_div">
-                               <a class="navbar-brand dd_logo_img_2" href="http://ww.doctorsdiary.co">
+                               <a class="navbar-brand dd_logo_img_2" href="http://www.doctorsdiary.co">
                                    
                                 </a>
                             </div>
@@ -105,15 +106,22 @@
                                 <ul class="nav navbar-right dd_profil">
                                     <li class="dropdown current-user">
                                         <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
-                                            <img src="assets/images/avatar-1-small.jpg" class="circle-img" alt="">
+                                            @if(!empty($doctorData->gender))
+                                                @if($doctorData->gender=="Male")
+                                                    <img src="assets/images/patient_profile_ms.jpg" class="circle-img" alt="">
+                                                @else
+                                                    <img src="assets/images/patient_profile_s.jpg" class="circle-img" alt="">
+                                                @endif
+                                            @endif
+                                            
                                             <span class="username">{{ucfirst($doctorData->first_name)." ".ucfirst($doctorData->last_name)}}</span>
                                             <i class="clip-chevron-down"></i>
                                         </a>
-                                        <ul class="dropdown-menu">
+                                        <ul class="dropdown-menu dd_dropdown_menu">
                                             <li>
-                                                <a href="logout">
-                                                    <i class="clip-exit"></i>
-                                                    &nbsp;Log Out
+                                                <a href="logout" class="dd_settings">
+                                                    <i class="clip-dd-logout"></i>
+                                                    <span>&nbsp;Log Out</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -143,15 +151,16 @@
       <!--       <div class="swiper-button-next swiper-button-white"></div>
             <div class="swiper-button-prev swiper-button-white"></div> -->
             <div class="inner_wrapper_3 ">
-
-
-             <div class="box_admin">
-
-             <div class="dd_profile_pic_div">
-                 
-                 <div class="dd_profile_pic"></div> 
-             </div>
-
+                <div class="box_admin">
+                     @if(!empty($doctorData->gender))
+                        <div class="dd_profile_pic_div">
+                             @if($doctorData->gender=="Male")
+                                <div class="dd_profile_pic_male"></div> 
+                            @else
+                                <div class="dd_profile_pic"></div> 
+                            @endif
+                        </div>
+                    @endif
                     <div class="dd_logo_responsive">
                                     <div class="navbar-tools  pull-right">
                                     <!-- start: TOP NAVIGATION MENU -->
@@ -159,15 +168,15 @@
                                         <ul class="nav navbar-right dd_profil">
                                             <li class="dropdown current-user">
                                                 <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
-                                                    <img src="assets/images/avatar-1-small.jpg" class="circle-img" alt="">
+                                                    <img src="assets/images/patient_profile_ms.jpg" class="circle-img" alt="">
                                                     <span class="username">{{ucfirst($doctorData->first_name)." ".ucfirst($doctorData->last_name)}}</span>
                                                     <i class="clip-chevron-down"></i>
                                                 </a>
-                                                <ul class="dropdown-menu">
+                                                <ul class="dropdown-menu dd_dropdown_menu">
                                                     <li>
-                                                        <a href="logout">
+                                                        <a href="logout" class="dd_settings">
                                                             <i class="clip-exit"></i>
-                                                            &nbsp;Log Out
+                                                            <span>&nbsp;Log Out</span>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -263,14 +272,16 @@
                                
                               ?>
                               @if(!empty($error))
-                                <div class="dd_alert dd_abs col-sm-6 display-none" style="display: block;">
-                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+                                <div class="dd_alert dd_abs dd_error_center col-sm-12 display-none" style="display: block;">
+                                  
                                           {{$error}}
+                                          <a class="close_home" aria-hidden="true" href="#" data-dismiss="alert">×</a>
                                 </div>
                               @elseif(!empty($success))
-                                <div class="dd_alert_2 display-none" style="display: block;">
-                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+                                <div class="dd_alert_2 dd_error_center display-none" style="display: block;">
+                                  
                                           {{$success}}
+                                          <a class="close_home" aria-hidden="true" href="#" data-dismiss="alert">×</a>
                                 </div>
                               @endif
                                     

@@ -90,6 +90,8 @@ class DoctorController extends Controller {
 		
 	}
 	public function showDoctorHome(){
+
+
 		Session::forget('patientId');
 		Session::forget('referenceId');
 		Session::forget('patientName');
@@ -97,9 +99,10 @@ class DoctorController extends Controller {
 		$doctorId = Session::get('doctorId');
 
 
-		$patientId = Session::get('patientId');
+		
 
 		$doctorData = DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+		
 
 		if(empty($doctorId )){
 			return Redirect::to('doctorlogin');
@@ -240,9 +243,13 @@ class DoctorController extends Controller {
 												->where('id_patient','=',$patientId)
         										->where('obs_lmp_date', DB::raw("(select max(`obs_lmp_date`) from sp_gynaecology_obs_lmp where id_patient='$patientId')"))
         										->first();
-		
 
-		return view('patientobstetricshistory',array('lmpFlow' => $lmpFlow,'lmpDysmenohrrea'=>$lmpDysmenohrrea, 'lmpMensusType' => $lmpMensusType, 'pregKind' => $pregKind, 'pregType' => $pregType,'gender' => $gender, 'pregTerm' =>$pregTerm, 'pregChildHealth' => $pregChildHealth,'patientPersonalData' =>$patientPersonalData, 'patientGynObsData' =>$patientGynObsData, /*'patientGynObsLmpData' =>$patientGynObsLmpData,*/ 'patientGynObsPregData' =>$patientGynObsPregData,'bloodGroup' => $bloodGroup,'lastLmpDate'=>$lastLmpDate,'doctorData'=>$doctorData));
+
+        $pregnancyCount = DB::table('sp_gynaecology_obs_preg')->where('id_patient','=',$patientId)->count();
+
+
+
+		return view('patientobstetricshistory',array('lmpFlow' => $lmpFlow,'lmpDysmenohrrea'=>$lmpDysmenohrrea, 'lmpMensusType' => $lmpMensusType, 'pregKind' => $pregKind, 'pregType' => $pregType,'gender' => $gender, 'pregTerm' =>$pregTerm, 'pregChildHealth' => $pregChildHealth,'patientPersonalData' =>$patientPersonalData, 'patientGynObsData' =>$patientGynObsData, /*'patientGynObsLmpData' =>$patientGynObsLmpData,*/ 'patientGynObsPregData' =>$patientGynObsPregData,'bloodGroup' => $bloodGroup,'lastLmpDate'=>$lastLmpDate,'doctorData'=>$doctorData,'pregnancyCount'=>$pregnancyCount));
 	}
 
 	public function showPatientMedicalHistory(){
@@ -1337,8 +1344,8 @@ class DoctorController extends Controller {
         
         if($patientGynObsExist>0){
         	
-			if(	!empty($lastMensusDate) && !empty($lmpFlow) && !empty($lmpDysmenorrhea) && 
-   	   	 		!empty($days) && !empty($cycle) && !empty($lmpMensusType))
+			if(	!empty($lastMensusDate) || !empty($lmpFlow) || !empty($lmpDysmenorrhea) ||
+   	   	 		!empty($days) || !empty($cycle) || !empty($lmpMensusType))
    	   	 	{
    	   	 		
    	   	 		$lmpData = array(	'obs_lmp_date' 				=> $lastMensusDate,
@@ -1402,15 +1409,19 @@ class DoctorController extends Controller {
 		(!empty($input['type_of_abortion']))? $pregAbortion = $input['type_of_abortion'] : $pregAbortion="";
 		(!empty($input['preg_health'] ))? $pregHealth = $input['preg_health'] : $pregHealth="";
 		(!empty($input['years']))? $pregYear = $input['years'] : $pregYear="";
+		(!empty($input['months']))? $pregMonth = $input['months'] : $pregMonth="";
 		(!empty($input['weeks']))? $pregWeek = $input['weeks'] : $pregWeek="";
 		(!empty($input['gender']))? $pregGender = $input['gender'] : $pregGender="";
 		
 		/*----------------------------------------------------------------------------------------*/
     		
     		//Inserting into sp_gynaecology_obs_preg
-			if((!empty($pregKind) || $pregKind!=0) && (!empty($pregType) || $pregType!=0) && 
-			   (!empty($pregTerm) || $pregTerm!=0) && !empty($pregAbortion) && (!empty($pregHealth) || $pregHealth!=0) &&
-			   !empty($pregWeek) && !empty($pregYear) && (!empty($pregGender) || $pregGender!=0) ){ 
+			if(	(!empty($pregKind) || $pregKind!=0) && 
+				(!empty($pregType) || $pregType!=0) && 
+			   	(!empty($pregTerm) || $pregTerm!=0) && 
+			   	 !empty($pregAbortion) && (!empty($pregHealth) || $pregHealth!=0) &&
+			   	 !empty($pregWeek) && !empty($pregMonth) && !empty($pregYear) && 
+			   	(!empty($pregGender) || $pregGender!=0) ){ 
 
 			  
 				foreach ($pregKind as $index => $value){
@@ -1426,6 +1437,7 @@ class DoctorController extends Controller {
 								      'obs_preg_gender' 	=> $pregGender[$index],
 								      'obs_preg_years' 		=> $pregYear[$index],
 								      'obs_preg_weeks' 		=> $pregWeek[$index],
+								      'obs_preg_months' 	=> $pregMonth[$index],
 								      'obs_preg_reference' 	=> $referenceId,
 								      'created_date' 		=> $createdDate);
 					if((!empty($pregKind[$index]) || $pregKind[$index]!=0) && 
@@ -2315,16 +2327,20 @@ class DoctorController extends Controller {
 
 	public function addPatientPrescMedicine(){
     	$input = Request::all();
+
+    	$idSharePrescription = DBUtils:: id_share_prescription(6);
+
+
     	
     	$patientId 		= Session::get('patientId');
     	$doctorId 		= Session::get('doctorId');
     	$referenceId 	= Session::get('referenceId');
     	$createdDate 	= date('Y-m-d H:i:s');
-    	$flagArray = array();
-    	$printData = $input['print-data'];
-    	$defaultCount = $input['default-div-count'];
-    	$extraCount   = $input['prev-drug-count'];
-    	//var_dump($input);
+    	$flagArray 		= array();
+    	$printData 	  	= $input['print-data'];
+    	$defaultCount 	= $input['default-div-count'];
+    	$extraCount   	= $input['prev-drug-count'];
+    	
 
     	$insertValue = array();
     	$multi = array();	
@@ -2335,6 +2351,7 @@ class DoctorController extends Controller {
     		if(!empty($patientExistCheck)){
     		
     				for($i=1;$i<=$defaultCount;$i++){
+    					//echo "Enter into loop";
 
     					(isset($input["drug_name".$i]))?$drugName = $input["drug_name".$i]:$drugName = "";
 			    		(isset($input["dosage".$i]))?$dosage   =  $input["dosage".$i]:$dosage   =  "";
@@ -2354,25 +2371,28 @@ class DoctorController extends Controller {
 			    		
 
 			    		if(	!empty($drugName)){
+			    			//echo "Enter into not empty drugname";
 
-			    			$insertValue = array(	'drug_name' => $drugName,
-			    									'dosage' => $dosage,
-			    									'dosage_unit' => $dosageUnit,
-			    									'duration' => $duration,
-			    									'duration_unit' => $durationUnit,
-			    									'morning' => $morning,
-			    									'noon' => $noon,
-			    									'night' => $night,
-			    									'start_date' =>$startDate,
-			    									'instruction' => $instruction,
-			    									'food_status' => $foodStatus,
-			    									'follow_up_date' => $followUpDate,
-			    									'treatment' => $treatment,
-			    									'id_patient' => $patientId,
-			    									'id_doctor' =>$doctorId,
-			    									'presc_ref_id' =>$referenceId,
-			    									'created_date' => $createdDate
+			    			$insertValue = array(	'drug_name'		 	=> $drugName,
+			    									'dosage' 			=> $dosage,
+			    									'dosage_unit' 		=> $dosageUnit,
+			    									'duration' 			=> $duration,
+			    									'duration_unit' 	=> $durationUnit,
+			    									'morning' 			=> $morning,
+			    									'noon' 				=> $noon,
+			    									'night' 			=> $night,
+			    									'start_date' 		=>$startDate,
+			    									'instruction' 		=> $instruction,
+			    									'food_status' 		=> $foodStatus,
+			    									'follow_up_date' 	=> $followUpDate,
+			    									'treatment' 		=> $treatment,
+			    									'id_patient' 		=> $patientId,
+			    									'id_doctor' 		=>$doctorId,
+			    									'id_share_prescription' 	=> $idSharePrescription,
+			    									'presc_ref_id' 		=>$referenceId,
+			    									'created_date' 		=> $createdDate
 			    									);
+			    			//var_dump($insertValue);
 			    			array_push($multi,$insertValue);
 			    			array_push($flagArray ,1);
 			    		}
@@ -2391,20 +2411,27 @@ class DoctorController extends Controller {
 				    		if($defaultCount>$extraCount){
 				    			//echo "Inside Default>extra";
 				    			$prescriptionSave = DB::table('prescription')->insert($multi);
+				    			//var_dump($prescriptionSave);
 				    			$pdfFileName = $this->patientPrescPrint();
-				    			return $pdfFileName;
+				    			//echo $pdfFileName;
+				    			$prescSharedId = $idSharePrescription;
+				    			$dataArray = array('pdfFileName'=>$pdfFileName,'prescSharedId'=>$prescSharedId);
+				    			return $dataArray;
+				    			//return '1';
 				    		}
 				    		else{
 				    			//echo "Default<extra";
 				    			$pdfFileName = $this->patientPrescPrint();
-				    			return $pdfFileName;
+				    			$prescSharedId = $idSharePrescription;
+				    			$dataArray = array('pdfFileName'=>$pdfFileName,'prescSharedId'=>$prescSharedId);
+				    			return $dataArray;
 				    		}
 			    		
 			    		
 				    	}
 				    	else{
-				    		//return Redirect::to('patientprescmedicine')->with(array('error'=>'Failed to save data'));
-				    		return "failed";
+				    		return Redirect::to('patientprescmedicine')->with(array('error'=>'Failed to save data'));
+				    		//return "failed";
 				    	}
 			    	}
 			    	else{
@@ -2412,13 +2439,16 @@ class DoctorController extends Controller {
 
 				    		$prescriptionSave = DB::table('prescription')->insert($multi);
 				    		if($prescriptionSave){
+				    			//echo "Saved";
 				    			return Redirect::to('patientprescmedicine')->with(array('success'=>'Data saved successfully'));
 				    		}
 				    		else{
+				    			//echo "Not Saved";
 				    			return Redirect::to('patientprescmedicine')->with(array('error'=>'Failed to save data'));
 				    		}
 				    	}
 				    	else{
+				    		//echo "Failed Save";
 				    		return Redirect::to('patientprescmedicine')->with(array('error'=>'Failed to save data'));
 				    	}
 
@@ -2456,7 +2486,7 @@ class DoctorController extends Controller {
 
 		$pdfFileName 	= $patientId."_".$splitDate[0].$splitDate[1].$splitDate[2];
 
-		//echo $patientId;
+		
 
 		$doctorPersonalData  = DB::table('doctors As d')
                                             ->leftJoin('specialization As s','d.specialization','=','s.id_specialization')
@@ -2486,11 +2516,9 @@ class DoctorController extends Controller {
 
 		$printData = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
 
-		                       
-
+		   
 
 		$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData);
-
 
 
 

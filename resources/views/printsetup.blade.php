@@ -64,6 +64,13 @@ if(!empty($printData)){
 		default:
 	}
 }
+else{
+	$marginTop = 0;
+	$marginBottom  = 0;
+	$marginLeft = 0;
+	$marginRight = 0;
+}
+
 
 ?>
 @section('head')
@@ -192,9 +199,9 @@ if(!empty($printData)){
 
 						</div>
 						<div class="form-group">
-							<div class="col-sm-2">
-								<button type="submit" class="btn btn-primary ">
-								<i class="fa fa-floppy-o" aria-hidden="true"></i>
+							<div class="col-sm-5">
+								<button type="submit" class="btn btn-primary dd_save  pull-right ">
+								<!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
 								Save
 							</button>
 							</div>

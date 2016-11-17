@@ -46,16 +46,18 @@
 		  html, body {
         position: relative;
         height: 100%;
-    }
-
-    .swiper-container {
+   		 }
+   		.help-block{
+   			color:red;
+   		}
+   /* .swiper-container {
         width: 100%;
         height: 100%;
     }
     .swiper-slide {
         background-position: center;
         background-size: cover;
-    }
+    }*/
 		</style>
 		<!-- end: META -->
 		<!-- start: MAIN CSS -->
@@ -160,7 +162,7 @@
 				        	</div>
 
 			        		<div class="logo">
-			        			<span class="login_HD dd_signfont">We'll email you a link to make a brand new password. </span>
+			        			<span class="login_HD dd_signfont">We'll email or sms you a link to make a brand new password. </span>
 			        		</div>
 
 			        		 
@@ -172,8 +174,8 @@
 					        				<div class="form-group">
 												<div class="col-sm-12 dd_login">
 													<span class="input-icon ">
-														{!! Form::text('email_mobile', null, $attributes = array('class'=>'form-control dd_input','placeholder' => 'Email', 'id'=>'email'));  !!}
-														<span class="dd_input_icon_name"></span> 
+														{!! Form::text('email_mobile', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Email / Mobile', 'id'=>'email'));  !!}
+														<span class="dd_input_phone"></span> 
 													</span>
 												</div>
 					        				</div>
@@ -232,7 +234,7 @@
 												<!-- <span class="dd_color_light_bl">New User ?</span> -->
 													<span class="input-icon ">
 														
-														<a href="doctorsignup" class="btn btn-primary btn-block dd_btn_new doctor-login-btn"> Login Now</a>
+														<a href="doctorsignup" class="btn btn-primary btn-block dd_btn_new doctor-login-btn dd_regi_pd"> Login Now</a>
 													</span>
 						</div>
 						

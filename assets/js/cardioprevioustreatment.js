@@ -118,8 +118,8 @@ var patientPrevElements = function () {
                         $('.prev-contents').append('<div class="tab-pane" id="panel_tab4_example1'+i+'">'+
                                                     '<input type="hidden" name="created-date" class="created-date" value="'+data.originalCreatedDateDup[i]+'">'+
                                                        '<p>'+ 
-                                                            '<div class="row">'+
-                                                                '<div class="col-sm-12">'+
+                                                            '<div class="dd_prev_margine">'+
+                                                                '<div class="col-sm-12 dd_prev_hd_mg">'+
                                                                     '<div class="tabbable">'+
                                                                         '<ul id="myTab" class="nav nav-tabs tab-bricky dd_sidetab">'+
                                                                             '<li class="active">'+

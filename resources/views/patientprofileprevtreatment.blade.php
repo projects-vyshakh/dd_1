@@ -14,9 +14,6 @@ else{
 if(!empty($doctorData)){
 	$doctorSpecialization = $doctorData->specialization;
 }
-else{
-	$doctorSpecialization = "";
-}
 
 
 
@@ -27,6 +24,8 @@ else{
 	{!!Html::style('assets/plugins/select2/select2.css')!!}
 	{!!Html::style('assets/plugins/tokenizemultiselect/jquery.tokenize.css')!!}
 
+
+	{!!Html::style('assets/plugins/ajax-loader/src/jquery.mloading.css')!!}
 	
 	
 
@@ -78,12 +77,37 @@ for($startYear;$startYear>=$endYear;$startYear--){
 
 
 ?>
+
+	<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content" style="width:800px;height:580px">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title">Drug Alert</h4>
+				</div>
+				<div class="modal-body">
+					<p class="pdf_print">
+						
+					</p>	
+	
+				</div>
+				<!-- <div class="modal-footer">
+					<button class="btn btn-default printBtnOk" data-dismiss="modal">
+						OK
+					</button>
+				</div> -->
+			</div>
+		</div>
+	</div>
+
 		<div class="page-header">
 			<h1>Patient Previous Treatments <small></small></h1>
 		</div>
 		
-		<div class="row " style="margin-bottom:20px;">
-			<div class="col-sm-2 dd_year">
+		<div class="dd_dummy_year" style="margin-bottom:20px;">
+			<div class=" dd_year">
 				{!! Form::select('year', $yearArray, null , $attributes = array('class' => 'form-control year ','id'=>'year')); !!}
 				<!-- <i class="fa fa-sort-desc" aria-hidden="true"></i> -->
 			</div>
@@ -113,12 +137,12 @@ for($startYear;$startYear>=$endYear;$startYear--){
 		{!!Html::script('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')!!}
 	 	
 	 	{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
-	 	{!!Html::script('assets/js/patientprofileprevioustreatment.js')!!}
+	 	{!!Html::script('assets/js/previoustreatment.js')!!}
 	 	{!!Html::script('assets/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')!!}
 
 	 	{!!Html::script('assets/plugins/tokenizemultiselect/jquery.tokenize.js')!!}
+
 	 	{!!Html::script('assets/plugins/ajax-loader/src/jquery.mloading.js')!!}
-	 	
 
 	 	
 
@@ -128,11 +152,17 @@ for($startYear;$startYear>=$endYear;$startYear--){
 			patientPrevElements.init();
 			Main.init();
 			
-	
-   
 			
+   	
+			/*$(window).load(function() {
+				$(".loader").fadeOut("slow");
+				
+			});*/
 
+			//$('.quali').multiselect(); //Used class here instead of id
 			
+			$('.tokenize-sample').tokenize();
+			//$('.tokenize-disease').tokenize();
 			
 	 	});
 	</script>

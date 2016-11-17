@@ -204,6 +204,7 @@
 }
 
 @media only screen and (max-width: 900px){
+    
 
 
 .dd_sample_R {
@@ -254,6 +255,16 @@
 	}
 
 @media only screen and (max-width: 767px){
+
+.dd_bodred_l_0{
+    border-left: 1px solid hsl(0, 0%, 77%) !important;
+}
+
+.patient_settings > li > a {
+    padding: 20px 20px !important;
+    margin-left: 20px !important;
+   
+}
 
 .thumbnail {
     width: 193px;
@@ -563,14 +574,14 @@ display: none;
 .form-group .col-sm-12 .input-icon .dd_input_2 {
     width: 100%;
     float: none;
-    border: 1px solid #cbcbcb
+    /*border: 1px solid #cbcbcb*/
 
 }
 .form-group .col-sm-12 .input-icon .dd_input_3 {
     width: 100%;
     float: none;
-    border: 1px solid #cbcbcb
-   
+    /*border: 1px solid #cbcbcb
+   */
 
 }
 
@@ -582,15 +593,10 @@ display: none;
 .form-group .col-sm-12 .input-icon .dd_input_5{
     width: 100%;
     float: none;
-    
-    border: 1px solid #cbcbcb
-   
-
 }
 .form-group .col-sm-12 .input-icon .dd_input_6{
     width: 100%;
-    float: none;
-    border: 1px solid #cbcbcb
+    float: none;  
  }
 
 .login_div2 {

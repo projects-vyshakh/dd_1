@@ -94,7 +94,7 @@
 	        		<div class="row dd_mg_0">
 	        		 	<div class="col-sm-12 dd_pd_0">
 	        		 		<div class="logo_div">
-	    		 			   <a class="navbar-brand dd_logo_img_2" href="http://ww.doctorsdiary.co">				                   
+	    		 			   <a class="navbar-brand dd_logo_img_2" href="http://www.doctorsdiary.co">				                   
 								</a>
 							</div>
 							<div class="login_div">
@@ -136,33 +136,55 @@
 
 	       		 <span>Sign in or create an account</span></div>
 
-		        <div class="doctor_login_main">		       
-						<div class="box_2">
-						 <div class="box_2_main">
-				        	<!-- <div class="main-login"> -->
-					        	<div>
+	        <div class="doctor_login_main">		       
+				<div class="box_2">
+				 <div class="box_2_main">
+		        	<!-- <div class="main-login"> -->
+		        	<div>
 
-						        	<div class="dd_logo_responsive">
-							        	<img src="assets/images/logo-mob.png" alt="">			        		
-							        </div>
+		        	<div class="dd_logo_responsive">
+			        	<img src="assets/images/logo-mob.png" alt="">			        		
+			        </div>
 
-						        	<div class="dd_drlogin_responsive">
-							        	<div class="login_div2">
-											<div class="doctorlogin_main2">								
-												<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
-											</div>
-					        		 		<div class="patientlogin_main2"> 							        		 		       	
-					        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
-					        		 		 		Patient Login
-					        		 		 	</a>
-					        		 		</div>
-				        		 		</div> 	
-						        	</div>
-					        		<div class="logo">
-					        			<span class="login_HD dd_signfont">Sign into your account</span>
-					        		</div>
+		        	<div class="dd_drlogin_responsive">
+			        	<div class="login_div2">
+							<div class="doctorlogin_main2">								
+								<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+							</div>
+	        		 		<div class="patientlogin_main2"> 							        		 		       	
+	        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
+	        		 		 		Patient Login
+	        		 		 	</a>
+	        		 		</div>
+        		 		</div> 	
+		        	</div>
+	        		<div class="logo">
+	        			<span class="login_HD dd_signfont">Sign into your account</span>
+	        		</div>
 
-					        		<div class=" dd_relative">
+		        		
+	        		<div class="box-login " style="display: block;">
+	        			<div class="row">
+							<div class="col-sm-12">
+	        					{!! Form::open(array('route' => 'handleDoctorLogin', 'role'=>'form', 'id'=>'login', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
+		        				<div class="form-group">
+									<div class="col-sm-12 dd_login">
+										<span class="input-icon ">
+											{!! Form::text('email', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Email', 'id'=>'email'));  !!}
+											<span class="dd_input_icon_name"></span> 
+										</span>
+									</div>
+		        				</div>
+		        				<div class="form-group dd_mg_B_10">
+		        					<div class="col-sm-12 dd_login">
+										<span class="input-icon dd_relative">
+											{!! Form::password('password', array('placeholder'=>'Password', 'class'=>'form-control dd_input dd_login_main', 'id'=>'password' ) ) !!}
+											<span class="dd_input_icon"></span>
+
+										</span>
+									</div>
+		        				</div>
+			        				<div class=" dd_relative">
 				                        <div class="heading ">
 				                              <?php $error = Session::get('error');
 				                                $success = Session::get('success');
@@ -184,65 +206,44 @@
 				                                    
 				                        </div>
 				                    </div> 
-					        		<div class="box-login " style="display: block;">
-					        			<div class="row">
-											<div class="col-sm-12">
-					        					{!! Form::open(array('route' => 'handleDoctorLogin', 'role'=>'form', 'id'=>'login', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
-							        				<div class="form-group">
-														<div class="col-sm-12 dd_login">
-															<span class="input-icon ">
-																{!! Form::text('email', null, $attributes = array('class'=>'form-control dd_input','placeholder' => 'Email', 'id'=>'email'));  !!}
-																<span class="dd_input_icon_name"></span> 
-															</span>
-														</div>
-							        				</div>
-							        				<div class="form-group dd_mg_B_10">
-							        					<div class="col-sm-12 dd_login">
-															<span class="input-icon dd_relative">
-																{!! Form::password('password', array('placeholder'=>'Password', 'class'=>'form-control dd_input', 'id'=>'password' ) ) !!}
-																<span class="dd_input_icon"></span>
-
-															</span>
-														</div>
-							        				</div>
-							        				<div class="form-group dd_mg_B_10">
-							        					<div class="col-sm-12 dd_mg_B_T_10">
-															<span class="input-icon ">
-																<button type="submit" class="btn btn-primary btn-block dd_btn_new">Login</button>
-															</span>
-														</div>
-														<div class="col-sm-12 dd">
-															<a href="doctorforgetpassword" class="dd_textalign_center dd_16px ">Forgot Your Password?</a>
-														</div>
-													
-							        				</div>
-				        			
-												{!! Form::close() !!}
-					        				</div>
-					        			</div>
-					        		</div>		
-								</div>
-							</div>
-						</div>
-
-
-						<div class="box_right">
-				        	<div class="logo">
-				        		<span class="login_HD dd_signfont">New to Doctor's Diary?</span>
-				        	</div>
-							<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
-								<span class="input-icon ">
+			        				<div class="form-group dd_mg_B_10">
+			        					<div class="col-sm-12 dd_mg_B_T_10">
+											<span class="input-icon ">
+												<button type="submit" class="btn btn-primary btn-block dd_btn_new">Login</button>
+											</span>
+										</div>
+										<div class="col-sm-12 dd">
+											<a href="doctorforgetpassword" class="dd_textalign_center dd_16px ">Forgot Your Password?</a>
+										</div>
 									
-									<a href="doctorlogin" class="btn btn-primary btn-block dd_btn_new doctor-register-btn dd_regi_pd"> Register Now</a>
-									
-								</span>
-							</div>
-						</div>
-
-
-
-				<div class="dd_clear"></div>
+			        				</div>
+        			
+								{!! Form::close() !!}
+	        				</div>
+	        			</div>
+	        		</div>		
+					</div>
+					</div>
 				</div>
+
+
+					<div class="box_right">
+			        	<div class="logo">
+			        		<span class="login_HD dd_signfont">New to Doctor's Diary?</span>
+			        	</div>
+						<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
+							<span class="input-icon ">
+								
+								<a href="doctorlogin" class="btn btn-primary btn-block dd_btn_new doctor-register-btn dd_regi_pd"> Register Now</a>
+								
+							</span>
+						</div>
+					</div>
+
+
+
+			<div class="dd_clear"></div>
+			</div>
 
 
 

@@ -636,7 +636,7 @@ class LoginController extends Controller {
 
 		$specialization =  DB::table('specialization')->select('specialization_name','id_specialization')->orderBy('specialization_name', 'asc')->lists('specialization_name', 'specialization_name'); 	
 		    	
-			
+
 		   /* if(!in_array('', $gender)){
 		     	 array_unshift($gender, '');
 		    }	
@@ -659,9 +659,11 @@ class LoginController extends Controller {
 
 		$input = Request::all();
 
-		$signUpParam = $input['signup_parameter'];
 
-		if($signUpParam=="signup1"){
+
+		//$signUpParam = $input['signup_parameter'];
+
+		
 			$email 		= $input['email'];
 			$password 	= $input['password'];
 			$cPassword 	= $input['cpassword'];
@@ -669,11 +671,36 @@ class LoginController extends Controller {
 
 			$emailExistCheck = DB::table('doctors')->where('email','=',$email)->first();
 			
-			
 			if(!empty($emailExistCheck)){
-				if($emailExistCheck->registration_status==0){
-					if(($password==$cPassword) && !empty($email)){
-						$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
+				return Redirect::to('doctorsignup')->with(array('error'=>"Email already registered."));
+			}
+			else{
+				$firstName 	= $input['first_name'];
+				$middleName = $input['middle_name'];
+				$lastName 	= $input['last_name'];
+				$email 		= $input['email'];
+				$password 	= $input['password'];
+				$phone 		= $input['phone'];
+				$gender 	= $input['gender'];
+				$street 	= $input['street'];
+				$country 	= $input['country'];
+				!empty($input['state'])?$state = $input['state']:$state="";
+				$city 		= $input['city'];
+				$pincode 	= $input['pincode'];
+				!empty($input['qualification'])?$qualification = $input['qualification']:$qualification="";
+				$specialization = $input['specialization'];
+				!empty($input['super_specialization'])?$superSpecialization = $input['super_specialization']:$superSpecialization="";
+				$accredition = $input['accredition'];
+				$imaRegisterNo = $input['register_no'];
+				$createdDate = date('Y-m-d H:i:m');
+				
+				
+				
+				
+				
+				
+
+				$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
 						$iv = mcrypt_create_iv(
 						    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
 						    MCRYPT_DEV_URANDOM
@@ -689,205 +716,53 @@ class LoginController extends Controller {
 						        $iv
 						    )
 						);
+				
+				
+				
+				
 
-						$passwordUpdate = DB::table('doctors')->where('email','=',$email)->update(array('password'=>$encrypted));
-						if($passwordUpdate){
-							return Redirect::to('doctorsignupinformation');
-						}
-						else{
-							return Redirect::to('doctorsignup')->with(array('error'=>"Failed to update your new password"));
-						}
-						
-					}
-					
+				$regsiterValues = array('first_name' => $firstName,
+									'middle_name' => $middleName,
+									'last_name' => $lastName,
+									'password' =>$encrypted,
+									'gender' => $gender,
+									
+									
+									'street' => $street,
+									'country' => $country,
+									'state' => $state,
+									'city' => $city,
+									'pincode' => $pincode,
+									'phone' => $phone,
+									'email' => $email,
+									
+									'qualification' => json_encode($qualification),
+									'specialization' => $specialization,
+									'super_specialization' => $superSpecialization,
+									'accredition' => $accredition,
+									'doctor_registration_no' => $imaRegisterNo,
+									'registration_status'=>0,
+									'status'=>1,
+									'created_date' => $createdDate,
+									);
+
+				$doctorRegistration = DB::table('doctors')->insert($regsiterValues);
+				
+
+				if($doctorRegistration){
+					return Redirect::to('doctorlogin')->with(array('success'=>"Doctor registered successfully. Please wait for administrator authorisation"));
 				}
 				else{
-					return Redirect::to('doctorsignup')->with(array('error'=>"This email already registered. Please login to continue!!!"));
+					return Redirect::to('doctorsignup')->with(array('error'=>"Failed to register doctor"));
 				}
-				
-			}
-			else{
-				if(($password==$cPassword) && !empty($email)){
 
-					$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
-					$iv = mcrypt_create_iv(
-					    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
-					    MCRYPT_DEV_URANDOM
-					);
-
-					$encrypted = base64_encode(
-					    $iv .
-					    mcrypt_encrypt(
-					        MCRYPT_RIJNDAEL_128,
-					        hash('sha256', $key, true),
-					       	$password,
-					        MCRYPT_MODE_CBC,
-					        $iv
-					    )
-					);
-
-
-					$insertArray = array('email'=>$email,'password'=>$encrypted,'status'=>0);
-					$signupInitialSave = DB::table('doctors')->insert($insertArray);
-					if($signupInitialSave){
-						
-						return Redirect::to('doctorsignupinformation');
-					}
-					else{
-						return Redirect::to('doctorsignup')->with(array('error'=>"Error in processing"));
-						
-					}
-				}
 
 			}
 
 			
-		}
-		else{
-			$firstName = $input['first_name'];
-			$middleName = $input['middle_name'];
-			$lastName = $input['last_name'];
-			//$aadharNo = $input['aadhar_no'];
-			$gender = $input['gender'];
-			//$maritialStatus = $input['maritial_status'];
-			//$house = $input['house'];
-			$street = $input['street'];
-			$country = $input['country'];
-			!empty($input['state'])?$state = $input['state']:$state="";
-			$city = $input['city'];
-			$pincode = $input['pincode'];
-			$phone = $input['phone'];
-			$email = $input['email'];
-			//$password = $input['password'];
-			!empty($input['qualification'])?$qualification = $input['qualification']:$qualification="";
-			$specialization = $input['specialization'];
-			!empty($input['super_specialization'])?$superSpecialization = $input['super_specialization']:$superSpecialization="";
-			$accredition = $input['accredition'];
-			$imaRegisterNo = $input['register_no'];
-			$createdDate = date('Y-m-d H:i:m');
+			
 
-			$regsiterValues = array('first_name' => $firstName,
-								'middle_name' => $middleName,
-								'last_name' => $lastName,
-								
-								'gender' => $gender,
-								
-								
-								'street' => $street,
-								'country' => $country,
-								'state' => $state,
-								'city' => $city,
-								'pincode' => $pincode,
-								'phone' => $phone,
-								'email' => $email,
-								
-								'qualification' => json_encode($qualification),
-								'specialization' => $specialization,
-								'super_specialization' => $superSpecialization,
-								'accredition' => $accredition,
-								'doctor_registration_no' => $imaRegisterNo,
-								'registration_status'=>1,
-								'created_date' => $createdDate,
-								);
-
-			$emailExistCheck = DB::table('doctors')->where('email','=',$email)->count();
-
-
-			if($emailExistCheck>0){
-				$doctorDataUpdate = DB::table('doctors')->where('email','=',$email)->update($regsiterValues);
-				if($doctorDataUpdate){
-					return Redirect::to('doctorlogin')->with(array('success'=>"Registerd successfully!!! Please wait for administrator authorization"));
-				}
-			}
-			else{
-				return Redirect::to('doctorsignup')->with(array('error'=>"Please enter your email and password before saving information"));
-			}
-
-		}
-		
-
-		//$input = Request::all();
-		/*var_dump($input);
-		var_dump(json_encode($input['qualification']));*/
-		//die();
-
-		/*$firstName = $input['first_name'];
-		$middleName = $input['middle_name'];
-		$lastName = $input['last_name'];
-		$aadharNo = $input['aadhar_no'];
-		$gender = $input['gender'];
-		$maritialStatus = $input['maritial_status'];
-		$house = $input['house'];
-		$street = $input['street'];
-		$country = $input['country'];
-		$state = $input['state'];
-		$city = $input['city'];
-		$pincode = $input['pincode'];
-		$phone = $input['phone'];
-		$email = $input['email'];
-		$password = $input['password'];
-		$qualification = $input['qualification'];
-		$specialization = $input['specialization'];
-		$superSpecialization = $input['super_specialization'];
-		$accredition = $input['accredition'];
-		$imaRegisterNo = $input['register_no'];
-		$createdDate = date('Y-m-d');*/
-
-		/*$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
-
-		
-		$iv = mcrypt_create_iv(
-		    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
-		    MCRYPT_DEV_URANDOM
-		);
-
-		$encrypted = base64_encode(
-		    $iv .
-		    mcrypt_encrypt(
-		        MCRYPT_RIJNDAEL_128,
-		        hash('sha256', $key, true),
-		       	$password,
-		        MCRYPT_MODE_CBC,
-		        $iv
-		    )
-		);
-*/
-		
-		
 	
-
-		
-/*
-		$regsiterValues = array('first_name' => $firstName,
-								'middle_name' => $middleName,
-								'last_name' => $lastName,
-								'id_no' => $aadharNo,
-								'gender' => $gender,
-								'maritial_status' => $maritialStatus,
-								'house' =>$house,
-								'street' => $street,
-								'country' => $country,
-								'state' => $state,
-								'city' => $city,
-								'pincode' => $pincode,
-								'phone' => $phone,
-								'email' => $email,
-								'password' => $encrypted,
-								'qualification' => json_encode($qualification),
-								'specialization' => $specialization,
-								'super_specialization' => $superSpecialization,
-								'accredition' => $accredition,
-								'doctor_registration_no' => $imaRegisterNo,
-								'created_date' => $createdDate,
-								);
-*/
-
-		/*$registerDoctor = DB::table('doctors')->insert($regsiterValues);
-		if($registerDoctor){
-			return Redirect::to('doctorsignup')->with(array('success'=>"Doctor registered successfully. Please wait till administrator approves"));
-		}*/
-
-		return Redirect::to('doctorsignupinformation');	
 	}
 
 	public function showPatientIdCheckForActivate(){

@@ -25,31 +25,21 @@ var patientElements = function (dosageUnit) {
   
     //function to initiate bootstrap-datepicker
     var runDatePicker = function () {
-        var date = new Date();
-        date.setDate(date.getDate());
+        
         $('.date-picker').datepicker({
             autoclose: true,
-            startDate : date
+            //endDate : date
+            //maxDate : date
            
         });
 
-        $('.last_delivery_date').datepicker({
-            autoclose: true,
-            //startDate : date
-        });
+       
         $('.start_date').datepicker({
             autoclose: true,
             //startDate : date
         });
 
-        $('.expected_delvery_date').datepicker({
-            autoclose: true,
-            startDate : date
-        });
-        $('.obs_lmp_date').datepicker({
-            autoclose: true,
-            //startDate : date
-        });
+       
 
           
     };
@@ -383,7 +373,8 @@ var patientElements = function (dosageUnit) {
                 },
                 phone: {
                     required : true,
-                    number : true
+                    number : true,
+                    maxlength : 15,
                 },
                 email: {
                     
@@ -392,7 +383,7 @@ var patientElements = function (dosageUnit) {
                 
             },
             messages: {
-                /*first_name  : "Please type first name",*/
+                first_name  : "Please type first name",
                 /*last_name   : "Please type last name",*/
                 aadhar_no   : "Please type valid Aadhar No (UID must be 12 digit)",
                 dob         : "Please type a valid year between 1900 -"+new Date().getFullYear().toString(),
@@ -403,7 +394,11 @@ var patientElements = function (dosageUnit) {
                 country     : "Please type country",
                 state       : "Please type state",
                 city        : "Please type city",
-                phone       : "Please type valid phone number",
+                phone       : 
+                { 
+                    required: "Please type valid phone number" ,
+                    maxlength : "Please enter no more than 15 numbers",
+                },
                 email   : {
                     email: "Please type a valid email address"
                 },
@@ -674,7 +669,7 @@ var patientElements = function (dosageUnit) {
 
 
     var runPatientObstetricsHistoryValidation = function () {
-        var form2           = $('#addPatientObstetricsHistory');
+        var form2           = $('');
         var errorHandler2   = $('.errorHandler', form2);
         var successHandler2 = $('.successHandler', form2);
 
@@ -720,31 +715,24 @@ var patientElements = function (dosageUnit) {
             rules: {
                
                
-                married_life  :   { number : true },
-                gravida : { number : true },
-                /*para : { number : true },*/
-                living : { number : true },
-                abortion : { number : true },
+                
                 /*lmp_flow : { checkEmptyLmpFlow :function(){
                            return( $("#last_mensus_date").val());
                 }
 
                  },*/
                
-                'days[]' : { number : true },
-                'cycle[]' : { number : true },
-                'years[]' : { number : true },
-                'weeks[]' : { number : true },
+                'days[]'    : { number : true, },
+                'cycle[]'   : { number : true },
+                'years[]'   : { number : true },
+                'weeks[]'   : { number : true },
                 
                 
             },
             messages: {
                
-                married_life  : "Please type a valid number",
-                gravida : "Please type a valid number",
-                para : "Please type a valid number",
-                living : "Please type a valid number",
-                abortion : "Please type a valid number",
+              
+
                 'days[]' : "Please type a valid number",
                 'cycle[]' : "Please type a valid number",
                 'years[]' : "Please type a valid number",
@@ -1325,7 +1313,7 @@ var patientElements = function (dosageUnit) {
 
      
 
-            $('.add-instruction-btn1').click(function(e){
+           /* $('.add-instruction-btn1').click(function(e){
                 e.preventDefault();
 
 
@@ -1347,7 +1335,7 @@ var patientElements = function (dosageUnit) {
                     clickedElement.find('.remove-instruction-btn1').hide();
                       
               
-            });
+            });*/
 
     };
 
@@ -1709,6 +1697,24 @@ var patientElements = function (dosageUnit) {
     };
 
 
+    var runAddPrescMedicine = function () {
+        
+        /*$('.presc-save').click(function(){
+            var dataString = $("#addPatientPrescMedicine").serialize();
+            //console.log(dataString);
+            $.ajax({
+                type: "POST",
+                url: "addPatientPrescMedicine",
+                data: dataString,
+                success: function(data) {
+                     //alert('Data send');
+                     console.log(data);
+                }
+            });
+        })*/
+        
+       
+    };
 
 
    
@@ -1762,6 +1768,8 @@ var patientElements = function (dosageUnit) {
 
 
             runCardioAddPatient();
+
+            runAddPrescMedicine();
            
         }
     };

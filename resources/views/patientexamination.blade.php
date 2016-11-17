@@ -796,7 +796,7 @@ if(!empty($doctorData)){
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12 dd_font_bold">
-						{!! Form::label('sys_pelvic_cervix', 'Per Speculum (P/S) Examination : Cervix', $attributes = array('class'=>""));  !!}
+						{!! Form::label('sys_pelvic_cervix', 'Per Speculum (P/S) Examination: Cervix', $attributes = array('class'=>""));  !!}
 					</div>
 				</div>
 				<div class="form-group">	
@@ -900,7 +900,7 @@ if(!empty($doctorData)){
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12 dd_font_bold">
-						{!! Form::label('sys_pelvic_uterus', 'Per Vagina (P/V) Examination : Uterus', $attributes = array('class'=>""));  !!}
+						{!! Form::label('sys_pelvic_uterus', 'Per Vagina (P/V) Examination: Uterus', $attributes = array('class'=>""));  !!}
 					</div>
 				</div>
 				<div class="form-group">	
@@ -942,7 +942,7 @@ if(!empty($doctorData)){
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12 dd_font_bold">
-						{!! Form::label('sys_pelvic_cervix', 'Per Speculum (P/S) Examination : Cervix', $attributes = array('class'=>""));  !!}
+						{!! Form::label('sys_pelvic_cervix', 'Per Speculum (P/S) Examination: Cervix', $attributes = array('class'=>""));  !!}
 					</div>
 				</div>
 				<div class="form-group">	
@@ -1013,7 +1013,7 @@ if(!empty($doctorData)){
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12 dd_font_bold">
-						{!! Form::label('sys_pelvic_uterus', 'Per Vagina (P/V) Examination : Uterus', $attributes = array('class'=>""));  !!}
+						{!! Form::label('sys_pelvic_uterus', 'Per Vagina (P/V) Examination: Uterus', $attributes = array('class'=>""));  !!}
 					</div>
 				</div>
 				<div class="form-group">	
@@ -1053,7 +1053,7 @@ if(!empty($doctorData)){
 				<div class="form-group dd_fromgroup_MG_0 ">
 					<div class="col-sm-12">
 						<button type="submit" class="btn btn-primary btn-block dd_btn_center">
-						<i class="fa fa-floppy-o" aria-hidden="true"></i>
+						<!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
 						Save</button>
 					</div>
 				</div>

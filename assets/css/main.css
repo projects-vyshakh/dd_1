@@ -3,6 +3,7 @@
  /* ---------------------------------------------------------------------- */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,300,200,100,500,600,700,800,900);
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 
 
 /* ---------------------------------------------------------------------- */
@@ -382,9 +383,10 @@ a.bricky:hover {
 	/*14 10 12 prev*/
 	padding:0 0 12px 0;
 	margin-left: 0;
-	font-family: 'Raleway', sans-serif;
-	font-size: 25px;
+	 font-family: "Montserrat",sans-serif;
+	font-size: 16px;
 	min-width: 218px;
+font-weight: 500;
 /*	text-align: center;*/
 	margin-top: 11px;
 }
@@ -461,7 +463,7 @@ ul.notifications li, ul.todo li, ul.posts li {
     font-size: 14px;
     text-align: center;
     text-decoration: none;
-    width: 200px;
+   /* width: 200px;*/
     font-family: 'Open Sans', sans-serif;
     text-align: left;
 
@@ -5032,7 +5034,7 @@ td.column-right {
 }
 .login_div{
 	float: right;
-	margin: 35px 10px 26px 0;
+	margin: 30px 10px 26px 0;
 	font-size: 14px;
 	font-weight: 600;
 	/*text-transform: uppercase;*/
@@ -5055,8 +5057,8 @@ td.column-right {
 }
 .login_HD{
 	 color: #333333;
-    font-size: 18px;
-    font-weight: 600;
+    font-size:20px;
+    font-weight: 500;
 }
 .form-group .col-sm-12 .input-icon .dd_input{
 	border:1px solid rgba(135,137,137,0.6);
@@ -5418,6 +5420,10 @@ hr {
     text-align: center;
     width: 111px;
 }
+.dd_save_pass {
+    width: 111px;
+    margin-left: 245px;
+}
 .dd_top_mt{
 	font-size: 14px;
 	margin-bottom: 5px;
@@ -5612,11 +5618,20 @@ a:hover, a:focus{
 .dd_mg_26{
 	margin-top: 26px;
 }
+.dd_input_phone {
+    background: rgba(0, 0, 0, 0) url("../images/icon_phone.png") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 19px;
+    left: 14px;
+    position: absolute;
+    top:15px;
+    width: 19px;
+}
 .dd_input_icon {
     background: rgba(0, 0, 0, 0) url("../images/Icon_Password.png") repeat scroll 0 0 / cover ;
     display: inline-block;
     height: 17px;
-    left: 7px;
+    left: 14px;
     position: absolute;
     top:15px;
     width: 17px;
@@ -5625,7 +5640,7 @@ a:hover, a:focus{
    background: rgba(0, 0, 0, 0) url("../images/Icon_name.png") repeat scroll 0 0 / cover ;
     display: inline-block;
     height: 17px;
-    left: 7px;
+    left: 14px;
     position: absolute;
     top: 15px;
     width: 17px;
@@ -5796,14 +5811,18 @@ svg {
 	z-index: 50000;
 }
 .login_div a {
-    color: #fff;
-    text-decoration: none;
+    border: 1px solid hsla(0, 0%, 100%, 0.7);
+    color: hsl(0, 0%, 100%);
     font-weight: 500;
-    border: 1px solid rgba(255,255,255,0.7);
-    padding: 5px 10px;
+    padding: 9px 18px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
 }
 .login_div a:hover, .login_div a:focus {
-    color: #428bca;
+    background: #428bca;
+    color: #fff;
     text-decoration: none;
 }
 .dd_create{
@@ -5830,7 +5849,7 @@ svg {
 
 }
 .help-block {
-       color: #939393;
+       color:hsl(6, 90%, 56%) !important;
     display: block;
     margin-bottom: 0;
     margin-top: 0;
@@ -5862,6 +5881,8 @@ svg {
     width: 30px;
 
 }
+
+
 .dd_menu_a{
 	background: rgba(0, 0, 0, 0) url("../images/Medicine_icon.png") no-repeat;
 	  display: inline-block;
@@ -6169,8 +6190,8 @@ ul.dd_menu_bd > li:first-child {
     color: #e7383d;
 }
 .has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline{
-	  color: #939393;
-    margin-bottom: 7px;
+	  color: #f43f2c;
+   /* margin-bottom: 7px;*/
 }
 .has-success .form-control {
     border-color: #7d7d7d;
@@ -6285,11 +6306,22 @@ padding-bottom: 0;
 .close {
     color: #ff4136;
     float: right;
-    font-size: 21px;
+    font-size:19px;
     font-weight: 700;
     line-height: 1;
     opacity: 0.86;
     text-shadow: 0 1px 0 #fff;
+    margin-left: 5px;
+}
+.close_home{
+    color: #ff4136;
+    float: none;
+    font-size:19px;
+    font-weight: 700;
+    line-height: 1;
+    opacity: 0.86;
+    text-shadow: 0 1px 0 #fff;
+    margin-left: 5px;
 }
 .close:hover, .close:focus {
     color: #000;
@@ -6303,27 +6335,31 @@ padding-bottom: 0;
     display: inline-block;
     /* inline-block for ie7 */
     zoom: 1;
-    *display: inline;
+    display: inline;
   /*  vertical-align: middle;*/
 }
 .dd_email_reg_label{
 	margin-bottom: 10px;
-	font-size: 16px;
 	color: #3c3c3c;
+	   font-family: "Montserrat",sans-serif;
+    font-size: 15px;
 }
 .dd_email_reg_label_2{
 	margin-bottom: 10px;
 	font-size: 16px;
 	color: #3c3c3c;
-	width: 50%;
-	float: left;
+	   font-family: "Montserrat",sans-serif;
+    font-size: 15px;
+	/*float: left;*/
 }
 .dd_email_reg_label_3{
 	margin-bottom: 10px;
 	font-size: 16px;
 	color: #3c3c3c;
-	width: 33.33%;
-	float: left;
+	width: 100%;
+	   font-family: "Montserrat",sans-serif;
+    font-size: 15px;
+	/*float: left;*/
 }
 .dd_mg_B_20{
 	margin-bottom: 20px;
@@ -6437,41 +6473,41 @@ padding-bottom: 0;
 	float: right;
 }
 .pricon {
-   background-image: url("../images/left-nav-sprite-v1.png");
+   background-image: url("../images/left-nav-sprite-v3.png");
     float: left;
-    height: 26px;
+    height: 22px;
     margin-right: 5px;
     margin-top: 2px;
-    width: 26px;
+    width: 22px;
 }
 
  .pricon.icon-pr-prescriptions {
-    background-position:-3px -300px;
+    background-position:0px -92px;
 }
 #presc-top-menu-li:hover .pricon.icon-pr-prescriptions {
-    background-position:-3px -300px;
+    background-position:0px -92px;
 }
 #presc-top-menu-li.active #prescription-menu  .pricon.icon-pr-prescriptions {
-     background-position: -35px -300px;
+     background-position: -38px -92px;
 }
  .pricon.icon-pr-Diagnosis {
-    background-position: -3px -231px;
+    background-position: 0px -343px;
 }
 #diagnosis-menu:hover .pricon.icon-pr-Diagnosis {
-    background-position:-3px -231px;
+    background-position: 0px -343px;
 }
 #diagnosis-top-menu-li.active #diagnosis-menu .pricon.icon-pr-Diagnosis {
-     background-position: 32px -231px;
+     background-position:  -38px -343px;
 }
  .pricon.icon-pr-patient {
-    background-position: -3px -265px;
+   background-position: 1px -363px;
 }
 #patient-menu:hover .pricon.icon-pr-patient {
-    background-position: -3px -265px;
+    background-position: 1px -363px;
 }
 
 #patient-top-menu-li.active #patient-menu .pricon.icon-pr-patient {
-    background-position: -35px -265px;
+     background-position: -39px -363px;
 }
 .dd_print{
 	   background-color: #428bca;
@@ -6538,7 +6574,7 @@ padding-bottom: 0;
 .dd_praji_followup input {
 /*padding: 7px 15px 7px 15px;*/
 background-color: #fff;
-color: #fff;
+color: #333;
 font-weight: bold;
 border:1 none;
 width: 110px;
@@ -6798,7 +6834,7 @@ height: auto;
 }
 .dd_sidetab li a {
     display: block;
-    padding: 10px 13px;
+   /* padding: 10px 13px;*/
     position: relative;
     font-size: 14px;
 }
@@ -6930,11 +6966,11 @@ table.dataTable thead th, table.dataTable thead td {
 
 }
 .form-group .col-sm-12 .input-icon .dd_input_2 {
-    background: #fff none repeat scroll 0 0;
-    border: 1px solid rgba(135, 137, 137, 0.6);
+    /*background: #fff none repeat scroll 0 0;*/
+   /* border: 1px solid rgba(135, 137, 137, 0.6);*/
     color: rgba(0, 0, 0, 0.7);
     font-size: 16px;
-    height: 50px;
+  /*  height: 50px;*/
     margin: 0 auto;
     width: 50%;
     float: left;
@@ -6943,11 +6979,11 @@ table.dataTable thead th, table.dataTable thead td {
 
 }
 .form-group .col-sm-12 .input-icon .dd_input_3 {
-    background: #fff none repeat scroll 0 0;
-    border: 1px solid rgba(135, 137, 137, 0.6);
+   /* background: #fff none repeat scroll 0 0;*/
+  /*  border: 1px solid rgba(135, 137, 137, 0.6);*/
     color: rgba(0, 0, 0, 0.7);
     font-size: 16px;
-    height: 50px;
+ /*   height: 50px;*/
     width: 50%;
     float: right;
     border-left: 0;
@@ -6958,12 +6994,12 @@ table.dataTable thead th, table.dataTable thead td {
 }
 
 .form-group .col-sm-12 .input-icon .dd_input_4{
-    background: #fff none repeat scroll 0 0;
-    border: 1px solid rgba(135, 137, 137, 0.6);
+    /*background: #fff none repeat scroll 0 0;*/
+   /* border: 1px solid rgba(135, 137, 137, 0.6);*/
     color: rgba(0, 0, 0, 0.7);
     font-size: 16px;
-    height: 50px;
-    width: 36%;
+  /*  height: 50px;*/
+    width: 33.33%;
     float: left;
     -webkit-appearance:none;
     
@@ -6971,12 +7007,12 @@ table.dataTable thead th, table.dataTable thead td {
 
 }
 .form-group .col-sm-12 .input-icon .dd_input_5{
-    background: #fff none repeat scroll 0 0;
-    border: 1px solid rgba(135, 137, 137, 0.6);
+   /* background: #fff none repeat scroll 0 0;*/
+  /*  border: 1px solid rgba(135, 137, 137, 0.6);*/
     color: rgba(0, 0, 0, 0.7);
     font-size: 16px;
-    height: 50px;
-    width: 31%;
+   /* height: 50px;*/
+    width: 33.33%;
     float: left;
     border-left: 0;
     -webkit-appearance:none;
@@ -6984,12 +7020,12 @@ table.dataTable thead th, table.dataTable thead td {
 
 }
 .form-group .col-sm-12 .input-icon .dd_input_6{
-    background: #fff none repeat scroll 0 0;
-    border: 1px solid rgba(135, 137, 137, 0.6);
+   /* background: #fff none repeat scroll 0 0;*/
+   /* border: 1px solid rgba(135, 137, 137, 0.6);*/
     color: rgba(0, 0, 0, 0.7);
     font-size: 16px;
-    height: 50px;
-    width: 33%;
+    /*height: 50px;*/
+    width: 33.33%;
     float: left;
     border-left: 0;
     -webkit-appearance:none;
@@ -7060,6 +7096,17 @@ table.dataTable thead th, table.dataTable thead td {
 }
 .dd_profile_pic{
 	background:  url("../images/patient_profile_L.jpg") center center;
+    display: table;
+    height: 133px;
+    margin: 0 auto;
+    width: 123px;
+    border: 6px solid #cbcbcb;
+    background-size: cover;
+
+
+}
+.dd_profile_pic_male{
+	background:  url("../images/patient_profile_m.jpg") center center;
     display: table;
     height: 133px;
     margin: 0 auto;
@@ -7180,4 +7227,151 @@ table.dataTable thead .sorting_asc::after {
 }
 .dd_regi_pd{
 	padding-top: 15px;
+}
+.dd_heading{
+	height: 30px;
+}
+.dd_prev_hd_mg{
+	margin-left: -4px;
+}
+.dropdown-menu > li > a {
+    padding: 0 20px !important;
+   
+}
+.patient_settings > li > a {
+    padding: 5px 20px !important;
+    margin-left: 20px !important;
+   
+}
+.dd_bodred_l_0{
+	border-left: 0 !important;
+}
+.dd_input_2 .btn-default{
+	width: 100% !important;
+	height: 50px;
+	background: #fff;
+}
+.hide-native-select{
+	width: 100% !important;
+
+}
+.btn-group, .btn-group-vertical {
+    display: initial !important;
+    position: relative;
+    vertical-align: middle;
+}
+.dd_input_2 .multiselect-container {
+    left: -159px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 63px;
+}
+.dd_input_2 .caret {
+    border-left: 4px solid hsla(0, 0%, 0%, 0);
+    border-right: 4px solid hsla(0, 0%, 0%, 0);
+    border-top: 4px solid;
+    display: inline-block;
+    float: right;
+    height: 0;
+    margin-left: 2px;
+    margin-top: -10px;
+    vertical-align: middle;
+    width: 0;
+}
+.dd_mg_B_40{
+	margin-bottom: 30px;
+
+}
+.clip-dd-user{
+	  background: hsla(0, 0%, 0%, 0) url("../images/icons/user.svg") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 25px;
+    position: absolute;
+    top: 6px;
+    width: 25px;
+
+}
+.clip-dd-settings{
+	background: rgba(0, 0, 0, 0) url("../images/icons/settings.svg") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 25px;
+    position: absolute;  
+    width: 25px;
+    top: 6px;
+
+}
+.dropdown-menu li .dd_settings{
+	padding: 10px 15px !important;
+	border-bottom: 1px solid #cbcbcb;
+}
+ .dd_settings span{
+	margin-left: 30px;
+	   /*font-family: "Montserrat",sans-serif;*/
+    font-size: 15px;
+}
+.clip-dd-logout{
+	background: rgba(0, 0, 0, 0) url("../images/icons/logout_3.svg") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 28px;
+    position: absolute;  
+    width: 28px;
+}
+.dd_dropdown_menu{
+	min-width: 150px !important;
+}
+.dd_pres_save_icon{
+	margin-right: 3px;
+}
+.dd_error_center{
+	text-align: center;
+	margin-top: 10px;
+	font-size: 14px;
+
+}
+.dropdown-menu li{
+	position: relative;
+}
+.dropdown-menu {
+    background-clip: padding-box;
+    background-color: hsl(0, 0%, 100%);
+    border: 1px solid hsla(0, 0%, 0%, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px hsla(0, 0%, 0%, 0.176);
+    display: none;
+    float: left;
+    font-size: 14px;
+    left: 0;
+    list-style: outside none none;
+    margin: 2px 0 0;
+    min-width: 160px;
+    padding: 0px 0 !important;
+    position: absolute;
+    text-align: left;
+    top: 100%;
+    z-index: 1000;
+}
+.dd_print_save{
+	margin-left: 200px;
+}
+.dd_login_main{
+	padding-left: 40px !important;
+}
+.dd_babyage_col .col-sm-4{
+	margin:0 !important;
+	padding: 5px !important;
+}
+.dd_babyage_col{
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+}
+.dd_pregnancy_Count h5{
+	/*padding-left: 74px;*/
+	text-align: right;
+	padding-right: 10px;
+	margin-top: 15px;
+}
+.dd_printsetup{
+	margin-left: 200px;
 }

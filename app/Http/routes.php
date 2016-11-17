@@ -118,6 +118,7 @@ Route::post('showPatientPrescMedicine',  array('before'=>'isDoctorLoggedIn','as'
 
 Route::any('patientprescprint',  array('before'=>'isDoctorLoggedIn','as' => 'patientprescprint', 'uses' => 'DoctorController@patientPrescPrint'));
 
+Route::get('patientprescmedicine/shared/{sharedId}', 'UtilityController@handleSharedPrescription');
 
 Route::post('getState',  array('as' => 'getState', 'uses' => 'UtilityController@getState'));
 

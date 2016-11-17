@@ -23,6 +23,11 @@ if(!empty($doctorData)){
     {!!Html::style('assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')!!}
     {!!Html::style('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')!!}
 
+    {!!Html::style('assets/plugins/zebra-datepicker/css/default.css')!!}
+    {!!Html::style('assets/plugins/zebra-datepicker/css/style.css')!!}
+
+
+    
 @stop
 @extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
 
@@ -33,6 +38,9 @@ if(!empty($doctorData)){
 	<div class="page-header">
 		<h1>Patient Obstetrics History <small></small></h1>
 	</div>
+
+	<!-- Modal Box for showing no lmp date is entered on click of auto generate edd -->
+
 
 	<div class="row dd_menarche">
 		<div class="col-md-12">
@@ -146,20 +154,20 @@ if(!empty($doctorData)){
 								 			else{
 								 				
 								 				
-								 				$obsLmpDate = date('d-m-Y', strtotime($date1));
+								 				$obsLmpDate = date('Y-m-d', strtotime($date1));
 								 			}
 											
 								 		?>
 										<div class="form-group">
 											{!! Form::label('obs_lmp_date', 'LMP', $attributes = array('class'=>'col-sm-2 dd_pdl_0 '));  !!}
 											<div class="col-sm-4 ">
-												<span class="">
+												<span class="input-icon">
 
-													{!! Form::text('obs_lmp_date',(!empty($patientGynObsData))?$obsLmpDate : input::old('obs_lmp_date'), $attributes = array('class' => 'form-control obs_lmp_date  dd_relative ', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
+													{!! Form::text('obs_lmp_date',(!empty($patientGynObsData))?$obsLmpDate : input::old('obs_lmp_date'), $attributes = array('class' => 'form-control obs_lmp_date  dd_relative ')); !!}
+													<i class="fa fa-calendar" aria-hidden="true"></i>
 
-
-													<!-- {!! Form::text('	',(!empty($patientGynObsData))?$obsLmpDate : input::old('obs_lmp_date') , $attributes = array('class' => 'form-control date-picker last_mensus_date', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!} -->
-													<!-- <i class=""></i>  -->
+													<!-- <input id="datepicker-example1" type="text"> -->
+												
 													
 												</span>
 											</div>
@@ -171,21 +179,10 @@ if(!empty($doctorData)){
 													
 												</span>
 											</div>
-											<!-- {!! Form::label('lmp_flow', 'Flow', $attributes = array('class'=>'col-sm-2  '));  !!}
-											<div class="col-sm-4 ">
-												<span class="">
-													{!! Form::select('lmp_flow[]', $lmpFlow, "null", $attributes = array('class' => 'form-control', 'disabled' => 'disabled')); !!}
-													{!! Form::text('lmp_flow', (!empty($patientGynObsData))?$patientGynObsData->obs_lmp_flow : Input::get('lmp_flow') , $attributes = array('class' => 'form-control')); !!}
-												</span>
-											</div> -->
+											
 										</div>
 										<div class="form-group">
-											<!-- {!! Form::label('dysmenorrhea', 'Dysmenorrhea', $attributes = array('class'=>'col-sm-2 '));  !!}
-											<div class="col-sm-4">
-												<span class="">
-													{!! Form::select('lmp_dysmenorrhea[]', $lmpDysmenohrrea, null, $attributes = array('class' => 'form-control')); !!}
-												</span>
-											</div> -->
+											
 											{!! Form::label('obs_lmp_dysmenorrhea', 'Dysmenorrhea', $attributes = array('class'=>'col-sm-2 dd_pdl_0 '));  !!}
 											<div class="col-sm-4 ">
 												<span class="">
@@ -193,14 +190,7 @@ if(!empty($doctorData)){
 													
 												</span>
 											</div>
-										<!-- 	{!! Form::label('lmp_dysmenorrhea', 'Dysmenorrhea', $attributes = array('class'=>'col-sm-2 dd_pdl_0 '));  !!}
-											<div class="col-sm-4">
-												<span class="">
-													{!! Form::select('lmp_dysmenorrhea[]', $lmpDysmenohrrea, null, $attributes = array('class' => 'form-control')); !!}
-													{!! Form::text('lmp_dysmenorrhea', (!empty($patientGynObsData))?$patientGynObsData->obs_lmp_dysmenorrhea : Input::get('lmp_dysmenorrhea') , $attributes = array('class' => 'form-control')); !!}
-													
-												</span>
-											</div> -->
+										
 											{!! Form::label('obs_lmp_days', 'Days', $attributes = array('class'=>'col-sm-2 '));  !!}
 											<div class="col-sm-4">
 												<span class="">
@@ -241,12 +231,10 @@ if(!empty($doctorData)){
 										
 											{!! Form::label('obs_lmp_date', 'LMP', $attributes = array('class'=>'col-sm-2 dd_pdl_0'));  !!}
 											<div class="col-sm-4 ">
-												<span class="">
-													{!! Form::text('obs_lmp_date',(!empty($patientGynObsData))?$obsLmpDate : input::old('obs_lmp_date'), $attributes = array('class' => 'form-control obs_lmp_date  dd_relative ', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
+												<span class="input-icon">
+													{!! Form::text('obs_lmp_date',(!empty($patientGynObsData))?$obsLmpDate : input::old('obs_lmp_date '), $attributes = array('class' => 'form-control obs_lmp_date  dd_relative ')); !!}
 
-													<!-- {!! Form::text('obs_lmp_date',Input::old('obs_lmp_date'), $attributes = array('class' => 'form-control date-picker last_mensus_date', 'placeholder'=>'','data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!} -->
-													<!-- <i class=""></i>  -->
-													
+													<i class="fa fa-calendar" aria-hidden="true"></i>
 												</span>
 											</div>
 											{!! Form::label('obs_lmp_flow', 'Flow', $attributes = array('class'=>'col-sm-2 
@@ -292,19 +280,22 @@ if(!empty($doctorData)){
 										</div>	
 									</div>
 								@endif
-								<!-- 
+								
 								<div class="form-group">
-									
-									<div class="col-sm-12">
-										<button type="submit" class="btn btn-default btn-addmore-lmp dd_right" id="btn-addmore-lmp" style="margin-top: 10px">
-										<i class="fa fa-plus-circle "></i> Add More LMP</button>
-									</div>
-								</div>
-								<hr> -->
-								<div class="form-group">
-									<div class="col-sm-4">
+									<div class="col-sm-8">
 										<!-- <i class="fa fa-pencil-square teal"></i> -->
 										<h3>Pregnancy</h3>
+									</div>
+									<div class="col-sm-3 pull-right dd_pregnancy_Count">
+										<!-- <i class="fa fa-pencil-square teal"></i> -->
+										<h5>
+											
+											@if(!empty($pregnancyCount) || $pregnancyCount>0)
+												<b>( Pregnancy-Count: {{$pregnancyCount}} )</b>
+											@else
+												<b>( Pregnancy-Count: 0 )</b>
+											@endif
+										</h5>
 									</div>
 								</div>
 								
@@ -358,23 +349,6 @@ if(!empty($doctorData)){
 													
 												</span>
 											</div>
-											{!! Form::label('age', 'Age', $attributes = array('class'=>'col-sm-2'));  !!}
-											<div class="col-sm-2">
-												<span class="">
-													{!! Form::text('years[]', (!empty($patientGynObsPregData))?$pregDataValue->obs_preg_years: Input::old('years'), $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Years'));  !!}
-													<!-- <i class="fa fa-quote-left"></i> -->
-													 </span>
-											</div>
-											
-											<div class="col-sm-2">
-												<span class="">
-													{!! Form::text('weeks[]', (!empty($patientGynObsPregData))?$pregDataValue->obs_preg_weeks: Input::old('weeks'), $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Weeks'));  !!}
-													<!-- <i class="fa fa-quote-left"></i> -->
-													 </span>
-											</div>
-											
-										</div>
-										<div class="form-group">
 											{!! Form::label('gender', 'Gender', $attributes = array('class'=>'col-sm-2 '));  !!}
 											<div class="col-sm-4">
 												
@@ -384,9 +358,50 @@ if(!empty($doctorData)){
 													
 												</span>
 											</div>
+											
+										</div>
+
+
+										<div class="form-group">
+
+											{!! Form::label('age', 'Baby-Age', $attributes = array('class'=>'col-sm-2'));  !!}
+
+											<div class="col-sm-4 dd_babyage_col">
+
+											<div class="col-sm-4">
+												<span class="">
+													<?php $babyYears = $pregDataValue->obs_preg_years." "."Years"; ?>
+
+													{!! Form::text('years[]',$babyYears, $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Years'));  !!}
+													<!-- <i class="fa fa-quote-left"></i> -->
+												</span>
+											</div>
+
+											<div class="col-sm-4">
+												<span class="">
+													<?php $babyMonths = $pregDataValue->obs_preg_months." "."Months"; ?>
+
+													{!! Form::text('months[]', $babyMonths , $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Months'));  !!}
+													<!-- <i class="fa fa-quote-left"></i> -->
+													 </span>
+											</div>
+
+											<div class="col-sm-4">
+												<span class="">	
+													<?php $babyWeeks = $pregDataValue->obs_preg_weeks." "."Weeks"; ?>
+
+													{!! Form::text('weeks[]', $babyWeeks, $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Weeks'));  !!}
+													<!-- <i class="fa fa-quote-left"></i> -->
+												</span>
+											</div>
+
+												
+											</div> 
+
+											
 										</div>
 									
-										<div style="border-bottom: 1px solid #eee;  margin: 25px 0"></div>
+										<!-- <div style="border-bottom: 1px solid #eee;  margin: 25px 0"></div> -->
 									@endforeach
 									</div>
 								@else
@@ -430,25 +445,49 @@ if(!empty($doctorData)){
 													{!! Form::select('preg_health[]', $pregChildHealth, null, $attributes = array('class' => 'form-control')); !!}
 												</span>
 											</div>
-											{!! Form::label('age', 'Age', $attributes = array('class'=>'col-sm-2 '));  !!}
-											<div class="col-sm-2">
-												<span class="">
-													{!! Form::text('years[]', Input::old('years'), $attributes = array('class'=>'form-control','placeholder'=>'Years'));  !!}
-											</div>
-											
-											<div class="col-sm-2">
-												<span class="">
-													{!! Form::text('weeks[]', Input::old('weeks'), $attributes = array('class'=>'form-control','placeholder'=>'Weeks'));  !!}
-											</div>
-											
-										</div>
-										<div class="form-group">
 											{!! Form::label('gender', 'Gender', $attributes = array('class'=>'col-sm-2 '));  !!}
 											<div class="col-sm-4">
 												<span class="">
 													{!! Form::select('gender[]', $gender, null, $attributes = array('class' => 'form-control')); !!}
 												</span>
 											</div>
+										</div>
+										<div class="form-group">
+											
+											{!! Form::label('years', 'Baby-Age', $attributes = array('class'=>'col-sm-2'));  !!}
+
+											<div class="col-sm-4 dd_babyage_col">
+
+												<div class="col-sm-4">
+													<span class="">
+														{!! Form::text('years[]', Input::old('years'), $attributes = array('class'=>'form-control','placeholder'=>'Years'));  !!}
+												</div>
+
+												<div class="col-sm-4">
+													<span class="">
+														{!! Form::text('months[]',Input::old('months'), $attributes = array('class'=>'form-control','placeholder'=>'Months'));  !!}
+														<!-- <i class="fa fa-quote-left"></i> -->
+													</span>
+												</div>
+
+												<div class="col-sm-4">
+													<span class="">
+														{!! Form::text('weeks[]', Input::old('weeks'), $attributes = array('class'=>'form-control','placeholder'=>'Weeks'));  !!}
+													</span>
+												</div>
+
+
+											</div>
+											
+											<!-- {!! Form::label('age', 'Years', $attributes = array('class'=>'col-sm-1'));  !!} -->
+											
+
+											<!-- {!! Form::label('months', 'Months', $attributes = array('class'=>'col-sm-1'));  !!} -->
+										
+
+											<!-- {!! Form::label('weeks', 'Weeks', $attributes = array('class'=>'col-sm-1'));  !!} -->
+											
+											
 										</div>
 									</div>
 								@endif
@@ -461,52 +500,57 @@ if(!empty($doctorData)){
 								<div class="form-group dd_none_mg_form">
 									<?php
 									   if(!empty($patientGynObsData)){
-									   		if($patientGynObsData->obs_last_delivery_date!='0000-00-00'){
-											$lastDeliveryDate = $patientGynObsData->obs_last_delivery_date;
-											$date1  = str_replace('/', '-', $lastDeliveryDate);
-											$lastDeliveryDate = date('d-m-Y', strtotime($date1));
+									   		if($patientGynObsData->obs_last_delivery_date!='0000-00-00')
+									   		{
+												$lastDeliveryDate = $patientGynObsData->obs_last_delivery_date;
+												$date1  		  = str_replace('/', '-', $lastDeliveryDate);
+												$lastDeliveryDate = date('Y-m-d', strtotime($date1));
+											}
+											else{
+												$lastDeliveryDate = "";
 											}
 										
-											if($patientGynObsData->obs_expected_delivery_date!='0000-00-00'){
+											if($patientGynObsData->obs_expected_delivery_date!='0000-00-00')
+											{
 												$expectedDeliveryDate = $patientGynObsData->obs_expected_delivery_date;
-												$date2  = str_replace('/', '-', $expectedDeliveryDate);
-												$expectedDeliveryDate = date('d-m-Y', strtotime($date2));
+												$date2  			  = str_replace('/', '-', $expectedDeliveryDate);
+												$expectedDeliveryDate = date('Y-m-d', strtotime($date2));
+											}
+											else{
+												$expectedDeliveryDate = "";
 											}
 									   }
 										
 									?>
 									<div class="col-sm-4 dd_rs_mg">
 										<div class="dd_top_mt">Last Delivery Date</div>
-										<span class="input-icon">
+											<span class="input-icon">
+												@if(!empty($patientGynObsData->obs_last_delivery_date) && ($patientGynObsData->obs_last_delivery_date!='0000-00-00'))
 
-											{!! Form::text('last_delvery_date',(!empty($patientGynObsData) && $patientGynObsData->obs_last_delivery_date!='0000-00-00')?$lastDeliveryDate:Input::old('last_delivery_date'), $attributes = array('class' => 'form-control last_delivery_date','data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
-											<i class="fa fa-calendar" aria-hidden="true"></i>
-
-											<!-- <img src="assets/images/calendre.png"> -->
+													{!! Form::text('last_delvery_date',$lastDeliveryDate , $attributes = array('class' => 'form-control last_delivery_date','id'=>'last_delivery_date')); !!}
+													<i class="fa fa-calendar" aria-hidden="true"></i>
+												@else
+													{!! Form::text('last_delvery_date',Input::old('last_delivery_date'), $attributes = array('class' => 'form-control last_delivery_date','id'=>'last_delivery_date')); !!}
+													<i class="fa fa-calendar" aria-hidden="true"></i>
+												@endif
 											
-										</span>
+											
+											</span>
 									</div>
 									<div class="col-sm-4 dd_rs_mg">
-										<div class="dd_top_mt">Expected Delivery Date<a href="" class="btn btn-blue btn-xs auto-generate-deliverydate dd_Auto_Generate" >Auto Generate</a></div>
-
-									
+										<div class="dd_top_mt">Expected Delivery Date
+											<a href="" class="btn btn-blue btn-xs auto-generate-deliverydate dd_Auto_Generate" >Auto Generate</a>
+										</div>
 										<span class="input-icon">
-											<?php     
-
-												$date = !empty($lastLmpDate)?$lastLmpDate->obs_lmp_date:"";
-
-												if(!empty($date)){
-													$date = strtotime($date);
-													$date = strtotime("+281 days", $date);
-													$date = date('d-m-Y', $date);
-												}
-													
-
-											?>
-											{!! Form::hidden('expected_delvery_date_auto',$date,$attributes = array('class' => 'form-control expected_delvery_date_auto')) !!}
-
-											{!! Form::text('expected_delvery_date',(!empty($patientGynObsData) && $patientGynObsData->obs_expected_delivery_date!='0000-00-00')?$expectedDeliveryDate:Input::old('expected_delivery_date'), $attributes = array('class' => 'form-control date-picker expected_delivery_date dd_relative', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
-											<i class="fa fa-calendar dd_fa_calender" aria-hidden="true"></i>
+											@if(!empty($patientGynObsData) && ($patientGynObsData->obs_expected_delivery_date!='0000-00-00'))
+												{!! Form::text('expected_delvery_date',$expectedDeliveryDate, $attributes = array('class' => 'form-control expected_delivery_date dd_relative','id'=>'expected_delivery_date','readonly'=>'readonly')); !!}
+												<i class="fa fa-calendar" aria-hidden="true"></i>
+											@else
+												{!! Form::text('expected_delvery_date',Input::old('expected_delivery_date'), $attributes = array('class' => 'form-control expected_delivery_date dd_relative','id'=>'expected_delivery_date','readonly'=>'readonly')); !!}
+												<i class="fa fa-calendar" aria-hidden="true"></i>
+											@endif
+										
+											
 										</span>
 
 										
@@ -524,11 +568,11 @@ if(!empty($doctorData)){
 								</div>
 							
 								<hr>
-
+								
 								<div class="form-group">
 									<div class="col-sm-10"></div>
 									<div class="col-sm-12">
-										<button type="submit" class="btn btn-primary btn-block dd_save "><i class="fa fa-floppy-o"></i> Save</button>
+										<button type="submit" class="btn btn-primary btn-block dd_save "><!-- <i class="fa fa-floppy-o"></i> --> Save</button>
 									</div>
 								</div>
 										
@@ -549,6 +593,7 @@ if(!empty($doctorData)){
 
 @section('scripts')
 	@parent
+		
 		{!!Html::script('assets/plugins/jquery-inputlimiter/jquery.inputlimiter.1.3.1.min.js')!!}
 		{!!Html::script('assets/plugins/autosize/jquery.autosize.min.js')!!}
 		{!!Html::script('assets/plugins/select2/select2.min.js')!!}
@@ -561,11 +606,20 @@ if(!empty($doctorData)){
 		{!!Html::script('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')!!}
 		
 		{!!Html::script('assets/js/patient-personal-information.js')!!}
+		{!!Html::script('assets/js/obstetrics-history.js')!!}
 
 		{!!Html::script('assets/js/moment.js')!!}
 		
 		{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 		{!!Html::script('assets/js/patient-personal-information.js')!!}
+
+		{!!Html::script('assets/plugins/zebra-datepicker/js/zebra_datepicker.js')!!}
+		{!!Html::script('assets/plugins/zebra-datepicker/js/core.js')!!}
+
+		{!!Html::script('assets/plugins/bootbox/bootbox.min.js')!!}
+
+        
+       
 
 	<script>
 		$(document).ready(function() {
@@ -582,6 +636,8 @@ if(!empty($doctorData)){
             //alert(lmpDysmenohrrea);
 			Main.init();
 			patientElements.init();
+			obstetricsElements.init();
+
 
 			//Page Loader closing
 			$(window).load(function() {
@@ -591,6 +647,15 @@ if(!empty($doctorData)){
 			/*$('body').on('focus',".expected_delivery_date", function(){
 					$(this).datepicker();
    			});*/
+
+
+
+
+   			
+
+
+
+
    			var counter = 1;
 
 
@@ -668,21 +733,6 @@ if(!empty($doctorData)){
 		                                        '</span>' +
 		                                    '</div>' +
 		                                    '<label  class="col-sm-2 ">' +
-		                                        'Age' +
-		                                    '</label>' +
-		                                    '<div class="col-sm-2">' +
-		                                        '<span class="">' +
-		                                            '<input type="text" name="years[]" id="years'+counter+'" class="form-control years" placeholder="Years"/>' +
-		                                        '</span>' +
-		                                    '</div>' +
-		                                    '<div class="col-sm-2">' +
-		                                        '<span class="">' +
-		                                            '<input type="text" name="weeks[]" id="weeks'+counter+'" class="form-control weeks" placeholder="Weeks"/>' +
-		                                        '</span>' +
-		                                    '</div>' +
-		                             '</div>' +
-		                               '<div class="form-group">' +
-		                                    '<label  class="col-sm-2 ">' +
 		                                        'Gender' +
 		                                    '</label>' +
 		                                   '<div class="col-sm-4">' +
@@ -692,6 +742,53 @@ if(!empty($doctorData)){
 		                                            '</select>' +
 		                                        '</span>' +
 		                                    '</div>' +
+		                                    
+		                             '</div>' +
+		                               '<div class="form-group">' +
+		                               		'<label  class="col-sm-2 ">' +
+		                                        'Baby-Age' +
+		                                    '</label>' +
+
+		                                    /*'<label  class="col-sm-1 ">' +
+		                                        'Years' +
+		                                    '</label>' +*/
+
+		                                    '<div class="col-sm-4 dd_babyage_col">' +
+
+		                                        '<div class="col-sm-4">' +
+		                                        '<span class="">' +
+		                                            '<input type="text" name="years[]" id="years'+counter+'" class="form-control years" placeholder="Years"/>' +
+		                                        '</span>' +
+		                                    	'</div>' +
+
+		                                    '<div class="col-sm-4">' +
+		                                        '<span class="">' +
+		                                            '<input type="text" name="months[]" id="months'+counter+'" class="form-control months" placeholder="Months"/>' +
+		                                        '</span>' +
+		                                    '</div>' +
+
+		                                    '<div class="col-sm-4">' +
+		                                        '<span class="">' +
+		                                            '<input type="text" name="weeks[]" id="weeks'+counter+'" class="form-control weeks" placeholder="Weeks"/>' +
+		                                        '</span>' +
+		                                    '</div>' +
+
+
+		                                    '</div>'+
+		                                
+
+		                                  /*  '<label  class="col-sm-1 ">' +
+		                                        'Months' +
+		                                    '</label>' +*/
+		                                
+
+		                                    /*'<label  class="col-sm-1 ">' +
+		                                        'Weeks' +
+		                                    '</label>' +*/
+		                                    
+
+
+		                                    
 		                                '</div>' +    
 		                             '<div class="form-group">' +
 		                                    '<div class="col-sm-10">' +
@@ -757,39 +854,7 @@ if(!empty($doctorData)){
 			
         });
 	
-		function expectedDeliveryDateCalculate(date2){
-                date2.setDate(date2.getDate()+280); 
-             
-                //$('.dropoffDate').datepicker('setDate', date2);
-                var day = date2.getDate();
-                var month = date2.getMonth() + 1;
-                var year  = date2.getFullYear();
-                var newDate = day+"-"+month+"-"+year;
-              
-                var  lmpFormatedDate = moment(newDate, "DD/MM/YYYY").format("DD-MM-YYYY");
-                $('.expected_delivery_date').val(lmpFormatedDate);
-                //alert(lmpFormatedDate);
-            }
-            /*$('#obs_lmp_date').change(function() {
-              var date2 = $('#obs_lmp_date').val(); 
-              //alert(date2);
-                expectedDeliveryDateCalculate(date2);
-            });*/
-
-            //var date2 = $('#obs_lmp_date').datepicker('getDate', '+1d'); 
-                //expectedDeliveryDateCalculate(date2);
-
-            $('.auto-generate-deliverydate').click(function(e){
-                e.preventDefault();
-                //var date = $('.expected_delvery_date_auto').val();
-                //alert(date);
-                //$('.expected_delivery_date').datepicker('setDate',date);
-                var date2 = $('#obs_lmp_date').datepicker('getDate', '+1d');
-               // alert(date2);
-               expectedDeliveryDateCalculate(date2);
-               // $('.expected_delivery_date').val(date);
-
-            })
+		
 
       
 	</script>

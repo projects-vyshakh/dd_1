@@ -47,15 +47,9 @@
 			position: relative;
 			height: 100%;
 		}
+		
 
-		.swiper-container {
-			width: 100%;
-			height: 100%;
-		}
-		.swiper-slide {
-			background-position: center;
-			background-size: cover;
-		}
+		
 	</style>
 	<!-- end: META -->
 	<!-- start: MAIN CSS -->
@@ -76,8 +70,12 @@
 
 	{!!Html::style('assets/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css')!!}
 	
+	<!-- {!!Html::style('assets/plugins/multiselectbox_jquery/jquery.multiselect.css')!!} -->
 
+	<!-- {!!Html::style('assets/plugins/magicsuggest/magicsuggest-min.css')!!} -->
+	<!-- {!!Html::style('assets/plugins/chosen/chosen.min.css')!!} -->
 
+	<!-- {!!Html::style('assets/plugins/multiple-select-master/multiple-select.css')!!} -->
 
 
 </head>
@@ -149,7 +147,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 	  					<div class="dd_doctor_register_main_hd">Sign in or create an account</div>
 	  					<div>
 	  						<div class="dd_create dd_mg_20">
-	  							<span class="login_HD  dd_signfont ">Create An Account</span>
+	  							<span class="login_HD  dd_signfont ">Create an Account</span>
 	  						</div> 
 	  						<?php 
 	  						$error = Session::get('error');
@@ -180,26 +178,45 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
 
 									<div class="dd_email_reg_label">Name</div>
-									<div class="form-group dd_mg_B_15">
+									<div class="form-group dd_mg_B_40">
 										<div class="col-sm-12">
 											<span class="input-icon ">
-												{!! Form::password('first_name', array('placeholder'=>'', 'class'=>'form-control dd_input_4 first-name','placeholder' => 'First Name', 'id'=>'first-name' ) ) !!}
-
-												{!! Form::text('middle_name', null, $attributes = array('class'=>'form-control col-sm-6  middle-name dd_input_5','placeholder' => 'Middle Name', 'id'=>'middle-name'));  !!}
-
-												{!! Form::text('last_name', null, $attributes = array('class'=>'form-control last-name dd_input_6','placeholder' => 'Last Name', 'id'=>'last-name'));  !!}
+												
+											<div class="dd_input_4"> 
+												{!! Form::text('first_name', null, $attributes = array('class'=>'form-control  first-name ','placeholder' => 'First Name', 'id'=>'first-name'));  !!}
+											</div>
+											<div class="dd_input_5"> 
+												{!! Form::text('middle_name', null, $attributes = array('class'=>'form-control  middle-name dd_bodred_l_0 ','placeholder' => 'Middle Name', 'id'=>'middle-name'));  !!}
+											</div>
+											<div class="dd_input_6"> 
+												{!! Form::text('last_name', null, $attributes = array('class'=>'form-control last-name dd_bodred_l_0','placeholder' => 'Last Name', 'id'=>'last-name'));  !!}
+											</div>
 												<!-- <i class="fa fa-user"></i>  -->
 												<!-- <span class="dd_input_icon"></span> -->
 											</span>
 										</div>
+										<div class="dd_clear"></div>
 									</div>
 
-									<div class="dd_email_reg_label">Email</div>
+									
+									
+									
 
-									<div class="form-group dd_mg_B_15">
+									<div class="form-group dd_mg_B_40">
 										<div class="col-sm-12">
 											<span class="input-icon ">
-												{!! Form::text('email',  Input::old('email'), $attributes = array('class' => 'form-control dd_input', 'placeholder' => '')); !!}
+
+											<div class="dd_input_2"> 
+											<div class="dd_email_reg_label_2">Email</div>
+												{!! Form::text('email',  Input::old('email'), $attributes = array('class' => 'form-control ', 'placeholder' => '')); !!}
+
+											</div>
+
+											<div class="dd_input_3"> 
+											<div class="dd_email_reg_label_2">Phone </div>
+
+											{!! Form::text('phone',Input::old('phone'), $attributes = array('class' => 'form-control  dd_bodred_l_0  ', 'placeholder' => '')); !!}
+											</div>
 												<!-- <span class="dd_input_icon_email"></span>  -->
 												<!-- <i class="fa fa-user"></i>  -->
 											</span>
@@ -208,12 +225,71 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
 									<div class="dd_email_reg_label">Password</div>
 
-									<div class="form-group dd_mg_B_15">
+									<div class="form-group dd_mg_B_40">
 										<div class="col-sm-12">
 											<span class="input-icon ">
-												{!! Form::password('password', array('placeholder'=>'', 'class'=>'form-control dd_input_2', 'id'=>'password' ) ) !!}
 
-												{!! Form::password('cpassword', array('placeholder'=>'Confirm password', 'class'=>'form-control dd_input_3', 'id'=>'cpassword' ) ) !!}
+												<div class="dd_input_2"> 
+													{!! Form::password('password', array('placeholder'=>'', 'class'=>'form-control ', 'id'=>'password' ) ) !!}
+
+												</div>
+												<div class="dd_input_3"> 
+
+													{!! Form::password('cpassword', array('placeholder'=>'Confirm password', 'class'=>'form-control dd_bodred_l_0 ', 'id'=>'cpassword' ) ) !!}
+												</div>
+													<!-- <span class="dd_input_icon"></span> -->
+													<!-- <i class="fa fa-user"></i>  -->
+											</span>
+										</div>
+
+										<div class="dd_clear"></div>
+									</div>
+
+									
+																	
+									<div class="form-group dd_mg_B_40 ">
+										<div class="col-sm-12">
+											<span class="input-icon ">
+
+											<div class="dd_input_2"> 
+											<div class="dd_email_reg_label_2">Gender</div>
+												{!! Form::select('gender', $gender, Input::old('gender'), $attributes = array('class' => 'form-control ')); !!}
+											</div>
+
+											<div class="dd_input_3"> 
+												<div class="dd_email_reg_label_2">Martial Status</div>
+												{!! Form::select('gender', $maritialStatus, Input::old('gender'), $attributes = array('class' => 'form-control  dd_bodred_l_0')); !!}
+											</div>
+												<!-- 	<span class="symbol required"></span>	 -->						
+											</span>
+										</div>
+									</div> 
+
+
+							
+
+									<div class="form-group dd_mg_B_40">
+										<div class="col-sm-12">
+											<span class="input-icon ">
+											
+
+											<div class="dd_input_4">
+
+												<div class="dd_email_reg_label_3">Country </div>
+												{!! Form::select('country', $country, Input::old('country'), $attributes = array('class' => 'form-control country dd_input_', 'id'=>'country')); !!}
+											</div>
+
+											<div class="dd_input_5">
+
+												<div class="dd_email_reg_label_3">State </div>
+												{!! Form::select('state', $state, Input::old('state'), $attributes = array('class' => 'form-control  state dd_bodred_l_0','id' =>'state')); !!}
+											</div>
+
+											<div class="dd_input_6">
+
+												<div class="dd_email_reg_label_3">City </div>
+												{!! Form::text('city', Input::old('city'), $attributes = array('class' => 'form-control dd_bodred_l_0 ', 'placeholder' => 'City')); !!}
+											</div>
 												<!-- <span class="dd_input_icon"></span> -->
 												<!-- <i class="fa fa-user"></i>  -->
 											</span>
@@ -221,57 +297,22 @@ $currentPath = Route::getCurrentRoute()->getPath();
 									</div>
 
 
+								
 
-									<div class="dd_email_reg_label">Phone Number</div>
-
-									<div class="form-group dd_mg_B_15 ">
-										<div class="col-sm-12">
-											<span class=" ">
-												{!! Form::text('phone',Input::old('phone'), $attributes = array('class' => 'form-control dd_input', 'placeholder' => '')); !!}
-												<!-- 	<span class="symbol required"></span>	 -->						
-											</span>
-										</div>
-									</div> 
-
-									<div class="dd_email_reg_label">Gender</div>
-
-									<div class="form-group dd_mg_B_15 ">
-										<div class="col-sm-12">
-											<span class=" ">
-												{!! Form::select('gender', $gender, Input::old('gender'), $attributes = array('class' => 'form-control dd_input_2')); !!}
-												<!-- 	<span class="symbol required"></span>	 -->						
-											</span>
-										</div>
-									</div> 
-
-
-									<div class="dd_email_reg_label_2">Street Name</div><div class="dd_email_reg_label_2">Country </div>
-
-									<div class="form-group dd_mg_B_15">
+									<div class="form-group dd_mg_B_40">
 										<div class="col-sm-12">
 											<span class="input-icon ">
-												{!! Form::text('street', Input::old('street'), $attributes = array('class'=>'form-control dd_input_2', 'placeholder' => ''));  !!}
-
-												{!! Form::select('country', $country, Input::old('country'), $attributes = array('class' => 'form-control country dd_input_3', 'id'=>'country')); !!}
-												<!-- <span class="dd_input_icon"></span> -->
-												<!-- <i class="fa fa-user"></i>  -->
-											</span>
-										</div>
-									</div>
-
-
-									<div class="dd_email_reg_label_3">State </div>
-
-									<div class="form-group dd_mg_B_15">
-										<div class="col-sm-12">
-											<span class="input-icon ">
-												{!! Form::select('state', $state, Input::old('state'), $attributes = array('class' => 'form-control dd_input_4 state','id' =>'state')); !!}
-
 											<!-- 	 <i class="fa fa-sort-desc dd_fa_icons"></i>
 										-->
-										{!! Form::text('city', Input::old('city'), $attributes = array('class' => 'form-control dd_input_5', 'placeholder' => 'City')); !!}
-
-										{!! Form::text('pincode', Input::old('pincode'), $attributes = array('class' => 'form-control dd_input_6', 'placeholder' => 'Pincode')); !!}
+										<div class="dd_input_2"> 
+											<div class="dd_email_reg_label_2">Street </div>
+											{!! Form::text('street', Input::old('street'), $attributes = array('class'=>'form-control ', 'placeholder' => ''));  !!}
+										</div>
+										
+										<div class="dd_input_3">
+										<div class="dd_email_reg_label_2">Pincode</div> 
+										{!! Form::text('pincode', Input::old('pincode'), $attributes = array('class' => 'form-control dd_bodred_l_0 ', 'placeholder' => 'Pincode')); !!}
+										</div>
 										<!-- <span class="dd_input_icon"></span> -->
 
 									</span>
@@ -279,29 +320,52 @@ $currentPath = Route::getCurrentRoute()->getPath();
 							</div>
 
 
-							<div class="dd_email_reg_label_2">Qualification</div><div class="dd_email_reg_label_2">Specialization </div>
-
-							<div class="form-group dd_mg_B_15">
+							<div class="form-group dd_mg_B_40">
 								<div class="col-sm-12">
 									<span class="input-icon ">
-										{!! Form::select('qualification[]', $qualification, Input::old('qualification'), $attributes = array('class' => 'form-control dd_input_2','id'=>'qualification','multiple' => 'multiple')); !!}
 
-										{!! Form::select('specialization', $specialization, Input::old('specialization'), $attributes = array('class' => 'form-control dd_input_3')); !!}
+									<div class="dd_input_2"> 
+
+									<div class="dd_email_reg_label_2">Qualification </div>
+
+										{!! Form::select('qualification[]', $qualification, Input::old('qualification'), $attributes = array('class' => 'form-control dd_qualification','id'=>'qualification','multiple' => 'multiple')); !!}
+
+									</div>
+
+									<div class="dd_input_2">
+									<div class="dd_email_reg_label_2">Accredition </div>
+
+
+									{!! Form::text('accredition', null,array('placeholder'=>'', 'class'=>'form-control dd_bodred_l_0 ', 'id'=>'accredition' ) ) !!}
+									</div>
+										
+										
+										
 										<!-- <span class="dd_input_icon"></span> -->
 										<!-- <i class="fa fa-user"></i>  -->
 									</span>
 								</div>
 							</div>
 
-							<div class="dd_email_reg_label_2">Super specialization</div><div class="dd_email_reg_label_2">Accredition
-						</div>
-
-						<div class="form-group dd_mg_B_15">
+						<div class="form-group dd_mg_B_40">
 							<div class="col-sm-12">
 								<span class="input-icon ">
-									{!! Form::text('super_specialization', null,array('placeholder'=>'', 'class'=>'form-control dd_input_2 super_specialization', 'id'=>'super_specialization' ) ) !!}
 
-									{!! Form::text('accredition', null,array('placeholder'=>'', 'class'=>'form-control dd_input_3', 'id'=>'accredition' ) ) !!}
+								<div class="dd_input_2">
+									<div class="dd_email_reg_label_2">Specialization </div>
+
+									{!! Form::select('specialization', $specialization, Input::old('specialization'), $attributes = array('class' => 'form-control ')); !!}
+								</div>
+
+								<div class="dd_input_2">
+									<div class="dd_email_reg_label_2">Super specialization </div>
+
+
+									{!! Form::text('super_specialization', null,array('placeholder'=>'', 'class'=>'form-control  super_specialization dd_bodred_l_0', 'id'=>'super_specialization' ) ) !!}
+
+									</div>
+
+									
 									<!-- <span class="dd_input_icon"></span> -->
 									<!-- <i class="fa fa-user"></i>  -->
 								</span>
@@ -312,7 +376,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
 						<div class="dd_email_reg_label_2">IMA Register Number</div>
 
-						<div class="form-group dd_mg_B_15">
+						<div class="form-group dd_mg_B_40">
 							<div class="col-sm-12">
 								<span class="input-icon ">
 									{!! Form::text('register_no', null,array('placeholder'=>'', 'class'=>'form-control dd_input', 'id'=>'register_no	' ) ) !!}
@@ -330,8 +394,8 @@ $currentPath = Route::getCurrentRoute()->getPath();
 							<p>
 								<!-- <a href="" class="dd_textalign_center"> -->
 
-								<input type="checkbox" name=agree"agree" id="agree" value="agree" class="agree"> 
-								I agree to the Doctord Diary 
+								<input type="checkbox" name="services" id="services" value="agree" class="services"> 
+								I agree to the Doctor's Diary 
 
 
 								<a target="_blank"> Terms of Service </a> and
@@ -467,13 +531,28 @@ $currentPath = Route::getCurrentRoute()->getPath();
 		<!-- {!!Html::script('assets/plugins/tooltip-validation/jquery-validate.bootstrap-tooltip.js')!!} -->
 		{!!Html::script('assets/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')!!}
 
+		<!-- {!!Html::script('assets/plugins/magicsuggest/magicsuggest-min.js')!!} -->
+		{!!Html::script('assets/plugins/multiple-select-master/multiple-select.js')!!}
 
+		<!-- {!!Html::script('assets/plugins/chosen/chosen.jquery.min.js')!!} -->
+
+		<!-- {!!Html::script('assets/plugins/multiselectbox_jquery/jquery.multiselect.js')!!} -->
 
 		<script>
 			jQuery(document).ready(function() {
 				//Main.init();
 				Login.init();
-				$('#qualification').multiselect();
+				$('#qualification').multiselect({ });
+					
+				
+				
+
+				
+				
+				
+
+
+
 
 				
 			});

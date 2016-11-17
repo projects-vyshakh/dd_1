@@ -1,3 +1,4 @@
+
 <?php
 
 if(!empty($patientPersonalData)){
@@ -418,7 +419,7 @@ if(!empty($doctorData)){
 							 	<div class="col-sm-12 ">
 									<div class="col-sm-12">
 										<button type="submit" class="btn btn-primary btn-block dd_btn_center">
-										<i class="fa fa-floppy-o" aria-hidden="true"></i>
+										<!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
 										Save</button>
 									</div>
 								</div>
