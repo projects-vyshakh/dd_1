@@ -132,7 +132,7 @@ if(!empty($prescMedicine)){
 													Print
 												</a>
 
-												<a class="btn btn-purple  share-prescription">
+												<a class="btn btn-purple  share-prescription dd_share">
 													Share
 												</a>
 									<!-- <a href="patientprescprint" class="btn btn-primary">Print</a> -->
@@ -295,9 +295,8 @@ if(!empty($prescMedicine)){
 															
 																<tr>
 																	<td colspan="40">
-																		<div class="instruction-div" id="instruction-div">
-																								
-																			<textarea class="form-control instruction" name="instruction<?php echo $index; ?>" id="instruction<?php echo $index; ?>"  >{{$prescMedicineVal->instruction}}</textarea>
+																		<div class="instruction-div1" id="instruction-div">
+																			<textarea style="width: 100px" class="form-control instruction" name="instruction<?php echo $index; ?>" id="instruction<?php echo $index; ?>"  >{{$prescMedicineVal->instruction}}</textarea>
 																		</div>
 																	</td>
 																</tr>
@@ -447,7 +446,7 @@ if(!empty($prescMedicine)){
 													
 													<tr>
 														<td colspan="40">
-															<div class="instruction-div" id="instruction-div">
+															
 																
 															</div>
 														</td>
@@ -827,9 +826,9 @@ if(!empty($prescMedicine)){
 	   		$('.present-drug-btn').click(function(e){
 
 	   			$('.pdfopen').attr('disabled',false);
-             	$('.share-prescription').attr('disabled',false);
+             		$('.share-prescription').attr('disabled',false);
 	   			
-	   			var defaultDivCount = $('.default-div-count').val();
+	   				var defaultDivCount = $('.default-div-count').val();
 
 	   			 $('.prev-drug-load-status').val(1);
 

@@ -364,39 +364,34 @@ if(!empty($doctorData)){
 
 										<div class="form-group">
 
-											{!! Form::label('age', 'Baby-Age', $attributes = array('class'=>'col-sm-2'));  !!}
+													{!! Form::label('age', 'Baby-Age', $attributes = array('class'=>'col-sm-2'));  !!}
 
-											<div class="col-sm-4 dd_babyage_col">
-
-											<div class="col-sm-4">
-												<span class="">
-													<?php $babyYears = $pregDataValue->obs_preg_years." "."Years"; ?>
-
-													{!! Form::text('years[]',$babyYears, $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Years'));  !!}
-													<!-- <i class="fa fa-quote-left"></i> -->
-												</span>
-											</div>
-
-											<div class="col-sm-4">
-												<span class="">
-													<?php $babyMonths = $pregDataValue->obs_preg_months." "."Months"; ?>
-
-													{!! Form::text('months[]', $babyMonths , $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Months'));  !!}
-													<!-- <i class="fa fa-quote-left"></i> -->
-													 </span>
-											</div>
-
-											<div class="col-sm-4">
-												<span class="">	
-													<?php $babyWeeks = $pregDataValue->obs_preg_weeks." "."Weeks"; ?>
-
-													{!! Form::text('weeks[]', $babyWeeks, $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Weeks'));  !!}
-													<!-- <i class="fa fa-quote-left"></i> -->
-												</span>
-											</div>
-
-												
-											</div> 
+													<div class="col-sm-4 dd_babyage_col">
+														<div class="col-sm-4">
+																<span class="">	
+																	<?php $babyWeeks = $pregDataValue->obs_preg_weeks." "."Weeks"; ?>
+				
+																	{!! Form::text('weeks[]', $babyWeeks, $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Weeks'));  !!}
+																	<!-- <i class="fa fa-quote-left"></i> -->
+																</span>
+														</div>
+														<div class="col-sm-4">
+															<span class="">
+																<?php $babyMonths = $pregDataValue->obs_preg_months." "."Months"; ?>
+			
+																{!! Form::text('months[]', $babyMonths , $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Months'));  !!}
+																<!-- <i class="fa fa-quote-left"></i> -->
+																 </span>
+														</div>
+														<div class="col-sm-4">
+															<span class="">
+																<?php $babyYears = $pregDataValue->obs_preg_years." "."Years"; ?>
+			
+																{!! Form::text('years[]',$babyYears, $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Years'));  !!}
+																<!-- <i class="fa fa-quote-left"></i> -->
+															</span>
+														</div>
+												</div> 
 
 											
 										</div>
@@ -453,42 +448,26 @@ if(!empty($doctorData)){
 											</div>
 										</div>
 										<div class="form-group">
-											
-											{!! Form::label('years', 'Baby-Age', $attributes = array('class'=>'col-sm-2'));  !!}
+												{!! Form::label('years', 'Baby-Age', $attributes = array('class'=>'col-sm-2'));  !!}
 
-											<div class="col-sm-4 dd_babyage_col">
-
-												<div class="col-sm-4">
-													<span class="">
-														{!! Form::text('years[]', Input::old('years'), $attributes = array('class'=>'form-control','placeholder'=>'Years'));  !!}
-												</div>
-
-												<div class="col-sm-4">
-													<span class="">
-														{!! Form::text('months[]',Input::old('months'), $attributes = array('class'=>'form-control','placeholder'=>'Months'));  !!}
-														<!-- <i class="fa fa-quote-left"></i> -->
-													</span>
-												</div>
-
-												<div class="col-sm-4">
-													<span class="">
-														{!! Form::text('weeks[]', Input::old('weeks'), $attributes = array('class'=>'form-control','placeholder'=>'Weeks'));  !!}
-													</span>
-												</div>
-
-
+													<div class="col-sm-4 dd_babyage_col">
+																<div class="col-sm-4">
+																		<span class="">
+																			{!! Form::text('weeks[]', Input::old('weeks'), $attributes = array('class'=>'form-control','placeholder'=>'Weeks'));  !!}
+																		</span>
+																</div>
+																<div class="col-sm-4">
+																	<span class="">
+																		{!! Form::text('months[]',Input::old('months'), $attributes = array('class'=>'form-control','placeholder'=>'Months'));  !!}
+																		<!-- <i class="fa fa-quote-left"></i> -->
+																	</span>
+																</div>
+																<div class="col-sm-4">
+																	<span class="">
+																		{!! Form::text('years[]', Input::old('years'), $attributes = array('class'=>'form-control','placeholder'=>'Years'));  !!}
+																</div>
+													</div>
 											</div>
-											
-											<!-- {!! Form::label('age', 'Years', $attributes = array('class'=>'col-sm-1'));  !!} -->
-											
-
-											<!-- {!! Form::label('months', 'Months', $attributes = array('class'=>'col-sm-1'));  !!} -->
-										
-
-											<!-- {!! Form::label('weeks', 'Weeks', $attributes = array('class'=>'col-sm-1'));  !!} -->
-											
-											
-										</div>
 									</div>
 								@endif
 								<div class="form-group">
@@ -606,7 +585,7 @@ if(!empty($doctorData)){
 		{!!Html::script('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')!!}
 		
 		{!!Html::script('assets/js/patient-personal-information.js')!!}
-		{!!Html::script('assets/js/obstetrics-history.js')!!}
+		{!!Html::script('assets/js/gyn-obstetrics-history.js')!!}
 
 		{!!Html::script('assets/js/moment.js')!!}
 		
@@ -635,7 +614,7 @@ if(!empty($doctorData)){
             //console.log(pregHealth);
             //alert(lmpDysmenohrrea);
 			Main.init();
-			patientElements.init();
+			//patientElements.init();
 			obstetricsElements.init();
 
 
@@ -754,24 +733,25 @@ if(!empty($doctorData)){
 		                                    '</label>' +*/
 
 		                                    '<div class="col-sm-4 dd_babyage_col">' +
-
+												'<div class="col-sm-4">' +
+		                                        '<span class="">' +
+		                                            '<input type="text" name="weeks[]" id="weeks'+counter+'" class="form-control weeks" placeholder="Weeks"/>' +
+		                                        '</span>' +
+		                                    '</div>' +
+		                                     '<div class="col-sm-4">' +
+		                                        '<span class="">' +
+		                                            '<input type="text" name="months[]" id="months'+counter+'" class="form-control months" placeholder="Months"/>' +
+		                                        '</span>' +
+		                                    '</div>' +
 		                                        '<div class="col-sm-4">' +
 		                                        '<span class="">' +
 		                                            '<input type="text" name="years[]" id="years'+counter+'" class="form-control years" placeholder="Years"/>' +
 		                                        '</span>' +
 		                                    	'</div>' +
 
-		                                    '<div class="col-sm-4">' +
-		                                        '<span class="">' +
-		                                            '<input type="text" name="months[]" id="months'+counter+'" class="form-control months" placeholder="Months"/>' +
-		                                        '</span>' +
-		                                    '</div>' +
+		                                   
 
-		                                    '<div class="col-sm-4">' +
-		                                        '<span class="">' +
-		                                            '<input type="text" name="weeks[]" id="weeks'+counter+'" class="form-control weeks" placeholder="Weeks"/>' +
-		                                        '</span>' +
-		                                    '</div>' +
+		                                    
 
 
 		                                    '</div>'+

@@ -778,81 +778,11 @@ var patientElements = function (dosageUnit) {
     } 
 
 
-    var runIllnessAddMore = function () {
+   
 
+    
 
-       
-    }; 
-
-    var runSurgeryAddMore = function () {
-
-            $('.btn-add-surgery').click(function(e){
-                e.preventDefault();
-                $('#surgery').append('<div class="form-group dd_col_size">' + 
-                                        '<div class="col-sm-11">' +
-                                            '<span class="">' +
-                                                '<input type="text" name="surgery[]" class="form-control surgicalhistory" placeholder="Surgery">' +
-                                                '' +
-                                            '</span>' +
-                                        '</div>'+
-                                        '<div class="col-sm-1">' +
-                                            '<button name="btn-surgery-remove" class="btn btn-danger btn-surgery-remove dd_right " id="btn-surgery-remove">x</button' +
-                                        '</div>' +  
-                                     '</div>'
-
-                );
-
-
-                $('.btn-surgery-remove').click(function(e){
-                    e.preventDefault();
-                    var clickedElements = $(this).closest('.form-group');
-                    console.log(clickedElements);
-                    clickedElements.remove();   
-                })
-
-            });
-    };
-
-    var runAllergyAddMore = function(){
-        $('.btn-add-allergies').click(function(e){
-                e.preventDefault();
-                //counter ++;
-                $('#allergy').append('<div class="form-group">' +
-                                        '<div class="col-sm-6">'+
-                                        '<div class="dd_top_mt">Medication</div>'+
-
-                                                '<span class="">' +
-                                                    '<input type="text" name="medication-drug-allergy[]" class="form-control medication-drug-allergy",placeholder = "Medication" />' +
-                                                '</span>' +
-                                            '</div>'    +
-                                             ' <div class="dd_col_size">'+
-                                            ' <div class="col-sm-5">'+
-                                            '<div class="dd_top_mt">Reaction</div>'+
-                                                    '<span class="">' +
-                                                        '<input type="text" name="reaction-drug-allergy[]" class="form-control reaction-drug-allergy",placeholder = "Reaction" />' +
-                                                    '</span>' +
-                                            '</div>'    +
-                                             '</div>'    +
-                                             ' <div class="dd_col_size">'+
-                                            ' <div class="col-sm-1">'+
-                                                '<button class="btn btn-danger btn-allergy-remove dd_right dd_mg_25 ">x</button>'+
-                                            '</div>' +
-                                             '</div>' +
-                                    '</div>'
-
-                            );
-
-
-                $('.btn-allergy-remove').click(function(e){
-                    e.preventDefault();
-                    var clickedElements = $(this).closest('.form-group');
-                    //console.log(clickedElements);
-                    clickedElements.remove();   
-                })
-                
-
-            });
-    };
+  
 
     var runDiagnosisExamination = function () {
         var form2           = $('#addPatientExamination');
@@ -1093,216 +1023,13 @@ var patientElements = function (dosageUnit) {
         
 
     };
-    var runPresentPastNotApplicable = function(){
-        $('#noPresentPast').click(function(){
-            if($('#noPresentPast').is(':checked')){
-                //alert('checked');
-               //$('input:radio[name="hypertension"]').filter('[value="NA"]').prop('checked', true);hypertension
-               $('#present-past-check-value').val('NA');
-               $('.illness_name').attr('disabled',true);
-               $('.present-past-na').filter('[value="NA"]').prop('checked', true);
-               $('.present-past-current').attr('disabled',true);
-               $('.present-past-past').attr('disabled',true);
-               $('.present-past-medication-empty').attr('disabled',true);
-            }
-            else{
-                //alert('not checked');
-                $('#present-past-check-value').val('');
-                $('.illness_name').attr('disabled',false);
-                $('.present-past-na').filter('[value="NA"]').prop('checked', false);
-                $('.present-past-current').attr('disabled',false);
-                $('.present-past-past').attr('disabled',false);
-                $('.present-past-medication-empty').attr('disabled',false);
-            }
-        });
-    }; 
 
 
 
-    var runNoFamilyHistoryReport = function(){
-         $('#noFamilyHistory').click(function(){
-            if($('#noFamilyHistory').is(':checked')){
-                $('.family-hypertension').prop('disabled',true);
-                $('.family-diabetes').prop('disabled',true);
-                $('.family-cancer').prop('disabled',true);
-                $('.family-other').prop('disabled',true);
-                $('.other-medical-history').prop('disabled',true);
-                $('.family-history-na').prop('checked',true);
-            }
-            else{
-                $('.family-hypertension').prop('disabled',false); 
-                $('.family-diabetes').prop('disabled',false);
-                $('.family-cancer').prop('disabled',false);
-                $('.family-other').prop('disabled',false);
-                $('.other-medical-history').prop('disabled',false);
-                $('.family-history-na').prop('checked',false);
-            }
-        });
-           
-    };
 
-    var runFamilyHistoryDetails = function(){
+   
 
-        $('.other-medical-history').prop('disabled', true);
-        $('.other-allergy-text').prop('disabled', true);
-
-        $('.family-other').click(function(){
-            var closestElements  = $(this).closest('.form-group');
-            if(closestElements.find('.family-other'). prop("checked") == true){
-                closestElements.find('.other-medical-history').prop('disabled', false);
-            }
-            else{
-                
-                closestElements.find('.other-medical-history').prop('disabled', true);
-            }    
-        }); 
-
-        var clicked  = $('.family-other').closest('.form-group');
-            clicked.find('.family-other').each(function(index){
-                
-                if ($(this).prop('checked')==true){ 
-                   //alert('checked');
-                    
-                   clicked.find('.other-medical-history').prop('disabled', false);
-                }
-                else{
-                   // alert('not');
-                   clicked.find('.other-medical-history').prop('disabled', true);
-                }
-        });  
-         
-
-        
-
-       $('.family-history-na').each(function (index) {
-        //alert(index);
-        var clickedElements = $(this).closest('.form-group');
-        
-           if(clickedElements.find('.family-history-na'). prop("checked") == true){
-            
-                clickedElements.find('.family-hypertension').prop('checked', false);
-                clickedElements.find('.family-hypertension').prop('disabled', true);
-
-                clickedElements.find('.family-diabetes').prop('checked', false);
-                clickedElements.find('.family-diabetes').prop('disabled', true);
-                clickedElements.find('.family-cancer').prop('checked', false);
-                clickedElements.find('.family-cancer').prop('disabled', true);
-                clickedElements.find('.family-other').prop('checked', false);
-                clickedElements.find('.family-other').prop('disabled', true);
-                clickedElements.find('.other-medical-history').prop('disabled',true);
-           }
-           else{
-                clickedElements.find('.family-hypertension').prop('disabled', false);
-                clickedElements.find('.family-diabetes').prop('disabled', false);
-                clickedElements.find('.family-cancer').prop('disabled', false);
-                clickedElements.find('.family-other').prop('disabled', false);
-                clickedElements.find('.other-medical-history').prop('disabled',false);
-           }
-        });
-
-        $('.family-history-na').click(function(){
-
-             var closestElements  = $(this).closest('.form-group');
-                //console.log(closestElements);
-            if($(this). prop("checked") == true){
-                //alert("checked");
-               
-                closestElements.find('.family-hypertension').prop('checked', false);
-                closestElements.find('.family-hypertension').prop('disabled', true);
-
-                closestElements.find('.family-diabetes').prop('checked', false);
-                closestElements.find('.family-diabetes').prop('disabled', true);
-                closestElements.find('.family-cancer').prop('checked', false);
-                closestElements.find('.family-cancer').prop('disabled', true);
-                closestElements.find('.family-other').prop('checked', false);
-                closestElements.find('.family-other').prop('disabled', true);
-                closestElements.find('.other-medical-history').prop('disabled',true);
-            }
-            else{
-                //alert("not checked");
-                
-                closestElements.find('.family-hypertension').prop('disabled', false);
-                closestElements.find('.family-diabetes').prop('disabled', false);
-                closestElements.find('.family-cancer').prop('disabled', false);
-                closestElements.find('.family-other').prop('disabled', false);
-                closestElements.find('.other-medical-history').prop('disabled',true);
-            }    
-            //console.log();
-            
-        });
-
-       /* $('.other-allergy').click(function(){
-            var closestElements  = $(this).closest('.form-group');
-                console.log(closestElements);
-            if($('.other-allergy').is(':checked')){
-                
-                closestElements.find('.other-allergy-text').prop('disabled', false);
-            }
-            else{
-                closestElements.find('.other-allergy-text').prop('disabled', true);
-            }    
-        });*/
-        
-
-        
-
-    }; 
-    var runSurgicalHistoryDetails = function(){
-        $('#noSurgicalHistory').click(function(){
-            if($('#noSurgicalHistory').is(':checked')){
-                $('.surgicalhistory').prop('disabled', true);
-               
-            }
-            else{
-                $('.surgicalhistory').prop('disabled', false);
-            }
-        });
-    } 
-    var runAllergyHistoryDetails = function(){
-        $('#noDrugAllergy').click(function(){
-            //var closestElements  = $(this).closest('.form-group');
-            //console.log(closestElements);
-            if($('#noDrugAllergy').is(':checked')){
-                $('.medication-drug-allergy').prop('disabled', true);
-                $('.reaction-drug-allergy').prop('disabled', true);
-            }
-            else{
-               $('.medication-drug-allergy').prop('disabled', false); 
-               $('.reaction-drug-allergy').prop('disabled', false);
-            }
-
-        });
-
-         $('#noAllergyHistory').click(function(){
-            //var closestElements  = $(this).closest('.form-group');
-            //console.log(closestElements);
-            if($('#noAllergyHistory').is(':checked')){
-                $('.allergy_general').prop('disabled', true);
-                //$('.reaction-drug-allergy').prop('disabled', true);
-            }
-            else{
-                $('.allergy_general').prop('disabled', false);
-            }
-
-        });
-    };
-
-    var runSocialHistoryDetails = function(){
-        $('#noSocialHistory').click(function(){
-            //var closestElements  = $(this).closest('.form-group');
-            //console.log(closestElements);
-            if($('#noSocialHistory').is(':checked')){
-                $('.social-history').prop('disabled', true);
-                $('.social-history-na').prop('checked', true);
-                //$('.reaction-drug-allergy').prop('disabled', true);
-            }
-            else{
-                $('.social-history').prop('disabled', false);
-                $('.social-history-na').prop('checked', false);
-            }
-
-        });
-    }; 
+   
 
     var runPrescription = function(){
         //console.log($('.presc-medicine').find('.presc-table').length);
@@ -1697,24 +1424,7 @@ var patientElements = function (dosageUnit) {
     };
 
 
-    var runAddPrescMedicine = function () {
-        
-        /*$('.presc-save').click(function(){
-            var dataString = $("#addPatientPrescMedicine").serialize();
-            //console.log(dataString);
-            $.ajax({
-                type: "POST",
-                url: "addPatientPrescMedicine",
-                data: dataString,
-                success: function(data) {
-                     //alert('Data send');
-                     console.log(data);
-                }
-            });
-        })*/
-        
-       
-    };
+   
 
 
    
@@ -1741,35 +1451,18 @@ var patientElements = function (dosageUnit) {
             runValidator2();
             runPatientObstetricsHistoryValidation();
             runMedicalHistoryValidator();
-            runIllnessAddMore();
-            runSurgeryAddMore();
-
-            runAllergyAddMore();
             runDiagnosisExamination();
             runBmiCalculation();
-            //runValidator3();
             runCountryCityState();
-            //runAddMoreFunctions();
-            runPresentPastNotApplicable();
-            runNoFamilyHistoryReport();
-            runFamilyHistoryDetails();
-            runSurgicalHistoryDetails();
-            runAllergyHistoryDetails();
-            runSocialHistoryDetails();
             runDoctorsHomeValidator();
             runPatientDiagnosisValidator();
             runPatientDiagnosisValidator2();
             runPatientPrescMedicineValidator();
-            
-            runPrescription();
-            //runDataTable();
+        	runPrescription();
             runPatientChangePasswordValidation();
             runPrintSetup();
-
-
-            runCardioAddPatient();
-
-            runAddPrescMedicine();
+			runCardioAddPatient();
+			
            
         }
     };

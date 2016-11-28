@@ -5940,6 +5940,7 @@ svg {
 }
 .instruction{
 	/*margin-top: -10px;*/
+	width: 100%;
 }
 .instruction1{
 	border-color:#ddd;
@@ -7374,4 +7375,25 @@ table.dataTable thead .sorting_asc::after {
 }
 .dd_printsetup{
 	margin-left: 200px;
+}
+.dd_patient_id_icon {
+    background-image: url("../images/patient_id.svg");
+    float: left;
+    height: 22px;
+    margin-right: 5px;
+    margin-top: -2px;
+    width: 22px;
+}
+.dd_patient_name_icon {
+    background-image: url("../images/patient_name.svg");
+    float: left;
+    height: 21px;
+    margin-right: 5px;
+    margin-top: -2px;
+    width: 21px;
+}
+.btn.btn-purple.share-prescription.dd_share {
+    border-radius: 0 0 5px 5px;
+    position: absolute;
+    top: -20px;
 }
