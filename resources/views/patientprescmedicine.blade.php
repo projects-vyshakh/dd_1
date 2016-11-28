@@ -858,7 +858,7 @@ if(!empty($prescMedicine)){
 	   			else{
 	   				//bootbox.alert("No previous drugs to load"); 
 	   				//$('#myModal2').modal('show');
-	   			}
+	   				}
 	   			
 
 	   			var counter = <?php echo json_encode(count($prescMedicine)); ?>;
@@ -888,8 +888,8 @@ if(!empty($prescMedicine)){
    			
 					
 	   		$('.morning').tooltip({'trigger':'focus', 'title': 'Morning medicine count'});
-			$('.noon').tooltip({'trigger':'focus', 'title': 'Noon medicine count'}); 
-			$('.night').tooltip({'trigger':'focus', 'title': 'Night medicine count'}); 
+				$('.noon').tooltip({'trigger':'focus', 'title': 'Noon medicine count'}); 
+				$('.night').tooltip({'trigger':'focus', 'title': 'Night medicine count'}); 
 									
 		                                       
 		 });
@@ -900,7 +900,7 @@ if(!empty($prescMedicine)){
 			var extraPrescCounter = $('.extra-presc-count').val();
 			extraPrescCounter = parseInt(extraPrescCounter) + 1;
 			$('.extra-presc-count').val(extraPrescCounter);
-			alert(extraPrescCounter);
+			//alert(extraPrescCounter);
 			//alert(clickStatus)
 			if(clickStatus=="add"){
 					$('.presc-medicine').append('<div class="presc-inner contaner dd_border_table">'+
