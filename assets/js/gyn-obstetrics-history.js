@@ -6,9 +6,9 @@ var obstetricsElements = function () {
 
         $('#obs_lmp_date').Zebra_DatePicker({
    				direction: -1,
-   				icon_position : 'left',
-   				inside : true,
-   				show_icon : false
+	   				icon_position : 'left',
+	   				inside : true,
+	   				show_icon : false
    		});
 
    		$('#last_delivery_date').Zebra_DatePicker({
@@ -24,6 +24,7 @@ var obstetricsElements = function () {
     };
 
     var runDeliveryDateAutoGenerate = function(){
+
 
     	$('.auto-generate-deliverydate').click(function(e){
     		e.preventDefault();
@@ -49,23 +50,37 @@ var obstetricsElements = function () {
 				});
     		}
     		else{
-
-    			var lmpDate 				=  $('#obs_lmp_date').val();
-               	var lmpDateFormatted  		= new Date(lmpDate);
-				var setExpectedDate 		= lmpDateFormatted.setDate(lmpDateFormatted.getDate()+280); 
-               	var expectedDateFormatted 	= new Date(setExpectedDate);
-               	//alert(newEdd)
-               	var day 	= expectedDateFormatted.getDate();
-                var month 	= expectedDateFormatted.getMonth() + 1;
-                var year  	= expectedDateFormatted.getFullYear();
-                var newDate = day+"-"+month+"-"+year;
-
-               	var expectedDeliveryDate = moment(newDate, "DD/MM/YYYY").format("YYYY-MM-DD");
-               	$('#expected_delivery_date').val(expectedDeliveryDate);
+    			runDeliveryDateAutoGenerateExtended();
                	
     		}	
     		
     	});
+
+    };
+
+    var runDeliveryDateAutoGenerateExtended = function(){
+
+    	var lmpDate 				=  $('#obs_lmp_date').val();
+
+    	if(lmpDate==null || lmpDate==''){
+    		$('#expected_delivery_date').val('');
+    	}
+    	
+    	else{
+    		var lmpDateFormatted  		= new Date(lmpDate);
+			var setExpectedDate 		= lmpDateFormatted.setDate(lmpDateFormatted.getDate()+280); 
+		   	var expectedDateFormatted 	= new Date(setExpectedDate);
+		   	//alert(newEdd)
+		   	var day 	= expectedDateFormatted.getDate();
+		    var month 	= expectedDateFormatted.getMonth() + 1;
+		    var year  	= expectedDateFormatted.getFullYear();
+		    var newDate = day+"-"+month+"-"+year;
+
+		   	var expectedDeliveryDate = moment(newDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+		   	$('#expected_delivery_date').val(expectedDeliveryDate);
+		}
+    		
+	   	
 
     };
 
@@ -195,6 +210,7 @@ var obstetricsElements = function () {
          runObsDatePickers();
             runDeliveryDateAutoGenerate();
             runGynObstetricsValidation();
+            runDeliveryDateAutoGenerateExtended();
             //runAddMorePregnancy();
         }
     };

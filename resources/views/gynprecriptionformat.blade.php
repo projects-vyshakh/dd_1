@@ -381,7 +381,7 @@ else{
 				<td><h3>Medical History :</h3></td>
 			</tr>
 			<tr>
-				
+				{{sizeOf($medicalHistoryData)}}
 				@foreach($medicalHistoryData as $index=>$medicalHistoryDataVal)
 					@if($medicalHistoryDataVal->illness_name=="Hypertension" ||
 						$medicalHistoryDataVal->illness_name=="Diabetes" ||

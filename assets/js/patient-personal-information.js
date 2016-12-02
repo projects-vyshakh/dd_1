@@ -34,11 +34,7 @@ var patientElements = function (dosageUnit) {
         });
 
        
-        $('.start_date').datepicker({
-            autoclose: true,
-            //startDate : date
-        });
-
+       
        
 
           
@@ -905,96 +901,7 @@ var patientElements = function (dosageUnit) {
     };
 
 
-    var runPatientPrescMedicineValidator = function () {
-        var form2           = $('#addPatientPrescMedicine');
-        var errorHandler2   = $('.errorHandler', form2);
-        var successHandler2 = $('.successHandler', form2);
-
-        $.validator.addClassRules("morning", {
-             number : true 
-        });
-        $.validator.addClassRules("noon", {
-             number : true 
-        });
-        $.validator.addClassRules("night", {
-             number : true 
-        });
-        
-        form2.validate({
-            errorElement: "span", // contain the error msg in a small tag
-            errorClass: 'help-block',
-            errorPlacement: function (error, element) { // render error placement for each input type
-                if (element.attr("type") == "radio" || element.attr("type") == "checkbox") { // for chosen elements, need to insert the error after the chosen container
-                    error.insertAfter($(element).closest('.form-group').children('div').children().last());
-                } else if (element.hasClass("ckeditor")) {
-                    error.appendTo($(element).closest('.form-group'));
-                } else {
-                    error.insertAfter(element);
-                    // for other inputs, just perform default behavior
-                }
-            },
-
-          
-
-
-            ignore: "",
-            rules: {
-               
-               
-                /*'drugs'   :   { needsSelection: true, required:true },*/
-                'drugs[]' :   {  required:true },
-                'dosage[]'  :   {  required:true },
-                'start_date[]'   :   {  required:true },
-                
-                /*'followup_date' : {  required:true },*/
-                  
-                
-                
-            },
-            
-            messages: {
-               
-                'drugs[]'  : "Please type drug name", 
-                'dosage[]' :   "Please type dosage",
-                'start_date[]'    :    "Please type medicine start date",
-                 /*'morning' : "Please enter a valid number",*/
-                 /*'followup_date' : "Please type followup date",*/
-               
-            },
-            invalidHandler: function (event, validator) { //display error alert on form submit
-                successHandler2.hide();
-                errorHandler2.show();
-            },
-            highlight: function (element) {
-                $(element).closest('.help-block').removeClass('valid');
-                // display OK icon
-                $(element).closest('.form-group').removeClass('has-success').addClass('has-error').find('.symbol').removeClass('ok').addClass('required');
-                // add the Bootstrap error class to the control group
-            },
-            unhighlight: function (element) { // revert the change done by hightlight
-                $(element).closest('.form-group').removeClass('has-error');
-                // set error class to the control group
-            },
-            success: function (label, element) {
-                label.addClass('help-block valid');
-                // mark the current input as valid and display OK icon
-                $(element).closest('.form-group').removeClass('has-error').addClass('has-success').find('.symbol').removeClass('required').addClass('ok');
-            },
-            submitHandler: function (form) {
-                successHandler2.show();
-                errorHandler2.hide();
-                   // alert('REgsiter');
-                   ("#form2" ).submit(function( event ) {
-                      //alert( "Handler for .submit() called." );
-                      event.preventDefault();
-                      //alert('sdsdsdss');
-                });
-                    
-               
-            }
-        });
-
-    } 
+    
 
 
     var runCountryCityState = function(){
@@ -1031,40 +938,7 @@ var patientElements = function (dosageUnit) {
 
    
 
-    var runPrescription = function(){
-        //console.log($('.presc-medicine').find('.presc-table').length);
-        
-            var defaultDivCount = $('.presc-medicine').find('.presc-table').length;
 
-  
-
-     
-
-           /* $('.add-instruction-btn1').click(function(e){
-                e.preventDefault();
-
-
-                $('.instruction1').show();
-                var clickedElement = $(this).closest('.presc-table');
-                console.log(clickedElement);
-                clickedElement.find('.add-instruction-btn1').hide();
-                clickedElement.find('.remove-instruction-btn1').show();
-                        
-              
-            });
-
-            $('.remove-instruction-btn1').click(function(e){
-                e.preventDefault();
-                
-                $('.instruction1').hide();
-                var clickedElement = $(this).closest('.presc-table');
-                    clickedElement.find('.add-instruction-btn1').show();
-                    clickedElement.find('.remove-instruction-btn1').hide();
-                      
-              
-            });*/
-
-    };
 
 
     var runPatientChangePasswordValidation = function () {
@@ -1457,8 +1331,8 @@ var patientElements = function (dosageUnit) {
             runDoctorsHomeValidator();
             runPatientDiagnosisValidator();
             runPatientDiagnosisValidator2();
-            runPatientPrescMedicineValidator();
-        	runPrescription();
+           
+        
             runPatientChangePasswordValidation();
             runPrintSetup();
 			runCardioAddPatient();

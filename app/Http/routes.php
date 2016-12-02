@@ -112,6 +112,8 @@ Route::post('addPatientPrescManagement',  array('before'=>'isDoctorLoggedIn','as
 
 Route::get('patientprescmedicine', array('before'=>'isDoctorLoggedIn','as'=>'patientprescmedicine','uses'=>'DoctorController@showPatientPrescMedicine'));
 
+Route::post('showPatientPrescMedicineAjax', array('before'=>'isDoctorLoggedIn','as'=>'showPatientPrescMedicineAjax','uses'=>'DoctorController@showPatientPrescMedicineAjax'));
+
 Route::post('addPatientPrescMedicine',  array('before'=>'isDoctorLoggedIn','as' => 'addPatientPrescMedicine', 'uses' => 'DoctorController@addPatientPrescMedicine'));
 
 Route::post('showPatientPrescMedicine',  array('before'=>'isDoctorLoggedIn','as' => 'showPatientPrescMedicine', 'uses' => 'DoctorController@showPatientPrescMedicine'));

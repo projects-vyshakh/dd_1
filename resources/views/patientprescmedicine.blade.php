@@ -33,6 +33,8 @@ if(!empty($prescMedicine)){
 	<!-- {!!Html::style('assets/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css')!!} -->
 	{!!Html::style('assets/plugins/bootstrap-modal/css/bootstrap-modal.css')!!}
 	{!!Html::style('assets/plugins/ajax-loader/src/jquery.mloading.css')!!}
+	{!!Html::style('assets/plugins/zebra-datepicker/css/default.css')!!}
+    {!!Html::style('assets/plugins/zebra-datepicker/css/style.css')!!}
 	
 
 	
@@ -114,7 +116,7 @@ if(!empty($prescMedicine)){
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<div class="col-sm-11 dd_relative dd_alert_main">
+								<div class="col-sm-12 dd_relative dd_alert_main">
 
 									<!-- <input type="button" class="btn btn-orange pull-right present-drug-btn dd_Present_mg" value="Load Previous Drugs"> -->
 									@if(!empty($prescMedicine))
@@ -165,7 +167,9 @@ if(!empty($prescMedicine)){
 	</div>
 	<!-- end: PAGE CONTENT-->
 	
-
+	
+<!-- <input id="post-shortlink" value="https://ac.me/qmE_jpnYXFo">
+<button class="button" id="copy-button" data-clipboard-target="#post-shortlink">Copy</button> -->
 	@if(!empty($success))
 		<div class="panel">
 			<div class="panel-body">
@@ -238,21 +242,16 @@ if(!empty($prescMedicine)){
 																<td></td>
 															</tr>
 															<tr class="drugs_row dd_relative">
-																<!-- <td class="dd_presc_medicin"></td> -->
 																<td colspan="1" >
 																	<input type="button" class="btn btn-default dd_instruction  btn-xs add-instruction-btn" id="add-instruction-btn<?php echo $index; ?>" value="+ Add Instruction" onclick="return addInstruction(this);"/>
-
 																	<input type="button" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs remove-instruction-btn" id="remove-instruction-btn<?php echo $index; ?>" value="- Remove Instruction" style="display:none" onclick="return removeInstruction(this);"/>
-																	<!-- <div class="instruction-div1"></div> -->
-																	
 																</td>
 																<td colspan="2" style="vertical-align: top;" >	
 																	<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date	</div>	
 																	<div class="dd_dosage1_text_2 pull-left">
 																	  		<span class="dd_instruction"> 
-																				{!! Form::text('start_date'.$index, (!empty($prescMedicineVal->start_date) && ($prescMedicineVal->start_date)!="0000-00-00")?$prescMedicineVal->start_date:Input::old('start_date'.$index) , $attributes = array('class' => 'form-control  start_date', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
+																				{!! Form::text('start_date'.$index, (!empty($prescMedicineVal->start_date) && ($prescMedicineVal->start_date)!="0000-00-00")?$prescMedicineVal->start_date:Input::old('start_date'.$index) , $attributes = array('class' => 'form-control  start_date')); !!}
 																			</span>
-																		
 																	</div>
 																</td>
 																
@@ -291,20 +290,16 @@ if(!empty($prescMedicine)){
 																</td>
 															</tr>
 															
-															@if(!empty($prescMedicineVal->instruction))
 															
-																<tr>
-																	<td colspan="40">
-																		<div class="instruction-div1" id="instruction-div">
-																			<textarea style="width: 100px" class="form-control instruction" name="instruction<?php echo $index; ?>" id="instruction<?php echo $index; ?>"  >{{$prescMedicineVal->instruction}}</textarea>
-																		</div>
-																	</td>
-																</tr>
-															@else
-																<tr></tr>
-															@endif
 														</tbody>
 													</table>
+													@if(!empty($prescMedicineVal->instruction))
+															<div class="instruction-div" >
+																<textarea  class="form-control instruction" name="instruction<?php echo $index; ?>" id="instruction<?php echo $index; ?>"  >{{$prescMedicineVal->instruction}}</textarea>
+															</div>
+													@else
+															<div class="instruction-div" ></div>	
+													@endif
 												</div>
 											@endforeach
 										@endif
@@ -313,7 +308,7 @@ if(!empty($prescMedicine)){
 									<div class="form-group dd_menarche_4">
 										<div class="col-sm-4  dd_praji_followup dd_folloup_mg">
 											{!! Form::label('follow_up_date', 'Follow-up date', $attributes = array('class'=>"col-sm-4 dd_padding_follw "));  !!}
-											{!! Form::text('follow_up_date', null , $attributes = array('class' => 'form-control date-picker follow_up_date dd_praji_followup ', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
+											{!! Form::text('follow_up_date', null , $attributes = array('class' => 'form-control  follow_up_date dd_praji_followup ', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
 										</div>
 										<div class="col-sm-8" >
 											<input type="button" class="btn btn-default presc-add-more  pull-right dd_addmore_0 "  value="+ Add More Drug">
@@ -330,7 +325,7 @@ if(!empty($prescMedicine)){
 										<div class="">
 											<div class="form-group">
 												<div class="col-sm-12">
-													<button type="submit" class="btn btn-primary presc-save dd_btn_center"><i class="fa fa-floppy-o dd_pres_save_icon" aria-hidden="true"></i>Save</button>
+													<button type="submit" class="btn btn-primary presc-save dd_btn_center">Save</button>
 													<!-- <input type="submit" class="btn btn-primary presc-save dd_btn_center" value="Save"> -->
 												</div>
 											</div>
@@ -343,6 +338,7 @@ if(!empty($prescMedicine)){
 			</div>
 		</div>
 	@else
+	
 		<div class="panel">
 			<div class="panel-body">
 				{!! Form::open(array('route' => 'addPatientPrescMedicine', 'role'=>'form', 'id'=>'addPatientPrescMedicine', 'class'=>'form-horizontal addPatientPrescMedicine','novalidate'=>'novalidate')) !!}
@@ -415,7 +411,7 @@ if(!empty($prescMedicine)){
 														<!-- <td class="dd_presc_medicin"></td> -->
 														<td colspan="1" >
 															<input type="button" class="btn btn-default dd_instruction  btn-xs add-instruction-btn" id="add-instruction-btn1" value="+ Add Instruction" onclick="return addInstruction(this);" />
-
+																	
 															<input type="button" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs remove-instruction-btn" id="remove-instruction-btn1" value="- Remove Instruction" style="display:none" onclick="return removeInstruction(this);"/>
 															<!-- <div class="instruction-div1"></div> -->
 															
@@ -443,23 +439,15 @@ if(!empty($prescMedicine)){
 															</div>
 														</td>
 													</tr>
-													
-													<tr>
-														<td colspan="40">
-															
-																
-															</div>
-														</td>
-													</tr>
-													
 												</tbody>
 											</table>
+											<div class="instruction-div"></div>
 										</div>
 									</div>
 									<div class="form-group dd_menarche_4">
 										<div class="col-sm-4  dd_praji_followup dd_folloup_mg">
 											{!! Form::label('follow_up_date', 'Follow-up date', $attributes = array('class'=>"col-sm-4 dd_padding_follw "));  !!}
-											{!! Form::text('follow_up_date', null , $attributes = array('class' => 'form-control date-picker follow_up_date dd_praji_followup ', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
+											{!! Form::text('follow_up_date', null , $attributes = array('class' => 'form-control  follow_up_date dd_praji_followup ', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
 										</div>
 										<div class="col-sm-8" >
 											<input type="button" class="btn btn-default presc-add-more  pull-right dd_addmore_0 "  value="+ Add More Drug">
@@ -516,7 +504,7 @@ if(!empty($prescMedicine)){
 		
 		{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 		{!!Html::script('assets/js/patient-personal-information.js')!!}
-		<!-- {!!Html::script('assets/js/prescriptionmedicine.js')!!} -->
+		{!!Html::script('assets/js/patientprescmedicine.js')!!}
 		{!!Html::script('assets/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')!!}
 
 		{!!Html::script('assets/plugins/bootstrap-modal/js/bootstrap-modal.js')!!}
@@ -527,6 +515,11 @@ if(!empty($prescMedicine)){
 		{!!Html::script('assets/plugins/tooltip-validation/jquery-validate.bootstrap-tooltip.js')!!}
 		{!!Html::script('assets/plugins/ajax-loader/src/jquery.mloading.js')!!}
 		
+		{!!Html::script('assets/plugins/zebra-datepicker/js/zebra_datepicker.js')!!}
+		{!!Html::script('assets/plugins/zebra-datepicker/js/core.js')!!}
+
+		{!!Html::script('//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js')!!}
+		
 
 	<script>
 		$(document).ready(function() {
@@ -534,21 +527,21 @@ if(!empty($prescMedicine)){
 			Main.init();
 			patientElements.init(dosageUnit);
 			UIModals.init();
-			//patientPrescMedicine.init();
-
-
-			$('body').on('focus',".date-picker", function(){
-					$(this).datepicker();
-   			});
-
+			patientPrescMedicine.init();
+				
+				
+			
+			
+			
    			var dosageUnit 				= <?php echo json_encode($dosageUnit); ?>;
 			var durationUnit 			= <?php echo json_encode($drugDurationUnit); ?>;
          	var prescMedicine   		= <?php echo json_encode($prescMedicine); ?>;
 			var prescMedicineDetails  	= <?php echo json_encode($prescMedicine); ?>;
 			var success 				= $('.success-status').val();/*<?php //echo json_encode($success); ?>;*/
 			
+			
 			//alert(success);	
-			$('.pdfopen').attr('disabled','disabled');
+			//$('.pdfopen').attr('disabled','disabled');
 			if(success== null || success==''){
 				$('.pdfopen').attr('disabled','disabled');
 				$('.share-prescription').attr('disabled','disabled');
@@ -578,6 +571,7 @@ if(!empty($prescMedicine)){
 			//Printing
 			//-------------------------------------------------------------------
 			$('.pdfopen').click(function(){
+				
 				var loadDrugStatus = $('.prev-drug-load-status').val();
 				$('.print-data').val('printTrue');
 				if(success==null){
@@ -782,503 +776,29 @@ if(!empty($prescMedicine)){
 			
 
 			
-			//Share Prescription
-			$('.share-prescription').click(function(e){
-				e.preventDefault();
-				var arrNumber = new Array();
-					$('.drug_name').each(function(){
-				    arrNumber.push($(this).val());
-				});
-
-				//alert(arrNumber)
-			})
-
-
-
-			//Share ends
-			
-
-         
 
 			
-			//Add more drugs
-			
-			$('.presc-add-more').click(function(e){
-             	counter = $('.default-div-count').val();
 
-             	$('.pdfopen').attr('disabled','disabled');
-             	$('.share-prescription').attr('disabled','disabled');
-
-             	$('.success-status').val('');
-             	
-             	//$('.prescdata-saved-status').val(0); //setting 0 because needs save confirmation before print
-             	
-             	counter++;
-             	
-            	e.preventDefault();
-            	var clickStatus = "add";
-            	
-		           //addDrugs(counter,dosageUnit,durationUnit,clickStatus);
-            	addOrLoadDrugs(counter,dosageUnit,durationUnit,clickStatus);
-			});
-			
-			
-	   		$('.present-drug-btn').click(function(e){
-
-	   			$('.pdfopen').attr('disabled',false);
-             		$('.share-prescription').attr('disabled',false);
-	   			
-	   				var defaultDivCount = $('.default-div-count').val();
-
-	   			 $('.prev-drug-load-status').val(1);
-
-	   			//alert("default Count--"+defaultDivCount);
-	   			var clickStatus = "loadDrug";
-	   			
-	   			//console.log(prescMedicine);
-	   			if(prescMedicine!=''){
-	   					for(i=1;i<=defaultDivCount;i++){
-		   				var drugElement = $('#drug_name'+i);
-		   				//alert(drugElement.length);
-		   				//console.log(drugElement);
-		   				var tableElement = drugElement.closest('.presc-inner');
-		   				if(i>=1){
-		   					tableElement.remove();	
-		   				}
-		   				
-		   				var newDefaultCount = defaultDivCount - parseInt(i);
-		   				if(newDefaultCount==0){
-		   					$('.default-div-count').val(1);
-		   				}
-		   				
-		   			   
-		   				
-		   			}
-	   			}
-	   			else{
-	   				//bootbox.alert("No previous drugs to load"); 
-	   				//$('#myModal2').modal('show');
-	   				}
-	   			
-
-	   			var counter = <?php echo json_encode(count($prescMedicine)); ?>;
-        		
-	   				addOrLoadDrugs(counter,dosageUnit,durationUnit,clickStatus,prescMedicine);
-	   			
-	   			
-	   			//Adding previous drug details
-	   			//--------------------------------------------------------------------------------
-
-
-	   			var defaultDivCount = $('.default-div-count').val();
-	   			
-	   			$('.prev-drug-count').val(defaultDivCount); //this is for knowing in case of print
-	   			
-	  			/*$('#loadDrugDiv').show();
-				$('#loadDrugDiv').find('input, textarea, button, select').attr('disabled',false);
-
-				
-				$('#singleDrugTable').remove();
-
-				var tableCount = $('.presc-medicine').find('.presc-table').length;
-        		var defaultTableCount = $('.default-div-count').val(tableCount);*/
-
-	   		})
 			
    			
 					
-	   		$('.morning').tooltip({'trigger':'focus', 'title': 'Morning medicine count'});
-				$('.noon').tooltip({'trigger':'focus', 'title': 'Noon medicine count'}); 
-				$('.night').tooltip({'trigger':'focus', 'title': 'Night medicine count'}); 
+	   	
 									
 		                                       
 		 });
 
 
-		function addOrLoadDrugs(counter,dosageUnit,durationUnit,clickStatus,prescMedicine){
 
-			var extraPrescCounter = $('.extra-presc-count').val();
-			extraPrescCounter = parseInt(extraPrescCounter) + 1;
-			$('.extra-presc-count').val(extraPrescCounter);
-			//alert(extraPrescCounter);
-			//alert(clickStatus)
-			if(clickStatus=="add"){
-					$('.presc-medicine').append('<div class="presc-inner contaner dd_border_table">'+
-						'<table class="table table-bordered  presc-table" id="sample-table-1">'+
-		                                        '<thead>'+
-		                                            '<tr class="drugs_row_hd" >'+
-		                                                '<th width="16%">Drug Name</th>'+
-		                                                '<th width="30%">Strength</th>'+
-		                                                '<th width="18%">Duration</th>'+
-		                                                '<th width="1%">Morning</th>'+
-		                                                '<th width="1%">Noon </th>'+
-		                                                '<th width="29%">Night</th>'+
-		                                                '<th width="9%"></th>'+
-
-		                                            '</tr>'+
-		                                        '</thead>'+
-		                                        '<tbody>'+
-		                                            
-		                                                '<tr class="drugs_row">'+
-		                                                    '<td class="dd_presc_medicin">'+
-		                                                        '<input type="text" name="drug_name'+counter+'" class="dd_input_mini drug_name" id="drug_name'+counter+'">'+
-		                                                    '</td>'+
-		                                                    '<td>'+
-		                                                        '<div class="dd_dosage1_text">'+
-		                                                             '<input type="text" name="dosage'+counter+'" class="input-mini ng-pristine ng-valid dosage" id="dosage'+counter+'">'+
-		                              									'<select class="dosage_unit" name="dosage_unit'+counter+'" id="dosage_unit'+counter+'">'+
-																	 '</select>'+
-		                                                                                         
-		                                                        '</div>'+
-		                                                    '</td>'+
-		                                                    '<td >'+
-																'<div class="dd_dosage1_text">'+
-																	'<input type="text" name="duration'+counter+'" class="input-mini ng-pristine ng-valid duration" id="duration'+counter+'" >'+
-																	'<select class="duration_unit" name="duration_unit'+counter+'" id="duration_unit'+counter+'">'+
-																	 '</select>'+
-																		
-																	
-																'</div>'+
-															'</td>'+
-															'<td>'+
-																'<input type="text" name="morning'+counter+'" class="col-sm-8 morning" id="morning'+counter+'"  >'+
-															'</td>'+
-															'<td>'+
-																'<input type="text" name="noon'+counter+'" class="col-sm-8 noon" id="noon'+counter+'"  >'+
-															'</td>'+
-															'<td>'+
-																'<input type="text" name="night'+counter+'" class="col-sm-8 night" id="night'+counter+'" >'+
-															'</td>'+
-															'<td>'+
-																
-																'<input type="button" id="drugmore-remove'+counter+'" onclick="return drugRemove(this);" name="drugmore-remove" class=" dd_X_btn btn btn-bricky pull-right drugmore-remove" value="X" ' +
-																
-															'</td>'+
-										
-		                                                '</tr>'+
-														'<tr class="drugs_row dd_relative">'+
-															
-															'<td colspan="1" >'+
-															/*'<input type="button" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs add-instruction-btn" id="add-instruction-btn" value="+ Add instruction" />'+
-																*/
-
-																'<input type="button" onclick="return addInstruction(this);" name="add-instruction-btn" class="btn btn-default  dd_instruction  btn-xs add-instruction-btn" value="+ Add Instruction" >' +
-																'<input type="button" onclick="return removeInstruction(this);" name="remove-instruction-btn" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs remove-instruction-btn" value="- Remove Instruction" style="display:none" >' +
-																
-																
-															'</td>'+
-															'<td colspan="2" style="vertical-align: top;" >'+
-															'<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date</div>'+		
-																'<div class="dd_dosage1_text_2 pull-left">'+
-																  						  	
-																		'<span class="dd_instruction"> '+
-																			'<input type="text" name="start_date'+counter+'" class="form-control date-picker start_date" id="start_date'+counter+'" data-date-format="dd-mm-yyyy">'+
-																		'</span>'+
-																	
-																'</div>'+
-															'</td>'+
-															/*'<td></td>'+*/	
-															'<td colspan="2" class="dd_relative" style="vertical-align: top;">'+
-															    '<div class="dd_beforfood ">'+
-																	'<label class="dd_beforfood_pd" >'+
-																		'<input type="radio" class="before_food food_status" id="food_status_before'+counter+'" name="food_status'+counter+'" value="Before Food">Before Food'+
-																	'</label>'+
-																	'<label class="dd_beforfood_pd">'+
-																		'<input type="radio" class="after_food food_status" id="food_status_after'+counter+'" name="food_status'+counter+'" value="After Food">After Food'+
-																	'</label>'+
-																'</div>'+
-															'</td>'+
-																
-														'</tr>'+
-														'<tr>'+
-															
-																
-															
-														'</tr>'+
-
-		                                        '</tbody>' +
-		                                        '</table>'+
-		                                        '<div class="instruction-div" >'+
-		                                        	
-												'</div>'+
-		                                        '</div>'
-
-		                                        );
-
-		           	
-		           	for(dosageUnitVal in dosageUnit){
-						$('#dosage_unit'+counter).append('<option value='+dosageUnitVal+'>'+dosageUnit[dosageUnitVal]+'</option>');
-					}
-					for(durationUnitVal in durationUnit){
-						$('#duration_unit'+counter).append('<option value='+durationUnitVal+'>'+durationUnit[durationUnitVal]+'</option>');
-					}
-
-					if(counter==1){
-						$('#drugmore-remove'+counter).remove();
-						
-					}
-
-					$('.default-div-count').val(counter++);
-					extraPrescCounter = parseInt(extraPrescCounter) + 1;
-					$('.extra-presc-count').val();
-					//alert(extraPrescCounter)
-					/*Tooltip*/
-
-					$('.morning').tooltip({'trigger':'focus', 'title': 'Morning medicine count'});
-					$('.noon').tooltip({'trigger':'focus', 'title': 'Noon medicine count'}); 
-					$('.night').tooltip({'trigger':'focus', 'title': 'Night medicine count'}); 
-
-			}
-			else{
-				
-
-				for(i=1;i<=counter;i++){
-
-					var drugName 			= prescMedicine[i-1].drug_name;
-					var dosage   			= prescMedicine[i-1].dosage;
-					var dosageUnitDefault 	= prescMedicine[i-1].dosage_unit;
-					var duration 			= prescMedicine[i-1].duration;
-					var durationUnitDefault = prescMedicine[i-1].duration_unit;
-					var morning 			= prescMedicine[i-1].morning;
-					var noon 				= prescMedicine[i-1].noon;
-					var night 				= prescMedicine[i-1].night;
-					var instruction 		= prescMedicine[i-1].instruction;
-					var startDate 			= prescMedicine[i-1].start_date;
-					var followUpDate 		= prescMedicine[i-1].follow_up_date;
-					var prescSharedId       = prescMedicine[i-1].id_share_prescription;
-
-
-
-					if(startDate=='' || startDate=='0000-00-00'){
-						startDate = '';
-					}
-					else{
-						startDate = startDate.split('-');
-						var year = startDate[0];
-						var month = startDate[1];
-						var day = startDate[2];
-
-						startDate = day+'-'+month+'-'+year;
-					}
-
-					if(followUpDate=='' || followUpDate=='0000-00-00'){
-						followUpDate = '';
-					}
-					else{
-						followUpDate 	= followUpDate.split('-');
-						var year 		= followUpDate[0];
-						var month 		= followUpDate[1];
-						var day 		= followUpDate[2];
-
-						followUpDate 		= day+'-'+month+'-'+year;
-
-					}
-
-					var foodStatus = prescMedicine[i-1].food_status;
-					
-					//console.log(drugName);
-					
-					//console.log(startDate);
-
-
-						$('.presc-medicine').append('<div class="presc-inner contaner dd_border_table">'+
-							'<table class="table table-bordered  presc-table" id="sample-table-1">'+
-		                                        '<thead>'+
-		                                            '<tr class="drugs_row_hd" >'+
-		                                                '<th width="16%">Drug Name</th>'+
-		                                                '<th width="30%">Strength</th>'+
-		                                                '<th width="18%">Duration</th>'+
-		                                                '<th width="1%">Morning</th>'+
-		                                                '<th width="1%">Noon </th>'+
-		                                                '<th width="29%">Night</th>'+
-		                                                 '<th width="9%"></th>'+
-		                                            '</tr>'+
-		                                        '</thead>'+
-		                                        '<tbody>'+
-		                                            	
-		                                                '<tr class="drugs_row">'+
-		                                                    '<td class="dd_presc_medicin">'+
-		                                                        '<input type="text" name="drug_name'+i+'" class="dd_input_mini drug_name" id="drug_name'+i+'" value="'+drugName+'">'+
-		                                                    '</td>'+
-		                                                    '<td>'+
-		                                                        '<div class="dd_dosage1_text">'+
-		                                                             '<input type="text" name="dosage'+i+'" class="input-mini ng-pristine ng-valid dosage" id="dosage'+i+'" value='+dosage+'>'+
-		                              									'<select class="dosage_unit" name="dosage_unit'+i+'" id="dosage_unit'+i+'">'+
-		                              									'<option value='+dosageUnitDefault+'>'+dosageUnitDefault+'</option>'+
-																	 '</select>'+
-		                                                                                         
-		                                                        '</div>'+
-		                                                    '</td>'+
-		                                                    '<td >'+
-																'<div class="dd_dosage1_text">'+
-																	'<input type="text" name="duration'+i+'" class="input-mini ng-pristine ng-valid duration" id="duration'+i+'" value='+duration+'>'+
-																	'<select class="duration_unit" name="duration_unit'+i+'" id="duration_unit'+i+'">'+
-																		'<option value='+durationUnitDefault+'>'+durationUnitDefault+'</option>'+
-																	 '</select>'+
-																		
-																	
-																'</div>'+
-															'</td>'+
-															'<td>'+
-																'<input type="text" name="morning'+i+'" class="col-sm-8 morning"  id="morning'+i+'" value='+morning+'>'+
-															'</td>'+
-															'<td>'+
-																'<input type="text" name="noon'+i+'" class="col-sm-8 noon"  id="noon'+i+'" value='+noon+'>'+
-															'</td>'+
-															'<td>'+
-																'<input type="text" name="night'+i+'" class="col-sm-8 night" id="night'+i+'" value='+night+'>'+
-															'</td>'+
-															'<td>'+
-																'<input type="button" id="drugmore-remove'+i+'" onclick="return drugRemove(this);" name="drugmore-remove" class="dd_X_btn btn btn-bricky pull-right drugmore-remove" value="X" ' +
-															'</td>'+
-										
-		                                                '</tr>'+
-														'<tr class="drugs_row dd_relative">'+
-															
-															'<td colspan="1" >'+
-															/*'<input type="button" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs add-instruction-btn" id="add-instruction-btn" value="+ Add instruction" />'+
-																*/
-
-																'<input type="button" onclick="return addInstruction(this);" name="add-instruction-btn" class="btn btn-default  dd_instruction  btn-xs add-instruction-btn" value="+ Add Instruction" id="add-instruction-btn'+i+'">' +
-																'<input type="button" onclick="return removeInstruction(this);" name="remove-instruction-btn" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs remove-instruction-btn" value="- Remove Instruction" style="display:none" id="remove-instruction-btn'+i+'">' +
-																
-																
-															'</td>'+
-															'<td colspan="2" style="vertical-align: top;">'+
-															'<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date</div>'+		
-																'<div class="dd_dosage1_text_2 pull-left">'+
-																  						  	
-																		'<span class="dd_instruction"> '+
-																			'<input type="text" name="start_date'+i+'" class="form-control date-picker start_date" id="start_date'+i+'" value="'+startDate+'" data-date-format="dd-mm-yyyy">'+
-																		'</span>'+
-																	
-																'</div>'+
-															'</td>'+
-															/*'<td></td>'+	*/
-															'<td colspan="2"  class="dd_relative" style="vertical-align: top;">'+
-															    '<div class="dd_beforfood">'+
-																	'<label class="dd_beforfood_pd" >'+
-																		'<input type="radio" class="before_food food_status" id="food_status_before'+i+'" name="food_status'+i+'" value="Before Food">Before Food'+
-																	'</label>'+
-																	'<label class="dd_beforfood_pd">'+
-																		'<input type="radio" class="after_food food_status" id="food_status_after'+i+'" name="food_status'+i+'" value="After Food">After Food'+
-																	'</label>'+
-																'</div>'+
-															'</td>'+
-																
-														'</tr>'+
-
-		                                            
-		                                        '</tbody>'+
-		                                        '</table>'+
-		                                        '<div class="instruction-div" id="instruction-div'+i+'">'+
-												'</div>'+
-		                                        '</div>');
-
-		           	
-		           	for(dosageUnitVal in dosageUnit){
-		           		if(dosageUnitDefault!=dosageUnitVal)
-		           		{
-		           			$('#dosage_unit'+i).append('<option value='+dosageUnitVal+'>'+dosageUnit[dosageUnitVal]+'</option>');
-		           		}
-						
-					}
-					for(durationUnitVal in durationUnit){
-						if(durationUnitDefault!=durationUnit)
-		           		{
-		           			$('#duration_unit'+i).append('<option value='+durationUnitVal+'>'+durationUnit[durationUnitVal]+'</option>');
-		           		}
-						
-					}
-
-					if(instruction!=""){
-						//alert(i)
-						$('#remove-instruction-btn'+i).show();
-						$('#add-instruction-btn'+i).hide();
-
-						 $('#instruction-div'+i).append('<textarea name="instruction'+i+'" cols="10" class="form-control instruction"  id="instruction'+i+'"	>'+instruction+'</textarea>');
-
-					}
-					else{
-						//$('.add-instruction-btn').show();
-					}
-
-					if(foodStatus!=''){
-						if(foodStatus=="Before Food"){
-							$('#food_status_before'+i).attr('checked','checked');
-						}
-						else{
-							$('#food_status_after'+i).attr('checked','checked');
-						}
-						
-					}
-
-					//code for removing remove button,when clikcing load prev
-					if(i==1){
-						$('#drugmore-remove'+i).remove();
-					}
-
-					
-				}
-
-
-				//Share Prescription btn click
-				$('.share-prescription').click(function(){
-					sharePrescription(prescSharedId)
-				});
-				
-				$('.default-div-count').val(counter);
-
-				$('.morning').tooltip({'trigger':'focus', 'title': 'Morning medicine count'});
-				$('.noon').tooltip({'trigger':'focus', 'title': 'Noon medicine count'}); 
-				$('.night').tooltip({'trigger':'focus', 'title': 'Night medicine count'}); 
-
-
-			}
-			 
-		}
 		
-		function sharePrescription(prescSharedId){
-			//alert(prescSharedId);
-			var currentUrl = window.location.href;
-			var shareLink = currentUrl+"/shared/"+prescSharedId;
-			bootbox.dialog({
-						message		: shareLink,
-						title 		: "Share link",
-						buttons 	: 
-						{
-							success : 
-							{
-								label 		: "Ok",
-								className	: "btn-success",
-								callback 	: function() 
-								{
-								}
-							}
-						}
-			});
-		}
+		
 		function addInstruction(e){
-			
-					
-			           // e.preventDefault();
-			                //$('#instruction-div').append('<textarea name=""> </textarea>')
-			                //console.log($(this).closest('.presc-table'));
-			                var clickedElement = $(e).closest('.presc-inner');
-			                //console.log(clickedElement);
-			               	var instructionDiv = clickedElement.find('.instruction-div');
-			               	var instructionDiv = clickedElement.find('.presc-table');
-			               	//console.log(instructionDiv);
-			                
-			                var drugNameInputId = clickedElement.find('.drug_name').attr('id');
-			                //console.log(drugNameInputId);
-
-			                var drugNameInputId = parseInt(drugNameInputId.replace(/[^0-9\.]/g, ''), 10);
-			                //console.log(drugNameInputId);
-
-			                //var instructionCounter = $('.default-div-count').val();
-
-			                instructionDiv.append('<textarea name="instruction'+drugNameInputId+'" cols="30" class=" form-control instruction"  id="instruction'+drugNameInputId+'"	></textarea>');
+					 var clickedElement 	= $(e).closest('.presc-inner');
+			          var instructionDiv 		= clickedElement.find('.instruction-div');
+			          //var instructionDiv = clickedElement.find('.presc-table');
+	               		//console.log(instructionDiv.closest('.instruction-div'));
+			           var drugNameInputId = clickedElement.find('.drug_name').attr('id');
+			           var drugNameInputId = parseInt(drugNameInputId.replace(/[^0-9\.]/g, ''), 10);
+			       		 instructionDiv.append('<textarea name="instruction'+drugNameInputId+'" cols="30" class=" form-control instruction"  id="instruction'+drugNameInputId+'"	></textarea>');
 
 			               clickedElement.find('.add-instruction-btn').hide();
 			               clickedElement.find('.remove-instruction-btn').show();
