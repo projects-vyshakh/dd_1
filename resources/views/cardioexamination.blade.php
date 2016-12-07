@@ -572,12 +572,13 @@ if(!empty($doctorData)){
 		
 		{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 		{!!Html::script('assets/js/patient-personal-information.js')!!}
+		{!!Html::script('assets/js/cardio-diagnosis.js')!!}
 
 		{!!Html::script('assets/plugins/tooltip-validation/jquery-validate.bootstrap-tooltip.js')!!}
 	<script>
 		$(document).ready(function() {
 			Main.init();
-			patientElements.init();
+			cardioDiagnosisElements.init();
 
 			$(window).load(function() {
 				$(".loader").fadeOut("slow");
@@ -585,55 +586,7 @@ if(!empty($doctorData)){
 			});
 
 
-			$('.tooltip tooltip-inner').css("background-color","red"); 
-
-    $("#addPatientExamination").validate({
-    	rules: {
-           weight: { digits:true },
-           height: { digits:true },
-           systolic_pressure: 
-           					{ 
-           						digits:true, 
-           						required: true,
-           						range:[57,200]
-           					},
-           	diastolic_pressure: 
-           					{ 
-           						digits:true, 
-           						required: true,
-           						range:[40,120]
-           					},
-           	
-           	pulse : { number:true, range:[40,220]},
-            respiratory_rate : { number:true, range:[12,50]},
-            temperature : { number:true, range:[75,111.2]},
-            spo2 : { number:true, range:[55,100]},
-           
-            
-        },
-        tooltip_options: {
-           weight: { placement: 'top' },
-           weight: { placement: 'top' },
-           systolic_pressure: { placement: 'bottom' },
-           diastolic_pressure: { placement: 'bottom' },
-           pulse : { placement: 'top' },
-           temperature : { placement: 'left' },
-           spo2: { placement: 'bottom' },
-        }
-        /*rules: {
-            height: { required: true},
-            weight: {required: true}
-        },
-        messages: {
-            example5: "Just check the box<h5 class='text-danger'>You aren't going to read the EULA</h5>"
-        },
-        tooltip_options: {
-            height: {trigger:'focus'},
-            weight: {placement:'left',html:true}
-        },*/
-    });
-
-
+			
 
 
 

@@ -41,38 +41,17 @@ $newPatientId = Session::get('patientId');
 
 if(!empty($medicalHistory)){
 	foreach($medicalHistory as $medicalHistoryVal){
-		/*$menarche 					= $medicalHistoryVal->menstrual_menarche;
-		$menopause 					= $medicalHistoryVal->menstrual_menopause;*/
-		$hypertension 				= $medicalHistoryVal ->history_present_past_hypertension; 
-		$hypertensionMedication 	= $medicalHistoryVal ->history_present_past_hypertension_medication;
-		$diabetes 					= $medicalHistoryVal ->history_present_past_diabetes;
-		$diabetesMedication 		= $medicalHistoryVal ->history_present_past_diabetes_medication;
-		$hypothyroidism 			= $medicalHistoryVal->history_present_past_hypothyroidism;
-		$hypothyroidismMedication 	= $medicalHistoryVal->history_present_past_hypothyroidism_medication;
-		$hyperthyroidism 			= $medicalHistoryVal->history_present_past_hyperthyroidism;
-		$hyperthyroidismMedication 	= $medicalHistoryVal->history_present_past_hyperthyroidism_medication;
-		$cyst 						= $medicalHistoryVal->history_present_past_cyst;
-		$cystMedication 			= $medicalHistoryVal->history_present_past_cyst_medication;
-		$endometriosis 				= $medicalHistoryVal->history_present_past_endometriosis;
-		$endometriosisMedication 	= $medicalHistoryVal->history_present_past_endometriosis_medication;
-		$uterineFibroids 			= $medicalHistoryVal->history_present_past_uterinefiberoids;
-		$uterineFibroidsMedication 	= $medicalHistoryVal->history_present_past_uterinefiberoids_medication;
-		$uti 						= $medicalHistoryVal->history_present_past_uti;
-		$utiMedication 				= $medicalHistoryVal->history_present_past_uti_medication;
-		$cancer 					= $medicalHistoryVal->history_present_past_cancer;
-		$cancerMedication 			= $medicalHistoryVal->history_present_past_cancer_medication;
-
-
+	
 		$fatherHistory =  json_decode($medicalHistoryVal->history_family_father);
 		$motherHistory =  json_decode($medicalHistoryVal->history_family_mother);
 		$siblingHistory = json_decode($medicalHistoryVal->history_family_sibling);
-		$grandfatherHistory   = json_decode($medicalHistoryVal->history_family_grandfather);
-		$grandmotherHistory = json_decode($medicalHistoryVal->history_family_grandmother);
-		$fatherHistoryOther = $medicalHistoryVal->history_family_father_other;
-		$motherHistoryOther = $medicalHistoryVal->history_family_mother_other;
-		$siblingHistoryOther = $medicalHistoryVal->history_family_sibling_other;
-		$grandfatherHistoryOther = $medicalHistoryVal->history_family_grandfather_other;
-		$grandmotherHistoryOther = $medicalHistoryVal->history_family_grandmother_other;
+		$grandfatherHistory 		= json_decode($medicalHistoryVal->history_family_grandfather);
+		$grandmotherHistory 		= json_decode($medicalHistoryVal->history_family_grandmother);
+		$fatherHistoryOther 		= $medicalHistoryVal->history_family_father_other;
+		$motherHistoryOther 		= $medicalHistoryVal->history_family_mother_other;
+		$siblingHistoryOther 		= $medicalHistoryVal->history_family_sibling_other;
+		$grandfatherHistoryOther 	= $medicalHistoryVal->history_family_grandfather_other;
+		$grandmotherHistoryOther 	= $medicalHistoryVal->history_family_grandmother_other;
 
 		$generalAllergyHistory = json_decode($medicalHistoryVal->history_allergy_general);
 
@@ -87,6 +66,21 @@ if(!empty($medicalHistory)){
 	}	
 
 }
+
+//Present Past History
+if(!empty($medicalHistoryPresentPastMore)){
+	$illnessNameArray	=	array();
+	foreach($medicalHistoryPresentPastMore as $medicalHistoryPresentPastMoreVal){
+		array_push($illnessNameArray, $medicalHistoryPresentPastMoreVal->illness_name);
+	}
+	
+	for($i=0;$i<count($medicalHistoryPresentPastMore);$i++){
+		$illnessName 												 = $medicalHistoryPresentPastMore[$i]->illness_name;
+		$medication													 = $medicalHistoryPresentPastMore[$i]->medication;
+		$illnessDataArray[$illnessName]	 =	[$medicalHistoryPresentPastMore[$i]->illness_status,$medicalHistoryPresentPastMore[$i]->medication];
+	}
+}
+//Present Past History
 
 
 ?>
@@ -121,334 +115,910 @@ if(!empty($medicalHistory)){
 					{!! Form::open(array('route' => 'addCardioMedicalHistory', 'role'=>'form', 'id'=>'addCardioMedicalHistory', 'class'=>'form-horizontal','novalidate'=>'novalidate')) !!}
 					{!! Form::hidden('presentPastDivCount', "0", $attributes = array('class'=>'form-control present-past-div-count'));  !!}
 					
-					<div class="form-group">
+					
+					
+
+						<!-- Present Past History-->
+					<div class="form-group">	
 						<div class="col-sm-8">
 							<h3 class="dd_h3_Pd_t_0">Present & Past History</h3>
 						</div>
 						<div class="col-sm-4 dd_Present_PD" >
-							@if(!empty($medicalHistoryPresentPastMore))
-								<label class="checkbox-inline col-sm-12">
-									<input type="checkbox" value="NA" class="noPresentPastHistory" id="noPresentPast" disabled="disabled" />
-									<input type="hidden" name="present-past-check-value" id="present-past-check-value" class="present-past-check-value">
-									<span class="dd_past">No known present & past history to report</span>
-								</label>
-							@else
-								<label class="checkbox-inline col-sm-12">
-									<input type="checkbox" value="NA" class="noPresentPastHistory" id="noPresentPast" />
-									<input type="hidden" name="present-past-check-value" id="present-past-check-value" class="present-past-check-value">
-									<span class="dd_past">No known present & past history to report</span>
-								</label>
-							@endif
-						
+							<label class="checkbox-inline col-sm-12">
+								<input type="checkbox" value="NA" class="noPresentPastHistory" id="noPresentPast" />
+								<input type="hidden" name="present-past-check-value" id="present-past-check-value" class="present-past-check-value">
+								<span class="dd_past">No known present & past history to report</span> 
+							</label>
 						</div>
 					</div>
-					
 					<div class="presentPastDiv" id="presentPastDiv">
-						@if(!empty($medicalHistoryPresentPastMore))
-							<?php $counter = 1; ?>
-							@foreach($medicalHistoryPresentPastMore as $presentPastMore)
-							<?php  $counter++; ?>
-							<div class="form-group">
-								<div class="col-sm-2">
-									{!! Form::label('illness_name', ucfirst($presentPastMore->illness_name), $attributes = array('class'=>''));  !!}	
-									 <input type="hidden" name="illness_name[]" id="illness_name" class="form-control " value="{{$presentPastMore->illness_name}}" disabled="disabled"/> 
-		   						</div>
-		   						<div class="col-sm-2">
-		 							<label class="radio-inline">
-										<input type="radio" value="Current" name="illness<?php echo $counter; ?>" class="" disabled="disabled"  @if($presentPastMore->illness_status=="Current") checked="checked" @endif>
-										Current
-
-									</label>
-								</div>
-								<div class="col-sm-2">	
-									<label class="radio-inline col-sm-2">
-										<input type="radio" value="Past" name="illness<?php echo $counter; ?>" class=""  disabled="disabled" @if($presentPastMore->illness_status=="Past") checked="checked" @endif>
-										Past
-									</label>
-								</div>
-								<div class="col-sm-2">	
-									<label class="radio-inline">
-										<input type="radio" value="NA" name="illness<?php echo $counter; ?>" class=" pp-dynamic-na present-past-na" disabled="disabled" @if($presentPastMore->illness_status=="NA") checked="checked" @endif>
-										N/A
-									</label>
-		   						</div>
-		   						<div class="col-sm-4">
-		   							<input type="text" name="illness_medication[]" id="medication_present_past'+counter+'" class="form-control",placeholder="Medication" value="{{$presentPastMore->medication}}" disabled="disabled" />
-		   						</div>
-		   					</div>
-							@endforeach
-						@else
+						@if(!empty($medicalHistoryPresentPastMore) && !empty($illnessNameArray))
 						<div class="form-group">
-						    {!! Form::label('hypertension', 'Hypertension', $attributes = array('class'=>'col-sm-2'));  !!}
-						    {!! Form::hidden('illness_name1', "Hypertension", $attributes = array('class'=>'form-control hypertension_text'));  !!}	
-						    <div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status1', 'Current', null, ['class' => 'present-past-past']) !!}
-									Current
-								</label>
-							</div>
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status1', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>
-							</div>	
+								{!! Form::label('hypertension', 'Hypertension', $attributes = array('class'=>''));  !!}
+								{!! Form::hidden('illness_name1', 'Hypertension', $attributes = array('class'=>'form-control illness_name_hypertension'));  !!}
+							</div> 
+							<!-- Checking  illness existing in the db array -->
+							@if(in_array('Hypertension',$illnessNameArray)) 
+							@if($illnessDataArray['Hypertension'][0]=="Current")
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status1', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status1', 'Current','Current' , ['class' => 'present-past-past']) !!} Current </label>
 							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status1', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Hypertension'][0]=="Past")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status1','Past', 'Past', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status1','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Hypertension'][0]=="NA")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status1','NA','NA' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status1','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@endif
+							@if(!empty($illnessDataArray['Hypertension'][1]))
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication1', $illnessDataArray['Hypertension'][1], $attributes = array('class'=>'form-control present-past-medication-empty medication','placeholder' => 'Medication'));  !!}
+							</div>
+							@else
 							<div class="col-sm-4">
 								{!! Form::text('illness_medication1', Input::old('medication_hypertension'), $attributes = array('class'=>'form-control present-past-medication-empty medication','placeholder' => 'Medication'));  !!}
 							</div>
-						</div>
-
+							@endif
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status1', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status1','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status1','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication1', Input::old('medication_hypertension'), $attributes = array('class'=>'form-control present-past-medication-empty medication','placeholder' => 'Medication'));  !!}
+							</div>
+							
+							@endif
+						</div> 
 						<div class="form-group">
-						    {!! Form::label('diabetes', 'Diabetes', $attributes = array('class'=>'col-sm-2'));  !!}
-						    {!! Form::hidden('illness_name2', "Diabetes", $attributes = array('class'=>'form-control diabetes_text'));  !!}		
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status2', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>	
+								{!! Form::label('diabetes', 'Diabetes', $attributes = array('class'=>''));  !!}
+								{!! Form::hidden('illness_name2', 'Diabetes', $attributes = array('class'=>'form-control illness_name_diabetes'));  !!}
 							</div>
+							<!-- Checking  illness existing in the db array -->
+							@if(in_array('Diabetes',@$illnessNameArray))
+							@if($illnessDataArray['Diabetes'][0]=="Current")
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status2', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>	
+								<label class="radio-inline"> {!! Form::radio('illness_status2', 'Current','Current' , ['class' => 'present-past-past']) !!} Current </label>
 							</div>
+							@else
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status2', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
-							</div>	
+								<label class="radio-inline"> {!! Form::radio('illness_status2', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Diabetes'][0]=="Past")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status2','Past', 'Past', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status2','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Diabetes'][0]=="NA")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status2','NA','NA' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status2','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@endif
+							@if(!empty($illnessDataArray['Diabetes'][1]))
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication2', $illnessDataArray['Diabetes'][1], $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@else
 							<div class="col-sm-4">
 								{!! Form::text('illness_medication2', Input::old('medication_diabetes'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
 							</div>
+							@endif
+							@else
+							
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status2', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status2','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status2','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication2', Input::old('medication_diabetes'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							
+							@endif
 						</div>
-
 						<div class="form-group">
-						    {!! Form::label('hyperthyroidism', 'Hyperthyroidism', $attributes = array('class'=>'col-sm-2'));  !!}
-						    {!! Form::hidden('illness_name3', "Hyperthyroidism", $attributes = array('class'=>'form-control hyperthyroidism_text'));  !!}		
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status3', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>
+								{!! Form::label('hyperthyroidism', 'Hyperthyroidism', $attributes = array('class'=>''));  !!}
+								{!! Form::hidden('illness_name3', 'Hyperthyroidism', $attributes = array('class'=>'form-control illness_name_hyperthyroidism'));  !!}
 							</div>
-							<div class="col-sm-2">	
-								<label class="radio-inline">
-									{!! Form::radio('illness_status3', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>
-							</div>
+							@if(in_array('Hyperthyroidism',@$illnessNameArray))
+							@if($illnessDataArray['Hyperthyroidism'][0]=="Current")
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status3', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status3', 'Current','Current' , ['class' => 'present-past-past']) !!} Current </label>
 							</div>
-								
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status3', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Hyperthyroidism'][0]=="Past")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status3','Past', 'Past', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status3','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Hyperthyroidism'][0]=="NA")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status3','NA','NA' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status3','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@endif
+							@if(!empty($illnessDataArray['Hyperthyroidism'][1]))
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication3',$illnessDataArray['Hyperthyroidism'][1], $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@else
 							<div class="col-sm-4">
 								{!! Form::text('illness_medication3', Input::old('medication_hyperthyroidism'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
 							</div>
+							@endif
+							@else
+							
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status3', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
+							</div>
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status3', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status3', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication3', Input::old('medication_hyperthyroidism'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@endif
 						</div>
-
 						<div class="form-group">
-						    {!! Form::label('hypothyroidism', 'Hypothyroidism', $attributes = array('class'=>'col-sm-2'));  !!}
-						    {!! Form::hidden('illness_name4', "Hypothyroidism", $attributes = array('class'=>'form-control hypothyroidism_text'));  !!}	
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status4', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>
+								{!! Form::label('hypothyroidism', 'Hypothyroidism', $attributes = array('class'=>''));  !!}
+								{!! Form::hidden('illness_name4', 'Hypothyroidism', $attributes = array('class'=>'form-control illness_name_hypothyroidism'));  !!}
 							</div>
+							@if(in_array('Hypothyroidism',@$illnessNameArray))
+							@if($illnessDataArray['Hypothyroidism'][0]=="Current")
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status4', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status4', 'Current','Current' , ['class' => 'present-past-past']) !!} Current </label>
 							</div>
+							@else
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status4', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status4', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
 							</div>
-								
+							@endif
+							@if($illnessDataArray['Hypothyroidism'][0]=="Past")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status4','Past', 'Past', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status4','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Hypothyroidism'][0]=="NA")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status4','NA','NA' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status4','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@endif
+							@if(!empty($illnessDataArray['Hyperthyroidism'][1]))
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication4',$illnessDataArray['Hyperthyroidism'][1], $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@else
 							<div class="col-sm-4">
 								{!! Form::text('illness_medication4',Input::old('medication_hypothyroidism'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
 							</div>
+							@endif
+							@else
+							
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status4', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
+							</div>
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status4', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status4', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication4',Input::old('medication_hypothyroidism'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@endif
+							
 						</div>
-
 						<div class="form-group">
-						    {!! Form::label('cyst', 'Cyst', $attributes = array('class'=>'col-sm-2'));  !!}	
-						    {!! Form::hidden('illness_name5', "Cyst", $attributes = array('class'=>'form-control cyst_text'));  !!}
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status5', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>
+								{!! Form::label('cyst', 'Cyst', $attributes = array('class'=>''));  !!}
+								{!! Form::hidden('illness_name5', 'Cyst', $attributes = array('class'=>'form-control illness_name_cyst'));  !!}
+							</div>
+							@if(in_array('Cyst',@$illnessNameArray))
+							@if($illnessDataArray['Cyst'][0]=="Current")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status5', 'Current','Current' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status5', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Cyst'][0]=="Past")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status5','Past', 'Past', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status5','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Cyst'][0]=="NA")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status5','NA','NA' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status5','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@endif
+							@if(!empty($illnessDataArray['Cyst'][1]))
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication5',$illnessDataArray['Cyst'][1], $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@else
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication5',Input::old('medication_cyst'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@endif
+							@else
+							
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status5', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
 							</div>
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status5', 'Past', null, ['class' => 'present-past-current']) !!}
-									Past
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status5', 'Past', null, ['class' => 'present-past-current']) !!}Past </label>
 							</div>
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status5', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status5', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
 							</div>
 							<div class="col-sm-4">
 								{!! Form::text('illness_medication5', Input::old('medication_cyst'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
 							</div>
+							@endif
+							
 						</div>
-
 						<div class="form-group">
-						    {!! Form::label('endometriosis', 'Endometriosis', $attributes = array('class'=>'col-sm-2'));  !!}
-						    {!! Form::hidden('illness_name6', "Endometriosis", $attributes = array('class'=>'form-control endometriosis_text'));  !!}	
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status6', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>
+								{!! Form::label('endometriosis', 'Endometriosis', $attributes = array('class'=>''));  !!}
+								{!! Form::hidden('illness_name6', 'Endometriosis', $attributes = array('class'=>'form-control illness_name_endometriosis'));  !!}
+							</div>
+							@if(in_array('Endometriosis',@$illnessNameArray))
+							@if($illnessDataArray['Endometriosis'][0]=="Current")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status6', 'Current','Current' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status6', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Endometriosis'][0]=="Past")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status6','Past', 'Past', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status6','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@endif 
+							@if($illnessDataArray['Endometriosis'][0]=="NA")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status6','NA','NA' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status6','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@endif
+							@if(!empty($illnessDataArray['Endometriosis'][1]))
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication6',$illnessDataArray['Endometriosis'][1], $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@else
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication6',Input::old('medication_endometriosis'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@endif
+							@else
+							
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status6', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
 							</div>
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status6', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status6', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
 							</div>
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status6', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status6', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
 							</div>
 							<div class="col-sm-4">
 								{!! Form::text('illness_medication6',Input::old('medication_endometriosis '), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
 							</div>
+							@endif
+							
 						</div>
-
 						<div class="form-group">
-						    {!! Form::label('uterinefibroids', 'Utrine Fibroids', $attributes = array('class'=>'col-sm-2'));  !!}
-						    {!! Form::hidden('illness_name7', "Utrine Fibroids", $attributes = array('class'=>'form-control uterinefibroids_text'));  !!}		
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status7', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>
+								{!! Form::label('uterinefibroids', 'Utrine Fibroids', $attributes = array('class'=>''));  !!}
+								{!! Form::hidden('illness_name7', 'Utrine Fibroids', $attributes = array('class'=>'form-control illness_name_uterinefibroids'));  !!}
+							</div>
+							@if(in_array('Utrine Fibroids',@$illnessNameArray))
+							@if($illnessDataArray['Utrine Fibroids'][0]=="Current")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status7', 'Current','Current' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status7', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Utrine Fibroids'][0]=="Past")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status7','Past', 'Past', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status7','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@endif 
+							@if($illnessDataArray['Utrine Fibroids'][0]=="NA")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status7','NA','NA' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status7','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@endif
+							@if(!empty($illnessDataArray['Utrine Fibroids'][1]))
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication7',$illnessDataArray['Utrine Fibroids'][1], $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@else
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication7',Input::old('medication_uterinefibroids'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@endif
+							@else
+							
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status7', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
 							</div>
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status7', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status7', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
 							</div>
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status7', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status7', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
 							</div>
 							<div class="col-sm-4">
 								{!! Form::text('illness_medication7', Input::old('medication_uterinefibroids'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
 							</div>
+							@endif
+							
 						</div>
-
 						<div class="form-group">
-						    {!! Form::label('uti', 'UTI', $attributes = array('class'=>'col-sm-2'));  !!}
-						    {!! Form::hidden('illness_name8', "UTI", $attributes = array('class'=>'form-control uti_text'));  !!}		
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status8', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>
+								{!! Form::label('uti', 'UTI', $attributes = array('class'=>''));  !!}
+								{!! Form::hidden('illness_name8', 'UTI', $attributes = array('class'=>'form-control illness_name_uti'));  !!}
+							</div>
+							@if(in_array('UTI',@$illnessNameArray))
+							@if($illnessDataArray['UTI'][0]=="Current")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status8', 'Current','Current' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status8', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@endif
+							@if($illnessDataArray['UTI'][0]=="Past")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status8','Past', 'Past', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status8','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@endif 
+							@if($illnessDataArray['UTI'][0]=="NA")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status8','NA','NA' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status8','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@endif
+							@if(!empty($illnessDataArray['UTI'][1]))
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication8',$illnessDataArray['UTI'][1], $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@else
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication8',Input::old('medication_uti'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@endif
+							@else
+							
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status8', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
 							</div>
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status8', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status8', 'Past', null, ['class' => 'present-past-past']) !!}	Past </label>
 							</div>
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status8', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status8', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
 							</div>
 							<div class="col-sm-4">
 								{!! Form::text('illness_medication8', Input::old('medication_uti '), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
 							</div>
+							@endif
+							
 						</div>
-
 						<div class="form-group">
-						    {!! Form::label('cancer', 'Cancer', $attributes = array('class'=>'col-sm-2'));  !!}
-						     {!! Form::hidden('illness_name9', "Cancer", $attributes = array('class'=>'form-control cancer_text'));  !!}		
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status9', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>
+								{!! Form::label('cancer', 'Cancer', $attributes = array('class'=>''));  !!}
+								{!! Form::hidden('illness_name9', 'Cancer', $attributes = array('class'=>'form-control illness_name_cancer'));  !!}
+							</div>
+							@if(in_array('Cancer',@$illnessNameArray))
+							@if($illnessDataArray['Cancer'][0]=="Current")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status9', 'Current','Current' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status9', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+							</div>
+							@endif
+							@if($illnessDataArray['Cancer'][0]=="Past")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status9','Past', 'Past', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status9','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+							</div>
+							@endif 
+							@if($illnessDataArray['Cancer'][0]=="NA")
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status9','NA','NA' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status9','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+							</div>
+							@endif
+							@if(!empty($illnessDataArray['Cancer'][1]))
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication9',$illnessDataArray['Cancer'][1], $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@else
+							<div class="col-sm-4">
+								{!! Form::text('illness_medication9',Input::old('medication_cancer'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+							</div>
+							@endif
+							@else
+							<div class="col-sm-2">
+								<label class="radio-inline"> {!! Form::radio('illness_status9', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
 							</div>
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status9', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status9', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
 							</div>
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status9', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
+								<label class="radio-inline"> {!! Form::radio('illness_status9', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
 							</div>
 							<div class="col-sm-4" >
 								{!! Form::text('illness_medication9', Input::old('medication_cancer'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
 							</div>
+							@endif
 						</div>
-
 						<div class="form-group">
-						    {!! Form::label('thyroid', 'Thyroid', $attributes = array('class'=>'col-sm-2'));  !!}
-						     {!! Form::hidden('illness_name10', "Thyroid", $attributes = array('class'=>'form-control thyroid_text'));  !!}		
 							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status10', 'Current', null, ['class' => 'present-past-current']) !!}
-									Current
-								</label>
+								{!! Form::label('thyroid', 'Thyroid', $attributes = array('class'=>''));  !!}
+								{!! Form::hidden('illness_name10', 'Thyroid', $attributes = array('class'=>'form-control illness_name_thyroid'));  !!}
 							</div>
-							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status10', 'Past', null, ['class' => 'present-past-past']) !!}
-									Past
-								</label>
-							</div>
-							<div class="col-sm-2">
-								<label class="radio-inline">
-									{!! Form::radio('illness_status10', 'NA', null, ['class' => 'present-past-na']) !!}
-									N/A
-								</label>
-							</div>
-							<div class="col-sm-4" >
-								{!! Form::text('illness_medication10', Input::old('medication_thyroid'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
-							</div>
+							@if(in_array('Thyroid',@$illnessNameArray))
+								@if($illnessDataArray['Thyroid'][0]=="Current")
+									<div class="col-sm-2">
+										<label class="radio-inline"> {!! Form::radio('illness_status10', 'Current','Current' , ['class' => 'present-past-past']) !!} Current </label>
+									</div>
+								@else
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status10', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+								</div>
+								@endif
+								@if($illnessDataArray['Thyroid'][0]=="Past")
+									<div class="col-sm-2">
+										<label class="radio-inline"> {!! Form::radio('illness_status10','Past', 'Past', ['class' => 'present-past-past']) !!}Past </label>
+									</div>
+								@else
+									<div class="col-sm-2">
+										<label class="radio-inline"> {!! Form::radio('illness_status10','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+									</div>
+								@endif 
+								@if($illnessDataArray['Cancer'][0]=="NA")
+									<div class="col-sm-2">
+										<label class="radio-inline"> {!! Form::radio('illness_status10','NA','NA' , ['class' => 'present-past-na']) !!}N/A </label>
+									</div>
+								@else
+									<div class="col-sm-2">
+										<label class="radio-inline"> {!! Form::radio('illness_status10','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+									</div>
+								@endif
+								@if(!empty($illnessDataArray['Thyroid'][1]))
+									<div class="col-sm-4">
+										{!! Form::text('illness_medication10',$illnessDataArray['Thyroid'][1], $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+									</div>
+								@else
+									<div class="col-sm-4">
+										{!! Form::text('illness_medication10',Input::old('medication_thyroid'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+									</div>
+								@endif
+							@else
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status10', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status10', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status10', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
+								</div>
+								<div class="col-sm-4" >
+									{!! Form::text('illness_medication10', Input::old('medication_thyroid'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+								</div>
+							@endif
 						</div>
+						
+						<!-- Addmore illness -->
+						<?php $counter = 10; ?>
+						@foreach($medicalHistoryPresentPastMore as $medicalHistoryPresentPastMoreVal)
+							<?php
+								$illnessName 		= $medicalHistoryPresentPastMoreVal->illness_name;
+								$illnessStatus		= $medicalHistoryPresentPastMoreVal->illness_status;
+								$illnessMedication	= $medicalHistoryPresentPastMoreVal->medication;
+							
+							?>
+							@if($illnessName=="Hypertension" || 
+								$illnessName=="Diabetes" || 
+								$illnessName=="Hyperthyroidism"	 || 
+								$illnessName=="Hypothyroidism" ||
+								$illnessName=="Cyst"	||	
+								$illnessName=="Endometriosis" || 	
+								$illnessName=="Utrine Fibroids" || 
+								$illnessName=="UTI" || 
+								$illnessName=="Cancer" ||
+								$illnessName=="Thyroid")
+							
+							@else	
+								@if(!empty($illnessName))
+									<div class="form-group">
+										<div class="col-sm-2">
+											<label>{{$illnessName}}</label>
+											<input type="hidden" name="illness_name{{$counter}}" value="{{$illnessName}}" />
+										</div> 
+										
+										@if($illnessStatus=="Current")
+										
+										<div class="col-sm-2">
+											<label class="radio-inline">
+												<input type="radio" class="present-past-current" name="illness_status{{$counter}}" value="Current" 	checked="checked" id="current{{$counter}}"/>Current
+											</label>
+										</div>
+										<div class="col-sm-2">
+											<label class="radio-inline">
+												<input type="radio" class="present-past-past" name="illness_status{{$counter}}" value="Past"  />Past
+											</label>
+										</div>
+										<div class="col-sm-2">
+											<label class="radio-inline">
+												<input type="radio" class="present-past-na" name="illness_status{{$counter}}" value="NA"  />N/A
+											</label>
+										</div>
+										@endif
+										@if($illnessStatus=="Past")
+										<div class="col-sm-2">
+											<label class="radio-inline">
+												<input type="radio" class="present-past-current" name="illness_status{{$counter}}" value="Current" 	/>Current
+											</label>
+										</div>
+										<div class="col-sm-2">
+											<label class="radio-inline">
+												<input type="radio" class="present-past-past" name="illness_status{{$counter}}" value="Past"   checked="checked"/>Past
+											</label>
+										</div>
+										<div class="col-sm-2">
+											<label class="radio-inline">
+												<input type="radio" class="present-past-na" name="illness_status{{$counter}}" value="NA"  />N/A
+											</label>
+										</div>
+										@endif
+										@if($illnessStatus=="NA")
+										<div class="col-sm-2">
+											<label class="radio-inline">
+												<input type="radio" class="present-past-current" name="illness_status{{$counter}}" value="Current" 	/>Current
+											</label>
+										</div>
+										<div class="col-sm-2">
+											<label class="radio-inline">
+												<input type="radio" class="present-past-past" name="illness_status{{$counter}}" value="Past"   />Past
+											</label>
+										</div>
+										<div class="col-sm-2">
+											<label class="radio-inline">
+												<input type="radio" class="present-past-na" name="illness_status{{$counter}}" value="NA"   checked="checked"/>N/A
+											</label>
+										</div>
+										@endif
+										<div class="col-sm-4" >
+											<input type="text" name="illness_medication{{$counter}}"	value="{{$illnessMedication}}" class="form-control present-past-medication-empty"  placeholder="Medication"/>
+										</div>
+									</div>
+									<?php $counter++; ?>
+								@endif
+							@endif	
+						@endforeach					
+						
+						@else
+							<div class="form-group">
+								<div class="col-sm-2">
+									{!! Form::label('hypertension', 'Hypertension', $attributes = array('class'=>''));  !!}
+									{!! Form::hidden('illness_name1', 'Hypertension', $attributes = array('class'=>'form-control illness_name_hypertension'));  !!}
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status1', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+								</div>
+								
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status1','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+								</div>
+								
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status1','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+								</div>
+								
+								<div class="col-sm-4">
+									{!! Form::text('illness_medication1', Input::old('medication_hypertension'), $attributes = array('class'=>'form-control present-past-medication-empty medication','placeholder' => 'Medication'));  !!}
+								</div>
+							</div> 
+							<div class="form-group">
+								<div class="col-sm-2">
+									{!! Form::label('diabetes', 'Diabetes', $attributes = array('class'=>''));  !!}
+									{!! Form::hidden('illness_name2', 'Diabetes', $attributes = array('class'=>'form-control illness_name_diabetes'));  !!}
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status2', 'Current','' , ['class' => 'present-past-past']) !!} Current </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status2','Past', '', ['class' => 'present-past-past']) !!}Past </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status2','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
+								</div>
+								<div class="col-sm-4">
+									{!! Form::text('illness_medication2', Input::old('medication_diabetes'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2">
+									{!! Form::label('hyperthyroidism', 'Hyperthyroidism', $attributes = array('class'=>''));  !!}
+									{!! Form::hidden('illness_name3', 'Hyperthyroidism', $attributes = array('class'=>'form-control illness_name_hyperthyroidism'));  !!}
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status3', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status3', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status3', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
+								</div>
+								<div class="col-sm-4">
+									{!! Form::text('illness_medication3', Input::old('medication_hyperthyroidism'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2">
+									{!! Form::label('hypothyroidism', 'Hypothyroidism', $attributes = array('class'=>''));  !!}
+									{!! Form::hidden('illness_name4', 'Hypothyroidism', $attributes = array('class'=>'form-control illness_name_hypothyroidism'));  !!}
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status4', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status4', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status4', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
+								</div>
+								<div class="col-sm-4">
+									{!! Form::text('illness_medication4',Input::old('medication_hypothyroidism'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2">
+									{!! Form::label('cyst', 'Cyst', $attributes = array('class'=>''));  !!}
+									{!! Form::hidden('illness_name5', 'Cyst', $attributes = array('class'=>'form-control illness_name_cyst'));  !!}
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status5', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status5', 'Past', null, ['class' => 'present-past-current']) !!}Past </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status5', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
+								</div>
+								<div class="col-sm-4">
+									{!! Form::text('illness_medication5', Input::old('medication_cyst'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2">
+									{!! Form::label('endometriosis', 'Endometriosis', $attributes = array('class'=>''));  !!}
+									{!! Form::hidden('illness_name6', 'Endometriosis', $attributes = array('class'=>'form-control illness_name_endometriosis'));  !!}
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status6', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status6', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status6', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
+								</div>
+								<div class="col-sm-4">
+									{!! Form::text('illness_medication6',Input::old('medication_endometriosis '), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2">
+									{!! Form::label('uterinefibroids', 'Utrine Fibroids', $attributes = array('class'=>''));  !!}
+									{!! Form::hidden('illness_name7', 'Utrine Fibroids', $attributes = array('class'=>'form-control illness_name_uterinefibroids'));  !!}
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status7', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status7', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status7', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
+								</div>
+								<div class="col-sm-4">
+									{!! Form::text('illness_medication7', Input::old('medication_uterinefibroids'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2">
+									{!! Form::label('uti', 'UTI', $attributes = array('class'=>''));  !!}
+									{!! Form::hidden('illness_name8', 'UTI', $attributes = array('class'=>'form-control illness_name_uti'));  !!}
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status8', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status8', 'Past', null, ['class' => 'present-past-past']) !!}	Past </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status8', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
+								</div>
+								<div class="col-sm-4">
+									{!! Form::text('illness_medication8', Input::old('medication_uti '), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2">
+									{!! Form::label('cancer', 'Cancer', $attributes = array('class'=>''));  !!}
+									{!! Form::hidden('illness_name9', 'Cancer', $attributes = array('class'=>'form-control illness_name_cancer'));  !!}
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status9', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status9', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status9', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
+								</div>
+								<div class="col-sm-4" >
+									{!! Form::text('illness_medication9', Input::old('medication_cancer'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2">
+									{!! Form::label('thyroid', 'Thyroid', $attributes = array('class'=>''));  !!}
+									{!! Form::hidden('illness_name10', 'Thyroid', $attributes = array('class'=>'form-control illness_name_thyroid'));  !!}
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status10', 'Current', null, ['class' => 'present-past-current']) !!}Current </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status10', 'Past', null, ['class' => 'present-past-past']) !!}Past </label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline"> {!! Form::radio('illness_status10', 'NA', null, ['class' => 'present-past-na']) !!}N/A </label>
+								</div>
+								<div class="col-sm-4" >
+									{!! Form::text('illness_medication10', Input::old('medication_thyroid'), $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+								</div>
+							</div>
+						
+						
 						@endif
 					</div>
 
-					
+
+
 					<div class="form-group">
 						<div class="col-sm-12">
-							<button type="submit" class="btn btn-default btn-addmore-illness pull-right" id="btn-addmore-illness" style="margin-top: 10px"><i class="fa fa-plus-circle "></i> Add More illness</button>
+							<button type="submit" class="btn btn-default btn-addmore-illness pull-right" id="btn-addmore-illness" style="margin-top: 10px">
+								<i class="fa fa-plus-circle "></i> Add More illness
+							</button>
 						</div>
 					</div>
-					
+
+
+
+					<!-- Present Past History -->
+
+
+
+
+
 					<hr>
 
 					<div class="form-group">
@@ -1456,9 +2026,12 @@ if(!empty($medicalHistory)){
 		{!!Html::script('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')!!}
 		
 		{!!Html::script('assets/js/patient-personal-information.js')!!}
+		{!!Html::script('assets/js/cardio-medical-history.js')!!}
 		
 		{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 		{!!Html::script('assets/js/patient-personal-information.js')!!}
+
+		{!!Html::script('assets/plugins/tooltip-validation/jquery-validate.bootstrap-tooltip.js')!!}
 		
 		
 	<script>
@@ -1470,132 +2043,76 @@ if(!empty($medicalHistory)){
 			})
 			
 			Main.init();
-			patientElements.init();
-
-			var div 	= $('div').find('#presentPastDiv');
-	   		var newDiv 	= div.find('.form-group');
-	   		var medicalHistory = <?php echo json_encode($medicalHistory); ?>;
-	   		//console.log(medicalHistory);
-			//var counter = newDiv.length;
-	   		
-	   		
+			//patientElements.init();
+			cardioMedicalHistoryElements.init();
+	
    			var presentPastDivCount = $('.presentPastDiv').find('.form-group').length;
    			$('.present-past-div-count').val(presentPastDivCount);
+		});
 
+	  	function illnessRemove(e){
+       
+            var clickedElements = $(e).closest('.form-group');
+            //console.log(clickedElements);
+            
 
+            var removedRawId = clickedElements.find('.present-past-medication-empty').attr('id');
+            clickedElements.remove();   
 
-        //Illness Addmore
+            var removedId = parseInt(removedRawId.replace(/[^0-9\.]/g, ''), 10);
+            //console.log(removedId);
 
-        $('#btn-addmore-illness').click(function(e){
-            e.preventDefault();
-            var counter = $('.present-past-div-count').val();
-            counter++;
+            $('.presentPastDiv').each(function(){
+                    var defaultIllnessCount = $(this).find('.form-group').length;
+                    $('.present-past-div-count').val(defaultIllnessCount);
+            });
+
+            var newDefaultIllnessCount = $('.present-past-div-count').val();
+            //console.log(newDefaultIllnessCount);
+
+            for(i=1;i<=newDefaultIllnessCount;i++){
                 
-            $('#presentPastDiv').append(
-                '<div class="form-group">'+
-                    '<div class="col-sm-2">' +
-                        '<input type="text" name="illness_name'+counter+'" id="illness_name'+counter+'" class="form-control illness_name" />' +
-                    '</div>' +
-                    '<div class="col-sm-2">' +
-                        '<label class="radio-inline">' +
-                            '<input type="radio" value="Current" name="illness_status'+counter+'" class="present-past-current radioValidation illness_status" id="illness_status_current'+counter+'">'+
-                                'Current'+
-                            '</label>'+
-                    '</div>'+
-                    '<div class="col-sm-2">' +      
-                        '<label class="radio-inline col-sm-2">'+
-                            '<input type="radio" value="Past" name="illness_status'+counter+'"class="present-past-past radioValidation illness_status" id="illness_status_past'+counter+'">'+
-                                'Past'+
-                        '</label>'+
-                    '</div>'+
-                    '<div class="col-sm-2">' +      
-                        '<label class="radio-inline">'+
-                            '<input type="radio" value="NA" name="illness_status'+counter+'"class="present-past-na pp-dynamic-na radioValidation illness_status" id="illness_status_na'+counter+'">'+
-                                'N/A'+
-                        '</label>'+
-                    '</div>' +
-                    '<div class="col-sm-3">' +
-                        '<input type="text" name="illness_medication'+counter+'" id="medication_present_past'+counter+'" class="form-control present-past-medication-empty ilness_medication",placeholder="Medication" />' +
-                    '</div>' +
-                    '<div class="col-sm-1">' +
-                        '<button name="btn-ppmore-remove" onclick="return illnessRemove(this);" class="btn btn-danger btn-ppmore-remove dd_right dd_mg_Medication_10 " id="btn-ppmore-remove">Remove</button' +
-                    '</div>' +  
-                '</div>'    
-            );
-
-            //Assigning new value to illnessDivCount
-            $('.present-past-div-count').val(counter);
-        });
-      
-
-
-
-
-	    });
-
-		  function illnessRemove(e){
-            //alert(event.type); 
-                var clickedElements = $(e).closest('.form-group');
-                //console.log(clickedElements);
-                
-
-                var removedRawId = clickedElements.find('.present-past-medication-empty').attr('id');
-                clickedElements.remove();   
-
-                var removedId = parseInt(removedRawId.replace(/[^0-9\.]/g, ''), 10);
-                //console.log(removedId);
-
-                $('.presentPastDiv').each(function(){
-                        var defaultIllnessCount = $(this).find('.form-group').length;
-                        $('.present-past-div-count').val(defaultIllnessCount);
-                });
-
-                var newDefaultIllnessCount = $('.present-past-div-count').val();
-                //console.log(newDefaultIllnessCount);
-
-                for(i=1;i<=newDefaultIllnessCount;i++){
-                    
-                    var nextIllnessId = parseInt(i) + parseInt(1);
-                    if(nextIllnessId>removedId){
-                        var decrementIllnessId = nextIllnessId - 1;
-                        console.log('decrement'+decrementIllnessId);
-                        var selected1 = $('#presentPastDiv').find('.form-group').find('#illness_name'+nextIllnessId);
-                        var selected2 = $('#presentPastDiv').find('.form-group').find('#illness_status_current'+nextIllnessId);
-                        var selected3 = $('#presentPastDiv').find('.form-group').find('#illness_status_past'+nextIllnessId);
-                        var selected4 = $('#presentPastDiv').find('.form-group').find('#illness_status_na'+nextIllnessId);
-                        var selected5 = $('#presentPastDiv').find('.form-group').find('#medication_present_past'+nextIllnessId);
-                        //var selected2 = $('#medicine').find('.form-group').find('.frequency'+nextDivId);
-                        //selected1.attr('name','frequency'+decrementDivId+'[]');
-                        selected1.attr({
-                              'name' : 'illness_name'+decrementIllnessId,
-                              'id': 'illness_name'+decrementIllnessId
-                        });
-                        selected2.attr({
-                              'name' : 'illness_status'+decrementIllnessId,
-                              'id': 'illness_status_current'+decrementIllnessId
-                        });
-                        selected3.attr({
-                              'name' : 'illness_status'+decrementIllnessId,
-                              'id': 'illness_status_past'+decrementIllnessId
-                        });
-                        selected4.attr({
-                              'name' : 'illness_status'+decrementIllnessId,
-                              'id': 'illness_status_na'+decrementIllnessId
-                        });
-                        selected5.attr({
-                              'name' : 'illness_medication'+decrementIllnessId,
-                              'id': 'medication_present_past'+decrementIllnessId
-                        });
-                        
-                        
-                    }
-                    
-                    $('.present-past-div-count').val(newDefaultIllnessCount);
+                var nextIllnessId = parseInt(i) + parseInt(1);
+                if(nextIllnessId>removedId){
+                    var decrementIllnessId = nextIllnessId - 1;
+                    console.log('decrement'+decrementIllnessId);
+                    var selected1 = $('#presentPastDiv').find('.form-group').find('#illness_name'+nextIllnessId);
+                    var selected2 = $('#presentPastDiv').find('.form-group').find('#illness_status_current'+nextIllnessId);
+                    var selected3 = $('#presentPastDiv').find('.form-group').find('#illness_status_past'+nextIllnessId);
+                    var selected4 = $('#presentPastDiv').find('.form-group').find('#illness_status_na'+nextIllnessId);
+                    var selected5 = $('#presentPastDiv').find('.form-group').find('#medication_present_past'+nextIllnessId);
+                    //var selected2 = $('#medicine').find('.form-group').find('.frequency'+nextDivId);
+                    //selected1.attr('name','frequency'+decrementDivId+'[]');
+                    selected1.attr({
+                          'name' : 'illness_name'+decrementIllnessId,
+                          'id': 'illness_name'+decrementIllnessId
+                    });
+                    selected2.attr({
+                          'name' : 'illness_status'+decrementIllnessId,
+                          'id': 'illness_status_current'+decrementIllnessId
+                    });
+                    selected3.attr({
+                          'name' : 'illness_status'+decrementIllnessId,
+                          'id': 'illness_status_past'+decrementIllnessId
+                    });
+                    selected4.attr({
+                          'name' : 'illness_status'+decrementIllnessId,
+                          'id': 'illness_status_na'+decrementIllnessId
+                    });
+                    selected5.attr({
+                          'name' : 'illness_medication'+decrementIllnessId,
+                          'id': 'medication_present_past'+decrementIllnessId
+                    });
                     
                     
                 }
                 
-        }
+                $('.present-past-div-count').val(newDefaultIllnessCount);
+                
+                
+            }
+            
+    	}
 
 	</script>
 @stop	

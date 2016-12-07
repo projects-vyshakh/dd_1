@@ -78,10 +78,10 @@ if(!empty($prescMedicine)){
 			</div>
 		</div>
 	</div>
-	
-	<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content" style="width:800px;height:580px">
+	<div>
+	<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-hidden="true" >
+		<div class="modal-dialog" style="width:1200px">
+			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						&times;
@@ -102,7 +102,7 @@ if(!empty($prescMedicine)){
 			</div>
 		</div>
 	</div>
-
+	</div>
 
 <!-- sometime later, probably inside your on load event callback -->
 
@@ -570,41 +570,41 @@ if(!empty($prescMedicine)){
 
 			//Printing
 			//-------------------------------------------------------------------
-			$('.pdfopen').click(function(){
+			// $('.pdfopen').click(function(){
 				
-				var loadDrugStatus = $('.prev-drug-load-status').val();
-				$('.print-data').val('printTrue');
-				if(success==null){
-					//Previous drug loaded
-					if(loadDrugStatus==1){
-						var defaultCount = $('.default-div-count').val();
-						if(defaultCount>prescMedicineDetails.length){
+			// 	var loadDrugStatus = $('.prev-drug-load-status').val();
+			// 	$('.print-data').val('printTrue');
+			// 	if(success==null){
+			// 		//Previous drug loaded
+			// 		if(loadDrugStatus==1){
+			// 			var defaultCount = $('.default-div-count').val();
+			// 			if(defaultCount>prescMedicineDetails.length){
 							
-							printWithSaveConfirmations();
-						}
-						else{
-							printWithoutSaveConfirmations();
-						}
-					}
-					else{
-						printWithSaveConfirmations();
-					}
+			// 				printWithSaveConfirmations();
+			// 			}
+			// 			else{
+			// 				printWithoutSaveConfirmations();
+			// 			}
+			// 		}
+			// 		else{
+			// 			printWithSaveConfirmations();
+			// 		}
 					
-				}
-				else{
-					//alert("sucess not null and prints")
-					var defaultCount = $('.default-div-count').val();
-					console.log(defaultCount);
-					console.log(prescMedicineDetails.length);
-					if(defaultCount>prescMedicineDetails.length){
+			// 	}
+			// 	else{
+			// 		//alert("sucess not null and prints")
+			// 		var defaultCount = $('.default-div-count').val();
+			// 		console.log(defaultCount);
+			// 		console.log(prescMedicineDetails.length);
+			// 		if(defaultCount>prescMedicineDetails.length){
 						
-						printWithSaveConfirmations();
-					}
-					else{
-						printWithoutSaveConfirmations();
-					}
-				}
-           	});
+			// 			printWithSaveConfirmations();
+			// 		}
+			// 		else{
+			// 			printWithoutSaveConfirmations();
+			// 		}
+			// 	}
+   //         	});
 			//Printing ends here
 			//-----------------------------------------------------------------
 

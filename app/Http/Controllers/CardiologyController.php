@@ -7,14 +7,23 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Session;
 use Request;
-use App\classes\DBUtils;
-use App\classes\DOMPDF;
 use Carbon\Carbon;
-use App\classes\DBAuth;
 use App;
 use PDF;
 use View;
 //use Illuminate\Support\Collection::sortBy();
+
+//Classes
+use App\classes\DBAuth;
+use App\classes\DBUtils;
+use App\classes\DOMPDF;
+
+//Models
+use App\Models\DoctorsModel;
+use App\Models\PatientsModel;
+use App\Models\CardioMedicalHistoryPresentPastModel;
+use App\Models\SurgeryHistoryModel;
+use App\Models\DrugAllergyHistoryModel;
 
 class CardiologyController extends Controller {
 
@@ -268,9 +277,12 @@ class CardiologyController extends Controller {
 	public function showCardioMedicalHistory(){
 
 		$patientId 	= Session::get('patientId');
-		$doctorId  = Session::get('doctorId');
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+		$doctorId  	= Session::get('doctorId');
+		//$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+		//$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+
+		$patientPersonalData = PatientsModel::where('id_patient','=',$patientId)->first();
+		$doctorData          = DoctorsModel::where('id_doctor','=',$doctorId)->first();
       
 
 		$medicalHistory = DB::table('cardiac_medical_history')
@@ -280,13 +292,10 @@ class CardiologyController extends Controller {
 
 		$medicalHistoryPresentPastMore = DB::table('cardiac_medical_history_present_past_more')
 													->where('id_patient','=',$patientId)
-													
-													->distinct('illness_name')
+													->where('created_date', DB::raw("(select max(`created_date`) from cardiac_medical_history_present_past_more)"))
 													->get();
-/*
-		$medicalHistoryPresentPastMore = DB::table('medical_history_present_past_more')
-													->where('id_patient','=',$patientId)
-													->get();*/
+													//dd($medicalHistoryPresentPastMore);
+
 
 		$surgeryHistory = DB::table('medical_history_surgical')->where('id_patient','=',$patientId)->get();
 
@@ -312,8 +321,8 @@ class CardiologyController extends Controller {
 	    //var_dump(json_encode($input));
 	    //die();
 
-	    $patientExistCheck = DB::table('patients')->where('id_patient','=',$patientId)->count();
-
+	    $patientExistCheck = PatientsModel::where('id_patient','=',$patientId)->count();
+	   
 	    $medicalHistoryExist = DB::table('cardiac_medical_history')
 	    										->where('id_patient','=',$patientId)
 	    										->where('medical_history_reference','=',$referenceId)
@@ -387,7 +396,15 @@ class CardiologyController extends Controller {
     			}
 
     			//Add more illness
-    			$this->illnessSurgeryDrugInsert($input,$surgery,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate,$specializationText);
+    			$this->illnessDataManagement($input,$patientId,$doctorId,$referenceId,$createdDate,$specializationText);
+
+    			//Surgery Management
+	    		$this->surgeryDataManagement($input,$surgery,$patientId,$doctorId,$referenceId,$createdDate);
+
+	    		//Drug Data Management
+	    		$this->drugDataManagement($input,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate);
+
+    			
 
     			return Redirect::to('cardiomedicalhistory')->with(array('success'=>"Data updated successfully"));
 
@@ -427,8 +444,15 @@ class CardiologyController extends Controller {
     				$dataInsert = DB::table('cardiac_medical_history')->insert($dataArray);
 	    		}
 	    		
+	    		// Illness data management 
+	    		$this->illnessDataManagement($input,$patientId,$doctorId,$referenceId,$createdDate,$specializationText);
 
-	    		$this->illnessSurgeryDrugInsert($input,$surgery,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate,$specializationText);
+	    		//Surgery Management
+	    		$this->surgeryDataManagement($input,$surgery,$patientId,$doctorId,$referenceId,$createdDate);
+
+	    	
+	    		//Drug Data Management
+	    		$this->drugDataManagement($input,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate);
 
 	    		return Redirect::to('cardiomedicalhistory')->with(array('success'=>"Data saved successfully"));
 
@@ -443,114 +467,98 @@ class CardiologyController extends Controller {
 
 	}
 
-	 public function illnessSurgeryDrugInsert($input,$surgery,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate,$specializationText){
-    
-	    	 $presentPastDivCount = $input['presentPastDivCount'];
-	    	 $illnessAllArray = array();
-
-	    	for($i=1;$i<=$presentPastDivCount;$i++){
-	    		
-	    		
-	    		(!empty($input['illness_name'.$i]))?$illnessName 			= $input['illness_name'.$i]:$illnessName="";
-	    		(!empty($input['illness_status'.$i]))?$illnessStatus 		= $input['illness_status'.$i]:$illnessStatus="NA";
-	    		(!empty($input['illness_medication'.$i]))?$illnessMedication 	= $input['illness_medication'.$i]:$illnessMedication="";
-	    		
-	    	/*	echo "------------------------------------";
-	    		echo "</br>";
-	    		echo "Name==>".$illnessName;
-	    		echo "</br>";
-	    		echo "Status==>".$illnessStatus;
-	    		echo "</br>";
-	    		echo "Medication==>".$illnessMedication;
-	    		echo "</br>";*/
-
-	    		if(!empty($illnessName) && !empty($illnessStatus)){
-	    			//echo "Null";
-	    		
-	    			$illnessArray = array('id_patient' 	=> $patientId,
-		    							  'id_doctor' 			=> $doctorId,
-		    							  'illness_name' 		=> $illnessName,
-		    							  'illness_status' 		=> $illnessStatus,
-		    							  'medication' 			=> $illnessMedication,
-		    							  'illness_reference' 	=> $referenceId,
-		    							  'created_date' 		=> $createdDate);
-	    			array_push($illnessAllArray,$illnessArray);
-	    			
-	    		}
-
-	    		
-	    	}
-	    	
-	    	switch ($specializationText) {
-	    		case '1':
-	    			$illnessSave = DB::table('medical_history_present_past_more')->insert($illnessAllArray);
-	    			break;
-	    		case '2':
-	    			$illnessSave = DB::table('cardiac_medical_history_present_past_more')->insert($illnessAllArray);
-	    			break;	
-	    		
-	    		default:
-	    			# code...
-	    			break;
-	    	}
-	    	
-
-	    	//Surgery History Insert
-	    	/*if($surgeryCounter>0){*/
-	    	if(!empty($surgery)) { $surgery = array_filter($surgery); }
-	    	if(!empty($surgery)){
-	    		for($i=0;$i<count($input['surgery']); $i++){
-	    			$suregeryData = array('surgery_name' => $surgery[$i],
-	    								  'id_patient' => $patientId,
-	    								  'id_doctor' => $doctorId,
-	    								  'surgery_reference'=>$referenceId,
-	    								  'created_date'=> $createdDate);
-
-	    			$surgerySave = DB::table('medical_history_surgical')->insert($suregeryData);
-
-	    		}
-	    	}
-		    //}	
-
-		    	//Drug Allergy History
-	    	//if($allergyCounter>0){
-	    		
-	    	if(!empty($allergyMedication) && !empty($allergyReaction)){
-	    		$allergyMedication = array_filter($allergyMedication);
-	    		$allergyReaction   = array_filter($allergyReaction);
-	    		
-	    		if(!empty($allergyMedication) && !empty($allergyReaction)){
-	    			$this->addDrugAllergyDetails($allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate);
-	    		}
-	    	}
-	    	/*else{
-	    		if($allergyCounter>0){
-	    			return Redirect::to('patientmedicalhistory')->with(array('error'=>'Please fill data'));
-	    		}
-	    	}*/
-		    //}	
-	    
-
-    }
-    public function addDrugAllergyDetails($allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate){
-
-		//echo "njan addDrugAllergyDetails Keriye";
-			foreach($allergyMedication as $index=>$value){
-				
-				$drugName = $allergyMedication[$index];
-				$reactionName = $allergyReaction[$index];
-				$allergyData = array('drug_name' => $drugName,
-									 'reaction' => $reactionName,
-									 'id_patient' => $patientId,
-									 'id_doctor' => $doctorId,
-									 'drug_allergy_reference' => $referenceId,
-									 'created_date' => $createdDate);
-				$alleryInsert = DB::table('medical_history_drug_allergy')->insert($allergyData);
+	public function illnessDataManagement($input,$patientId,$doctorId,$referenceId,$createdDate,$specializationText ){
+			//var_dump(json_encode($input));
+			$presentPastDivCount =	$input['presentPastDivCount'];
+			$conditionString 	 = 	array('id_patient' => $patientId, 'illness_reference'=>$referenceId);
+			$illnessData	     =	CardioMedicalHistoryPresentPastModel::where($conditionString)->get();
+			$illnessAllArray 	 = 	array();
+			
+			for($i=1;$i<=$presentPastDivCount;$i++){
+					isset($input['illness_name'.$i])?$illnessName = $input['illness_name'.$i]				: $illnessName = "";
+					isset($input['illness_status'.$i])?$illnessStatus = $input['illness_status'.$i]				: $illnessStatus = "";
+					isset($input['illness_medication'.$i])?$illnessMedication = $input['illness_medication'.$i]	: $illnessMedication 	 = "";
+					
+					empty($illnessStatus)?$illnessStatus=" ":$illnessStatus	=	$illnessStatus;
+					
+					if(!empty($illnessName)){
+							$illnessArray = array(  'id_patient' 		=> $patientId,
+										    	    'id_doctor' 		=> $doctorId,
+												    'illness_name' 		=> $illnessName,
+												    'illness_status' 	=> $illnessStatus,
+												    'medication' 		=> $illnessMedication,
+												    'illness_reference' => $referenceId,
+										    		'created_date' 		=> $createdDate
+												);
+												array_push($illnessAllArray,$illnessArray);
+					}
 			}
 			
-		//}
+			
+			if(count($illnessData)>0){
+				//Update illness data by deleting the existing with same reference
+				$whereString 	 = array('id_patient'=>$patientId,'illness_reference'=>$referenceId);
+				$illnessDataFind = CardioMedicalHistoryPresentPastModel::where($whereString)->delete();
+				if($illnessDataFind){
+						CardioMedicalHistoryPresentPastModel::insert($illnessAllArray);
+				}
+			}
+			else{
+					//inserting the new illness data
+					CardioMedicalHistoryPresentPastModel::insert($illnessAllArray);
+			}
 
-    }
+			
+			
+	}
+
+	public function surgeryDataManagement($input,$surgery,$patientId,$doctorId,$referenceId,$createdDate){
+				
+		!empty($surgery)?$surgery = array_filter($surgery): $surgery = "";
+		$surgeryArray = array();
+					
+		if(!empty($surgery))
+		{
+			
+    		for($i=0;$i<count($surgery); $i++)
+    		{
+				if(!empty($surgery[$i])){
+					$surgeryData = array('surgery_name' => $surgery[$i],
+								    	 'id_patient'   => $patientId,
+								    	 'id_doctor'	=> $doctorId,
+								    	 'surgery_reference'=>$referenceId,
+								    	 'created_date'	=> $createdDate);
+																	  
+					array_push($surgeryArray,$surgeryData);
+				}
+    		}
+				
+			SurgeryHistoryModel::insert($surgeryArray);
+		}
+	}
+	public function drugDataManagement($input,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate){
+		if(!empty($allergyMedication) && !empty($allergyReaction))
+		{
+	    		$allergyMedication 	= array_filter($allergyMedication);
+	    		$allergyReaction   	= array_filter($allergyReaction);
+				$allergyArray 		= array();
+	    		if(!empty($allergyMedication) && !empty($allergyReaction)){
+					foreach($allergyMedication as $index=>$value){
+							$drugName 		= $allergyMedication[$index];
+							$reactionName 	= $allergyReaction[$index];
+							$allergyData 	= array('drug_name'  => $drugName,							 							'reaction'	 => $reactionName,
+													'id_patient' => $patientId,					
+													'id_doctor'  => $doctorId,							
+													'drug_allergy_reference'=> $referenceId,
+													'created_date' => $createdDate);
+										array_push($allergyArray,$allergyData);
+					}
+					DrugAllergyHistoryModel::insert($allergyArray);
+				}
+		}
+	}
+
+	
 
     public function showCardioPreviousTreatment(){
 		$patientId 	= Session::get('patientId');
@@ -1012,13 +1020,12 @@ class CardiologyController extends Controller {
     }
 
     public function showCardiacDiagnosis(){
-		$patientId = Session::get('patientId');
+		$patientId 		= Session::get('patientId');
 		$doctorId 		= Session::get('doctorId');
-
 		$symptomsArray = array();
 
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+		$patientPersonalData 	= PatientsModel::where('id_patient','=',$patientId)->first();
+		$doctorData 			= DoctorsModel::where('id_doctor','=',$doctorId)->first();
 		
      
 		$diseases =  DB::table('diseases')->select('disease_name')->orderBy('disease_name', 'asc')->lists('disease_name', 'disease_name'); 
@@ -1044,7 +1051,149 @@ class CardiologyController extends Controller {
 		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 		return View('cardiolabdata',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
 	}
+	public function addCardioDiagnosis(){
+    	
+		$input 				= Request::all();
+    	$patientId 			= Session::get('patientId'); 
+        $doctorId 	 		= Session::get('doctorId');
+        $referenceId 		= Session::get('referenceId'); 
+        $createdDate 		= date('Y-m-d');
+		
+		//dd($input);
+		
+		$doctorData 			= DoctorsModel::where('id_doctor','=',$doctorId)->first();
+		$patientPersonalData 	= PatientsModel::where('id_patient','=',$patientId)->first();
+		
+	
+     
+		$diseases 	  =  DB::table('diseases')->select('disease_name')->orderBy('disease_name', 'asc')->lists('disease_name', 'disease_name'); 
+		$symptoms =  DB::table('symptoms')->select('symptoms')->orderBy('symptoms', 'asc')->lists('symptoms','symptoms'); 
 
+					
+
+		
+		
+    
+    	
+        $patientExistCheck = DB::table('patients')->where('id_patient','=',$patientId)->count();
+
+        if($patientExistCheck>0){
+        		$diagExistCheck = DB::table('diagnosis')->where('id_patient','=',$patientId)->where('diag_reference','=',$referenceId)->first();
+    											
+		    	(!empty($input['symptoms']))?$symptoms= $input['symptoms']:$symptoms =[""];
+		    	(!empty($input['syndromes']))?$syndromes= $input['syndromes']:$syndromes ="";
+		    	(!empty($input['diseases']))?$diseases= $input['diseases']:$diseases =[""];
+		    	(!empty($input['additional_comment']))?$additionalComment= $input['additional_comment']:$additionalComment ="";
+
+	    	
+
+			    	//Adding Symptoms
+			    	$newSymptomsArray = array();
+			    	$symptomsExist =  DB::table('symptoms')->orderBy('symptoms')->lists('symptoms');
+			    	
+			    	foreach($symptoms as $index=>$symptomsVal){
+			    		
+			    		if(in_array($symptomsVal, $symptomsExist)){
+		
+			    		}
+			    		else{
+			    			$insertData = array('symptoms'=>$symptomsVal,'symptoms_subclass'=>'');
+			    			array_push($newSymptomsArray,$insertData);
+			    		}
+			    	}
+		
+			    	DB::table('symptoms')->insert($newSymptomsArray);
+
+
+		    	//Adding Diseasess
+		    	$newDiseasesArray = array();
+		    	$diseasesExist =  DB::table('diseases')->orderBy('disease_name')->lists('disease_name');
+		    	
+		    	foreach($diseases as $index=>$diseasesVal){
+		    		
+		    		if(in_array($diseasesVal, $diseasesExist)){
+
+		    		}
+		    		else{
+		    			$insertData = array('disease_name'=>$diseasesVal);
+		    			array_push($newDiseasesArray,$insertData);
+		    		}
+		    	}
+
+		    	DB::table('diseases')->insert($newDiseasesArray);
+
+
+
+	    			
+	    	if(!empty($diagExistCheck)){
+	    		$diagData = array('diag_symptoms'=>json_encode($symptoms),
+	    						  'diag_syndromes'=>$syndromes,
+	    						  'diag_suspected_diseases'=>json_encode($diseases),
+	    						  'diag_comment' => $additionalComment,
+	    						  'edited_date'=>$createdDate);
+	    		//var_dump($diseases);
+	    		$diseases = array_filter($diseases);
+	    		
+	    		if(!empty($diseases)){
+	    			//echo "dises ok";
+		    		$diagUpdate = DB::table('diagnosis')->where('id_patient','=',$patientId)->update($diagData);
+		    		//var_dump($diagUpdate);
+		    		//return Redirect::to('patientdiagnosis')->with(array('success'=>"Data updated successfully"));
+		    		if($diagUpdate){
+		    			
+		    			return Redirect::to('cardiodiagnosis')->with(array('success'=>"Data updated successfully",'newSymptoms'=>$symptoms));	
+		    		}
+		    		else{
+		    		//echo "dises nsss ok";
+		    			return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to update data."));	
+		    		}	
+		    		
+		    	}
+		    	else{
+		    		//echo "dises n ok";
+		    			return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to update data. Diseases field is empty"));	
+		    		}	
+
+	    	}
+	    	else{
+	    		$diagData = array('diag_symptoms'=>json_encode($symptoms),
+		    						  'diag_syndromes'=>$syndromes,
+		    						  'diag_suspected_diseases'=>json_encode($diseases),
+		    						  'diag_comment' => $additionalComment,
+		    						  'id_patient'=>$patientId,
+		    						  'id_doctor'=>$doctorId,
+		    						  'diag_reference' => $referenceId,
+		    						  'created_date'=>$createdDate);
+	    		$diseases = array_filter($diseases);
+	    		if(!empty($diseases)){
+		    		$diagSave = DB::table('diagnosis')->insert($diagData);
+		    		if($diagSave){
+		    			return Redirect::to('cardiodiagnosis')->with(array('success'=>"Data saved successfully"));	
+		    		}
+		    		else{
+		    		//echo "dises nsss ok";
+		    			return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to save data."));	
+		    		}
+		    		
+	    		}
+	    		else
+	    		{
+		    		return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to save data. Diseases field is empty"));	
+		    	}
+
+	    	}		
+
+        }
+        else{
+        	return Redirect::to('patientdiagnosis')->with(array('error'=>"Please save patient personal data "));	
+        }	
+
+    								
+
+    	
+
+    
+    }
 
 
 	public function showMigration(){

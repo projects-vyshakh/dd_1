@@ -150,6 +150,8 @@ Route::any('addCardiacExamination', array('as' => 'addCardiacExamination', 'uses
 
 Route::any('cardiodiagnosis', array('as' => 'cardiodiagnosis', 'uses' => 'CardiologyController@showCardiacDiagnosis'));
 
+Route::any('addCardioDiagnosis', array('as' => 'addCardioDiagnosis', 'uses' => 'CardiologyController@addCardioDiagnosis'));
+
 Route::any('cardiolabdata', array('as' => 'cardiolabdata', 'uses' => 'CardiologyController@showCardiacLabdata'));
 
 Route::any('cardioprevioustreatment', array('as' => 'cardioprevioustreatment', 'uses' => 'CardiologyController@showCardioPreviousTreatment'));
@@ -185,6 +187,9 @@ Route::any('handleMedicalDataMigration', array('as'=>'handleMedicalDataMigration
 Route::any('handleDoctorsDataMigration', array('as'=>'handleDoctorsDataMigration','uses'=>'UserController@showDoctorsDataMigration'));
 Route::any('handlePatientsDataMigration', array('as'=>'handlePatientsDataMigration','uses'=>'UserController@showPatientsDataMigration'));
 Route::any('handleUserDataMigration', array('as'=>'handleUserDataMigration','uses'=>'UserController@handleUserDataMigration'));
+
+//Print Controllers
+Route::post('patientPrescPrint', array('as'=>'patientPrescPrint','uses'=>'PrintController@patientPrescPrint'));
 
 
 //Services
