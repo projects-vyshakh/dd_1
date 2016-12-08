@@ -339,12 +339,12 @@ var patientPrescMedicine = function () {
 				// });
 				// runSharePrescriprion(data.prescMedicine[0].id_share_prescription);
 				var currentUrl = window.location.href;
-						var shareLink = currentUrl+"/shared/"+prescSharedId;
-								bootbox.dialog({
-											message		: '<input type="text" value="'+ shareLink+'"  id="post-shortlink"  style="width:568px" class="form-control post-shorlink"/><button class="button btn btn-info copy-button" id="copy-button" data-clipboard-target="#post-shortlink" style="margin-top:10px"">Copy</button>',
-											title 		: "Share link",
-										
-								});
+				var shareLink  = currentUrl+"/shared/"+prescSharedId;
+				bootbox.dialog({
+					message		: '<h5>Enable your customers to pay,print and download this invoice</h5>'+'<h6 style="margin-top:50px">Copy and share link through email or SMS</h6>'+'<input type="text" value="'+ shareLink+'"  id="post-shortlink"  style="width:565px;margin-top:25px" class="form-control post-shorlink"/><button class="button btn btn-info btn-default copy-button" id="copy-button" data-clipboard-target="#post-shortlink" style="margin-top:10px;float:right">Copy link</button><button class="button btn btn-info btn-default"  data-clipboard-target="#post-shortlink" style="margin-top:10px;float:left">Cancel</button>',
+					title 		: "Share invoice link",
+						
+				});
 		
 				var copyCode = new Clipboard('.copy-button', {
 				    target: function(trigger) {

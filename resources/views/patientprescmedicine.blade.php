@@ -46,6 +46,22 @@ if(!empty($prescMedicine)){
 	
 }
 
+.modal-header {
+    /*border-bottom: 10px solid #e5e5e5;*/
+    border-bottom: none;
+    min-height: 16.43px;
+    padding: 15px;
+}
+.modal-content {
+    background-clip: padding-box;
+    background-color: #fff;
+    border: 5px solid #333;
+    border-radius: 6px;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    outline: 0 none;
+    position: relative;
+}
+
 </style>
 @stop
 @extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
