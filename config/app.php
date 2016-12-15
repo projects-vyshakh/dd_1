@@ -138,6 +138,7 @@ return [
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider', 
 		'Barryvdh\DomPDF\ServiceProvider',
+		'Vsmoraes\Pdf\PdfServiceProvider',
 		
 		/*
 		 * Application Service Providers...
@@ -198,7 +199,8 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Form'      => 'Illuminate\Html\FormFacade',
 		'Html'      => 'Illuminate\Html\HtmlFacade',
-		'PDF' => 'Barryvdh\DomPDF\Facade',
+		//'PDF' => 'Barryvdh\DomPDF\Facade',
+		'PDF' => 'Vsmoraes\Pdf\PdfFacade',
 		
 	],
 

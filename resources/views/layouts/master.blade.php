@@ -44,6 +44,7 @@ $todayDate = date('d-M-Y');
     @if($currentPath=="patientchangepassword")<title>Patient Change Password</title> @endif
 
     @if($currentPath=="userhome")<title>Home</title> @endif
+    @if($currentPath=="oldpatientslist")<title>Patients Lists</title> @endif
     @if($currentPath=="userjsonimport")<title>Import</title> @endif
     
     {!!Html::style('assets/plugins/bootstrap/css/bootstrap.min.css')!!}
@@ -64,7 +65,6 @@ $todayDate = date('d-M-Y');
 
    
 
-    <link rel="stylesheet" href="">
 
  
 </head>
@@ -455,6 +455,8 @@ $todayDate = date('d-M-Y');
                         </li> -->
                         <!-- end: TO-DO DROPDOWN-->
                         <!-- start: NOTIFICATION DROPDOWN -->
+}
+}
 
 
 <!----------------------------------------------- Prajeesh remove notification------------------------------ -->
@@ -881,38 +883,7 @@ $todayDate = date('d-M-Y');
                     @endif   
                     <!-- Diagnosis side menu ends --> 
 
-                     <!-- User Side Menus Starts -->
-                     @if(($currentPath == 'userhome' || $currentPath == 'userjsonimport'))
-                         <div id="user-side-menu">
-                            <ul class="main-navigation-menu">
-                                <li @if($currentPath == 'userhome') class="active open" @endif>
-                                    <a href="userpersonalinformation">
-                                     <span class="dd_input_icon_Management"></span>
-                                        <span class="title"> Personal Information </span><span class="selected"></span>
-                                    </a>
-                                </li>
-                                <li @if($currentPath=='userjsonimport') class="active " @endif>
-                                    <a href="javascript:void(0)">
-                                  
-                                        <span class="dd_input_icon_Medicine"></span>
-                                        <span class="title"> Import </span><span class="selected"></span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li  @if($currentPath == 'userjsonimport') class="active open" @endif>
-                                            <a href="userjsonimport">
-                                                <span class="title"> Json Files </span>
-                                                <!-- <span class="badge badge-new">new</span> -->
-                                            </a>
-                                        </li>
-                                       
-                                        
-                                    </ul>        
-                                </li>
-                               
-                        
-                            </ul>
-                        </div>
-                    @endif
+                    
 
                     <!-- Prescription side menu starts -->
                     @if(($currentPath == 'patientprescmanagement') || ($currentPath == 'patientprescmedicine'))
@@ -993,9 +964,63 @@ $todayDate = date('d-M-Y');
                     <!-- Diagnosis side menu ends -->  
 
 
+                    <!-- User Side Menus Starts -->
+                    
+                    @if($currentPath == 'userhome' || $currentPath=='oldpatientslist')
+                         <div id="user-side-menu">
+                            <ul class="main-navigation-menu">
+                                <li @if($currentPath == 'userhome') class="active open" @endif>
+                                    <a href="userpersonalinformation">
+                                     <span class="dd_input_icon_Management"></span>
+                                        <span class="title"> Dashboard </span><span class="selected"></span>
+                                    </a>
+                                </li>
+                                <li @if($currentPath == 'userpersonalinformation') class="active" @endif>
+                                    <a href="userpersonalinformation">
+                                     <span class="dd_input_icon_Management"></span>
+                                        <span class="title"> Personal Information </span><span class="selected"></span>
+                                    </a>
+                                </li>
+                                <li @if($currentPath=='oldpatientslist') class="active" @endif>
+                                    <a href="javascript:void(0)">
+                                  
+                                        <span class="dd_input_icon_Medicine"></span>
+                                        <span class="title"> Migration Details </span><span class="selected"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li  @if($currentPath == 'oldpatientslist') class="active open" @endif>
+                                            <a href="oldpatientslist">
+                                                <span class="title">Old Patients List </span>
+                                            </a>
+                                        </li>
+                                       
+                                        
+                                    </ul>        
+                                </li>
+                                <!-- <li @if($currentPath=='userjsonimport') class="active " @endif>
+                                    <a href="javascript:void(0)">
+                                  
+                                        <span class="dd_input_icon_Medicine"></span>
+                                        <span class="title"> Import </span><span class="selected"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li  @if($currentPath == 'userjsonimport') class="active open" @endif>
+                                            <a href="userjsonimport">
+                                                <span class="title"> Json Files </span>
+                                            </a>
+                                        </li>
+                                       
+                                        
+                                    </ul>        
+                                </li> -->
+                               
+                        
+                            </ul>
+                        </div>
+                    @endif
 
                 </div>    
-            </div>
+            </div> 
             <div class="main-content">
                 <div class="container">
                     <div class="row">
@@ -1004,17 +1029,32 @@ $todayDate = date('d-M-Y');
                                 <div class="col-sm-8">
                                     @if($currentPath == 'patientprofilemanagement' || $currentPath == 'patientprofileprevtreatment' || $currentPath == 'patientprofileedit' || $currentPath == 'patientchangepassword')
                                     @else
-                                        <a style="font-size: 14px;text-decoration: none;float: left">
+                                        @if($currentPath=='userhome' || $currentPath=='oldpatientslist')
+                                            <a style="font-size: 14px;text-decoration: none;float: left">
+                                            USER ID: {{strtoupper($userId)}}
+                                           
+                                        </a>
+                                        @else
+                                            <a style="font-size: 14px;text-decoration: none;float: left">
                                             PATIENT ID: {{strtoupper($patientId)}}
                                            
                                         </a>
+                                        @endif
+                                        
                                     @endif
                                 </div>
                                 <div class="">
-                                    <a style="font-size: 14px;text-decoration: none;float: right">
-                                            
+                                    @if($currentPath=='userhome' || $currentPath=='oldpatientslist')
+                                        <a style="font-size: 14px;text-decoration: none;float: right">
+                                            USER NAME: {{strtoupper($userName)}}
+                                        </a>
+                                    @else
+                                        <a style="font-size: 14px;text-decoration: none;float: right">
                                             PATIENT NAME: {{strtoupper($patientName)}}
-                                    </a>
+                                        </a>
+                                    @endif
+                               
+                             
                                     <!-- <a style="font-size: 14px;float:right;text-decoration: none">TODAY : {{$todayDate}}</a> -->
                                 </div>
                                 <!-- <li>
@@ -1051,7 +1091,7 @@ $todayDate = date('d-M-Y');
                 </div>
 
             </div>
-
+{{$currentPath}}
     </div>        
      @section('scripts')
   

@@ -46,29 +46,12 @@
 	{
 		foreach ($medicalHistory as $medicalHistoryVal) 
 		{
-			$menarche 											 = $medicalHistoryVal -> menstrual_menarche;
-			$menopause										 = $medicalHistoryVal -> menstrual_menopause;
-			$hypertension										 = $medicalHistoryVal -> history_present_past_hypertension;
-			$hypertensionMedication 			 = $medicalHistoryVal -> history_present_past_hypertension_medication;
-			$diabetes 												 = $medicalHistoryVal -> history_present_past_diabetes;
-			$diabetesMedication						 = $medicalHistoryVal -> history_present_past_diabetes_medication;
-			$hypothyroidism 								 = $medicalHistoryVal -> history_present_past_hypothyroidism;
-			$hypothyroidismMedication 		 = $medicalHistoryVal -> history_present_past_hypothyroidism_medication;
-			$hyperthyroidism 							 = $medicalHistoryVal -> history_present_past_hyperthyroidism;
-			$hyperthyroidismMedication	 = $medicalHistoryVal -> history_present_past_hyperthyroidism_medication;
-			$cyst 														 = $medicalHistoryVal -> history_present_past_cyst;
-			$cystMedication 								 = $medicalHistoryVal -> history_present_past_cyst_medication;
-			$endometriosis 									 = $medicalHistoryVal -> history_present_past_endometriosis;
-			$endometriosisMedication 		 = $medicalHistoryVal -> history_present_past_endometriosis_medication;
-			$uterineFibroids 								 = $medicalHistoryVal -> history_present_past_uterinefiberoids;
-			$uterineFibroidsMedication 		 = $medicalHistoryVal -> history_present_past_uterinefiberoids_medication;
-			$uti															 = $medicalHistoryVal -> history_present_past_uti;
-			$utiMedication 									 = $medicalHistoryVal -> history_present_past_uti_medication;
-			$cancer 													 = $medicalHistoryVal -> history_present_past_cancer;
-			$cancerMedication 							 = $medicalHistoryVal -> history_present_past_cancer_medication;
+			$menarche 		= $medicalHistoryVal -> menstrual_menarche;
+			$menopause  	= $medicalHistoryVal -> menstrual_menopause;
 			
-			$fatherHistory									 = json_decode($medicalHistoryVal -> history_family_father);
-			$motherHistory 								 = json_decode($medicalHistoryVal -> history_family_mother);
+			
+			$fatherHistory	= json_decode($medicalHistoryVal -> history_family_father);
+			$motherHistory 	= json_decode($medicalHistoryVal -> history_family_mother);
 			$siblingHistory 									 = json_decode($medicalHistoryVal -> history_family_sibling);
 			$grandfatherHistory 						 = json_decode($medicalHistoryVal -> history_family_grandfather);
 			$grandmotherHistory 					 = json_decode($medicalHistoryVal -> history_family_grandmother);
@@ -92,7 +75,7 @@
 	}	
 	
 	
-	
+
 	//Present Past History
 	if(!empty($medicalHistoryPresentPastMore)){
 		$illnessNameArray	=	array();
@@ -101,9 +84,9 @@
 		}
 		
 		for($i=0;$i<count($medicalHistoryPresentPastMore);$i++){
-			$illnessName 												 = $medicalHistoryPresentPastMore[$i]->illness_name;
-			$medication													 = $medicalHistoryPresentPastMore[$i]->medication;
-			$illnessDataArray[$illnessName]	 =	[$medicalHistoryPresentPastMore[$i]->illness_status,$medicalHistoryPresentPastMore[$i]->medication];
+			$illnessName = $medicalHistoryPresentPastMore[$i]->illness_name;
+			$medication	= $medicalHistoryPresentPastMore[$i]->medication;
+			$illnessDataArray[$illnessName]	=[$medicalHistoryPresentPastMore[$i]->illness_status,$medicalHistoryPresentPastMore[$i]->medication];
 		}
 	}
 	//Present Past History
@@ -114,6 +97,7 @@
 	<div class="page-header">
 		<h1>Patient Medical History <small></small></h1>
 	</div>
+	
 	<div class="row">
 		<div class="col-sm-12">
 			<?php $error = Session::get('error');

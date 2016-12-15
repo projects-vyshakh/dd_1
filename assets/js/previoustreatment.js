@@ -395,79 +395,61 @@ var patientPrevElements = function () {
                                                                 '<div class="col-sm-12">'+
                                                                     '<div class="form-group form-horizontal">'+
                                                                         '<div class="form-group ">'+
-
-                                                                            '<div class="col-sm-4 ">'+
-                                                                            '<label class=" pull-left col-sm-6 dd_pd_0 dd_font_left" for="gravida">Gravida :</label>'+
-                                                                               
-                                                                                        '<div class="dd_prev_color pull-left col-sm-6 dd_pd_0 dd_font_left" for="gravida">'+data.obsData[o].gravida+'</div>'+
-     
+                                                                            '<div class="">'+
+                                                                            '<label class=" pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="gravida">Gravida</label>'+
+                                                                                '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="gravida">: '+data.obsData[o].gravida+'</div>'+
                                                                                 '<div class="dd_clear">'+'</div>'+
                                                                                 '</div>'+ 
-
-
-                                                                         '<div class="col-sm-4 ">'+
-                                                                            '<label class="  pull-left col-sm-6 dd_pd_0 dd_font_left" for="para">Para :</label>'+
-                                                                             
-                                                                                        '<div class="dd_prev_color pull-left col-sm-6 dd_pd_0 dd_font_left" for="para">'+data.obsData[o].para+'</div>'+
-                                                               
-
-                                                                                '<div class="dd_clear">'+'</div>'+
-                                                                          '</div>'+ 
-
-
-                                                                            '<div class="col-sm-4 ">'+
-                                                                               '<label class="  pull-left col-sm-6 dd_pd_0 dd_font_left" for="living">Living :</label>'+
-                                                                                  
-                                                                                        '<div class="dd_prev_color pull-left col-sm-6 dd_pd_0 dd_font_left" for="living">'+data.obsData[o].living+'</div>'+
-                                                                          
+                                                                        '</div>'+
+                                                                        '<div class="form-group ">'+
+                                                                            '<div class="">'+
+                                                                               '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="para">Para</label>'+
+                                                                                    '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="para">: '+data.obsData[o].para+'</div>'+
+                                                                                    '<div class="dd_clear">'+'</div>'+
+                                                                            '</div>'+ 
+                                                                        '</div>'+ 
+                                                                        '<div class="form-group ">'+
+                                                                            '<div class="">'+
+                                                                               '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="living">Living</label>'+
+                                                                                    '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="living">: '+data.obsData[o].living+'</div>'+
                                                                                 '<div class="dd_clear">'+'</div>'+ 
                                                                             '</div>'+ 
                                                                         '</div>'+
-
-
                                                                         '<div class="form-group ">'+
-                                                                            '<div class="col-sm-4 ">'+
-                                                                                 '<label class="  pull-left col-sm-6 dd_pd_0 dd_font_left" for="marriedlife">Married Life :</label>'+
-                                                                               
-                                                                                 '<div class="dd_prev_color pull-left col-sm-6 dd_pd_0 dd_font_left" for="marriedlife">'+data.obsData[o].married_life+'</div>'+
-                                                                    
-                                                                                '<div class="dd_clear">'+'</div>'+ 
-                                                                                 '</div>'+
-
-                                                                           
-                                                                           '<div class="col-sm-4 ">'+
-                                                                            '<label class="  pull-left col-sm-6 dd_pd_0 dd_font_left" for="bloodgroup">Blood Group :</label>'+
-                                                                               
-                                                                                        '<div class="dd_prev_color pull-left col-sm-6 dd_pd_0 dd_font_left" for="bloodgroup">'+data.obsData[o].husband_blood_group+'</div>'+
-                                                                                        '<div class="dd_clear">'+'</div>'+
-                                                                                '</div>'+ 
-
-                                                                        '<div class="col-sm-4 ">'+
-                                                                            '<label class="  pull-left col-sm-6 dd_pd_0 dd_font_left" for="gestationalage">Gestational Age :</label>'+
-                                                                               
-                                                                                        '<div class=" dd_prev_color pull-left col-sm-6 dd_pd_0 dd_font_left" for="gestationalage">'+data.obsData[o].obs_gestational_age+'</div>'+
-                                                                                  
-                                                                                '</div>'+ 
-                                                                                 '<div class="dd_clear">'+'</div>'+          
+                                                                            '<div class="">'+
+                                                                                '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="marriedlife">Married Life</label>'+
+                                                                                    '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="marriedlife">: '+data.obsData[o].married_life+'</div>'+
+                                                                                    '<div class="dd_clear">'+'</div>'+ 
+                                                                            '</div>'+
+                                                                        '</div>'+
+                                                                        '<div class="form-group ">'+
+                                                                            '<div class="">'+
+                                                                                '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="bloodgroup">Blood Group</label>'+
+                                                                                    '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="bloodgroup">: '+data.obsData[o].husband_blood_group+'</div>'+
+                                                                                    '<div class="dd_clear">'+'</div>'+
+                                                                            '</div>'+ 
+                                                                        '</div>'+
+                                                                        '<div class="form-group ">'+
+                                                                            '<div class="">'+
+                                                                                '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="gestationalage">Gestational Age</label>'+
+                                                                                    '<div class=" dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="gestationalage">: '+data.obsData[o].obs_gestational_age+'</div>'+
+                                                                            '</div>'+ 
+                                                                            '<div class="dd_clear">'+'</div>'+          
                                                                         '</div>'+ 
                                                                         '<div class="form-group ">'+
-
-
-                                                                        '<div class="col-sm-4 ">'+
-                                                                            '<label class="  pull-left col-sm-6 dd_pd_0 dd_font_left" for="lastdeliverydate">Last Delivery Date :</label>'+
-                                                                               
-                                                                                        '<div class=" dd_prev_color pull-left col-sm-6 dd_pd_0 dd_font_left" for="lastdeliverydate">'+data.obsData[o].obs_last_delivery_date+'</div>'+
-                                                                                   '<div class="dd_clear">'+'</div>'+  
-                                                                                '</div>'+
-
-
-                                                                        '<div class="col-sm-4 ">'+        
-                                                                            '<label class="  pull-left col-sm-6 dd_pd_0 dd_font_left" for="expecteddeliverydate">Expected Delivery Date :</label>'+
-                                                                            
-                                                                                        '<div class=" dd_prev_color pull-left col-sm-6 dd_pd_0 dd_font_left" pull-left dd_prev_colorfor="lastdeliverydate">'+data.obsData[o].obs_expected_delivery_date+'</div>'+
-                                                                                 '<div class="dd_clear">'+'</div>'+    
-                                                                                '</div>'+      
-                                                                         '</div>'+                
+                                                                            '<div class="">'+
+                                                                                '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="lastdeliverydate">Last Delivery Date</label>'+
+                                                                                    '<div class=" dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="lastdeliverydate">: '+data.obsData[o].obs_last_delivery_date+'</div>'+
+                                                                                    '<div class="dd_clear">'+'</div>'+  
+                                                                            '</div>'+
+                                                                        '</div>'+
+                                                                        '<div class="form-group ">'+
+                                                                            '<div class="">'+        
+                                                                                '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="expecteddeliverydate">Expected Delivery Date</label>'+
+                                                                                    '<div class=" dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" pull-left dd_prev_colorfor="lastdeliverydate">: '+data.obsData[o].obs_expected_delivery_date+'</div>'+
+                                                                                    '<div class="dd_clear">'+'</div>'+    
+                                                                            '</div>'+
+                                                                        '</div>'+      
                                                                     '</div>'+ 
                                                                 '</div>'+ 
                                                              '</div>'                   

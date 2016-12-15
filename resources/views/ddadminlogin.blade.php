@@ -8,7 +8,7 @@
 	<!-- start: HEAD -->
 	<head>
 
-		<title>Doctor's Diary | Admin Login</title>
+		<title>Doctor's Diary | Login</title>
 		<!-- start: META -->
 		<meta charset="utf-8" />
 		<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
@@ -87,28 +87,25 @@
 		$currentPath = Route::getCurrentRoute()->getPath();
 		//echo $currentPath;
 	?>
-	<body style="background-color:#000">
-		<div class=" navbar-fixed-top resize-login dd_login_header">
-			<div class="inner_wrapper">
+	<body style="background-color:#f9f9f9">
+		<div class=" navbar-fixed-top resize-login dd_login_header"><!-- navbar-fixed-top -->
+			<div class="inner_wrapper_2">
 				<div class="container dd_pd_0">
 	        		<div class="row dd_mg_0">
 	        		 	<div class="col-sm-12 dd_pd_0">
 	        		 		<div class="logo_div">
-	    		 			   <a class="navbar-brand dd_logo_img" href="http://ww.doctorsdiary.co">
-				                   
+	    		 			   <a class="navbar-brand dd_logo_img_2" href="http://www.doctorsdiary.co">				                   
 								</a>
 							</div>
-								<div class="login_div">
+							<div class="login_div">
 								<div class="doctorlogin_main">
-									<span class="doctor_login"><img src="assets/images/doctor_icon.png"></span>
-
-										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #428bca" @endif>Doctor Login</a>&nbsp;  &nbsp;
-
+									<!-- <span class="doctor_login"><img src="assets/images/doctor_icon.png"></span> -->
+									<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #a9f2ff" @endif>Doctor Login</a>&nbsp;  &nbsp;
 								</div>
 		        		 		<div class="patientlogin_main"> 		
-		        		 		 	<span class="patient_login"><img src="assets/images/patient_icon.png">
-		        		 		 	</span>	        		 		 	
-		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #428bca" @endif>
+		        		 		 	<!-- <span class="patient_login"><img src="assets/images/patient_icon.png">
+		        		 		 	</span>	   -->      		 		 	
+		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #a9f2ff" @endif>
 		        		 		 		Patient Login
 		        		 		 	</a>
 		        		 		</div>
@@ -123,181 +120,143 @@
 	        </div>
         </div>
        <!-- Swiper -->
-	    <div class="swiper-container dd_bg_black">
+	  
 
 	       
 	           
-	        <div class="swiper-wrapper dd_swiper_opacity  ">
-	         
-	            <div class="swiper-slide"  style="background-image:url(assets/images/slider1.jpeg);">
-
-	               <span class="dd_slider_hd">
-	       
-	             The EHR platform for billion Indian Population
-	              </span>
-                </div>
-
-	           
-
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider2.jpeg)">	            	
-	            <span class="dd_slider_hd">
-	             The EHR platform with Machine Learning Algorithms
-	            </span>
-	            </div>
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider3.jpeg)">
-
-	            <span class="dd_slider_hd">
-	             The EHR platform that helps fight Cancer
-	            </span> 
-	            	
-
-	            </div>
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider4.jpg) ">
-		           <span class="dd_slider_hd">
-		             The EHR platform backed by Supercomputing
-		            </span> 	           
-	            </div>
-
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider5.jpg) ">
-		           <span class="dd_slider_hd">
-		             The EHR platform that saves lives from Epidemics
-		            </span> 	           
-	            </div>
-
-
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider6.jpeg) ">
-		           <span class="dd_slider_hd">
-		             The EHR platform that brings Personalized Medicine
-		            </span> 	           
-	            </div>
-
-
-	            <div class="swiper-slide" style="background-image:url(assets/images/slider7.jpg) ">
-		           <span class="dd_slider_hd">
-		                The EHR platform that helps in Quantitative Research
-		            </span> 	           
-	            </div>
-<!-- 	            <div class="swiper-slide" style="background-image:url(assets/images/slider1.jpeg)">ggg</div> -->
-	        </div>
+	        
 	        <!-- Add Pagination -->
 	       <!--  <div class="swiper-pagination swiper-pagination-white"></div> -->
 	        <!-- Add Arrows -->
 	  <!--       <div class="swiper-button-next swiper-button-white"></div>
 	        <div class="swiper-button-prev swiper-button-white"></div> -->
-	        <div class="inner_wrapper ">
-					<div class="box_2">
-			        	<!-- <div class="main-login"> -->
-			        	<div>
+	        <div class="inner_wrapper_3 ">
 
-			        	<div class="dd_logo_responsive">
+	        <div class="dd_doctor_login_main_hd">
 
-				        		<img src="assets/images/logo-mob.png" alt="">			        		
-				        	</div>
-				        	<div class="dd_drlogin_responsive">
+	       		 <span>Sign in or create an account</span></div>
 
-				        				<div class="login_div2">
-								<div class="doctorlogin_main2">								
+	        <div class="doctor_login_main">		       
+				<div class="box_2">
+				 <div class="box_2_main">
+		        	<!-- <div class="main-login"> -->
+		        	<div>
 
-										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+		        	<div class="dd_logo_responsive">
+			        	<img src="assets/images/logo-mob.png" alt="">			        		
+			        </div>
 
-								</div>
-		        		 		<div class="patientlogin_main2"> 		
-		        		 		         		 		 	
-		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
-		        		 		 		Patient Login
-		        		 		 	</a>
-		        		 		</div>
+		        	<div class="dd_drlogin_responsive">
+			        	<div class="login_div2">
+							<div class="doctorlogin_main2">								
+								<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+							</div>
+	        		 		<div class="patientlogin_main2"> 							        		 		       	
+	        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
+	        		 		 		Patient Login
+	        		 		 	</a>
 	        		 		</div>
-				        	
-				        			        		
-				        	</div>
+        		 		</div> 	
+		        	</div>
+	        		<div class="logo">
+	        			<span class="login_HD dd_signfont">Sign into your account</span>
+	        		</div>
 
+		        		
+	        		<div class="box-login " style="display: block;">
+	        			<div class="row">
+							<div class="col-sm-12">
+	        					{!! Form::open(array('route' => 'handleDoctorLogin', 'role'=>'form', 'id'=>'login', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
+		        				<div class="form-group">
+									<div class="col-sm-12 dd_login">
+										<span class="input-icon ">
+											{!! Form::text('email', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Email', 'id'=>'email'));  !!}
+											<span class="dd_input_icon_name"></span> 
+										</span>
+									</div>
+		        				</div>
+		        				<div class="form-group dd_mg_B_10">
+		        					<div class="col-sm-12 dd_login">
+										<span class="input-icon dd_relative">
+											{!! Form::password('password', array('placeholder'=>'Password', 'class'=>'form-control dd_input dd_login_main', 'id'=>'password' ) ) !!}
+											<span class="dd_input_icon"></span>
 
-			   
-
-
-			        		<div class="logo dd_textalign_center">
-			        			<span class="login_HD dd_signfont">Sign In</span>
-			        		</div>
-
-			        		<div class=" core-box dd_margin_0 dd_width_90 dd_border_0 dd_relative">
-		                        <div class="heading ">
-		                              <?php $error = Session::get('error');
-		                                $success = Session::get('success');
-		                                Session::forget('error');
-		                                Session::forget('success');
-		                               
-		                              ?>
-		                              @if(!empty($error))
-		                                <div class="dd_alert dd_abs col-sm-12 display-none" style="display: block;">
-		                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-		                                          {{$error}}
-		                                </div>
-		                              @elseif(!empty($success))
-		                                <div class="dd_alert_2 display-none" style="display: block;">
-		                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-		                                          {{$success}}
-		                                </div>
-		                              @endif
-		                                    
-		                        </div>
-		                    </div> 
-			        		<div class="box-login " style="display: block;">
-			        			<div class="row">
-									<div class="col-sm-12">
-			        					{!! Form::open(array('route' => 'userLogin', 'role'=>'form', 'id'=>'login', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
-					        				<div class="form-group">
-												<div class="col-sm-12 dd_login">
-													<span class="input-icon ">
-														{!! Form::text('email', null, $attributes = array('class'=>'form-control dd_input','placeholder' => 'Email', 'id'=>'email'));  !!}
-														<span class="dd_input_icon_name"></span> 
-													</span>
-												</div>
-					        				</div>
-					        				<div class="form-group dd_mg_B_10">
-					        					<div class="col-sm-12 dd_login">
-													<span class="input-icon dd_relative">
-														{!! Form::password('password', array('placeholder'=>'Password', 'class'=>'form-control dd_input', 'id'=>'password' ) ) !!}
-														<span class="dd_input_icon"></span>
-
-													</span>
-												</div>
-					        				</div>
-					        				<div class="form-group dd_mg_B_10">
-					        					<div class="col-sm-12 dd_mg_B_T_10">
-													<span class="input-icon ">
-														<button type="submit" class="btn btn-primary btn-block dd_btn">Login</button>
-													</span>
-												</div>
-												<div class="col-sm-12 dd_login_mg_30 dd_font_size_14px dd">
-													<a href="forgetpassword" class="dd_textalign_center ">Forgot Password?</a>
-												</div>
-												<div class="col-sm-12 dd_textalign_center dd_mg_25 dd_dummy dd_font_size_14px">
-												<span class="dd_color_light_bl">New User ?</span><a href="doctorsignup" class=""> Register Now</a>
-												</div>
-					        				</div>
-					        			<!-- 	<hr class="dd_border_CL">
-					        				<div class="form-group ">
-					        					<div class="col-sm-2 "></div>
-					        					<div class="col-sm-12 dd_textalign_center_mg">New to Doctor's Diary?&nbsp;<a href="doctorsignup">Signup</a></div>
-											</div> -->
-					        			
-										{!! Form::close() !!}
+										</span>
+									</div>
+		        				</div>
+			        				<div class=" dd_relative">
+				                        <div class="heading ">
+				                              <?php $error = Session::get('error');
+				                                $success = Session::get('success');
+				                                Session::forget('error');
+				                                Session::forget('success');
+				                               
+				                              ?>
+				                              @if(!empty($error))
+				                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
+				                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+				                                          {{$error}}
+				                                </div>
+				                              @elseif(!empty($success))
+				                                <div class="dd_alert_2 display-none" style="display: block;">
+				                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+				                                          {{$success}}
+				                                </div>
+				                              @endif
+				                                    
+				                        </div>
+				                    </div> 
+			        				<div class="form-group dd_mg_B_10">
+			        					<div class="col-sm-12 dd_mg_B_T_10">
+											<span class="input-icon ">
+												<button type="submit" class="btn btn-primary btn-block dd_btn_new">Login</button>
+											</span>
+										</div>
+										<div class="col-sm-12 dd">
+											<a href="doctorforgetpassword" class="dd_textalign_center dd_16px ">Forgot Your Password?</a>
+										</div>
+									
 			        				</div>
-			        			</div>
-			        		</div>
-			        			
-						</div>
+        			
+								{!! Form::close() !!}
+	        				</div>
+	        			</div>
+	        		</div>		
+					</div>
 					</div>
 				</div>
 
 
+					<div class="box_right">
+			        	<div class="logo">
+			        		<span class="login_HD dd_signfont">New to Doctor's Diary?</span>
+			        	</div>
+						<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
+							<span class="input-icon ">
+								
+								<a href="doctorlogin" class="btn btn-primary btn-block dd_btn_new doctor-register-btn dd_regi_pd"> Register Now</a>
+								
+							</span>
+						</div>
+					</div>
+
+
+
+			<div class="dd_clear"></div>
+			</div>
+
+
+
+				<div class="dd_clear"></div>
+				</div>
+
+
 		<footer>
-				<div class="navbar-fixed-bottom " style="z-index: 20000; bottom: 0;">
+				<div class="navbar-fixed-bottom dd_footer" style="z-index: 20000; bottom: 0;">
 			      <div class="container " style="height:">
 			        <div class="row">
 			        	<div class="col-sm-12">
-			        	<div class="inner_wrapper">
+			        	<div class="inner_wrapper_2">
 			        		<div class="footer_div footer_pd dd_left ">
 			        			&copy 2016 Doctor's Diary | Powered by Brainpan <!-- Innovations.  -->
 			        		</div>
@@ -333,7 +292,7 @@
 
 
 
-	    </div>
+	   
 	  	
 
 		
@@ -364,26 +323,17 @@
 	    {!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 	    {!!Html::script('assets/js/login.js')!!}
 
-	     {!!Html::script('assets/plugins/Swiper-master/dist/js/swiper.min.js')!!}
-	   	
+	   
 	
 		<script>
 			jQuery(document).ready(function() {
 				//Main.init();
 				Login.init();
 				
-			  	var swiper = new Swiper('.swiper-container', {
-			        pagination: '.swiper-pagination',
-			        speed: 1500,
-			        paginationClickable: true,
-			        autoplay : 5000,
-			        preloadImages : true,
-			        nextButton: '.swiper-button-next',
-			        prevButton: '.swiper-button-prev',
-			        spaceBetween: 5000,
-			        effect: 'fade',
-
-			    });
+			  	$('.doctor-register-btn').click(function(e){
+			  		e.preventDefault();
+			  		window.location.href = "doctorsignup";
+			  	})
 				
 			});
 		</script>

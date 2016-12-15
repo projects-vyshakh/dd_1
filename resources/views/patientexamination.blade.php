@@ -33,6 +33,7 @@ if(!empty($doctorData)){
 
 @stop
 @extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
+
 @section('main')
 <div class="loader"></div>
 	<div class="page-header">

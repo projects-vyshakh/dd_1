@@ -384,22 +384,37 @@ $currentPath = Route::getCurrentRoute()->getPath();
 									<!-- <i class="fa fa-user"></i>  -->
 								</span>
 							</div>
+							<!-- <input type="checkbox" name="services" id="services" value="agree" class="services">  -->
+						</div>
+
+						<div class="form-group dd_mg_B_40 dd_agree">
+							<div class="col-sm-12">
+								<span class="input-icon ">
+									<input type="checkbox" name="services" id="services" value="agree" class="services">
+								</span>
+								<p style="margin: -23px 20px 4px"> 
+									I agree to the Doctor's Diary 
+
+
+									<a target="_blank"> Terms of Service </a> and
+									<a  target="_blank"> Privacy Policy </a>
+								</p>
+							</div>
+							<!--   -->
 						</div>
 
 
 
 
-						<div class="dd_agree">
+
+						<div class="dd_agree form-group">
 
 							<p>
 								<!-- <a href="" class="dd_textalign_center"> -->
-
-								<input type="checkbox" name="services" id="services" value="agree" class="services"> 
-								I agree to the Doctor's Diary 
-
-
-								<a target="_blank"> Terms of Service </a> and
-								<a  target="_blank"> Privacy Policy </a>
+								<span>
+								<!-- <input type="checkbox" name="services" id="services" value="agree" class="services">  -->
+								</span>
+								
 								<!-- </a> -->
 							</p>
 						</div>
@@ -528,6 +543,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
 		{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 		{!!Html::script('assets/js/login.js')!!}
+		{!!Html::script('assets/js/doctorsignup.js')!!}
 		<!-- {!!Html::script('assets/plugins/tooltip-validation/jquery-validate.bootstrap-tooltip.js')!!} -->
 		{!!Html::script('assets/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')!!}
 
@@ -542,6 +558,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 			jQuery(document).ready(function() {
 				//Main.init();
 				Login.init();
+				doctorSignup.init();
 				$('#qualification').multiselect({ });
 					
 				

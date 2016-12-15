@@ -7,10 +7,20 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Session;
 use Request;
+use View;
 use App\classes\DBUtils;
 use App\Http\Controllers\Controller;
 use App\Http\Manager\SubscriptionManager;
 
+
+//Models
+//Models
+use App\Models\PatientsModel;
+use App\Models\DoctorsModel;
+use App\Models\MedicalHistoryPresentPastModel;
+use App\Models\SurgeryHistoryModel;
+use App\Models\DrugAllergyHistoryModel;
+use App\Models\MedicalHistoryModel;
 
 class UserController extends Controller {
 
@@ -52,9 +62,16 @@ class UserController extends Controller {
     public function handleUserLogin(){
      	$email 		= Input::get('email');
 		$password 	= Input::get('password');
-
-
+		
+		
 		$checkLoginCredentials = DB::table('users')->where('email','=',$email)->where('status','=','1')->first();
+
+		
+
+
+		
+
+
 		if(!empty($checkLoginCredentials))
 		{
 			$passwordEncrypted = $checkLoginCredentials->password;
@@ -78,9 +95,14 @@ class UserController extends Controller {
 			
 			
 			if($password==$decrypted){
-				Session::put('userId',$checkLoginCredentials->id_user);
-				Session::put('userType',$checkLoginCredentials->user_type);
-				return Redirect::to('userhome');
+				$userName = $checkLoginCredentials->first_name." ".$checkLoginCredentials->last_name;
+				$userId = $checkLoginCredentials->id_user;
+				Session::set('user_id',$checkLoginCredentials->id_user);
+				Session::set('user_name',$userName);
+				Session::set('user_type',$checkLoginCredentials->user_type);
+
+				//$userData = array('userName'=>$$userName,'userId'=>$userId);
+				return Redirect::to('userhome')->with(array('userName'=>$userName,'userId'=>$userId));
 			}
 			else{
 				return Redirect::to('dduserlogin')->with(array('error'=>"Login failed!!! Please check the credentials"));
@@ -103,7 +125,9 @@ class UserController extends Controller {
 	
     }
     public function showUserHome(){
-    	return view('userhome');
+    	$userName = Session::get('user_name');
+    	$userId   = Session::get('user_id');
+    	return view('userhome',array('userName'=>$userName,'userId'=>$userId));
     }
     /*public function showUserImport(){
     	return view('userjsonimport');
@@ -1248,5 +1272,19 @@ class UserController extends Controller {
 		}
 
 		
+	}
+
+	public function showOldPatientsList(){
+		$userName = Session::get('user_name');
+    	$userId   = Session::get('user_id');
+
+    	$oldPatientsData = MedicalHistoryModel::where('id_doctor','=','')->get();
+
+
+    	//var_dump($oldPatientsData);
+
+
+    	//return View::make('oldpatientslist')->with(array('userName'=>$userName,'userId'=>$userId));
+    	return view('oldpatientslist',array('userName'=>$userName,'userId'=>$userId,'oldPatientsData'=>$oldPatientsData));
 	}
 }

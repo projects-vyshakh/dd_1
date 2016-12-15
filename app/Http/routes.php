@@ -27,6 +27,8 @@ Route::get('blade', function ()
 	return view('page',array('name' => 'The Raven'));
 });
 
+Route::get('helloworld',  array('as' => 'helloworld', 'uses' => 'PrintTestController@helloworld'));
+
 Route::get('doctorforgetpassword',  array('as' => 'doctorforgetpassword', 'uses' => 'LoginController@showDoctorForgetPassword'));
 Route::post('handleDoctorForgetPassword',  array('as' => 'handleDoctorForgetPassword', 'uses' => 'LoginController@handleDoctorForgetPassword'));
 
@@ -180,6 +182,7 @@ Route::any('handlePatientChangePassword', array('as'=>'handlePatientChangePasswo
 Route::any('dduserlogin', array('as'=>'dduserlogin','uses'=>'UserController@showUserLogin'));
 Route::any('handleUserLogin', array('as'=>'handleUserLogin','uses'=>'UserController@handleUserLogin'));
 Route::any('userhome', array('as'=>'userhome','uses'=>'UserController@showUserHome'));
+Route::any('oldpatientslist', array('as'=>'oldpatientslist','uses'=>'UserController@showOldPatientsList'));
 Route::any('import', array('as'=>'import','uses'=>'UserController@showUserImport'));
 Route::any('userjsonimport', array('as'=>'userjsonimport','uses'=>'UserController@showUserJsonImport'));
 Route::any('handleDiagnosisDataMigration', array('as'=>'handleDiagnosisDataMigration','uses'=>'UserController@showDiagnosisDataMigration'));

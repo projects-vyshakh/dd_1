@@ -133,52 +133,7 @@ var Login = function () {
         });
     };
    
-    var runRegisterValidator = function () {
-        var form3 = $('.form-register');
-        var errorHandler3 = $('.errorHandler', form3);
-        form3.validate({
-            rules: {
-                full_name: {
-                    minlength: 2,
-                    required: true
-                },
-                address: {
-                    minlength: 2,
-                    required: true
-                },
-                city: {
-                    minlength: 2,
-                    required: true
-                },
-                gender: {
-                    required: true
-                },
-                email: {
-                    required: true
-                },
-                password: {
-                    minlength: 6,
-                    required: true
-                },
-                password_again: {
-                    required: true,
-                    minlength: 5,
-                    equalTo: "#password"
-                },
-                agree: {
-                    minlength: 1,
-                    required: true
-                }
-            },
-            submitHandler: function (form) {
-                errorHandler3.hide();
-                form3.submit();
-            },
-            invalidHandler: function (event, validator) { //display error alert on form submit
-                errorHandler3.show();
-            }
-        });
-    };
+  
     
     //function to return the querystring parameter with a given name.
     var getParameterByName = function(name) {
@@ -187,11 +142,7 @@ var Login = function () {
         return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     };
 
-
-
-    var runDoctorSignUpValidator = function () {
-        
-
+    var runCountryState = function(){
         $( "#country option:selected" ).val('101').text('India');
         /*Dynamically adding state responding to country and also keeping selected value of state*/
             var stateHidden = $('#state-hidden').val();
@@ -233,6 +184,10 @@ var Login = function () {
             });
             })
 
+    };
+
+    var runDoctorSignUpValidator = function () {
+        
 
         var form = $('#doctor-signup');
         var errorHandler = $('.errorHandler', form);
@@ -276,6 +231,7 @@ var Login = function () {
                 state : {
                     stateNotEquals : 0 ,
                 },
+                services : { needsSelection: false, required:true },
                 
                 qualification  :   { needsSelection: false, required:true },
                 
@@ -322,7 +278,8 @@ var Login = function () {
             runLoginButtons();
             runSetDefaultValidation();
             runLoginValidator();
-            runDoctorSignUpValidator();
+            //runDoctorSignUpValidator();
+            runCountryState();
             
         }
     };

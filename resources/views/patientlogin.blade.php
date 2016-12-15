@@ -178,28 +178,7 @@
 			        			<span class="login_HD dd_signfont">Sign into your account</span>
 			        		</div>
 
-			        		<div class=" dd_relative">
-		                        <div class="heading ">
-		                              <?php $error = Session::get('error');
-		                                $success = Session::get('success');
-		                                Session::forget('error');
-		                                Session::forget('success');
-		                               
-		                              ?>
-		                              @if(!empty($error))
-		                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
-		                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-		                                          {{$error}}
-		                                </div>
-		                              @elseif(!empty($success))
-		                                <div class="dd_alert_2 display-none" style="display: block;">
-		                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-		                                          {{$success}}
-		                                </div>
-		                              @endif
-		                                    
-		                        </div>
-		                    </div> 
+			        		
 			        		<div class="box-login " style="display: block;">
 			        			<div class="row">
 			        				<div class="col-sm-12">
@@ -223,6 +202,28 @@
 												</div>
 					        				</div>
 					        				<div class=" dd_relative">
+						                        <div class="heading ">
+						                              <?php $error = Session::get('error');
+						                                $success = Session::get('success');
+						                                Session::forget('error');
+						                                Session::forget('success');
+						                               
+						                              ?>
+						                              @if(!empty($error))
+						                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
+						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+						                                          {{$error}}
+						                                </div>
+						                              @elseif(!empty($success))
+						                                <div class="dd_alert_2 display-none" style="display: block;">
+						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+						                                          {{$success}}
+						                                </div>
+						                              @endif
+						                                    
+						                        </div>
+						                    </div> 
+						                    <div class=" dd_relative">
 						                        <div class="heading ">
 						                              <?php $error = Session::get('error');
 						                                $success = Session::get('success');

@@ -7397,3 +7397,6 @@ table.dataTable thead .sorting_asc::after {
     position: absolute;
     top: -20px;
 }
+.prev-bold{
+	font-weight: bold;
+}

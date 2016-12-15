@@ -262,12 +262,22 @@ class DoctorController extends Controller {
 
 	public function showPatientMedicalHistory(){
 
-		$patientId 								= Session::get('patientId');
-		$doctorId 								 	= Session::get('doctorId');
+		$patientId 	= Session::get('patientId');
+		$doctorId 	= Session::get('doctorId');
 		
-		$patientPersonalData 								= DB::table('patients')->where('id_patient','=',$patientId)->first();
-		$doctorData 													= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
-      	$medicalHistory										 	= DB::table('medical_history')->where('id_patient','=',$patientId)->where('created_date', DB::raw("(select max(`created_date`) from medical_history)"))->get();
+		$patientPersonalData = PatientsModel::where('id_patient','=',$patientId)->first();
+		$doctorData 		 = DoctorsModel::where('id_doctor','=',$doctorId)->first();
+      	$medicalHistory		 = DB::table('medical_history')
+      	                                    ->where('id_patient','=',$patientId)
+      	                                    ->where('created_date', DB::raw("(select max(`created_date`) from medical_history where id_patient='$patientId')"))
+      	                                    ->get();
+
+      	/*$medicalHistory		 = DB::table('medical_history')
+      	                                    ->where('id_patients','=',$patientId)
+      	                                    ->where('id_medical_history', DB::raw("(select max(`id_medical_history`) from medical_history where id_patient='$patientId')"))
+      	                                    ->get();*/
+      	    //dd($medicalHistory);
+
 		$medicalHistoryPresentPastMore  	= MedicalHistoryPresentPastModel::where('id_patient','=',$patientId)->where('created_date', DB::raw("(select max(`created_date`) from medical_history_present_past_more  where  id_patient='$patientId')"))->get();							
 		$surgeryHistory 											= DB::table('medical_history_surgical')->where('id_patient','=',$patientId)->get();
 		$drugAllergyHistory 									= DB::table('medical_history_drug_allergy')->where('id_patient','=',$patientId)->get();
@@ -829,22 +839,93 @@ class DoctorController extends Controller {
 	public function showPatientDiagnosis(){
 		$patientId = Session::get('patientId');
 		$doctorId  = Session::get('doctorId');
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+		$doctorData 			= DoctorsModel::where('id_doctor','=',$doctorId)->first();
+		$patientPersonalData 	= PatientsModel::where('id_patient','=',$patientId)->first();
+
 		$symptomsArray = array();
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-     
+		
 		$diseases =  DB::table('diseases')->select('disease_name')->orderBy('disease_name', 'asc')->lists('disease_name', 'disease_name'); 
+
 		$symptoms =  DB::table('symptoms')->select('symptoms')->orderBy('symptoms', 'asc')->lists('symptoms','symptoms'); 
 
 		
+		//var_dump($symptoms);
 
 
 		$diag = DB::table('diagnosis')
 									->where('id_patient','=',$patientId)
-									->where('created_date', DB::raw("(select max(`created_date`) from diagnosis where id_patient='$patientId')"))
+									// ->where('created_date', DB::raw("(select max(`created_date`) from diagnosis where id_patient='$patientId')"))
 									->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis where id_patient='$patientId')"))
 									->first();
+
+		$diag2 = DB::table('diagnosis')
+		                    ->select('diag_symptoms','diag_suspected_diseases')
+							->where('id_patient','=',$patientId)
+							->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis       where id_patient='$patientId')"))
+							->first();
+
+
+
+					//$sym = (array)$diag2->diag_symptoms;
+				if(!empty($diag2)){
+					//Symptoms Merging
+					if(!empty($diag->diag_symptoms)){
+						$symFetchedArray = array();
+						$symptomsName 	 = explode('"',$diag->diag_symptoms);
+						
+						for($i=0;$i<sizeof($symptomsName);$i++){
+							
+							if($i%2!=0){
+								array_push($symFetchedArray,$symptomsName[$i]);
+							}
+							
+						}
+						
+						$finalSymptomsFetchArray = array();
+						foreach($symFetchedArray as $index=>$value){
+							//var_dump($value);
+							$finalSymptomsFetchArray[$value] = $value;
+						}
+						
+						$symptoms = array_merge($symptoms,$finalSymptomsFetchArray);
+					}
+					else{
+						$symptoms = $symptoms;
+					}
+
+					//Diseases Merging
+					if(!empty($diag->diag_suspected_diseases)){
+						$disFetchedArray = array();
+						$diseasesName 	 = explode('"',$diag->diag_suspected_diseases);
+						
+						for($i=0;$i<sizeof($diseasesName);$i++){
+							
+							if($i%2!=0){
+								array_push($disFetchedArray,$diseasesName[$i]);
+							}
+							
+						}
+						
+						$finalDiseasesFetchArray = array();
+						foreach($disFetchedArray as $index=>$value){
+							//var_dump($value);
+							$finalDiseasesFetchArray[$value] = $value;
+						}
+						
+						$diseases = array_merge($diseases,$finalDiseasesFetchArray);
+					}
+					else{
+						$symptoms = $symptoms;
+					}
+					
+					
+				}
+				else{
+					$symptoms = $symptoms;
+				}				
+					
+
+				
 
 		return View('patientdiagnosis',array('diseases'=>$diseases,'diag'=>$diag,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
 	}
@@ -2020,63 +2101,30 @@ class DoctorController extends Controller {
         if($patientExistCheck>0){
         		$diagExistCheck = DB::table('diagnosis')->where('id_patient','=',$patientId)->where('diag_reference','=',$referenceId)->first();
     											
-		    	(!empty($input['symptoms']))?$symptoms= $input['symptoms']:$symptoms =[""];
+		    	(!empty($input['symptoms']))?$symptoms= $input['symptoms']:$symptoms =null;
 		    	(!empty($input['syndromes']))?$syndromes= $input['syndromes']:$syndromes ="";
-		    	(!empty($input['diseases']))?$diseases= $input['diseases']:$diseases =[""];
+		    	(!empty($input['diseases']))?$diseases= $input['diseases']:$diseases ="";
 		    	(!empty($input['additional_comment']))?$additionalComment= $input['additional_comment']:$additionalComment ="";
 
 	    	
-
-			    	//Adding Symptoms
-			    	$newSymptomsArray = array();
-			    	$symptomsExist =  DB::table('symptoms')->orderBy('symptoms')->lists('symptoms');
-			    	
-			    	foreach($symptoms as $index=>$symptomsVal){
-			    		
-			    		if(in_array($symptomsVal, $symptomsExist)){
 		
-			    		}
-			    		else{
-			    			$insertData = array('symptoms'=>$symptomsVal,'symptoms_subclass'=>'');
-			    			array_push($newSymptomsArray,$insertData);
-			    		}
-			    	}
-		
-			    	DB::table('symptoms')->insert($newSymptomsArray);
-
-
-	    	//Adding Diseasess
-	    	$newDiseasesArray = array();
-	    	$diseasesExist =  DB::table('diseases')->orderBy('disease_name')->lists('disease_name');
-	    	
-	    	foreach($diseases as $index=>$diseasesVal){
-	    		
-	    		if(in_array($diseasesVal, $diseasesExist)){
-
-	    		}
-	    		else{
-	    			$insertData = array('disease_name'=>$diseasesVal);
-	    			array_push($newDiseasesArray,$insertData);
-	    		}
-	    	}
-
-	    	DB::table('diseases')->insert($newDiseasesArray);
-
-
-
 	    			
 	    	if(!empty($diagExistCheck)){
-	    		$diagData = array('diag_symptoms'=>json_encode($symptoms),
-	    						  'diag_syndromes'=>$syndromes,
-	    						  'diag_suspected_diseases'=>json_encode($diseases),
-	    						  'diag_comment' => $additionalComment,
-	    						  'edited_date'=>$createdDate);
-	    		//var_dump($diseases);
-	    		$diseases = array_filter($diseases);
+	    		$diagData = array('diag_symptoms'			=>json_encode($symptoms),
+	    						  'diag_syndromes'			=>$syndromes,
+	    						  'diag_suspected_diseases'	=>json_encode($diseases),
+	    						  'diag_comment' 			=> $additionalComment,
+	    						  'id_doctor' 				=>$doctorId,
+	    						  'edited_date'				=>$createdDate);
+	    		
+	    		//$diseases = array_filter($diseases);
 	    		
 	    		if(!empty($diseases)){
-	    			//echo "dises ok";
-		    		$diagUpdate = DB::table('diagnosis')->where('id_patient','=',$patientId)->update($diagData);
+	    			
+		    		$diagUpdate = DB::table('diagnosis')
+		    		                            ->where('id_patient','=',$patientId)
+		    		                            ->where('diag_reference','=',$referenceId)
+		    		                            ->update($diagData);
 		    		//var_dump($diagUpdate);
 		    		//return Redirect::to('patientdiagnosis')->with(array('success'=>"Data updated successfully"));
 		    		if($diagUpdate){
@@ -2096,15 +2144,16 @@ class DoctorController extends Controller {
 
 	    	}
 	    	else{
-	    		$diagData = array('diag_symptoms'=>json_encode($symptoms),
-		    						  'diag_syndromes'=>$syndromes,
-		    						  'diag_suspected_diseases'=>json_encode($diseases),
-		    						  'diag_comment' => $additionalComment,
-		    						  'id_patient'=>$patientId,
-		    						  'id_doctor'=>$doctorId,
-		    						  'diag_reference' => $referenceId,
-		    						  'created_date'=>$createdDate);
-	    		$diseases = array_filter($diseases);
+	    		$diagData = array('diag_symptoms'				=>json_encode($symptoms),
+		    						  'diag_syndromes'			=>$syndromes,
+		    						  'diag_suspected_diseases'	=>json_encode($diseases),
+		    						  'diag_comment' 			=> $additionalComment,
+		    						  'id_patient'				=>$patientId,
+		    						  'id_doctor'				=>$doctorId,
+		    						  'diag_reference' 			=> $referenceId,
+		    						  'created_date'			=>$createdDate);
+
+	    		//$diseases = array_filter($diseases);
 	    		if(!empty($diseases)){
 		    		$diagSave = DB::table('diagnosis')->insert($diagData);
 		    		if($diagSave){

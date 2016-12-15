@@ -50,7 +50,7 @@ if(!empty($prescMedicine)){
     /*border-bottom: 10px solid #e5e5e5;*/
     border-bottom: none;
     min-height: 16.43px;
-    padding: 15px;
+    padding: 15px 15px 0 15px;
 }
 .modal-content {
     background-clip: padding-box;
@@ -60,14 +60,18 @@ if(!empty($prescMedicine)){
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     outline: 0 none;
     position: relative;
+    padding: 10px;
 }
-
+.modal-dialog{
+	width : 840px;
+}
 </style>
 @stop
 @extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
 
 
 @section('main')
+<div id="fakeLoader"></div>
 <div class="loader"></div>
 	<div class="page-header">
 		<h1>Prescription Medicine <small></small></h1>
@@ -96,15 +100,16 @@ if(!empty($prescMedicine)){
 	</div>
 	<div>
 	<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-hidden="true" >
-		<div class="modal-dialog" style="width:1200px">
+		<div class="modal-dialog" >
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						&times;
 					</button>
-					<h4 class="modal-title">Drug Alert</h4>
+					<h4 class="modal-title">Prescription Copy</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" id="modal-body">
+
 					<p class="pdf_print">
 						
 					</p>	

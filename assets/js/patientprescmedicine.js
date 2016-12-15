@@ -341,16 +341,20 @@ var patientPrescMedicine = function () {
 				var currentUrl = window.location.href;
 				var shareLink  = currentUrl+"/shared/"+prescSharedId;
 				bootbox.dialog({
-					message		: '<h5>Enable your customers to pay,print and download this invoice</h5>'+'<h6 style="margin-top:50px">Copy and share link through email or SMS</h6>'+'<input type="text" value="'+ shareLink+'"  id="post-shortlink"  style="width:565px;margin-top:25px" class="form-control post-shorlink"/><button class="button btn btn-info btn-default copy-button" id="copy-button" data-clipboard-target="#post-shortlink" style="margin-top:10px;float:right">Copy link</button><button class="button btn btn-info btn-default"  data-clipboard-target="#post-shortlink" style="margin-top:10px;float:left">Cancel</button>',
-					title 		: "Share invoice link",
+					message		: '<h6 style="margin-top:34px; font-size:16px; color:#333; ">Copy and share link through email or SMS</h6>'+'<input type="text" value="'+ shareLink+'"  id="post-shortlink"  style="margin-top:25px; margin-bottom:20px;" class="form-control post-shorlink"/><button class="button btn btn-info btn-default copy-button" id="copy-button" data-clipboard-target="#post-shortlink" style="margin-top:10px;float:right; background:#335bbd; color:#fff;">Copy link and close</button><button class="button btn btn-info btn-default btn-cancel"  data-clipboard-target="#post-shortlink" style="margin-top:10px;float:left">Cancel</button>',
+					title 		: '<h4 style="font-weight:bold;">Share prescription link</h4>',
 						
 				});
 		
 				var copyCode = new Clipboard('.copy-button', {
 				    target: function(trigger) {
+				    	bootbox.hideAll();
 				    	  return trigger.previousElementSibling;
 				    }
 				});
+				$('.btn-cancel').click(function(){
+					bootbox.hideAll();
+				})
 				
 				
 					
@@ -474,6 +478,8 @@ var patientPrescMedicine = function () {
 	                		
 	                		$('iframe').remove();
 	                		$('.pdf_print').append('<iframe src="storage/pdf/'+data+'.pdf" style="width:780px;height:500px;" id="iFrame"></iframe>');
+	                		//$('.pdf_print').load('storage/pdf/'+data+'.pdf');
+	                		//$("#modal-body embed").attr("storage","x007_20161116.pdf");
 	                		$('.print-data').val('saveTrue');
 	                		var src = "storage/pdf/'+data.pdfFileName+'.pdf";
 	                		console.log(src);
