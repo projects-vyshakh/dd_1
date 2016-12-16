@@ -1091,7 +1091,7 @@ $todayDate = date('d-M-Y');
                 </div>
 
             </div>
-{{$currentPath}}
+
     </div>        
      @section('scripts')
   

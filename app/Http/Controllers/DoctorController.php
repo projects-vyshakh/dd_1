@@ -861,7 +861,7 @@ class DoctorController extends Controller {
 		$diag2 = DB::table('diagnosis')
 		                    ->select('diag_symptoms','diag_suspected_diseases')
 							->where('id_patient','=',$patientId)
-							->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis       where id_patient='$patientId')"))
+							->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis      where id_patient='$patientId')"))
 							->first();
 
 
@@ -1575,140 +1575,142 @@ class DoctorController extends Controller {
 		
 		$patientExistCheck 		= 	PatientsModel::where('id_patient','=',$patientId)->count();
 		$medicalHistoryExist 	= 	DB::table('medical_history')->where('id_patient','=',$patientId)->where('medical_history_reference','=',$referenceId)->count();
-	    										
-	    										
+	    
+	    //dd($input);										
+	   								
 	    										
 
-	   if($patientExistCheck>0)
-	   {
-			    	(!empty($input['menarche']))?$menarche = $input['menarche']:$menarche = "";
-			    	(!empty($input['menopause']))?$menopause = $input['menopause']:$menopause = "";
-			    	(!empty($input['father']))?$fatherHistory = $input['father']:$fatherHistory = ['NA'];
-			    	(!empty($input['father_other']))?$fatherHistoryOther = $input['father_other']:$fatherHistoryOther = '';
-			    	(!empty($input['mother']))?$motherHistory = $input['mother']:$motherHistory = ['NA'];
-			    	(!empty($input['mother_other']))?$motherHistoryOther = $input['mother_other']:$motherHistoryOther = '';
-			    	(!empty($input['sibling']))?$siblingHistory = $input['sibling']:$siblingHistory = ['NA'];
-			    	(!empty($input['sibling_other']))?$siblingHistoryOther = $input['sibling_other']:$siblingHistoryOther = '';
-			    	(!empty($input['grandfather']))?$grandfatherHistory = $input['grandfather']:$grandfatherHistory = ['NA'];
-			    	(!empty($input['grandfather_other']))?$grandfatherHistoryOther = $input['grandfather_other']:$grandfatherHistoryOther = '';
-			    	(!empty($input['grandmother']))?$grandmotherHistory = $input['grandmother']:$grandmotherHistory = ['NA'];
-			    	(!empty($input['grandmother_other']))?$grandmotherHistoryOther = $input['grandmother_other']:$grandmotherHistoryOther = '';
-			    	(!empty($input['allergy_general']))?$allergyGeneral = $input['allergy_general'] : $allergyGeneral=['NA'];
-			    	(!empty($input['alcohol']))?$alcohol = $input['alcohol']:$alcohol = "NA";
-		    		(!empty($input['tobaco-smoke']))?$tobacoSmoke = $input['tobaco-smoke']:$tobacoSmoke = "NA";
-		    		(!empty($input['tobaco-chew']))?$tobacoChew = $input['tobaco-chew']:$tobacoChew = "NA";
-		    		(!empty($input['other-social-history']))?$OtherSocialHistory = $input['other-social-history']:$OtherSocialHistory = "NA";
-		    		(!empty($input['other_medical_history']))?$otherMedicalHistory = $input['other_medical_history']:$otherMedicalHistory = "";
+	    if($patientExistCheck>0)
+	    {
+	    	(!empty($input['menarche']))?$menarche = $input['menarche']:$menarche = "";
+	    	(!empty($input['menopause']))?$menopause = $input['menopause']:$menopause = "";
+	    	(!empty($input['father']))?$fatherHistory = $input['father']:$fatherHistory = ['NA'];
+	    	(!empty($input['father_other']))?$fatherHistoryOther = $input['father_other']:$fatherHistoryOther = '';
+	    	(!empty($input['mother']))?$motherHistory = $input['mother']:$motherHistory = ['NA'];
+	    	(!empty($input['mother_other']))?$motherHistoryOther = $input['mother_other']:$motherHistoryOther = '';
+	    	(!empty($input['sibling']))?$siblingHistory = $input['sibling']:$siblingHistory = ['NA'];
+	    	(!empty($input['sibling_other']))?$siblingHistoryOther = $input['sibling_other']:$siblingHistoryOther = '';
+	    	(!empty($input['grandfather']))?$grandfatherHistory = $input['grandfather']:$grandfatherHistory = ['NA'];
+	    	(!empty($input['grandfather_other']))?$grandfatherHistoryOther = $input['grandfather_other']:$grandfatherHistoryOther = '';
+	    	(!empty($input['grandmother']))?$grandmotherHistory = $input['grandmother']:$grandmotherHistory = ['NA'];
+	    	(!empty($input['grandmother_other']))?$grandmotherHistoryOther = $input['grandmother_other']:$grandmotherHistoryOther = '';
+	    	(!empty($input['allergy_general']))?$allergyGeneral = $input['allergy_general'] : $allergyGeneral=['NA'];
+	    	(!empty($input['alcohol']))?$alcohol = $input['alcohol']:$alcohol = "NA";
+    		(!empty($input['tobaco-smoke']))?$tobacoSmoke = $input['tobaco-smoke']:$tobacoSmoke = "NA";
+    		(!empty($input['tobaco-chew']))?$tobacoChew = $input['tobaco-chew']:$tobacoChew = "NA";
+    		(!empty($input['other-social-history']))?$OtherSocialHistory = $input['other-social-history']:$OtherSocialHistory = "NA";
+    		(!empty($input['other_medical_history']))?$otherMedicalHistory = $input['other_medical_history']:$otherMedicalHistory = "";
 
-    				//Surgery History
-		    		(!empty($input['surgery']))?$surgery = $input['surgery']:$surgery = "";
-    		
-					//Allergy History
-			    	(!empty($input['medication-drug-allergy']))?$allergyMedication = $input['medication-drug-allergy']: $allergyMedication="";
-			    	(!empty($input['reaction-drug-allergy']))?$allergyReaction= $input['reaction-drug-allergy']: $allergyReaction="";
+			//Surgery History
+    		(!empty($input['surgery']))?$surgery = $input['surgery']:$surgery = "";
+	
+			//Allergy History
+	    	(!empty($input['medication-drug-allergy']))?$allergyMedication = $input['medication-drug-allergy']: $allergyMedication="";
+	    	(!empty($input['reaction-drug-allergy']))?$allergyReaction= $input['reaction-drug-allergy']: $allergyReaction="";
 	    	
 	
 
 	    	if($medicalHistoryExist>0){
-			    		if  (!empty($input['menarche'])	 || 	!empty($input['menopause']) 	||	!empty($input['hypertension']) 	||
-					    	   !empty($input['medication_hypertension']) 	|| 	!empty($input['diabetes'])	 ||
-					    	   !empty($input['medication_diabetes'])	 ||	 !empty($input['hyperthyroidism'])	 ||
-					    	   !empty($input['medication_hyperthyroidism']) || !empty($input['hypothyroidism']) ||
-					    	   !empty($input['medication_hypothyroidism']) || !empty($input['cyst']) || 
-					    	   !empty($input['medication_cyst']) || !empty($input['endometriosis']) ||
-					    	   !empty($input['medication_endometriosis']) || !empty($input['uterinefibroids']) ||
-					    	   !empty($input['medication_uterinefibroids']) || !empty($input['uti']) || 
-					    	   !empty($input['medication_uti']) || !empty($input['cancer']) || 
-					    	   !empty($input['medication_cancer']) || !empty($input['father']) || !empty($input['mother']) ||
-					    	   !empty($input['sibling']) || !empty($input['grandfather']) || !empty($input['grandmother']) ||
-					    	   !empty($input['allergy_general']) || !empty($input['alcohol']) || !empty($input['tobaco-smoke']) || !empty($input['tobaco-chew'])  || !empty($input['other-social-history']))
-		    			{
-		    					$editedDate	 = date('Y-m-d H:i:s');
-		    						$dataArray 	 = array( 'menstrual_menarche' 								=> $menarche,
-														    					   'menstrual_menopause' 							=> $menopause,
-														    					   'history_family_father' 								=> json_encode($fatherHistory),
-														    					   'history_family_father_other' 				=> $fatherHistoryOther,
-														    					   'history_family_mother' 							=> json_encode($motherHistory),
-														    					   'history_family_mother_other' 				=> $motherHistoryOther,
-														    					   'history_family_sibling' 								=> json_encode($siblingHistory),
-														    					   'history_family_sibling_other' 				=> $siblingHistoryOther,
-														    					   'history_family_grandfather' 					=> json_encode($grandfatherHistory),
-														    					   'history_family_grandfather_other'		=> $grandfatherHistoryOther,
-														    					   'history_family_grandmother' 				=> json_encode($grandmotherHistory),
-														    					   'history_family_grandmother_other' => $grandmotherHistoryOther,
-														    					   'history_allergy_general' 							=>json_encode($allergyGeneral),
-														    					   'history_social_alcohol' 							=> $alcohol,
-														    					   'history_social_tobacco_smoke' 			=> $tobacoSmoke,
-														    					   'history_social_tobacco_chew' 			=> $tobacoChew,
-														    					   'history_social_other' 									=> $OtherSocialHistory,
-														    					   'history_other' 													=> $otherMedicalHistory,
-														    					   'id_doctor'															 => $doctorId,
-														    					   'edited_date' 													=> $editedDate);
-		
-		    					$dataUpdate = DB::table('medical_history')->where('id_patient','=',$patientId)->where('medical_history_reference','=',$referenceId)->update($dataArray);
-		    			}
+	    		if  (!empty($input['menarche'])	 || !empty($input['menopause']) ||	!empty($input['hypertension']) 	||
+			    	   !empty($input['medication_hypertension']) 	|| 	!empty($input['diabetes'])	 ||
+			    	   !empty($input['medication_diabetes'])	 ||	 !empty($input['hyperthyroidism'])	 ||
+			    	   !empty($input['medication_hyperthyroidism']) || !empty($input['hypothyroidism']) ||
+			    	   !empty($input['medication_hypothyroidism']) || !empty($input['cyst']) || 
+			    	   !empty($input['medication_cyst']) || !empty($input['endometriosis']) ||
+			    	   !empty($input['medication_endometriosis']) || !empty($input['uterinefibroids']) ||
+			    	   !empty($input['medication_uterinefibroids']) || !empty($input['uti']) || 
+			    	   !empty($input['medication_uti']) || !empty($input['cancer']) || 
+			    	   !empty($input['medication_cancer']) || !empty($input['father']) || !empty($input['mother']) ||
+			    	   !empty($input['sibling']) || !empty($input['grandfather']) || !empty($input['grandmother']) ||
+			    	   !empty($input['allergy_general']) || !empty($input['alcohol']) || !empty($input['tobaco-smoke']) || !empty($input['tobaco-chew'])  || !empty($input['other-social-history']))
+    			{
+    				$editedDate	 = date('Y-m-d H:i:s');
+    				$dataArray 	 = array(
+    								'menstrual_menarche'=> $menarche,
+									'menstrual_menopause' => $menopause,
+									'history_family_father' => json_encode($fatherHistory),
+									'history_family_father_other'=> $fatherHistoryOther,
+									'history_family_mother'=> json_encode($motherHistory),
+									'history_family_mother_other' => $motherHistoryOther,
+									'history_family_sibling'=> json_encode($siblingHistory),
+									'history_family_sibling_other' => $siblingHistoryOther,
+									'history_family_grandfather' => json_encode($grandfatherHistory),
+								    'history_family_grandfather_other'=> $grandfatherHistoryOther,
+									'history_family_grandmother' => json_encode($grandmotherHistory),
+									'history_family_grandmother_other' => $grandmotherHistoryOther,
+									'history_allergy_general'=>json_encode($allergyGeneral),
+									'history_social_alcohol' => $alcohol,
+									'history_social_tobacco_smoke' => $tobacoSmoke,
+									'history_social_tobacco_chew' => $tobacoChew,
+									'history_social_other' => $OtherSocialHistory,
+									'history_other' => $otherMedicalHistory,
+									'id_doctor'=> $doctorId,
+									'edited_date'=> $editedDate);
 
-	    			//Add more illness
-	    			$this->illnessDataManagement($input,$patientId,$doctorId,$referenceId,$createdDate,$specializationText );
-					//Surgery Management
-					$this->surgeryDataManagement($input,$surgery,$patientId,$doctorId,$referenceId,$createdDate);
-					//Drug allergy managent
-					$this->drugDataManagement($input,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate);
+    					$dataUpdate = DB::table('medical_history')->where('id_patient','=',$patientId)->where('medical_history_reference','=',$referenceId)->update($dataArray);
+    			}
+
+    			//Add more illness
+    			$this->illnessDataManagement($input,$patientId,$doctorId,$referenceId,$createdDate,$specializationText );
+				//Surgery Management
+				$this->surgeryDataManagement($input,$surgery,$patientId,$doctorId,$referenceId,$createdDate);
+				//Drug allergy managent
+				$this->drugDataManagement($input,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate);
 					
 	    			
 
-    				return Redirect::to('patientmedicalhistory')->with(array('success'=>"Data updated successfully"));
+    			return Redirect::to('patientmedicalhistory')->with(array('success'=>"Data updated successfully"));
 
 	    	}
 	    	else{
 	    		
-			    		if(	!empty($input['menarche']) || !empty($input['menopause'])  || 
-			    				!empty($input['father']) || !empty($input['mother']) ||
-				    	   		!empty($input['sibling']) || !empty($input['grandfather']) || 
-				    	   		!empty($input['grandmother']) ||  !empty($input['allergy_general']) || 
-				    	   		!empty($input['alcohol']) || !empty($input['tobaco-smoke']) || 
-				    	   		!empty($input['tobaco-chew'])  || !empty($input['other-social-history']))
-		    			{
+			    if(	!empty($input['menarche']) || !empty($input['menopause'])  || 
+    				!empty($input['father']) || !empty($input['mother']) ||
+	    	   		!empty($input['sibling']) || !empty($input['grandfather']) || 
+	    	   		!empty($input['grandmother']) ||  !empty($input['allergy_general']) || 
+	    	   		!empty($input['alcohol']) || !empty($input['tobaco-smoke']) || 
+	    	   		!empty($input['tobaco-chew'])  || !empty($input['other-social-history']))
+		    	{
 
 
-				    			//Menstrual History, Present & Past, Family History, General Allergy, Social History and Other
-				    			$dataArray = array('menstrual_menarche' => $menarche,
-						    					   'menstrual_menopause' => $menopause,
-						    					   'medical_history_reference' => $referenceId,
-						    					   'history_family_father' => json_encode($fatherHistory),
-						    					   'history_family_father_other' => $fatherHistoryOther,
-						    					   'history_family_mother' => json_encode($motherHistory),
-						    					   'history_family_mother_other' => $motherHistoryOther,
-						    					   'history_family_sibling' => json_encode($siblingHistory),
-						    					   'history_family_sibling_other' => $siblingHistoryOther,
-						    					   'history_family_grandfather' => json_encode($grandfatherHistory),
-						    					   'history_family_grandfather_other' => $grandfatherHistoryOther,
-						    					   'history_family_grandmother' => json_encode($grandmotherHistory),
-						    					   'history_family_grandmother_other' => $grandmotherHistoryOther,
-						    					   'history_allergy_general' =>json_encode($allergyGeneral),
-						    					   'history_social_alcohol' => $alcohol,
-						    					   'history_social_tobacco_smoke' => $tobacoSmoke,
-						    					   'history_social_tobacco_chew' => $tobacoChew,
-						    					   'history_social_other' => $OtherSocialHistory,
-						    					   'history_other' => $otherMedicalHistory,
-						    					   'id_patient' => $patientId,
-						    					   'id_doctor' => $doctorId,
-						    					   'created_date' => $createdDate);
-			
-			    				$dataInsert = DB::table('medical_history')->insert($dataArray);
-				    		}
+	    			//Menstrual History, Present & Past, Family History, General Allergy, Social History and Other
+	    			$dataArray = array('menstrual_menarche' => $menarche,
+			    					   'menstrual_menopause' => $menopause,
+			    					   'medical_history_reference' => $referenceId,
+			    					   'history_family_father' => json_encode($fatherHistory),
+			    					   'history_family_father_other' => $fatherHistoryOther,
+			    					   'history_family_mother' => json_encode($motherHistory),
+			    					   'history_family_mother_other' => $motherHistoryOther,
+			    					   'history_family_sibling' => json_encode($siblingHistory),
+			    					   'history_family_sibling_other' => $siblingHistoryOther,
+			    					   'history_family_grandfather' => json_encode($grandfatherHistory),
+			    					   'history_family_grandfather_other' => $grandfatherHistoryOther,
+			    					   'history_family_grandmother' => json_encode($grandmotherHistory),
+			    					   'history_family_grandmother_other' => $grandmotherHistoryOther,
+			    					   'history_allergy_general' =>json_encode($allergyGeneral),
+			    					   'history_social_alcohol' => $alcohol,
+			    					   'history_social_tobacco_smoke' => $tobacoSmoke,
+			    					   'history_social_tobacco_chew' => $tobacoChew,
+			    					   'history_social_other' => $OtherSocialHistory,
+			    					   'history_other' => $otherMedicalHistory,
+			    					   'id_patient' => $patientId,
+			    					   'id_doctor' => $doctorId,
+			    					   'created_date' => $createdDate);
+
+    				$dataInsert = DB::table('medical_history')->insert($dataArray);
+	    		}
+
 	
+				//Add more illness
+    			$this->illnessDataManagement($input,$patientId,$doctorId,$referenceId,$createdDate,$specializationText );
+				//Surgery Management
+				$this->surgeryDataManagement($input,$surgery,$patientId,$doctorId,$referenceId,$createdDate);
+				//Drug allergy managent
+				$this->drugDataManagement($input,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate);
+				
+				return Redirect::to('patientmedicalhistory')->with(array('success'=>"Data saved successfully"));
 	
-							//Add more illness
-			    			$this->illnessDataManagement($input,$patientId,$doctorId,$referenceId,$createdDate,$specializationText );
-							//Surgery Management
-							$this->surgeryDataManagement($input,$surgery,$patientId,$doctorId,$referenceId,$createdDate);
-							//Drug allergy managent
-							$this->drugDataManagement($input,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate);
-							
-							return Redirect::to('patientmedicalhistory')->with(array('success'=>"Data saved successfully"));
-	
-		    	}
+		    }
 		}
 	    else{
 	    	return Redirect::to('patientmedicalhistory')->with(array('error'=>"Please save patient personal information"));
