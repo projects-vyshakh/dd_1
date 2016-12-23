@@ -68,12 +68,12 @@ if(!empty($doctorData)){
 	<div class="panel-body"> 
 		{!! Form::open(array('route' => 'addPatientDiagnosis', 'role'=>'form', 'id'=>'addPatientDiagnosis', 'class'=>'form-horizontal','novalidate'=>'novalidate')) !!}	
 		<div class="for-group">
-			<div class="col-sm-12">
+			<div class="col-sm-12 dd_dignosis_dummy">
 					@if(!empty($diag))
 							<div class="form-group">
 										{!! Form::label('symptoms', 'Symptoms', $attributes = array('class'=>"col-sm-2"));  !!}
 										<div class="col-sm-10">
-												<?php	$diagSymptoms = json_decode($diag->diag_symptoms); ?>
+												<?php	$diagSymptoms = array_filter(json_decode($diag->diag_symptoms)); ?>
 												<span>
 														{!! Form::select('symptoms[]', $symptoms, $diagSymptoms, $attributes = array('class' => 'tokenize-sample','id'=>'symptoms','multiple' => 'multiple','name'=>'symptoms[]')); !!}
 												</span>
@@ -89,7 +89,7 @@ if(!empty($doctorData)){
 							</div>
 							<div class="form-group">
 									{!! Form::label('suspected_disease', 'Suspected Disease', $attributes = array('class'=>"col-sm-2"));  !!}
-									<?php $diagDiseases = json_decode($diag->diag_suspected_diseases); ?>
+									<?php $diagDiseases = array_filter(json_decode($diag->diag_suspected_diseases)); ?>
 									<div class="col-sm-10">
 											<span>
 													{!! Form::select('diseases[]', $diseases, $diagDiseases , $attributes = array('class' => 'tokenize-sample','id'=>'diseases','multiple' => 'multiple','name'=>'diseases[]')); !!}

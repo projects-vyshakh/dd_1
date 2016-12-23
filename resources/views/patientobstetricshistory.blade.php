@@ -300,13 +300,13 @@ if(!empty($doctorData)){
 											@endforeach
 											@if(in_array(1,$pregCountCheck))
 												@if(!empty($pregnancyCount) || $pregnancyCount>0)
-													<b>( Pregnancy-Count: {{$pregnancyCount}} )</b>
+													<b>( Birth-Count: {{$pregnancyCount}} )</b>
 												@else
-													<b>( Pregnancy-Count: 0 )</b>
+													<b>( Birth-Count: 0 )</b>
 												@endif
 
 											@else
-												<b>( Pregnancy-Count: 0 )</b>
+												<b>( Birth-Count: 0 )</b>
 											@endif
 											
 										</h5>
@@ -660,236 +660,15 @@ if(!empty($doctorData)){
 
 	<script>
 		$(document).ready(function() {
-
-			var lmpFlow 		= <?php echo json_encode($lmpFlow); ?>;
-			var lmpDysmenohrrea = <?php echo json_encode($lmpDysmenohrrea); ?>;
-			var lmpMensusType 	= <?php echo json_encode($lmpMensusType); ?>;
-			var pregKind 		= <?php echo json_encode($pregKind); ?>;
-			var pregType 		= <?php echo json_encode($pregType); ?>;
-			var pregTerm 		= <?php echo json_encode($pregTerm); ?>;
-			var pregHealth 		= <?php echo json_encode($pregChildHealth); ?>;
-			var pregGender 		= <?php echo json_encode($gender); ?>;
-            //console.log(pregHealth);
-            //alert(lmpDysmenohrrea);
 			Main.init();
-			//patientElements.init();
 			obstetricsElements.init();
-
 
 			//Page Loader closing
 			$(window).load(function() {
 				$(".loader").fadeOut("slow");
 			})
 
-			/*$('body').on('focus',".expected_delivery_date", function(){
-					$(this).datepicker();
-   			});*/
-
-
-
-
-   			
-
-
-
-
-   			var counter = 1;
-
-
-   			
-
-			
-			
-			
 		
-			$('.btn-addmore-preg').click(function(e){
-				e.preventDefault();
-				//alert('hai');
-
-				counter ++;
-		           
-		           
-	            //$('#lmp-count').val(counter);
-	             $('#pregnancy').append('<div id="dynamic-preg" class="dynamic-preg">' +
-		            					
-		            					'<div class="form-group">' +
-		                                    '<div class="col-sm-4">' +
-		                                    '</div>' +
-		                              '</div>' +
-		                              '<div class="form-group">' +
-		                                    '<label class="col-sm-2 ">' +
-		                                        'Pregnancy Kind' +
-		                                    '</label>' +
-		                                    '<div class="col-sm-4">' +
-		                                        '<span class="">' +
-		                                            '<select name="preg_kind[]" class="form-control preg_kind" id="preg_kind'+counter+'">' +
-		                                                
-		                                            '</select>' +
-		                                        '</span>' +
-		                                    '</div>' +
-		                                    '<label class="col-sm-2 ">' +
-		                                        'Pregnancy Type' +
-		                                    '</label>' +
-		                                    '<div class="col-sm-4">' +
-		                                        '<span class="">' +
-		                                            '<select name="preg_type[]" class="form-control preg_type" id="preg_type'+counter+'">' +
-		                                                
-		                                            '</select>' +
-		                                        '</span>' +
-		                                    '</div>' +
-		                             '</div>' +
-		                             '<div class="form-group">' +
-		                                    '<label class="col-sm-2 ">' +
-		                                        'Pregnancy Term' +
-		                                    '</label>' +
-		                                    '<div class="col-sm-4">' +
-		                                        '<span class="">' +
-		                                            '<select name="preg_term[]" class="form-control preg_term" id="preg_term'+counter+'">' +
-		                                                
-		                                            '</select>' +
-		                                        '</span>' +
-		                                    '</div>' +
-		                                    '<label class="col-sm-2 ">' +
-		                                        'Type of abortion' +
-		                                    '</label>' +
-		                                    '<div class="col-sm-4">' +
-		                                        '<span class="">' +
-		                                            '<input type="text" name="type_of_abortion[]" id="type_of_abortion'+counter+'" class="form-control type_of_abortion" />' +
-		                                        '</span>' +
-		                                    '</div>' +
-		                             '</div>' +
-		                             '<div class="form-group">' +
-		                                    '<label  class="col-sm-2 ">' +
-		                                        'Health' +
-		                                    '</label>' +
-		                                   '<div class="col-sm-4">' +
-		                                        '<span class="">' +
-		                                            '<select name="preg_health[]" class="form-control preg_health" id="preg_health'+counter+'">' +
-		                                                
-		                                            '</select>' +
-		                                        '</span>' +
-		                                    '</div>' +
-		                                    '<label  class="col-sm-2 ">' +
-		                                        'Gender' +
-		                                    '</label>' +
-		                                   '<div class="col-sm-4">' +
-		                                        '<span class="">' +
-		                                            '<select name="gender[]" class="form-control gender" id="gender'+counter+'">' +
-		                                                
-		                                            '</select>' +
-		                                        '</span>' +
-		                                    '</div>' +
-		                                    
-		                             '</div>' +
-		                               '<div class="form-group">' +
-		                               		'<label  class="col-sm-2 ">' +
-		                                        'Baby-Age' +
-		                                    '</label>' +
-
-		                                    /*'<label  class="col-sm-1 ">' +
-		                                        'Years' +
-		                                    '</label>' +*/
-
-		                                    '<div class="col-sm-4 dd_babyage_col">' +
-												'<div class="col-sm-4">' +
-		                                        '<span class="">' +
-		                                            '<input type="text" name="weeks[]" id="weeks'+counter+'" class="form-control weeks" placeholder="Weeks"/>' +
-		                                        '</span>' +
-		                                    '</div>' +
-		                                     '<div class="col-sm-4">' +
-		                                        '<span class="">' +
-		                                            '<input type="text" name="months[]" id="months'+counter+'" class="form-control months" placeholder="Months"/>' +
-		                                        '</span>' +
-		                                    '</div>' +
-		                                        '<div class="col-sm-4">' +
-		                                        '<span class="">' +
-		                                            '<input type="text" name="years[]" id="years'+counter+'" class="form-control years" placeholder="Years"/>' +
-		                                        '</span>' +
-		                                    	'</div>' +
-
-		                                   
-
-		                                    
-
-
-		                                    '</div>'+
-		                                
-
-		                                  /*  '<label  class="col-sm-1 ">' +
-		                                        'Months' +
-		                                    '</label>' +*/
-		                                
-
-		                                    /*'<label  class="col-sm-1 ">' +
-		                                        'Weeks' +
-		                                    '</label>' +*/
-		                                    
-
-
-		                                    
-		                                '</div>' +    
-		                             '<div class="form-group">' +
-		                                    '<div class="col-sm-10">' +
-		                                    '</div>' +
-		                                     '<div class="col-sm-12">' +
-		                                            '<input type="button" name="btn-preg-delete" id="btn-preg-delete'+counter+'" class="btn btn-danger  btn-preg-delete pull-right" value="x" />' +
-		                                    '</div>' +
-		                             '</div>' + 
-		                             '</div>' 	
-		                            
-		         					);
-
-
-					$('#preg_kind'+counter).empty();
-		            for (var key in pregKind) {
-					  if (pregKind.hasOwnProperty(key)) {
-					    //alert(key + " -> " + lmpFlow[key]);
-					   $('#preg_kind'+counter).append($("<option></option>").val(key).html(pregKind[key]));
-					  }
-					}
-					$('#preg_type'+counter).empty();
-		            for (var key in pregType) {
-					  if (pregType.hasOwnProperty(key)) {
-					    //alert(key + " -> " + lmpFlow[key]);
-					   $('#preg_type'+counter).append($("<option></option>").val(key).html(pregType[key]));
-					  }
-					}
-					$('#preg_term'+counter).empty();
-		            for (var key in pregTerm) {
-					  if (pregTerm.hasOwnProperty(key)) {
-					    //alert(key + " -> " + lmpFlow[key]);
-					   $('#preg_term'+counter).append($("<option></option>").val(key).html(pregTerm[key]));
-					  }
-					}
-					$('#preg_health'+counter).empty();
-		            for (var key in pregHealth) {
-					  if (pregHealth.hasOwnProperty(key)) {
-					    //alert(key + " -> " + lmpFlow[key]);
-					   $('#preg_health'+counter).append($("<option></option>").val(key).html(pregHealth[key]));
-					  }
-					}
-					$('#gender'+counter).empty();
-		            for (var key in pregGender) {
-					  if (pregGender.hasOwnProperty(key)) {
-					    //alert(key + " -> " + lmpFlow[key]);
-					   $('#gender'+counter).append($("<option></option>").val(key).html(pregGender[key]));
-					  }
-					}
-
-					//Remving dynamically added preg 
-					$('.btn-preg-delete').click(function(){
-				
-						var row = $(this).closest('.dynamic-preg');
-						//console.log(row);
-						row.remove();
-					});
-
-
-
-
-			});
-			
-			
         });
 	
 		

@@ -63,6 +63,8 @@ if(!empty($medicalHistory)){
 		$anaesthesiaHistory = $medicalHistoryVal->history_prev_intervention_anaesthesia;
 		$otherMedicalHistory = $medicalHistoryVal->history_other;
 
+		$presentPastNotKnown = $medicalHistoryVal ->history_presentpast_no;
+
 	}	
 
 }
@@ -123,13 +125,41 @@ if(!empty($medicalHistoryPresentPastMore)){
 						<div class="col-sm-8">
 							<h3 class="dd_h3_Pd_t_0">Present & Past History</h3>
 						</div>
-						<div class="col-sm-4 dd_Present_PD" >
+						<!-- <div class="col-sm-4 dd_Present_PD" >
 							<label class="checkbox-inline col-sm-12">
 								<input type="checkbox" value="NA" class="noPresentPastHistory" id="noPresentPast" />
 								<input type="hidden" name="present-past-check-value" id="present-past-check-value" class="present-past-check-value">
 								<span class="dd_past">No known present & past history to report</span> 
 							</label>
-						</div>
+						</div> -->
+						@if(!empty($presentPastNotKnown))
+							@if($presentPastNotKnown=="NA")
+								<div class="col-sm-4 dd_Present_PD" >
+									<label class="checkbox-inline col-sm-12">
+										<input type="checkbox" value="NA" class="noPresentPastHistory" id="noPresentPast" checked="checked" />
+										<input type="hidden" name="present-past-check-value" id="present-past-check-value" class="present-past-check-value">
+										<span class="dd_past">No known present & past history to report</span> 
+									</label>
+								</div>
+							@else
+								<div class="col-sm-4 dd_Present_PD" >
+									<label class="checkbox-inline col-sm-12">
+										<input type="checkbox" value="NA" class="noPresentPastHistory" id="noPresentPast" />
+										<input type="hidden" name="present-past-check-value" id="present-past-check-value" class="present-past-check-value">
+										<span class="dd_past">No known present & past history to report</span> 
+									</label>
+								</div>
+
+							@endif
+						@else
+							<div class="col-sm-4 dd_Present_PD" >
+									<label class="checkbox-inline col-sm-12">
+										<input type="checkbox" value="NA" class="noPresentPastHistory" id="noPresentPast" />
+										<input type="hidden" name="present-past-check-value" id="present-past-check-value" class="present-past-check-value">
+										<span class="dd_past">No known present & past history to report</span> 
+									</label>
+								</div>
+						@endif
 					</div>
 					<div class="presentPastDiv" id="presentPastDiv">
 						@if(!empty($medicalHistoryPresentPastMore) && !empty($illnessNameArray))
@@ -747,65 +777,56 @@ if(!empty($medicalHistoryPresentPastMore)){
 								@if(!empty($illnessName))
 									<div class="form-group">
 										<div class="col-sm-2">
-											<label>{{$illnessName}}</label>
-											<input type="hidden" name="illness_name{{$counter}}" value="{{$illnessName}}" />
+											<label>{{ucfirst($illnessName)}}</label>
+											<input type="hidden" name="illness_name{{$counter}}" value="{{$illnessName}}" class="illness_name" />
 										</div> 
 										
 										@if($illnessStatus=="Current")
 										
-										<div class="col-sm-2">
-											<label class="radio-inline">
-												<input type="radio" class="present-past-current" name="illness_status{{$counter}}" value="Current" 	checked="checked" id="current{{$counter}}"/>Current
-											</label>
-										</div>
-										<div class="col-sm-2">
-											<label class="radio-inline">
-												<input type="radio" class="present-past-past" name="illness_status{{$counter}}" value="Past"  />Past
-											</label>
-										</div>
-										<div class="col-sm-2">
-											<label class="radio-inline">
-												<input type="radio" class="present-past-na" name="illness_status{{$counter}}" value="NA"  />N/A
-											</label>
-										</div>
+											<div class="col-sm-2">
+												<label class="radio-inline">
+													<input type="radio" class="present-past-current" name="illness_status{{$counter}}" value="Current" 	checked="checked" id="current{{$counter}}"/>Current
+												</label>
+											</div>
+										@else
+											<div class="col-sm-2">
+												<label class="radio-inline">
+													<input type="radio" class="present-past-current" name="illness_status{{$counter}}" value="Current"  id="current{{$counter}}"/>Current
+												</label>
+											</div>
 										@endif
-										@if($illnessStatus=="Past")
-										<div class="col-sm-2">
-											<label class="radio-inline">
-												<input type="radio" class="present-past-current" name="illness_status{{$counter}}" value="Current" 	/>Current
-											</label>
-										</div>
-										<div class="col-sm-2">
-											<label class="radio-inline">
-												<input type="radio" class="present-past-past" name="illness_status{{$counter}}" value="Past"   checked="checked"/>Past
-											</label>
-										</div>
-										<div class="col-sm-2">
-											<label class="radio-inline">
-												<input type="radio" class="present-past-na" name="illness_status{{$counter}}" value="NA"  />N/A
-											</label>
-										</div>
+										
+										@if($illnessStatus=="Past")	
+											<div class="col-sm-2">
+												<label class="radio-inline">
+													<input type="radio" class="present-past-past" name="illness_status{{$counter}}" value="Past"   checked="checked"/>Past
+												</label>
+											</div>
+										@else
+											<div class="col-sm-2">
+												<label class="radio-inline">
+													<input type="radio" class="present-past-past" name="illness_status{{$counter}}" value="Past"  />Past
+												</label>
+											</div>
 										@endif
 										@if($illnessStatus=="NA")
-										<div class="col-sm-2">
-											<label class="radio-inline">
-												<input type="radio" class="present-past-current" name="illness_status{{$counter}}" value="Current" 	/>Current
-											</label>
-										</div>
-										<div class="col-sm-2">
-											<label class="radio-inline">
-												<input type="radio" class="present-past-past" name="illness_status{{$counter}}" value="Past"   />Past
-											</label>
-										</div>
-										<div class="col-sm-2">
-											<label class="radio-inline">
-												<input type="radio" class="present-past-na" name="illness_status{{$counter}}" value="NA"   checked="checked"/>N/A
-											</label>
-										</div>
+											<div class="col-sm-2">
+												<label class="radio-inline">
+													<input type="radio" class="present-past-na" name="illness_status{{$counter}}" value="NA"   checked="checked"/>N/A
+												</label>
+											</div>
+										@else
+											<div class="col-sm-2">
+												<label class="radio-inline">
+													<input type="radio" class="present-past-na" name="illness_status{{$counter}}" value="NA" />N/A
+												</label>
+											</div>
 										@endif
+									
 										<div class="col-sm-4" >
 											<input type="text" name="illness_medication{{$counter}}"	value="{{$illnessMedication}}" class="form-control present-past-medication-empty"  placeholder="Medication"/>
 										</div>
+										
 									</div>
 									<?php $counter++; ?>
 								@endif

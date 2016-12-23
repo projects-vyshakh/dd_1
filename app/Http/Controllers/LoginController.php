@@ -46,53 +46,7 @@ class LoginController extends Controller {
     {
         $this->middleware('auth');
     }*/
-    public function showDoctorSignupInformation(){
-
-    	$email = Session::get('doctorEmail');
-    	
-
-    	$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->lists('business_value', 'business_value');
-		
-		$maritialStatus = DB::table('business_key_details')->where('business_key', '=', 'MARITIAL_STATUS')->lists('business_value', 'business_value');
-		
-		$country =  DB::table('countries')->select('country_name','sortname','id')->orderBy('country_name', 'asc')->lists('country_name', 'id'); 	
-		
-		$state =  DB::table('states')->select('state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); 	
-		
-		$city =  DB::table('cities')->select('city_name','state_id')->orderBy('city_name', 'asc')->lists('city_name', 'city_name'); 	
-
-		$qualification =  DB::table('qualification')->select('qualification','id_qualification')->orderBy('qualification', 'asc')->lists('qualification', 'qualification'); 
-
-		$specialization =  DB::table('specialization')->select('id_specialization','specialization_name')->orderBy('specialization_name', 'asc')->lists('specialization_name', 'id_specialization'); 	
-
-		if(!empty($email)){
-			$signupBasicData = DB::table('doctors')->where('email','=',$email)->first();
-		}
-		else{
-			$signupBasicData = "";
-		}
-		
-		    	
-
-		   /* if(!in_array('', $gender)){
-		     	 array_unshift($gender, '');
-		    }	
-		    if(!in_array('', $maritialStatus)){
-		     	 array_unshift($maritialStatus, '');
-		    } */
-		    /*if(!in_array('', $country)){
-		     	 array_unshift($country, '');
-		    } 
-		    if(!in_array('', $state)){
-		     	 array_unshift($state, '');
-		    } 
-		    if(!in_array('', $city)){
-		     	 array_unshift($city, '');
-		    }	  	*/	
-
-		return view('doctorsignupinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city,'qualification' => $qualification,'specialization' => $specialization,'signupBasicData'=>$signupBasicData));
-			
-	}
+    
 	public function showDoctorLogin()
 	{
 		return view('doctorlogin');
@@ -634,7 +588,11 @@ class LoginController extends Controller {
 
 		$qualification =  DB::table('qualification')->select('qualification','id_qualification')->orderBy('qualification', 'asc')->lists('qualification', 'qualification'); 
 
-		$specialization =  DB::table('specialization')->select('specialization_name','id_specialization')->orderBy('specialization_name', 'asc')->lists('specialization_name', 'specialization_name'); 	
+
+
+		$specialization =  DB::table('specialization')->select('specialization_name','id_specialization')->orderBy('specialization_name', 'asc')->lists('specialization_name', 'id_specialization'); 	
+
+	
 		    	
 
 		   /* if(!in_array('', $gender)){
@@ -658,8 +616,8 @@ class LoginController extends Controller {
 
 
 		$input = Request::all();
-
-
+ 
+ 		
 
 		//$signUpParam = $input['signup_parameter'];
 
@@ -682,6 +640,7 @@ class LoginController extends Controller {
 				$password 	= $input['password'];
 				$phone 		= $input['phone'];
 				$gender 	= $input['gender'];
+				$marritialStatus = $input['maritial_status'];
 				$street 	= $input['street'];
 				$country 	= $input['country'];
 				!empty($input['state'])?$state = $input['state']:$state="";
@@ -726,7 +685,7 @@ class LoginController extends Controller {
 									'last_name' => $lastName,
 									'password' =>$encrypted,
 									'gender' => $gender,
-									
+									'maritial_status' => $marritialStatus,
 									
 									'street' => $street,
 									'country' => $country,

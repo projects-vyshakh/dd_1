@@ -133,12 +133,16 @@ class UserController extends Controller {
     	return view('userjsonimport');
     }*/
     public function showUserJsonImport(){
-    	return view('userjsonimport');
+    	$userName = Session::get('user_name');
+    	$userId   = Session::get('user_id');
+    	return view('userjsonimport',array('userName'=>$userName,'userId'=>$userId));
+    	
     }
 
     public function showDiagnosisDataMigration(){
     	//var_dump($_FILES['diagnosis_json']);
     	
+
     	
     	$file_tmp =$_FILES['diagnosis_json']['tmp_name'];
 		$file_name = $_FILES['diagnosis_json']['name'];
@@ -159,7 +163,39 @@ class UserController extends Controller {
 		$str = file_get_contents('assets/jsonfiles/'.$file_name);
 		$json = json_decode($str, true);
 
-		
+		$server = DB::table('diagnosis_test')->get();
+		foreach($server as $index=>$serverVal){
+			var_dump($serverVal->id_patient);
+			echo "</br>";
+		}
+
+		die();
+		/*$server = DB::table('diagnosis')->get();
+						
+			$server = (array)$server;
+			$testArray = array();
+			foreach($server as $index=>$serverVal){
+
+				var_dump($serverVal->diag_symptoms);
+				$diagData = array('diag_symptoms'=>$serverVal->diag_symptoms,
+								  'diag_suspected_diseases'=>$serverVal->diag_suspected_diseases,
+								  'diag_syndromes' => $serverVal->diag_syndromes,
+								   'id_patient' => $serverVal->id_patient,
+									'id_doctor' => $serverVal->id_doctor,
+									'diag_comment'=>$serverVal->diag_comment,
+									'diag_reference' => $serverVal->diag_reference,
+									'created_date' 	    => $serverVal->created_date,
+									'edited_date' 		=> $serverVal->edited_date);
+
+						array_push($testArray, $diagData);
+			}
+
+			DB::table('diagnosis_test')->insert($testArray);
+						die();*/
+
+						
+
+		//dd($json);
 
 		//var_dump(json_encode($json));
 
@@ -180,9 +216,10 @@ class UserController extends Controller {
 			$newVal = (object) $val;
 
 			foreach($newVal as $index=> $jsonData){
-
-				//var_dump($jsonData);
+				
+				//die();
 				(isset($jsonData['patientID']))?$patientId = $jsonData['patientID']: $patientId = "";
+				
 				(isset($jsonData['typeFlag']))?$typeFlag = $jsonData['typeFlag']: $typeFlag = "";
 
 				if($typeFlag==1){
@@ -288,7 +325,7 @@ class UserController extends Controller {
 											      'edited_date' 		=> $updatedDate[0]
 											     );
 
-									DB::table('sp_gynaecology_obs_preg')->insert($pregData);
+								//	DB::table('sp_gynaecology_obs_preg')->insert($pregData);
 
 								}
 								
@@ -367,7 +404,7 @@ class UserController extends Controller {
 										  'created_date' 		=> $createdDate[0]." ".$createdTime[0],
 										  'edited_date' 		=> $updatedDate[0]);
 
-						DB::table('sp_gynaecology_obs')->insert($obsData);
+						//DB::table('sp_gynaecology_obs')->insert($obsData);
 
 						/*Vitals Data*/
 						(isset($jsonData['weight']))?$weight = $jsonData['weight']: $weight = "";
@@ -406,7 +443,7 @@ class UserController extends Controller {
 			    							'created_date' => $createdDate[0]." ".$createdTime[0],
 			    							'edited_date' 				=> $updatedDate[0]);
 
-						DB::table('vitals')->insert($vitalsData);
+						//DB::table('vitals')->insert($vitalsData);
 
 
 						/*Diagnosis Examination*/
@@ -509,9 +546,47 @@ class UserController extends Controller {
 	    								'created_date' 	    => $createdDate[0]." ".$createdTime[0],
 										'edited_date' 		=> $updatedDate[0]);
 
-							DB::table('diagnosis_gynaecology_exam')->insert($systemicSaveData);
+							//DB::table('diagnosis_gynaecology_exam')->insert($systemicSaveData);
 
 						}
+
+						// Diagnosis Data
+						(isset($jsonData['symptoms']))?$symptoms = $jsonData['symptoms']: $symptoms = "";
+						(isset($jsonData['suspected_diseases']))?$diseases = $jsonData['suspected_diseases']: $diseases = "";
+						(isset($jsonData['syndromes']))?$syndromes = $jsonData['syndromes']: $syndromes = "";
+						(isset($jsonData['additionalComments']))?$comments = $jsonData['additionalComments']: $comments = "";
+						//echo $patientId."------->";
+						//var_dump($symptoms);
+						if(!empty($symptoms)){
+							$symptomsExploded = explode(',',$symptoms);
+						}
+						else{
+							$symptomsExploded = [""];
+						}
+
+						if(!empty($diseasesExploded)){
+							$diseasesExploded = explode(',', $diseases);
+						}
+						else{
+							$diseasesExploded = [""];
+						}
+						
+						$diagData = array('diag_symptoms'=>json_encode($symptomsExploded),
+										  'diag_suspected_diseases'=>json_encode($diseasesExploded),
+										  'diag_syndromes' => $syndromes,
+										  'id_patient' => $patientId,
+										  'id_doctor' => '',
+										  'created_date' 	    => $createdDate[0]." ".$createdTime[0],
+										  'edited_date' 		=> $updatedDate[0]);
+						echo $patientId;
+						echo "</br>";
+						var_dump($comments);
+						echo "</br>";
+						
+						//DB::table('diagnosis_test')->insert($diagData);
+
+						
+
 
 				}
 				else{
@@ -609,7 +684,7 @@ class UserController extends Controller {
 		    									
 		    									);
 
-							DB::table('prescription')->insert($insertValue);
+							//DB::table('prescription')->insert($insertValue);
 							
 						}
 					
@@ -643,7 +718,7 @@ class UserController extends Controller {
 										   	'created_date' => $originalCreatedDate,
 										   	'edited_date'=>$editedDate[0]
 										  );
-					DB::table('prescription_gynaecology')->insert($prescGynData);
+					//DB::table('prescription_gynaecology')->insert($prescGynData);
 
 	/*				$prescGynData = array(	'line_of_treatment' => $prescLineOfTreatment[0],
 										   	'line_of_treatment_detail' => $prescLineOfTreatment[1],
@@ -703,6 +778,7 @@ class UserController extends Controller {
 		$str = file_get_contents('assets/jsonfiles/'.$file_name);
 		$json = json_decode($str, true);
 
+		dd($json);
 		
 		foreach($json as $index=> $val){
 
@@ -1184,6 +1260,8 @@ class UserController extends Controller {
 
 		$str = file_get_contents('assets/jsonfiles/'.$file_name);
 		$json = json_decode($str, true);
+
+		dd($json);
 
 		foreach($json as $index=> $val){
 

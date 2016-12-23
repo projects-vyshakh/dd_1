@@ -455,8 +455,7 @@ $todayDate = date('d-M-Y');
                         </li> -->
                         <!-- end: TO-DO DROPDOWN-->
                         <!-- start: NOTIFICATION DROPDOWN -->
-}
-}
+
 
 
 <!----------------------------------------------- Prajeesh remove notification------------------------------ -->
@@ -966,7 +965,7 @@ $todayDate = date('d-M-Y');
 
                     <!-- User Side Menus Starts -->
                     
-                    @if($currentPath == 'userhome' || $currentPath=='oldpatientslist')
+                    @if($currentPath == 'userhome' || $currentPath=='oldpatientslist' || $currentPath == 'userjsonimport')
                          <div id="user-side-menu">
                             <ul class="main-navigation-menu">
                                 <li @if($currentPath == 'userhome') class="active open" @endif>
@@ -981,13 +980,13 @@ $todayDate = date('d-M-Y');
                                         <span class="title"> Personal Information </span><span class="selected"></span>
                                     </a>
                                 </li>
-                                <li @if($currentPath=='oldpatientslist') class="active" @endif>
+                                <li @if($currentPath=='oldpatientslist' || $currentPath == 'userjsonimport') class="active" @endif>
                                     <a href="javascript:void(0)">
                                   
                                         <span class="dd_input_icon_Medicine"></span>
                                         <span class="title"> Migration Details </span><span class="selected"></span>
                                     </a>
-                                    <ul class="sub-menu">
+                                    <!-- <ul class="sub-menu">
                                         <li  @if($currentPath == 'oldpatientslist') class="active open" @endif>
                                             <a href="oldpatientslist">
                                                 <span class="title">Old Patients List </span>
@@ -995,7 +994,16 @@ $todayDate = date('d-M-Y');
                                         </li>
                                        
                                         
-                                    </ul>        
+                                    </ul>   -->
+                                    <ul class="sub-menu">
+                                        <li  @if($currentPath == 'userjsonimport') class="active open" @endif>
+                                            <a href="userjsonimport">
+                                                <span class="title"> Json Files </span>
+                                            </a>
+                                        </li>
+                                       
+                                        
+                                    </ul>           
                                 </li>
                                 <!-- <li @if($currentPath=='userjsonimport') class="active " @endif>
                                     <a href="javascript:void(0)">
@@ -1029,7 +1037,7 @@ $todayDate = date('d-M-Y');
                                 <div class="col-sm-8">
                                     @if($currentPath == 'patientprofilemanagement' || $currentPath == 'patientprofileprevtreatment' || $currentPath == 'patientprofileedit' || $currentPath == 'patientchangepassword')
                                     @else
-                                        @if($currentPath=='userhome' || $currentPath=='oldpatientslist')
+                                        @if($currentPath=='userhome' || $currentPath=='oldpatientslist' || $currentPath=='userjsonimport')
                                             <a style="font-size: 14px;text-decoration: none;float: left">
                                             USER ID: {{strtoupper($userId)}}
                                            
@@ -1044,7 +1052,7 @@ $todayDate = date('d-M-Y');
                                     @endif
                                 </div>
                                 <div class="">
-                                    @if($currentPath=='userhome' || $currentPath=='oldpatientslist')
+                                    @if($currentPath=='userhome' || $currentPath=='oldpatientslist' || $currentPath=='userjsonimport')
                                         <a style="font-size: 14px;text-decoration: none;float: right">
                                             USER NAME: {{strtoupper($userName)}}
                                         </a>

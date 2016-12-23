@@ -85,6 +85,8 @@ Route::any('addPatientPersonalInformation', array('before'=>'isDoctorLoggedIn','
 
 Route::any('patientobstetricshistory', array('before'=>'isDoctorLoggedIn','as'=>'patientobstetricshistory','uses'=>'DoctorController@showPatientObstetricsHistory'));
 Route::any('addPatientObstetricsHistory', array('before'=>'isDoctorLoggedIn','as' => 'addPatientObstetricsHistory', 'uses' => 'DoctorController@addPatientObstetricsHistory'));
+Route::post('patientObstetricsDataAjax', array('before'=>'isDoctorLoggedIn','as'=>'patientObstetricsDataAjax','uses'=>'DoctorController@patientObstetricsDataAjax'));
+
 
 Route::any('patientmedicalhistory', array('before'=>'isDoctorLoggedIn','as'=>'patientmedicalhistory','uses'=>'DoctorController@showPatientMedicalHistory'));
 Route::any('addPatientMedicalHistory', array('before'=>'isDoctorLoggedIn','as' => 'addPatientMedicalHistory', 'uses' => 'DoctorController@addPatientMedicalHistory'));

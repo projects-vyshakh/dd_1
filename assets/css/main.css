@@ -43,7 +43,7 @@ h1, h2, h3 {
 h3, .h3 {
      color: #005a7e;
     font-family: open sans;
-    font-size: 20px;
+    font-size: 20px !important;
     font-weight: 700;
     text-transform: uppercase;
     margin-top: 0;
@@ -6639,7 +6639,7 @@ height: auto;
 	 border-bottom: 1px solid #bfbfbf;
 
     margin-bottom: 30px;
-    padding: 0px;
+    padding-bottom: 23px;
 }
 .presc-inner table{
 	margin-bottom: 0;
@@ -6896,9 +6896,9 @@ table.dataTable thead th, table.dataTable thead td {
 
 }
 .tab-content .col-sm-12 .form-horizontal{
-	font-size: 25px;
-	text-align: center;
-	color: #e7383d;
+	font-size: 16px;
+	/*text-align: center;*/
+	color: #787878;
 
 }
 .dd_footer{
@@ -7399,4 +7399,31 @@ table.dataTable thead .sorting_asc::after {
 }
 .prev-bold{
 	font-weight: bold;
+}
+.dd_fixed{
+	position: fixed;
+}
+.dd_dignosis_dummy .form-control{
+	border: 1px solid #787878 !important;
+
+}
+.dd_presc_dummy{
+	font-weight: 600;
+	font-family: 'Open Sans', sans-serif;
+	margin-top: 20px;
+}
+.dd_panel_body_pd{
+	padding: 0 15px;
+}
+.dd_drug_name_li{
+	margin-left: 15px;
+}
+.dd_prev_pd_2{
+	margin-bottom: 10px;
+}
+.dd_prev_mg_main{
+	margin-top: 20px;
+}
+.dd_panel_body_font{
+	color: #333;
 }

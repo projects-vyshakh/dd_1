@@ -25,7 +25,11 @@
 		  background: #FFFFFF; 
 		  font-family: Arial, sans-serif; 
 		  font-size: 14px; 
-		  font-family: SourceSansPro;
+		  /*font-family: SourceSansPro;*/
+		}
+		li{
+			padding: 5px 0;
+			margin: 5px 0;
 		}
 
 		header {
@@ -225,7 +229,7 @@
 			
 		}
 		.symptoms-div{
-			margin-left: 20px;
+			/*margin-left: 20px;*/
 		}
 		.diseases-column-left{
 			float:left;
@@ -234,6 +238,10 @@
 		.presc-margin{
 			
 			padding-top: 80px;
+		}
+		.set-width{
+			width: 100%;
+			height: auto;
 		}
 		.presc-drugs{
 			float : left;
@@ -248,16 +256,15 @@
 			width: 20%
 		}
 		.presc-frequency{
-			float : right;
+			float : left;
 			width: 30%
 		}
-		.set-width{
-			width: 100%;
-		}
+
 		.ta6 {
-			border: 3px double #CCCCCC;
+			border: 1px solid #CCCCCC;
 			width : 700px;
 			height: 60px;
+			padding: 10px;
 		}
 		.treatment-inner-div{
 			width: 50%;
@@ -278,9 +285,9 @@
 
     	?>
 	    <div id="company">
-	        <div><h2 class="name"><b>Name:	</b><i>{{$patientName}} </i></h2> </div>
-	        <div><h2 class="name"><b>Age:	</b><i>{{$age}}</i></h2> </div>
-	        <div><h2 class="name"><b>Sex:	</b><i>{{$gender}}</i></h2> </div>
+	        <div><div class="name" style="font-size: 20px; margin-bottom: 5px;">Name:	{{$patientName}} </div> </div>
+	        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Age:	{{$age}}</div> </div>
+	        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Sex:	{{$gender}}</div> </div>
 	    </div>
     	
 
@@ -297,8 +304,8 @@
 	    <div id="details" class="clearfix">
 	        <div id="client">
 	          <div class="to"></div>
-	          <h2 class="name">Dr.{{$doctorName}}</h2>
-	          <div class="address">
+	          <h2 class="name" style="margin-bottom: 5px;">Dr.{{$doctorName}}</h2>
+	          <div class="address" style="margin-bottom: 5px;">
 	          	@foreach($qualification  as $index=>$qualificationVal)
 	          		<!-- if condition for putting comma dynamically -->
 	          		@if($index>=0 && $index<$qualificationCount-1)
@@ -308,8 +315,8 @@
 	          		@endif
 	          	@endforeach	
 	          </div>
-	          <div class="address">{{$specializationName}}</div>
-	          <div class="email"><a>{{$mobile}}</a></div>
+	          <div class="address" style="margin-bottom: 8px;">{{$specializationName}}</div>
+	          <div class="email" style="margin-bottom: 5px;"><a>{{$mobile}}</a></div>
 	        </div>
 	    </div>
 
@@ -385,29 +392,29 @@
        		<div class="medical-hisotry-inner">
 				<div class="vitals-content">
 					<img width="40px" height="40px" src="assets/images/weight.png">
-					<div>{{$weight}} @if(!empty($weight)) {{"Kg"}} @else {{""}} @endif</div>
+					<div style="margin-top: 7px;">{{$weight}} @if(!empty($weight)) {{"Kg"}} @else {{""}} @endif</div>
 				</div>
 			   	<div class="vitals-content">
 			   		<img width="40px" height="40px" src="assets/images/bloodpressure.png">
-			   		<div>{{$pressure}} @if(!empty($pressure)) {{"mmHg"}} @else {{""}} @endif</div>
+			   		<div  style="margin-top: 7px;">{{$pressure}} @if(!empty($pressure)) {{"mmHg"}} @else {{""}} @endif</div>
 			   	</div>
 			    <div class="vitals-content">
 			    	<img width="40px" height="40px" src="assets/images/pulse.png">
-			    	<div>{{$pulse}} @if(!empty($pulse)) {{"bpm"}} @else {{""}} @endif</div>
+			    	<div  style="margin-top: 7px;">{{$pulse}} @if(!empty($pulse)) {{"bpm"}} @else {{""}} @endif</div>
 			    </div>
 			    <div class="vitals-content">
 			    	<img width="40px" height="40px" src="assets/images/respiratoryrate.png">
-			    	<div>
+			    	<div  style="margin-top: 7px;">
 			    		{{$respiratoryrate}} @if(!empty($respiratoryrate)) {{"breathes/min"}} @else {{""}} @endif
 			    	</div>
 			    </div>
 			    <div class="vitals-content">
 			    	<img width="40px" height="40px" src="assets/images/spo2.png">
-			    	<div>{{$spo2}} @if(!empty($spo2)) {{"%"}} @else {{" "}} @endif</div>
+			    	<div  style="margin-top: 7px;">{{$spo2}} @if(!empty($spo2)) {{"%"}} @else {{" "}} @endif</div>
 			    </div>
 			    <div class="vitals-content">
 			    	<img width="40px" height="40px" src="assets/images/temperature.png">
-			    	<div>{{$temperature}} @if(!empty($temperature)) &deg;F @else {{""}} @endif</div>
+			    	<div  style="margin-top: 7px;">{{$temperature}} @if(!empty($temperature)) &deg;F @else {{""}} @endif</div>
 			    </div>
 			   
 			</div>
@@ -474,14 +481,74 @@
 		    <div class="clear"></div> 
 		    
 		    <!-- Prescription Data -->
-		    <div  class="" >
+		    <div  class=""  style="margin-top: 30px;">
 	       		<h2>Prescription</h2>
 	       		<div class="medical-hisotry-inner set-width">
-					<div class="presc-drugs">
+
+	       		<table>
+	       			<thead>
+		       			<td><h4>Drugs</h4></td>
+		       			<td><h4>Dosage</h4></td>
+		       			<td><h4>Duration</h4></td>
+		       			<td><h4>Freuency</h4></td>
+	       			</thead>
+
+	       			<tbody>
+	       			
+	       				@foreach($prescriptionData as $index=>$prescriptionDataVal)
+		       				<tr>
+			       				<td>
+			       					{{$prescriptionDataVal->drug_name}}
+			       				</td>
+			       				<td>
+			       					@if(!empty($prescriptionDataVal->dosage))
+										{{$prescriptionDataVal->dosage." ".$prescriptionDataVal->dosage_unit}}
+								
+									@else
+								
+										{{"-"}}
+								
+									@endif
+			       				</td>
+
+			       				<td>
+
+									@if(!empty($prescriptionDataVal->duration))
+								
+										{{$prescriptionDataVal->duration." ".$prescriptionDataVal->duration_unit}}
+								
+									@else
+							
+										{{"-"}}
+								
+									@endif															       					
+
+			       				</td>
+
+			       				<td>
+
+			       				{{$prescriptionDataVal->morning}}
+								- {{$prescriptionDataVal->noon}}
+								- {{$prescriptionDataVal->night}}
+			       					
+
+			       				</td>
+			       				
+
+		       				</tr>
+		       				
+	       				@endforeach
+						
+	       			
+	       				
+	       			</tbody>
+	       		</table>
+
+					<!-- <div class="presc-drugs">
 						<h4>Drugs</h4>
 						@foreach($prescriptionData as $index=>$prescriptionDataVal)
 							<div class="presc-drug-content symptoms-div">
-								<li>{{$prescriptionDataVal->drug_name}}</li>
+							{{$prescriptionDataVal->drug_name}}
 							</div>
 						@endforeach
 						
@@ -525,7 +592,7 @@
 								Night: {{$prescriptionDataVal->night}}
 							</div>
 						@endforeach
-					</div>
+					</div> -->
 
 				</div>
 	       	</div>
@@ -536,7 +603,7 @@
 
 		<div class="clear"></div> 
 		<div  class="" >
-			<div class="treatment-inner-div">
+			<div class="treatment-inner-div" style="margin-top: 20px;">
 				<h2>Treatment</h2>
 				@foreach($prescriptionData as $index=>$prescriptionDataVal)
 					<?php 
@@ -546,7 +613,7 @@
 				@endforeach
 		       	<textarea class="ta6">{{$treatment}}</textarea>
 			</div>
-	        <div class="followup-inner-div">
+	        <div class="followup-inner-div" style="margin-top: 30px;">
 	        	<h2>Followup Date: </h2>
 	        	<div>
 	        		@if(!empty($followUpDate) && $followUpDate!="0000-00-00") 

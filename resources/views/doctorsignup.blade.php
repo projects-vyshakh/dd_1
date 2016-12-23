@@ -258,7 +258,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
 											<div class="dd_input_3"> 
 												<div class="dd_email_reg_label_2">Martial Status</div>
-												{!! Form::select('gender', $maritialStatus, Input::old('gender'), $attributes = array('class' => 'form-control  dd_bodred_l_0')); !!}
+												{!! Form::select('maritial_status', $maritialStatus, Input::old('maritial_status'), $attributes = array('class' => 'form-control  dd_bodred_l_0')); !!}
 											</div>
 												<!-- 	<span class="symbol required"></span>	 -->						
 											</span>
@@ -558,7 +558,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 			jQuery(document).ready(function() {
 				//Main.init();
 				Login.init();
-				doctorSignup.init();
+				//doctorSignup.init();
 				$('#qualification').multiselect({ });
 					
 				

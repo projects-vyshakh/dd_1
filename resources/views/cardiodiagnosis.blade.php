@@ -68,7 +68,7 @@ if(!empty($doctorData)){
 	<div class="panel-body"> 
 		{!! Form::open(array('route' => 'addCardioDiagnosis', 'role'=>'form', 'id'=>'addCardioDiagnosis', 'class'=>'form-horizontal','novalidate'=>'novalidate')) !!}	
 		<div class="for-group">
-			<div class="col-sm-12">
+			<div class="col-sm-12 dd_dignosis_dummy">
 					@if(!empty($diag))
 							<div class="form-group">
 										{!! Form::label('symptoms', 'Symptom / Chief Complaints', $attributes = array('class'=>"col-sm-2"));  !!}

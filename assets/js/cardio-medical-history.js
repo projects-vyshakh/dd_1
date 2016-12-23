@@ -84,74 +84,61 @@ var cardioMedicalHistoryElements = function (dosageUnit) {
 		            }
         });
     };
+
+    var runIllnessAddMore = function(){
+    	$('#btn-addmore-illness').click(function(e) {
+
+    		e.preventDefault();
+			
+			var counter = $('.present-past-div-count').val();
+			counter++;
+			
+			$('#presentPastDiv').append('<div class="form-group ">' + '<div class="col-sm-2">' + '<input type="text" name="illness_name' + counter + '" id="illness_name' + counter + '" class="form-control illness_name" />' + '</div>' + '<div class="col-sm-2">' + '<label class="radio-inline">' + '<input type="radio" value="Current" name="illness_status' + counter + '" class="present-past-current radioValidation illness_status" id="illness_status_current' + counter + '">' + 'Current' + '</label>' + '</div>' + '<div class="col-sm-2">' + '<label class="radio-inline col-sm-2">' + '<input type="radio" value="Past" name="illness_status' + counter + '"class="present-past-past radioValidation illness_status" id="illness_status_past' + counter + '">' + 'Past' + '</label>' + '</div>' + '<div class="col-sm-2">' + '<label class="radio-inline">' + '<input type="radio" value="NA" name="illness_status' + counter + '"class="present-past-na pp-dynamic-na radioValidation illness_status" id="illness_status_na' + counter + '">' + 'N/A' + '</label>' + '</div>' + '<div class="dd_col_size">' + '<div class="col-sm-3">' + '<input type="text" name="illness_medication' + counter + '" id="medication_present_past' + counter + '" class="form-control present-past-medication-empty ilness_medication",placeholder="Medication" />' + '</div>' + '</div>' + '<div class="dd_col_size">' + '<div class="col-sm-1">' + '<button name="btn-ppmore-remove" onclick="return illnessRemove(this);" class="btn btn-danger btn-ppmore-remove dd_right dd_mg_Medication_10 " id="btn-ppmore-remove">x</button' + '</div>' + '</div>' + '</div>');
+			
+			//Assigning new value to illnessDivCount
+			$('.present-past-div-count').val(counter);
+			$('#noPresentPast').attr('checked',false);
+			runPresentPastNotApplicableExtended();
+		});
+
+
+    };
     
-   	var runIllnessAddmore = function () {
-   		//Illness Addmore
-
-        $('#btn-addmore-illness').click(function(e){
-            e.preventDefault();
-            var counter = $('.present-past-div-count').val();
-            counter++;
-                
-            $('#presentPastDiv').append(
-                '<div class="form-group">'+
-                    '<div class="col-sm-2">' +
-                        '<input type="text" name="illness_name'+counter+'" id="illness_name'+counter+'" class="form-control illness_name" />' +
-                    '</div>' +
-                    '<div class="col-sm-2">' +
-                        '<label class="radio-inline">' +
-                            '<input type="radio" value="Current" name="illness_status'+counter+'" class="present-past-current radioValidation illness_status" id="illness_status_current'+counter+'">'+
-                                'Current'+
-                            '</label>'+
-                    '</div>'+
-                    '<div class="col-sm-2">' +      
-                        '<label class="radio-inline col-sm-2">'+
-                            '<input type="radio" value="Past" name="illness_status'+counter+'"class="present-past-past radioValidation illness_status" id="illness_status_past'+counter+'">'+
-                                'Past'+
-                        '</label>'+
-                    '</div>'+
-                    '<div class="col-sm-2">' +      
-                        '<label class="radio-inline">'+
-                            '<input type="radio" value="NA" name="illness_status'+counter+'"class="present-past-na pp-dynamic-na radioValidation illness_status" id="illness_status_na'+counter+'">'+
-                                'N/A'+
-                        '</label>'+
-                    '</div>' +
-                    '<div class="col-sm-3">' +
-                        '<input type="text" name="illness_medication'+counter+'" id="medication_present_past'+counter+'" class="form-control present-past-medication-empty ilness_medication",placeholder="Medication" />' +
-                    '</div>' +
-                    '<div class="col-sm-1">' +
-                        '<button name="btn-ppmore-remove" onclick="return illnessRemove(this);" class="btn btn-danger btn-ppmore-remove dd_right dd_mg_Medication_10 " id="btn-ppmore-remove">Remove</button' +
-                    '</div>' +  
-                '</div>'    
-            );
-
-            //Assigning new value to illnessDivCount
-            $('.present-past-div-count').val(counter);
-        });
-   	}
-
+   	
     var runPresentPastNotApplicable = function(){
-        	$('#noPresentPast').click(function()
-        	{
-            if($('#noPresentPast').is(':checked'))
-            {
-             	  $('#present-past-check-value').val('NA');
-		               $('.illness_name').attr('disabled',true);
-		               $('.present-past-na').filter('[value="NA"]').prop('checked', true);
-		               $('.present-past-current').attr('disabled',true);
-		               $('.present-past-past').attr('disabled',true);
-		               $('.present-past-medication-empty').attr('disabled',true);
-	            }
-	         else
-	         {
-	               $('#present-past-check-value').val('');
-		                $('.illness_name').attr('disabled',false);
-		                $('.present-past-na').filter('[value="NA"]').prop('checked', false);
-		                $('.present-past-current').attr('disabled',false);
-		                $('.present-past-past').attr('disabled',false);
-		                $('.present-past-medication-empty').attr('disabled',false);
-	            }
+    	runPresentPastNotApplicableExtended();
+        $('#noPresentPast').click(function()
+        {
+        	runPresentPastNotApplicableExtended();
+            
         });
+        
+    };
+    var runPresentPastNotApplicableExtended = function(){
+    	
+    	if($('#noPresentPast').is(':checked'))
+        {
+        	
+         	$('#present-past-check-value').val('NA');
+           	$('.illness_name').attr('disabled',true);
+           	//$('.present-past-na').filter('[value="NA"]').prop('checked', true);
+           	$('.illness_name').attr('disabled',true);
+           	$('.present-past-na').attr('disabled',true);
+           	$('.present-past-current').attr('disabled',true);
+           	$('.present-past-past').attr('disabled',true);
+           	$('.present-past-medication-empty').attr('disabled',true);
+        }
+     	else
+     	{
+     		
+           	$('#present-past-check-value').val('');
+            $('.illness_name').attr('disabled',false);
+            //$('.present-past-na').filter('[value="NA"]').prop('checked', false);
+            $('.present-past-na').attr('disabled',false);
+            $('.present-past-current').attr('disabled',false);
+            $('.present-past-past').attr('disabled',false);
+            $('.present-past-medication-empty').attr('disabled',false);
+        }
     };
     
     var runFamilyHistoryNotApplicable = function()
@@ -409,7 +396,8 @@ var cardioMedicalHistoryElements = function (dosageUnit) {
          
             
             runMedicalHistoryValidator();
-            runIllnessAddmore();
+           
+            runIllnessAddMore();
         	runPresentPastNotApplicable();
         	runFamilyHistoryNotApplicable();
         	runSurgicalHistoryNotApplicable();

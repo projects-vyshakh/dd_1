@@ -6,7 +6,14 @@
     {!!Html::style('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')!!}
 
 @stop
-@extends('layouts.master')
+
+<?php
+	
+	// $userName 	= Session::get('userName');
+	// $userId		= Session::get('userId');
+	$patientName = "";
+?>
+@extends('layouts.master',['userName'=>$userName,'userId'=>$userId,'patientName'=>$patientName])
 <style>
 	.loader 
 	{
@@ -20,8 +27,8 @@
     }
 </style>
 @section('main')
-<div class="loader"></div>
-
+<!-- <div class="loader"></div>
+ -->
 
 	<div class="page-header">
 		<h1>Import <small></small></h1>

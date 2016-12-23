@@ -421,10 +421,10 @@ if(!empty($prescMedicine)){
 															{!! Form::text('morning1', Input::old('morning1'), $attributes = array('class'=>'col-sm-10 morning'));  !!}
 														</td>
 														<td>
-															{!! Form::text('noon', Input::old('noon1'), $attributes = array('class'=>'col-sm-10 noon'));  !!}
+															{!! Form::text('noon1', Input::old('noon1'), $attributes = array('class'=>'col-sm-10 noon'));  !!}
 														</td>
 														<td>
-															{!! Form::text('night', Input::old('night1'), $attributes = array('class'=>'col-sm-10 night'));  !!}
+															{!! Form::text('night1', Input::old('night1'), $attributes = array('class'=>'col-sm-10 night'));  !!}
 														</td>
 														<td></td>
 													</tr>
@@ -533,7 +533,7 @@ if(!empty($prescMedicine)){
 		{!!Html::script('assets/js/ui-modals.js')!!}
 		{!!Html::script('assets/plugins/bootbox/bootbox.min.js')!!}
 
-		{!!Html::script('assets/plugins/tooltip-validation/jquery-validate.bootstrap-tooltip.js')!!}
+		<!-- {!!Html::script('assets/plugins/tooltip-validation/jquery-validate.bootstrap-tooltip.js')!!} -->
 		{!!Html::script('assets/plugins/ajax-loader/src/jquery.mloading.js')!!}
 		
 		{!!Html::script('assets/plugins/zebra-datepicker/js/zebra_datepicker.js')!!}
@@ -550,393 +550,23 @@ if(!empty($prescMedicine)){
 			UIModals.init();
 			patientPrescMedicine.init();
 				
-				
-			
-			
-			
-   			var dosageUnit 				= <?php echo json_encode($dosageUnit); ?>;
+			var dosageUnit 				= <?php echo json_encode($dosageUnit); ?>;
 			var durationUnit 			= <?php echo json_encode($drugDurationUnit); ?>;
          	var prescMedicine   		= <?php echo json_encode($prescMedicine); ?>;
 			var prescMedicineDetails  	= <?php echo json_encode($prescMedicine); ?>;
-			var success 				= $('.success-status').val();/*<?php //echo json_encode($success); ?>;*/
 			
+			$('.morning').tooltip({'trigger':'focus', 'title': 'Morning medicine count'});
+			$('.noon').tooltip({'trigger':'focus', 'title': 'Noon medicine count'}); 
+			$('.night').tooltip({'trigger':'focus', 'title': 'Night medicine count'}); 
 			
-			//alert(success);	
-			//$('.pdfopen').attr('disabled','disabled');
-			if(success== null || success==''){
-				$('.pdfopen').attr('disabled','disabled');
-				$('.share-prescription').attr('disabled','disabled');
-				//alert('success null');
-			}
-			else{
-				//alert('success not null');
-				for(var i=1;i<=prescMedicineDetails.length;i++){
-					var instructionText = prescMedicineDetails[i-1].treatment;
-					if(instructionText!=""){
-						$('#add-instruction-btn'+i).hide();
-						$('#remove-instruction-btn'+i).show();
-					}
-
-					$('.default-div-count').val(i);
-				}
-				$('.pdfopen').attr('disabled',false);
-				$('.share-prescription').attr('disabled',false);
-				
-			}
-			
-
-			
-
-
-
-			//Printing
-			//-------------------------------------------------------------------
-			// $('.pdfopen').click(function(){
-				
-			// 	var loadDrugStatus = $('.prev-drug-load-status').val();
-			// 	$('.print-data').val('printTrue');
-			// 	if(success==null){
-			// 		//Previous drug loaded
-			// 		if(loadDrugStatus==1){
-			// 			var defaultCount = $('.default-div-count').val();
-			// 			if(defaultCount>prescMedicineDetails.length){
-							
-			// 				printWithSaveConfirmations();
-			// 			}
-			// 			else{
-			// 				printWithoutSaveConfirmations();
-			// 			}
-			// 		}
-			// 		else{
-			// 			printWithSaveConfirmations();
-			// 		}
-					
-			// 	}
-			// 	else{
-			// 		//alert("sucess not null and prints")
-			// 		var defaultCount = $('.default-div-count').val();
-			// 		console.log(defaultCount);
-			// 		console.log(prescMedicineDetails.length);
-			// 		if(defaultCount>prescMedicineDetails.length){
-						
-			// 			printWithSaveConfirmations();
-			// 		}
-			// 		else{
-			// 			printWithoutSaveConfirmations();
-			// 		}
-			// 	}
-   //         	});
-			//Printing ends here
-			//-----------------------------------------------------------------
-
-
-
-			function printWithoutSaveConfirmations(){
-				//Storing drug name into arrNumber array to find the empty array
-			    var arrNumber = new Array();
-				$('.drug_name').each(function(){
-				    arrNumber.push($(this).val());
-				})
-				
-				//Searching null value in array
-				if ($.inArray('', arrNumber) != -1)
-				{
-				  	//alert('Please fill the empty drug name')
-					bootbox.dialog({
-						message		: "Please fill the empty fields",
-						title 		: "Warning",
-						buttons 	: 
-						{
-							success : 
-							{
-								label 		: "Ok",
-								className	: "btn-success",
-								callback 	: function() 
-								{
-								}
-							}
-						}
-					});
-				}
-				else{
-					var dataString = $( ".addPatientPrescMedicine" ).serializeArray();
-					//console.log(dataString);
-					$("body").mLoading({ });
-					$.ajax({
-		                    type: "POST",
-		                    url: "addPatientPrescMedicine",
-		                    data: dataString,
-		                    success: function(data) {
-		                    	if(data!=""){
-		                    		//console.log(data);
-		                    		//location.href = "patientprescmedicine";
-		                    		if(data!=""){
-		                    			$('.success-status').val('Data saved successfully');
-		                    		}
-		                    		
-		                    		$("body").mLoading('hide');
-		                    		$('#myModal3').modal('show');
-			                    		
-			                    		$('iframe').remove();
-			                    		$('.pdf_print').append('<iframe src="storage/pdf/'+data.pdfFileName+'.pdf" style="width:780px;height:500px;" id="iFrame"></iframe>');
-			                    		$('.print-data').val('saveTrue');
-
-			                    	//Refreshing the iframe and showing latest data
-		                    		/*var currSrc = $("#iFrame").attr("src");
-									$("#iFrame").attr("src", currSrc);*/
-
-		                    		
-				                }
-
-								$('.printBtnOk,.close').click(function(){
-									//location.href = "patientprescmedicine";
-								})
-		                    	
-		                 	
-		                    },
-			        });
-				}
-			}
-
-
-
-			function printWithSaveConfirmations(){
-				
-					bootbox.dialog({
-							message		: "Please save the data before print. Are you sure you want to save?",
-							title 		: "Prescription Details",
-							buttons 	: 
-							{
-								success : 
-								{
-									label 		: "Yes",
-									className	: "btn-success",
-									callback 	: function() 
-									{
-										//Storing drug name into arrNumber array to find the empty array
-									    var arrNumber = new Array();
-										$('.drug_name').each(function(){
-										    arrNumber.push($(this).val());
-										})
-										
-										//Searching null value in array
-										if ($.inArray('', arrNumber) != -1)
-										{
-										  	//alert('Please fill the empty drug name')
-											bootbox.dialog({
-												message		: "Please fill the empty fields",
-												title 		: "Warning",
-												buttons 	: 
-												{
-													success : 
-													{
-														label 		: "Ok",
-														className	: "btn-success",
-														callback 	: function() 
-														{
-														}
-													}
-												}
-											});
-										}
-										else{
-											var dataString = $( ".addPatientPrescMedicine" ).serializeArray();
-											console.log(dataString);
-											$("body").mLoading({ });
-											$.ajax({
-								                    type: "POST",
-								                    url: "addPatientPrescMedicine",
-								                    data: dataString,
-								                    success: function(data) {
-								                    	if(data!=""){
-								                    		console.log(data);
-								                    		//location.href = "patientprescmedicine";
-								                    		if(data!=""){
-								                    			$('.success-status').val('Data saved successfully');
-								                    		}
-
-								                    		
-
-
-								                    		$("body").mLoading('hide');
-								                    		$('#myModal3').modal('show');
-									                    		
-									                    		$('iframe').remove();
-									                    		$('.pdf_print').append('<iframe src="storage/pdf/'+data.pdfFileName+'.pdf" style="width:780px;height:500px;" id="iFrame"></iframe>');
-									                    		$('.print-data').val('saveTrue');
-									                    	//Refreshing the iframe and showing latest data
-								                    		/*var currSrc = $("#iFrame").attr("src");
-															$("#iFrame").attr("src", currSrc);*/
-
-								                    		
-										                }
-
-														$('.printBtnOk,.close').click(function(){
-															//location.href = "patientprescmedicine";
-														})
-								                    	
-								                 	
-								                    },
-									        });
-										}
-									        	
-									}
-								},
-							    danger: {
-							      label: "No",
-							      className: "btn-danger",
-							      callback: function() {
-							        		
-							      }
-							    },
-									    
-							}
-						});
-			}
-			
-			
-
-			
-
-			
-
-			
-   			
-					
-	   	
-									
-		                                       
 		 });
 
 
 
 		
 		
-		function addInstruction(e){
-					 var clickedElement 	= $(e).closest('.presc-inner');
-			          var instructionDiv 		= clickedElement.find('.instruction-div');
-			          //var instructionDiv = clickedElement.find('.presc-table');
-	               		//console.log(instructionDiv.closest('.instruction-div'));
-			           var drugNameInputId = clickedElement.find('.drug_name').attr('id');
-			           var drugNameInputId = parseInt(drugNameInputId.replace(/[^0-9\.]/g, ''), 10);
-			       		 instructionDiv.append('<textarea name="instruction'+drugNameInputId+'" cols="30" class=" form-control instruction"  id="instruction'+drugNameInputId+'"	></textarea>');
+		eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('s 12(e){3 f=$(e).t(\'.6-o\');3 U=f.2(\'.b-m\');3 j=f.2(\'.l\').8(\'5\');3 j=h(j.H(/[^0-9\\.]/g,\'\'),10);U.13(\'<I a="b\'+j+\'" 17="14" 15=" 19-16 b"  5="b\'+j+\'"	></I>\');f.2(\'.O-b-r\').L();f.2(\'.q-b-r\').N()}s 18(e){3 f=$(e).t(\'.6-o\');3 J=f.2(\'.b\');J.q();f.2(\'.O-b-r\').N();f.2(\'.q-b-r\').L()}s 1b(e){3 P=$(\'.y-m-x\').v();3 u=$(e).t(\'.6-o\');3 Q=u.2(\'.c\');3 p=Q.2(\'.1f\').8(\'5\');3 p=h(p.H(/[^0-9\\.]/g,\'\'),10);u.q();3 k=h(P)-h(1);$(\'.y-m-x\').v(k);1c(i=1;i<=k;i++){3 7=h(i)+h(1);1g(7>p){3 4=7-1;3 Z=$(\'.6-d\').2(\'.c\').2(\'#l\'+7);3 X=$(\'.6-d\').2(\'.c\').2(\'#w\'+7);3 Y=$(\'.6-d\').2(\'.c\').2(\'#F\'+7);3 W=$(\'.6-d\').2(\'.c\').2(\'#B\'+7);3 S=$(\'.6-d\').2(\'.c\').2(\'#z\'+7);3 11=$(\'.6-d\').2(\'.c\').2(\'#A\'+7);3 V=$(\'.6-d\').2(\'.c\').2(\'#C\'+7);3 R=$(\'.6-d\').2(\'.c\').2(\'#D\'+7);3 E=$(\'.6-o\').2(\'#b\'+7);1d.1e(E);3 K=$(\'.6-d\').2(\'.c\').2(\'#G\'+7);3 M=$(\'.6-d\').2(\'.c\').2(\'#1a\'+7);3 T=$(\'.6-d\').2(\'.c\').2(\'#1h\'+7);Z.8({\'a\':\'l\'+4,\'5\':\'l\'+4});X.8({\'a\':\'w\'+4,\'5\':\'w\'+4});Y.8({\'a\':\'F\'+4,\'5\':\'F\'+4});W.8({\'a\':\'B\'+4,\'5\':\'B\'+4});S.8({\'a\':\'z\'+4,\'5\':\'z\'+4});11.8({\'a\':\'A\'+4,\'5\':\'A\'+4});V.8({\'a\':\'C\'+4,\'5\':\'C\'+4});R.8({\'a\':\'D\'+4,\'5\':\'D\'+4});E.8({\'a\':\'b\'+4,\'5\':\'b\'+4});K.8({\'a\':\'G\'+4,\'5\':\'G\'+4});M.8({\'a\':\'n\'+4,\'5\':\'n\'+4});T.8({\'a\':\'n\'+4,\'5\':\'n\'+4})}$(\'.y-m-x\').v(k)}}',62,80,'||find|var|decrementDivId|id|presc|nextDivId|attr||name|instruction|drugs_row|table||clickedElement||parseInt||drugNameInputId|newDefaultDivCount|drug_name|div|food_status|inner|removedId|remove|btn|function|closest|elements|val|dosage|count|default|duration_unit|morning|duration|noon|night|selected9|dosage_unit|start_date|replace|textarea|instructionTextArea|selected10|hide|selected11|show|add|divCount|removedPrescTable|selected8|selected5|selected12|instructionDiv|selected7|selected4|selected2|selected3|selected1||selected6|addInstruction|append|30|class|control|cols|removeInstruction|form|food_status_before|drugRemove|for|console|log|dd_input_mini|if|food_status_after'.split('|'),0,{}))
 
-			               clickedElement.find('.add-instruction-btn').hide();
-			               clickedElement.find('.remove-instruction-btn').show();
-		}
-
-		function removeInstruction(e){
-			var clickedElement = $(e).closest('.presc-inner');
-            //console.log(clickedElement);
-
-            var instructionTextArea = clickedElement.find('.instruction');
-            //console.log(instructionTextArea);
-            instructionTextArea.remove();
-            clickedElement.find('.add-instruction-btn').show();
-			clickedElement.find('.remove-instruction-btn').hide();
-
-		}
-
-		function drugRemove(e){
-			//alert(event.type); 
-				var divCount = $('.default-div-count').val();
-				var elements = $(e).closest('.presc-inner');
-				//console.log(elements);
-				var removedPrescTable = elements.find('.drugs_row');
-				//console.log(removedPrescTable);
-				var removedId = removedPrescTable.find('.dd_input_mini').attr('id');
-				//console.log(removedId);
-				var removedId = parseInt(removedId.replace(/[^0-9\.]/g, ''), 10);
-				//console.log(removedId);
-				elements.remove();
-				var newDefaultDivCount = parseInt(divCount)-parseInt(1);
-				//console.log(newDefaultDivCount);
-				$('.default-div-count').val(newDefaultDivCount);
-
-
-				for(i=1;i<=newDefaultDivCount;i++){
-					
-					var nextDivId = parseInt(i) + parseInt(1);
-					if(nextDivId>removedId){
-						var decrementDivId = nextDivId - 1;
-						//console.log('decrement'+decrementDivId);
-						var selected1 = $('.presc-table').find('.drugs_row').find('#drug_name'+nextDivId);
-						var selected2 = $('.presc-table').find('.drugs_row').find('#dosage'+nextDivId);
-						
-						var selected3 = $('.presc-table').find('.drugs_row').find('#dosage_unit'+nextDivId);
-						
-						var selected4 = $('.presc-table').find('.drugs_row').find('#duration'+nextDivId);
-						var selected5 = $('.presc-table').find('.drugs_row').find('#duration_unit'+nextDivId);
-						var selected6 = $('.presc-table').find('.drugs_row').find('#morning'+nextDivId);
-						var selected7 = $('.presc-table').find('.drugs_row').find('#noon'+nextDivId);
-						var selected8 = $('.presc-table').find('.drugs_row').find('#night'+nextDivId);
-						var selected9 = $('.presc-inner').find('#instruction'+nextDivId);
-						console.log(selected9);
-						var selected10 = $('.presc-table').find('.drugs_row').find('#start_date'+nextDivId);
-						var selected11 = $('.presc-table').find('.drugs_row').find('#food_status_before'+nextDivId);
-						var selected12 = $('.presc-table').find('.drugs_row').find('#food_status_after'+nextDivId);
-						//var selected2 = $('#medicine').find('.form-group').find('.frequency'+nextDivId);
-						//selected1.attr('name','frequency'+decrementDivId+'[]');
-						selected1.attr({
-							  'name' : 'drug_name'+decrementDivId,
-							  'id': 'drug_name'+decrementDivId
-							});
-						selected2.attr({
-							  'name' : 'dosage'+decrementDivId,
-							  'id': 'dosage'+decrementDivId
-							});
-						selected3.attr({
-							  'name' : 'dosage_unit'+decrementDivId,
-							   'id'  : 'dosage_unit'+decrementDivId
-							});
-						selected4.attr({
-							  'name' : 'duration'+decrementDivId,
-							  'id': 'duration'+decrementDivId
-							});
-						selected5.attr({
-							  'name' : 'duration_unit'+decrementDivId,
-							  'id'   : 'duration_unit'+decrementDivId
-							  
-							});
-						selected6.attr({
-							  'name' : 'morning'+decrementDivId,
-							  'id': 'morning'+decrementDivId
-							});
-						selected7.attr({
-							  'name' : 'noon'+decrementDivId,
-							  'id': 'noon'+decrementDivId
-							});
-						selected8.attr({
-							  'name' : 'night'+decrementDivId,
-							  'id': 'night'+decrementDivId
-							});
-						selected9.attr({
-							  'name' : 'instruction'+decrementDivId,
-							  'id': 'instruction'+decrementDivId
-							});
-						selected10.attr({
-							  'name' : 'start_date'+decrementDivId,
-							  'id': 'start_date'+decrementDivId
-							});
-						selected11.attr({
-							  'name' : 'food_status'+decrementDivId,
-							  'id': 'food_status'+decrementDivId
-							});
-						selected12.attr({
-							  'name' : 'food_status'+decrementDivId,
-							  'id': 'food_status'+decrementDivId
-							});
-
-						
-						
-					}
-					$('.default-div-count').val(newDefaultDivCount);
-					
-				}
-				
-				
-						
-		}
 
 
         

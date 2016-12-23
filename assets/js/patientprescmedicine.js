@@ -23,6 +23,36 @@ var patientPrescMedicine = function () {
 				   		 data: dataString,
 				    	success: function(data)
 				    	{
+				    		console.log(data);
+
+
+
+				    		// Enabling/Disabling print,share button on success after save
+				    		var success = $('.success-status').val();
+				    		if(success== null || success==''){
+								$('.pdfopen').attr('disabled','disabled');
+								$('.share-prescription').attr('disabled','disabled');
+								//alert('success null');
+							}
+							else{
+								//alert('success not null');
+								for(var i=1;i<=data.prescMedicine.length;i++){
+									var instructionText = data.prescMedicine[i-1].treatment;
+									if(instructionText!=""){
+										$('#add-instruction-btn'+i).hide();
+										$('#remove-instruction-btn'+i).show();
+									}
+
+									$('.default-div-count').val(i);
+								}
+								$('.pdfopen').attr('disabled',false);
+								$('.share-prescription').attr('disabled',false);
+								
+							}
+							// -----------------------------------------------------------------
+
+
+
 				    	 	
 		       				$('.presc-add-more').click(function(e){
    								$('.pdfopen').attr('disabled','disabled');							//disabling print button on add more click
@@ -298,10 +328,7 @@ var patientPrescMedicine = function () {
 									$('.share-prescription').attr('disabled',false);
 								}	
 
-								// $('.share-prescription').click(function(e){
-								// 	e.preventDefault();	
-								// 	runSharePrescriprion(data.prescMedicine[0].id_share_prescription);
-								// });
+								
 
 				       		});		
 
@@ -314,6 +341,7 @@ var patientPrescMedicine = function () {
 								runSharePrescriprion(prescSharedId);
 								
 							});
+							
 
 
 
@@ -378,7 +406,9 @@ var patientPrescMedicine = function () {
              required : true 
         });
        
-       
+       	// $.validator.addClassRules("dosage", {
+        //      number : true 
+        // });
         
         form2.validate({
             errorElement: "span", // contain the error msg in a small tag
@@ -400,13 +430,7 @@ var patientPrescMedicine = function () {
             ignore: "",
             rules: {
                
-               
-                /*'drugs'   :   { needsSelection: true, required:true },*/
-                'drugs[]' :   {  required:true },
-                'dosage[]'  :   {  required:true },
-                'start_date[]'   :   {  required:true },
-                
-                /*'followup_date' : {  required:true },*/
+              
                   
                 
                 
@@ -414,11 +438,7 @@ var patientPrescMedicine = function () {
             
             messages: {
                
-                'drugs[]'  : "Please type drug name", 
-                'dosage[]' :   "Please type dosage",
-                'start_date[]'    :    "Please type medicine start date",
-                 /*'morning' : "Please enter a valid number",*/
-                 /*'followup_date' : "Please type followup date",*/
+                
                  
                
             },
