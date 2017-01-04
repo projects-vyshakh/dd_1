@@ -1000,7 +1000,7 @@ if(!empty($doctorData)){
 										</label>
 									
 										<label class="dd_beforfood_pd" >
-											<input type="radio"  class="before_food" name="sys_pelvic_cervix_lbc" value="No" >Yes
+											<input type="radio"  class="before_food" name="sys_pelvic_cervix_lbc" value="No" >No
 										</label>
 								
 								</span>

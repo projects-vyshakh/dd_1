@@ -43,6 +43,11 @@ $todayDate = date('d-M-Y');
     @if($currentPath=="patientprofileprevtreatment")<title>Patient Previous Treatment</title> @endif
     @if($currentPath=="patientchangepassword")<title>Patient Change Password</title> @endif
 
+    <!-- Pediatrician -->
+    @if($currentPath=="pediapersonalinformation")<title>Patient Personal Information</title> @endif
+
+
+    <!-- Admin -->
     @if($currentPath=="userhome")<title>Home</title> @endif
     @if($currentPath=="oldpatientslist")<title>Patients Lists</title> @endif
     @if($currentPath=="userjsonimport")<title>Import</title> @endif
@@ -101,79 +106,118 @@ $todayDate = date('d-M-Y');
                 <div class="nav navbar-left">
                     <div class="horizontal-menu navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li id="patient-top-menu-li"  @if($currentPath == 'patientpersonalinformation' || $currentPath == 'patientobstetricshistory' || $currentPath == 'patientmedicalhistory' || $currentPath == 'patientprevioustreatment' || $currentPath == 'cardiopersonalinformation' || $currentPath == 'cardiomedicalhistory' || $currentPath == 'cardioprevioustreatment') class="active" @endif >
+                            <li id="patient-top-menu-li"  
+                                @if($currentPath == 'patientpersonalinformation' ||   
+                                    $currentPath == 'patientobstetricshistory' || 
+                                    $currentPath == 'patientmedicalhistory' || 
+                                    $currentPath == 'patientprevioustreatment' || 
+                                    $currentPath == 'cardiopersonalinformation' || $currentPath == 'cardiomedicalhistory' || 
+                                    $currentPath == 'cardioprevioustreatment' ||
+                                    $currentPath == 'pediapersonalinformation') 
+                                    class="active" 
+                                @endif >
 
-                            @if($specialization==1)
-                                <a href="patientpersonalinformation" id="patient-menu">
-                                 <i class="icon pricon icon-pr-patient" ng-show="navOption.key"></i>
-                               <!--  <img src="assets/images/Patient.png"> -->
+                                @if($specialization==1)
+                                    <a href="patientpersonalinformation" id="patient-menu">
+                                        <i class="icon pricon icon-pr-patient" ng-show="navOption.key"></i>
+                                        <span class="dd_menu_main_L">Patient</span>
+                                    </a>
 
-                               <span class="dd_menu_main_L">
-                                    Patient
-
-                                    </span>
-                                </a>
-                                <div class="dd_resp_menu" id="patient-menu-div">
-                                    <ul class="sub-menu" style="display:block">
-                                        <li>
-                                            <a href="patientpersonalinformation">
-                                                <span class="title"> Personal Information </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="patientobstetricshistory">
-                                                <span class="title"> Obstetrics History </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="patientmedicalhistory">
-                                                <span class="title"> Medical History </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="patientprevioustreatment">
-                                                <span class="title"> Prevoious Treatments </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            @elseif($specialization==2)
-                                 <a href="cardiopersonalinformation" id="patient-menu">
-                                 <i class="icon pricon icon-pr-patient" ng-show="navOption.key"></i>
-                               <!--  <img src="assets/images/Patient.png"> -->
-                                       <span class="dd_menu_main_L">
-                                    Patient
-
-                                    </span>
-                                </a>
-                                <div class="dd_resp_menu" id="patient-menu-div">
-                                    <ul class="sub-menu" style="display:block">
-                                        <li>
-                                            <a href="patientpersonalinformation">
-                                                <span class="title"> Personal Information </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="patientobstetricshistory">
-                                                <span class="title"> Obstetrics History </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="patientmedicalhistory">
-                                                <span class="title"> Medical History </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="patientprevioustreatment">
-                                                <span class="title"> Prevoious Treatments </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            @endif
+                                    <div class="dd_resp_menu" id="patient-menu-div">
+                                        <ul class="sub-menu" style="display:block">
+                                            <li>
+                                                <a href="patientpersonalinformation">
+                                                    <span class="title"> Personal Information </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="patientobstetricshistory">
+                                                    <span class="title"> Obstetrics History </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="patientmedicalhistory">
+                                                    <span class="title"> Medical History </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="patientprevioustreatment">
+                                                    <span class="title"> Prevoious Treatments </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @elseif($specialization==2)
+                                    <a href="cardiopersonalinformation" id="patient-menu">
+                                        <i class="icon pricon icon-pr-patient" ng-show="navOption.key"></i>
+                                        <span class="dd_menu_main_L">Patient</span>
+                                    </a>
+                                    <div class="dd_resp_menu" id="patient-menu-div">
+                                        <ul class="sub-menu" style="display:block">
+                                            <li>
+                                                <a href="patientpersonalinformation">
+                                                    <span class="title"> Personal Information </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="patientobstetricshistory">
+                                                    <span class="title"> Obstetrics History </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="patientmedicalhistory">
+                                                    <span class="title"> Medical History </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="patientprevioustreatment">
+                                                    <span class="title"> Prevoious Treatments </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @elseif($specialization==3)
+                                    <a href="pediapersonalinformation" id="patient-menu">
+                                        <i class="icon pricon icon-pr-patient" ng-show="navOption.key"></i>
+                                        <span class="dd_menu_main_L">Patient</span>
+                                    </a>
+                                    <div class="dd_resp_menu" id="patient-menu-div">
+                                        <ul class="sub-menu" style="display:block">
+                                            <li>
+                                                <a href="pediapersonalinformation">
+                                                    <span class="title"> Personal Information </span>
+                                                </a>
+                                            </li>
+                                            <!-- <li>
+                                                <a href="patientobstetricshistory">
+                                                    <span class="title"> Obstetrics History </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="patientmedicalhistory">
+                                                    <span class="title"> Medical History </span>
+                                                </a>
+                                            </li> -->
+                                            <li>
+                                                <a href="pediaprevioustreatment">
+                                                    <span class="title"> Previous Treatments </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
                             </li>
                             
-                            <li id="diagnosis-top-menu-li" @if($currentPath == 'patientexamination' || $currentPath == 'patientlabdata' || $currentPath == 'patientdiagnosis' || $currentPath == 'cardioexamination' || $currentPath == 'cardiolabdata' || $currentPath == 'cardiodiagnosis') class="active" @endif>
+                            <li id="diagnosis-top-menu-li" 
+                                @if($currentPath == 'patientexamination' || 
+                                    $currentPath == 'patientlabdata' || 
+                                    $currentPath == 'patientdiagnosis' || 
+                                    $currentPath == 'cardioexamination' || 
+                                    $currentPath == 'cardiolabdata' || 
+                                    $currentPath == 'cardiodiagnosis' || 
+                                    $currentPath == 'pediadiagnosis') 
+                                    class="active" 
+                                @endif>
                             @if($specialization==1)
                                 <a href="patientexamination" id="diagnosis-menu">
                                 <!-- <img src="assets/images/Diagnosis.png"> -->
@@ -759,66 +803,82 @@ $todayDate = date('d-M-Y');
                         <i class="clip-chevron-left"></i>
                         <i class="clip-chevron-right"></i>
                     </div>
-                    @if($currentPath == 'patientpersonalinformation' || $currentPath == 'patientobstetricshistory' || $currentPath == 'patientmedicalhistory' || $currentPath == 'patientprevioustreatment' || $currentPath == 'cardiopersonalinformation' || $currentPath == 'cardiomedicalhistory' || $currentPath == 'cardioprevioustreatment' || $currentPath== 'printsetup')
-                    <!-- Patient side menu starts -->
-                    <div id="patient-side-menu">
-                        <ul class="main-navigation-menu">
-                            @if($specialization == 1)
-                                <li  @if($currentPath == 'patientpersonalinformation') class="active open" @endif>
-                                    <a href="patientpersonalinformation">
-                                  <!--    <i class="clip-home-3"></i> --> 
-                                     <span class="dd_input_icon_patientpersonalinformation"></span>
-                                        <span class="title"> Personal Information </span><span class="selected"></span>
-                                    </a>
-                                </li>
-                            
-                            
-                                <li  @if($currentPath == 'patientobstetricshistory') class="active open" @endif>
-                                    <a href="patientobstetricshistory"> 
-                                        <span class="dd_input_icon_Obstetrics"></span>
-                                        <span class="title"> Obstetrics History </span><span class="selected"></span>
-                                    </a>
-                                </li>
-                                <li  @if($currentPath == 'patientmedicalhistory') class="active open" @endif>
-                                    <a href="patientmedicalhistory">
-                                        <span class="dd_input_icon_Medical_History"></span>
-                                        <span class="title"> Medical History </span><span class="selected"></span>
-                                    </a>
-                                </li>
-                                <li  @if($currentPath == 'patientprevioustreatment') class="active open" @endif>
-                                    <a href="patientprevioustreatment">
-                                        <span class="dd_input_icon_Previous_Treatments"></span>
-                                        <span class="title"> Previous Treatments </span>
-                                        <span class="selected"></span>
-                                    </a>
-                                </li>
-                            @elseif($specialization == 2)
-                                 <li  @if($currentPath == 'cardiopersonalinformation') class="active open" @endif>
-                                    <a href="cardiopersonalinformation">
-                                  <!--    <i class="clip-home-3"></i> --> 
-                                     <span class="dd_input_icon_patientpersonalinformation"></span>
-                                        <span class="title"> Personal Information </span><span class="selected"></span>
-                                    </a>
-                                </li>
-                                 <li  @if($currentPath == 'cardiomedicalhistory') class="active open" @endif>
-                                    <a href="cardiomedicalhistory">
-                                        <span class="dd_input_icon_Medical_History"></span>
-                                        <span class="title"> Medical History </span><span class="selected"></span>
-                                    </a>
-                                </li> 
-                                <li  @if($currentPath == 'cardioprevioustreatment') class="active open" @endif>
-                                    <a href="cardioprevioustreatment">
-                                        <span class="dd_input_icon_Previous_Treatments"></span>
-                                        <span class="title"> Previous Treatments </span>
-                                        <span class="selected"></span>
-                                    </a>
-                                </li> 
+                    @if($currentPath == 'patientpersonalinformation' || 
+                        $currentPath == 'patientobstetricshistory' || 
+                        $currentPath == 'patientmedicalhistory' || 
+                        $currentPath == 'patientprevioustreatment' || 
+                        $currentPath == 'cardiopersonalinformation' || 
+                        $currentPath == 'cardiomedicalhistory' || 
+                        $currentPath == 'cardioprevioustreatment' || 
+                        $currentPath == 'pediapersonalinformation' ||
+                        $currentPath == 'printsetup')
 
-                            @endif    
-                        </ul>
-                    </div>
-                    @endif
-                    <!-- Patient side menu ends --> 
+                        <!-- Patient side menu starts -->
+                        <div id="patient-side-menu">
+                            <ul class="main-navigation-menu">
+                                @if($specialization == 1)
+                                    <li  @if($currentPath == 'patientpersonalinformation') class="active open" @endif>
+                                        <a href="patientpersonalinformation">
+                                      <!--    <i class="clip-home-3"></i> --> 
+                                         <span class="dd_input_icon_patientpersonalinformation"></span>
+                                            <span class="title"> Personal Information </span><span class="selected"></span>
+                                        </a>
+                                    </li>
+                                
+                                
+                                    <li  @if($currentPath == 'patientobstetricshistory') class="active open" @endif>
+                                        <a href="patientobstetricshistory"> 
+                                            <span class="dd_input_icon_Obstetrics"></span>
+                                            <span class="title"> Obstetrics History </span><span class="selected"></span>
+                                        </a>
+                                    </li>
+                                    <li  @if($currentPath == 'patientmedicalhistory') class="active open" @endif>
+                                        <a href="patientmedicalhistory">
+                                            <span class="dd_input_icon_Medical_History"></span>
+                                            <span class="title"> Medical History </span><span class="selected"></span>
+                                        </a>
+                                    </li>
+                                    <li  @if($currentPath == 'patientprevioustreatment') class="active open" @endif>
+                                        <a href="patientprevioustreatment">
+                                            <span class="dd_input_icon_Previous_Treatments"></span>
+                                            <span class="title"> Previous Treatments </span>
+                                            <span class="selected"></span>
+                                        </a>
+                                    </li>
+                                @elseif($specialization == 2)
+                                     <li  @if($currentPath == 'cardiopersonalinformation') class="active open" @endif>
+                                        <a href="cardiopersonalinformation">
+                                      <!--    <i class="clip-home-3"></i> --> 
+                                         <span class="dd_input_icon_patientpersonalinformation"></span>
+                                            <span class="title"> Personal Information </span><span class="selected"></span>
+                                        </a>
+                                    </li>
+                                     <li  @if($currentPath == 'cardiomedicalhistory') class="active open" @endif>
+                                        <a href="cardiomedicalhistory">
+                                            <span class="dd_input_icon_Medical_History"></span>
+                                            <span class="title"> Medical History </span><span class="selected"></span>
+                                        </a>
+                                    </li> 
+                                    <li  @if($currentPath == 'cardioprevioustreatment') class="active open" @endif>
+                                        <a href="cardioprevioustreatment">
+                                            <span class="dd_input_icon_Previous_Treatments"></span>
+                                            <span class="title"> Previous Treatments </span>
+                                            <span class="selected"></span>
+                                        </a>
+                                    </li> 
+                                @elseif($specialization == 3)
+                                    <li  @if($currentPath == 'pediapersonalinformation') class="active open" @endif>
+                                        <a href="pediapersonalinformation">
+                                      <!--    <i class="clip-home-3"></i> --> 
+                                         <span class="dd_input_icon_patientpersonalinformation"></span>
+                                            <span class="title"> Personal Information </span><span class="selected"></span>
+                                        </a>
+                                    </li>
+                                @endif    
+                            </ul>
+                        </div>
+                        @endif
+                        <!-- Patient side menu ends --> 
                     
                     <!-- Diagnosis side menu starts -->
                     @if(($currentPath == 'patientexamination') || ($currentPath == 'patientdiagnosis') || ($currentPath == 'patientlabdata' || $currentPath == 'cardioexamination' || $currentPath == 'cardiolabdata' || $currentPath == 'cardiodiagnosis'))

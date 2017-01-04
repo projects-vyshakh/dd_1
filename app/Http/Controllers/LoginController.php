@@ -97,7 +97,7 @@ class LoginController extends Controller {
 				return Redirect::to('doctorhome');
 			}
 			else{
-				return Redirect::to('doctorlogin')->withInput()->with(array('error'=>"Login failed!!! Incorrect email or password"));
+				return Redirect::to('doctorlogin')->withInput()->with(array('error'=>"Login failed! Incorrect email or password."));
 			}
 		}
 		else{
@@ -109,7 +109,7 @@ class LoginController extends Controller {
 			}
 			else{
 				//echo "enter into 0 else ";
-				return Redirect::to('doctorlogin')->with(array('error'=>"Login failed!!! Incorrect email or password"));
+				return Redirect::to('doctorlogin')->with(array('error'=>"Login failed! Incorrect email or password."));
 			}
 
 			
@@ -158,7 +158,7 @@ class LoginController extends Controller {
 
 				
 				if($password==$decrypted){ 
-					if($checkLoginCredentials->registration_status==1){
+					if($checkLoginCredentials->registration_status=='1'){
 						
 						Session::put('id_patient',$checkLoginCredentials->id_patient);
 						$patientName = $checkLoginCredentials->first_name." ".$checkLoginCredentials->last_name;

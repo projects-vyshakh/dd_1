@@ -54,8 +54,7 @@ class PrintController extends Controller {
 	 * @return Response
 	 */
 	public function patientPrescPrint(){
-	
-
+		
 		$specialization = Session::get('doctorSpecialization');;
 		$patientId 		= Session::get('patientId');
 		$doctorId 		= Session::get('doctorId');
@@ -88,23 +87,27 @@ class PrintController extends Controller {
 									->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
 		                            ->where('id_patient','=',$patientId)
 		                            ->get();
-
-		$medicalHistoryData =  DB::table('cardiac_medical_history_present_past_more')
-									->where('created_date', DB::raw("(select max(`created_date`) from cardiac_medical_history_present_past_more where id_patient='$patientId')"))
-									->where('id_patient','=',$patientId)
-		                            ->get();
+		
+		
 
 		$printData = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
 
 		   
 
-		$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData);
-
 		
+
+		//var_dump($medicalHistoryData);
 
 
 		switch ($specialization) {
 			case '1':
+				$medicalHistoryData =  DB::table('medical_history_present_past_more')
+									->where('created_date', DB::raw("(select max(`created_date`) from medical_history_present_past_more where id_patient='$patientId')"))
+									->where('id_patient','=',$patientId)
+		                            ->get();
+
+				$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData);
+				
 				$pdf = App::make('dompdf.wrapper');
 		        //$pdf->loadHTML('<h1>Test</h1>');
 		        $view =  View::make('gynprecriptionformat',$parametersArray)->render();
@@ -124,6 +127,13 @@ class PrintController extends Controller {
 				break;
 
 			case '2':
+				$medicalHistoryData =  DB::table('cardiac_medical_history_present_past_more')
+									->where('created_date', DB::raw("(select max(`created_date`) from cardiac_medical_history_present_past_more where id_patient='$patientId')"))
+									->where('id_patient','=',$patientId)
+		                            ->get();
+
+		         $parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData);
+
 				$pdf = App::make('dompdf.wrapper');
 		        //$pdf->loadHTML('<h1>Test</h1>');
 		        $view =  View::make('cardioprescriptionformat',$parametersArray)->render();

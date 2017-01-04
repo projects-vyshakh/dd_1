@@ -277,6 +277,10 @@ var patientElements = function (dosageUnit) {
                 return false;
             }
         }, 'This field is required.');*/
+        jQuery.validator.addClassRules('state', {
+            required: true /*,
+            other rules */
+        });
         $.validator.addMethod("maritialStatusNotEquals", function(value, element, arg){
             
           return arg != value;
@@ -300,6 +304,8 @@ var patientElements = function (dosageUnit) {
                // return this.optional(element) || re.test(value);
                //alert(value);
         },"Enter only characters from A-z");
+
+       
 
         form2.validate({
             errorElement: "span", // contain the error msg in a small tag
@@ -362,7 +368,7 @@ var patientElements = function (dosageUnit) {
                     countryNotEquals : 0
                 },*/
                 state : {
-                    stateNotEquals : 0
+                    stateNotEquals : ''
                 },
                 city : {
                     cityNotEquals : 0
@@ -371,11 +377,15 @@ var patientElements = function (dosageUnit) {
                     required : true,
                     number : true,
                     maxlength : 15,
+                    minlength : 7
                 },
                 email: {
                     
                     email : true
                 },
+                pincode :{
+                    number : true
+                }
                 
             },
             messages: {
@@ -394,10 +404,14 @@ var patientElements = function (dosageUnit) {
                 { 
                     required: "Please type valid phone number" ,
                     maxlength : "Please enter no more than 15 numbers",
+                    minlength : "Please enter atleast 7 numbers",
                 },
                 email   : {
                     email: "Please type a valid email address"
                 },
+                pincode: {
+                    number : "Type a valid pin code",
+                }
                 
             },
             invalidHandler: function (event, validator) { //display error alert on form submit

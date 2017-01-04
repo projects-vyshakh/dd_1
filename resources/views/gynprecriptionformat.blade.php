@@ -282,7 +282,7 @@
     		$age = $patientPersonalData->age;
     		$gender = $patientPersonalData->gender;
 
-
+    		
     	?>
 	    <div id="company">
 	        <div><div class="name" style="font-size: 20px; margin-bottom: 5px;">Name:	{{$patientName}} </div> </div>
@@ -329,6 +329,7 @@
       		$diabValue = "";
       		$cancerValue = "";
 
+      		
       		foreach($medicalHistoryData as $index=>$medicalHistoryDataVal){
       			if($medicalHistoryDataVal->illness_name=="Hypertension"){
       				$hyperIllnessStatus = $medicalHistoryDataVal->illness_status;

@@ -5369,6 +5369,7 @@ td.column-right {
 .form-group label{
 	font-size: 14px;
 	color: #212121;
+	
 }
 .dd_sample_L{
 	width:52%;
@@ -6511,14 +6512,14 @@ padding-bottom: 0;
      background-position: -39px -363px;
 }
 .dd_print{
-	   background-color: #428bca;
+	background-color: #428bca;
     border-color: #357ebd;
     border-radius: 0;
     color: #fff;
     position: absolute;
     right: 0;
     top: -21px;
-    border-radius: 0 0 15px;
+    /*border-radius: 0 0 15px;*/
     padding: 6px 20px
 }
 .dd_addmore_0{
@@ -7426,4 +7427,11 @@ table.dataTable thead .sorting_asc::after {
 }
 .dd_panel_body_font{
 	color: #333;
+}
+.dd_kids_Name{
+	font-size: 15px;
+}
+.dd_kids_space{
+	margin-bottom: 40px;
+    margin-top: 40px;
 }

@@ -11,6 +11,14 @@ use App\classes\DBUtils;
 use Carbon\Carbon;
 //use Illuminate\Support\Collection::sortBy();
 
+
+//Models
+use App\Models\PatientsModel;
+use App\Models\DoctorsModel;
+use App\Models\MedicalHistoryModel;
+use App\Models\MedicalHistoryPresentPastModel;
+use App\Models\SurgeryHistoryModel;
+use App\Models\DrugAllergyHistoryModel;
 class PatientController extends Controller {
 
 	/*
@@ -125,11 +133,11 @@ class PatientController extends Controller {
 	}
 
 	public function showPatientProfilePrevTreatment(){
-
-
-		$patientId = Session::get('id_patient');
-			
-		$doctorId = Session::get('doctorId');
+		$patientId 	= Session::get('id_patient');
+		$doctorId 	= Session::get('doctorId');
+		
+		
+		
 
 		if(!empty($patientId)){
 			$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
@@ -148,12 +156,14 @@ class PatientController extends Controller {
 		$year = Input::get('year');
 		
 		//$year = $input['year'];
-		$patientId = Session::get('id_patient');
-		$doctorId = Session::get('doctorId');
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+		$patientId 				= Session::get('id_patient');
+		$doctorId 				= Session::get('doctorId');
+		//$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+		//$doctorData 			= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 		
-		
+		$patientPersonalData = PatientsModel::where('id_patient','=',$patientId)->first();
+		$doctorData 		 = DoctorsModel::where('id_doctor','=',$doctorId)->first();
+
 		$bloodGroup = DB::table('business_key_details')->where('business_key', '=', 'BLOOD_GROUP')->lists('business_value', 'business_value');
 		$diseases 	=  DB::table('diseases')->select('disease_name')->orderBy('disease_name', 'asc')->lists('disease_name', 'disease_name');
 
@@ -169,18 +179,19 @@ class PatientController extends Controller {
 		
 		$obsData 	= DB::table('sp_gynaecology_obs')
 		                                    ->where('id_patient','=',$patientId)
+		                                    
 		                                    ->where('created_date','LIKE','%'.$year.'%')
 										    ->groupBy('created_date')
 										    ->orderBy('created_date','desc')
 										    ->get();
 
 										   //var_dump($obsData);
-										    //die();
-
+										    
 		
 
 		$pregData   = DB::table('sp_gynaecology_obs_preg')
 		                                    ->where('id_patient','=',$patientId)
+		                                    //->where('id_doctor','=',$doctorId)
 		                                    ->where('created_date','LIKE','%'.$year.'%')
 		                                    ->orderBy('created_date','desc')
 		                                    ->get();
@@ -189,6 +200,7 @@ class PatientController extends Controller {
 
 		$vitalsData = DB::table('vitals')
 		                            ->where('id_patient','=',$patientId)
+		                           //->where('id_doctor','=',$doctorId)
 		                            ->where('created_date','LIKE','%'.$year.'%')
 		                            ->orderBy('created_date','desc')
 		                            ->get();
@@ -197,6 +209,7 @@ class PatientController extends Controller {
 
 		$diagnosisData =  DB::table('diagnosis')
 		                            ->where('id_patient','=',$patientId)
+		                            //->where('id_doctor','=',$doctorId)
 		                            ->where('created_date','LIKE','%'.$year.'%')
 		                            ->orderBy('created_date','desc')
 		                            ->get();
@@ -204,6 +217,7 @@ class PatientController extends Controller {
 
 		$prescMedicineData =  DB::table('prescription')
 		                            ->where('id_patient','=',$patientId)
+		                            //->where('id_doctor','=',$doctorId)
 		                            ->where('created_date','LIKE','%'.$year.'%')
 		                            ->orderBy('created_date','desc')
 		                            ->get();
@@ -347,6 +361,7 @@ class PatientController extends Controller {
 											->whereIn('created_date', $originalCreatedDate)
 											->where('created_date','LIKE','%'.$year.'%')
 											->where('id_patient','=',$patientId)
+											//->where('id_doctor','=',$doctorId)
 											->get();	
 											
 											
@@ -354,6 +369,7 @@ class PatientController extends Controller {
 											->whereIn('created_date', $originalCreatedDate)
 											->where('created_date','LIKE','%'.$year.'%')
 											->where('id_patient','=',$patientId)
+											//->where('id_doctor','=',$doctorId)
 											->get();	
 
 			/*var_dump(json_encode($lmpData));
@@ -363,28 +379,29 @@ class PatientController extends Controller {
 											->whereIn('created_date', $originalCreatedDate)
 											->where('created_date','LIKE','%'.$year.'%')
 											->where('id_patient','=',$patientId)
+											//->where('id_doctor','=',$doctorId)
 											->get();
 		$vitalsData = DB::table('vitals')
 									->whereIn('created_date', $originalCreatedDate)
 									->where('created_date','LIKE','%'.$year.'%')
 									->where('id_patient','=',$patientId)
+									//->where('id_doctor','=',$doctorId)
 									->get();
 		$diagnosisData = DB::table('diagnosis')
 									->whereIn('created_date', $originalCreatedDate)
 									->where('created_date','LIKE','%'.$year.'%')
 									->where('id_patient','=',$patientId)
+									//->where('id_doctor','=',$doctorId)
 									->get();
 		$prescMedicineData = DB::table('prescription')
 									->whereIn('created_date', $originalCreatedDate)
 									->where('created_date','LIKE','%'.$year.'%')
 									->where('id_patient','=',$patientId)
+									//->where('id_doctor','=',$doctorId)
 									->get();
 
 									
 		return array('obsData' => $obsData,'lmpData' => $lmpData,'pregData' => $pregData,'vitalsData'=>$vitalsData,'originalCreatedDate'=>$originalCreatedDate,'bloodGroup'=>$bloodGroup,'diagnosisData'=>$diagnosisData,'diseases'=>$diseases,'prescMedicineData'=>$prescMedicineData,'drugFrequency'=>$drugFrequency,'originalCreatedDateDup'=>$originalCreatedDateDup,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit);
-		//die();
-
-		//return view('patientprevioustreatment',array('obsData' => $obsData,'lmpData' => $lmpData,'pregData' => $pregData,'vitalsData'=>$vitalsData,'originalCreatedDate'=>$originalCreatedDate,'bloodGroup'=>$bloodGroup,'diagnosisData'=>$diagnosisData,'diseases'=>$diseases,'prescMedicineData'=>$prescMedicineData,'drugFrequency'=>$drugFrequency,'originalCreatedDateDup'=>$originalCreatedDateDup,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit));
 	}
 
 

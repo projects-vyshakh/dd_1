@@ -321,6 +321,15 @@ class CardiologyController extends Controller {
 	    //var_dump(json_encode($input));
 	    //die();
 
+	    //if this is NA then checked the Not known else unchecked the not known
+		$presentPastNotKnown  	= $input['present-past-check-value']; 
+		$familyNotKnown       	= $input['family-check-value'];	
+		$surgeryNotKnown      	= $input['surgery-check-value'];
+		$generalAllergyNotKnown = $input['generalallergy-check-value'];
+		$drugAllergyNotKnown 	= $input['drugallergy-check-value'];
+		$socialNotKnown 		= $input['social-check-value'];
+
+
 	    $patientExistCheck = PatientsModel::where('id_patient','=',$patientId)->count();
 	   
 	    $medicalHistoryExist = DB::table('cardiac_medical_history')
@@ -363,9 +372,21 @@ class CardiologyController extends Controller {
 
 	    	if($medicalHistoryExist>0){
 	    		
-	    		if( !empty($input['father']) || !empty($input['mother']) ||
-		    	   !empty($input['sibling']) || !empty($input['grandfather']) || !empty($input['grandmother']) ||
-		    	   !empty($input['allergy_general']) || !empty($input['alcohol']) || !empty($input['tobaco-smoke']) || !empty($input['tobaco-chew'])  || !empty($input['other-social-history']))
+	    		if( !empty($input['father'])  || 
+	    			!empty($input['mother'])  ||
+		    	    !empty($input['sibling']) || 
+		    	    !empty($input['grandfather']) || 
+		    	    !empty($input['grandmother']) ||
+		    	    !empty($input['allergy_general']) || 
+		    	    !empty($input['alcohol']) || 
+		    	    !empty($input['tobaco-smoke']) || 
+		    	    !empty($input['tobaco-chew'])  || 
+		    	    !empty($input['other-social-history']) || 
+		    	    !empty($input['present-past-check-value']) ||
+			    	!empty($input['family-check-value']) || 
+			    	!empty($input['surgery-check-value']) ||
+			    	!empty($input['generalallergy-check-value']) || 
+			    	!empty($input['drugallergy-check-value']) || !empty($input['social-check-value']))
     			{
     				$editedDate = date('Y-m-d H:i:s');
     				$dataArray = array(

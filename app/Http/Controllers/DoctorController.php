@@ -373,9 +373,16 @@ class DoctorController extends Controller {
       	                                    ->get();*/
       	    //dd($medicalHistory);
 
-		$medicalHistoryPresentPastMore  	= MedicalHistoryPresentPastModel::where('id_patient','=',$patientId)->where('created_date', DB::raw("(select max(`created_date`) from medical_history_present_past_more  where  id_patient='$patientId')"))->get();							
-		$surgeryHistory 											= DB::table('medical_history_surgical')->where('id_patient','=',$patientId)->get();
-		$drugAllergyHistory 									= DB::table('medical_history_drug_allergy')->where('id_patient','=',$patientId)->get();
+		$medicalHistoryPresentPastMore  	= MedicalHistoryPresentPastModel::where('id_patient','=',$patientId)
+		                                          ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_present_past_more  where  id_patient='$patientId')"))->get();							
+		$surgeryHistory = DB::table('medical_history_surgical')
+		                                ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_surgical  where  id_patient='$patientId')"))
+		                                ->where('id_patient','=',$patientId)
+		                                ->get();
+		$drugAllergyHistory = DB::table('medical_history_drug_allergy')
+		                                    ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_drug_allergy  where  id_patient='$patientId')"))
+		                                   
+		                                    ->where('id_patient','=',$patientId)->get();
 		
 	
 		return view('patientmedicalhistory',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'medicalHistory'=>$medicalHistory,'medicalHistoryPresentPastMore'=>$medicalHistoryPresentPastMore,'surgeryHistory'=>$surgeryHistory,'drugAllergyHistory'=>$drugAllergyHistory));
@@ -1096,12 +1103,16 @@ class DoctorController extends Controller {
 											->where('id_patient','=',$patientId)
 											->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
 											->get();
+
+				$medicalHistoryData =  DB::table('medical_history_present_past_more')
+									->where('id_patient','=',$patientId)
+		                            ->get();
 		
 				$dosageUnit = DB::table('business_key_details')->where('business_key', '=', 'MED_DOSE_UNIT')->lists('business_value', 'business_value');
 		
 				$drugDurationUnit = DB::table('business_key_details')->where('business_key', '=', 'MED_DURATION_UNIT')->lists('business_value', 'business_value');
 		
-				$data = array('drugFrequency'=>$drugFrequency,'prescMedicine' => $prescMedicine,'patientPersonalData'=>$patientPersonalData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit,'doctorData'=>$doctorData);
+				$data = array('drugFrequency'=>$drugFrequency,'prescMedicine' => $prescMedicine,'patientPersonalData'=>$patientPersonalData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit,'doctorData'=>$doctorData,'medicalHistoryData'=>$medicalHistoryData);
 		
 									
 											
@@ -1282,10 +1293,10 @@ class DoctorController extends Controller {
 			
 			if(!empty($patientId)){
 
-				$patientIdExistCheck = DB::table('patients')->where('id_patient','=',$patientId)->count();
+				$patientIdExistCheck = DB::table('patients')->where('id_patient','=',$patientId)->first();
 
 
-				if($patientIdExistCheck>0){
+				if(count($patientIdExistCheck)>0){
 					
 					if($patientStatus=="new"){
 						//echo "Status from new and returns to home with exists message";
@@ -1296,12 +1307,21 @@ class DoctorController extends Controller {
 						//echo "Status from old and returns to patient information";
 						switch ($specialization) {
 							case '1':
+
 								return Redirect::to('patientpersonalinformation');
 								break;
 							case '2':
 								return Redirect::to('cardiopersonalinformation');
 								break;
-							
+							case '3':
+								if($patientIdExistCheck->age<=16){
+									return Redirect::to('pediapersonalinformation');
+								}
+								else{
+									return Redirect::to('doctorhome')->with(array('error'=>'Invalid Patient.'));
+								}
+								
+								break;
 							default:
 								# code...
 								break;
@@ -1636,30 +1656,37 @@ class DoctorController extends Controller {
 			  
 				foreach ($pregKind as $index => $value){
 					
+					isset($pregAbortion[$index])?$pregAbortion= $pregAbortion[$index]:$pregAbortion="";
+					isset($pregHealth[$index])?$pregHealth= $pregHealth[$index]:$pregHealth="";
+					isset($pregGender[$index])?$pregGender= $pregGender[$index]:$pregGender="";
+					isset($pregYear[$index])?$pregYear= $pregYear[$index]:$pregYear="";
+					isset($pregWeek[$index])?$pregWeek= $pregWeek[$index]:$pregWeek="";
+					isset($pregMonth[$index])?$pregMonth= $pregMonth[$index]:$pregMonth="";
 					//echo $pregKind[$index].' '.$pregType[$index];
 					$pregData = array('id_patient' 			=> $patientId,
 								      'id_doctor' 			=> $doctorId, 
 								      'obs_preg_kind' 		=> $pregKind[$index],
 								      'obs_preg_type' 		=> $pregType[$index],
 								      'obs_preg_term' 		=> $pregTerm[$index],
-								      'obs_preg_abortion' 	=> $pregAbortion[$index],
-								      'obs_preg_health' 	=> $pregHealth[$index],
-								      'obs_preg_gender' 	=> $pregGender[$index],
-								      'obs_preg_years' 		=> $pregYear[$index],
-								      'obs_preg_weeks' 		=> $pregWeek[$index],
-								      'obs_preg_months' 	=> $pregMonth[$index],
+								      'obs_preg_abortion' 	=> $pregAbortion,
+								      'obs_preg_health' 	=> $pregHealth,
+								      'obs_preg_gender' 	=> $pregGender,
+								      'obs_preg_years' 		=> $pregYear,
+								      'obs_preg_weeks' 		=> $pregWeek,
+								      'obs_preg_months' 	=> $pregMonth,
 								      'obs_preg_reference' 	=> $referenceId,
 								      'created_date' 		=> $createdDate);
 					
-					if(!empty($pregKind[$index] 	||
-					   !empty($pregType[$index] 	||
-					   !empty($pregTerm[$index] 	||
-					   !empty($pregHealth[$index]	||
-					   !empty($pregGender[$index]	||
-					   $pregKind[$index]!=0			||
+					if(!empty($pregKind[$index])	||
+					   !empty($pregType[$index])	||
+					   !empty($pregTerm[$index]) 	||
+					   !empty($pregHealth[$index])	||
+					   !empty($pregGender[$index])  ||
+					   $pregKind[$index]!=0		||
 					   $pregType[$index]!=0			||
 					   $pregHealth[$index]!=0		||
-					   $pregGender[$index]!=0)	
+					   $pregGender[$index]!=0	
+					  )	
 					
 					{ 
 						$gynObsPregData = DB::table('sp_gynaecology_obs_preg')->insert($pregData);
@@ -1690,12 +1717,7 @@ class DoctorController extends Controller {
 		
 		$patientExistCheck 		= 	PatientsModel::where('id_patient','=',$patientId)->count();
 		$medicalHistoryExist 	= 	DB::table('medical_history')->where('id_patient','=',$patientId)->where('medical_history_reference','=',$referenceId)->count();
-	    
-	    //dd($input);										
-	   	
-	   	var_dump(json_encode($input));
-	   	//die();						
-	    										
+	    								
 
 	    if($patientExistCheck>0)
 	    {
@@ -1907,27 +1929,7 @@ class DoctorController extends Controller {
 	}
 	public function surgeryDataManagement($input,$surgery,$patientId,$doctorId,$referenceId,$createdDate){
 				
-				//!empty($surgery)?$surgery = array_filter($surgery): $surgery = "";
-		
-					
-		/*if(!empty($surgery))
-		{
-			
-	    		for($i=0;$i<count($surgery); $i++)
-	    		{
-    				if(!empty($surgery[$i])){
-    					$surgeryData = array('surgery_name' => $surgery[$i],
-									    	 'id_patient'   => $patientId,
-									    	 'id_doctor'	=> $doctorId,
-									    	 'surgery_reference'=>$referenceId,
-									    	 'created_date'	=> $createdDate);
-																		  
-						array_push($surgeryArray,$surgeryData);
-    				}
-	    		}
-				//dd($surgeryArray);
-				SurgeryHistoryModel::insert($surgeryArray);
-		}*/
+				
 
 		if(!empty($surgery))
 		{
@@ -1936,11 +1938,17 @@ class DoctorController extends Controller {
 														->where('surgery_reference','=',$referenceId)
 														->count();
 			if($surgeryExistDetails>0){
-				DB::table('medical_history_surgical')
+				$surgeryDelete = DB::table('medical_history_surgical')
 											->where('id_patient','=',$patientId)
 											->where('surgery_reference','=',$referenceId)
 											->delete();
-				$this->surgeryDataManagementExtended($surgery,$patientId,$doctorId,$referenceId,$createdDate);
+				if($surgeryDelete){
+					$this->surgeryDataManagementExtended($surgery,$patientId,$doctorId,$referenceId,$createdDate);
+				}
+				else{
+					return Redirect::to('patientmedicalhistory',array('error'=>'Failed to save data'));
+				}
+				
 			}
 			else{
 				$this->surgeryDataManagementExtended($surgery,$patientId,$doctorId,$referenceId,$createdDate);
@@ -1995,24 +2003,24 @@ class DoctorController extends Controller {
     public function drugDataManagementExtended($allergyMedication,$allergyReaction,$patientId,$doctorId,$createdDate,$referenceId){
     	if(!empty($allergyMedication) && !empty($allergyReaction))
 		{
-	    		//$allergyMedication 	= array_filter($allergyMedication);
-	    		//$allergyReaction   	= array_filter($allergyReaction);
+	    		$allergyMedication 	= array_filter($allergyMedication);
+	    		$allergyReaction   	= array_filter($allergyReaction);
 				$allergyArray 		= array();
 
-				/*var_dump($allergyMedication);
-				echo "</br>";
-				var_dump($allergyReaction);
-				die();*/
-	    		if(!empty($allergyMedication) && !empty($allergyReaction)){
+	    		if(!empty($allergyMedication) && !empty($allergyReaction))
+				{
+
 					foreach($allergyMedication as $index=>$value){
-							$drugName 		= $allergyMedication[$index];
-							$reactionName 	= $allergyReaction[$index];
+						isset($allergyMedication[$index])?$drugName = $allergyMedication[$index]:$drugName ="";
+						isset($allergyReaction[$index])?$reactionName 	= $allergyReaction[$index]:$reactionName 	="";	
+							
 							$allergyData 	= array('drug_name'  => $drugName,							 				'reaction'	 => $reactionName,						 				'id_patient' => $patientId,						 					'id_doctor'  => $doctorId,											'drug_allergy_reference'=> $referenceId,
 													'created_date' => $createdDate);
 										array_push($allergyArray,$allergyData);
 					}
 					DrugAllergyHistoryModel::insert($allergyArray);
 				}
+				
 		}
     }
     
@@ -2469,132 +2477,6 @@ class DoctorController extends Controller {
 		}
 	}
 
-	/*public function addPatientPrescMedicine(){
-		$input = Request::all();
-		
-
-		$patientId 		= Session::get('patientId');
-		$doctorId 		= Session::get('doctorId');
-		$referenceId 	= Session::get('referenceId');
-		$createdDate 	= date('Y-m-d H:i:s');
-		
-
-		(!empty($input['default_div']))?$defaultMedicineCount = $input['default_div'] : $defaultMedicineCount=0;
-		(!empty($input['dynamic_div']))?$dynamicMedicineCount = $input['dynamic_div'] : $dynamicMedicineCount=0;
-
-		(!empty($input['additional_comment']))?$treatmentComment= $input['additional_comment']:$treatmentComment ="";
-		(!empty($input['followup_date']))?$followUpDate= $input['followup_date']:$followUpDate ="";
-		
-		(!empty($input['drug_counter']))?$drugCounter=$input['drug_counter']:$drugCounter="";
-		(!empty($input['start_date']))?$startDate= $input['start_date']:$startDate ="";
-		(!empty($input['followup_date']))?$followUpDate= $input['followup_date']:$followUpDate ="";
-		(!empty($input['drugs']))?$drugs= $input['drugs']:$drugs ="";
-		(!empty($input['dosage']))?$dosage= $input['dosage']:$dosage ="";
-		
-		(!empty($input['duration']))?$duration= $input['duration']:$duration ="";
-		(!empty($input['frequency']))?$frequency= $input['frequency']:$frequency =[""];
-		
-		$count = $input['default-div-count'];
-		//echo $count;
-		
-		//die();
-		
-		for($i=1;$i<=$count;$i++){
-			
-			if(!isset($input['drugs'][$i-1])){
-				//echo "No data";
-			}
-			else{
-
-				
-				
-				$drugs 		= $input['drugs'][$i-1];
-				$dosage 	= $input['dosage'][$i-1];
-				$duration   = $input['duration'][$i-1];
-				$startDate 	= $input['start_date'][$i-1];
-	
-				//echo $drugs.$dosage.$startDate;
-
-
-				if(isset($input['frequency'.$i])){
-					$frequency = $input['frequency'.$i];
-					
-				}
-				
-				
-
-				//Converted Start date and followdate for initial  and inserts
-				if(!empty($startDate)){
-					$startDate1  		  = str_replace('/', '-', $startDate);
-					$convertedStartDate    = date('Y-m-d', strtotime($startDate1));
-				}
-				else
-				{
-					$convertedStartDate = "";
-				}
-				if(!empty($followUpDate)){
-					$followupDate1  		  = str_replace('/', '-', $followUpDate);
-					$convertedFollowUpDate    = date('Y-m-d-m', strtotime($followupDate1));
-				}
-				else{
-					$convertedFollowUpDate = "";
-				}
-				$frequency = array_filter($frequency);	
-				$prescMedicineData = array('drug_name' => $drugs,
-												   'drug_dose'=>$dosage,
-												   'drug_start_date'=>$convertedStartDate,
-												   'drug_duration'=>$duration,
-												   'drug_frequency' => json_encode($frequency),
-												   'treatment'=>$treatmentComment,
-												   'followup_date' => $convertedFollowUpDate,
-												   'id_patient' => $patientId,
-												   'id_doctor' => $doctorId,
-												   'presc_ref_id'=>$referenceId,
-												   'created_date'=>$createdDate);
-					
-
-				if(!empty($drugs) && !empty($dosage) && !empty($convertedStartDate) && !empty($duration) && !empty($frequency)  && !empty($convertedFollowUpDate)){
-						$prescMedicineData = array('drug_name' => $drugs,
-												   'drug_dose'=>$dosage,
-												   'drug_start_date'=>$convertedStartDate,
-												   'drug_duration'=>$duration,
-												   'drug_frequency' => json_encode($frequency),
-												   'treatment'=>$treatmentComment,
-												   'followup_date' => $convertedFollowUpDate,
-												   'id_patient' => $patientId,
-												   'id_doctor' => $doctorId,
-												   'presc_ref_id'=>$referenceId,
-												   'created_date'=>$createdDate);
-					
-
-					$prescMedicineSave = DB::table('prescription')->insert($prescMedicineData);
-
-
-				}
-				else
-				{
-					//echo 'njn ntha ivide?';
-					return Redirect::to('patientprescmedicine')->with(array('error'=>"Please fill the data and submit"));
-				}	
-				//Initial data insert ends here
-
-				
-			}
-
-			
-
-		}
-		return Redirect::to('patientprescmedicine')->with(array('success'=>"Data saved successfully"));
-		//die();
-	
-
-		
-		if($prescMedicineSave){
-			return Redirect::to('patientprescmedicine')->with(array('success'=>"Data saved successfully"));
-		}
-		
-	}
-*/
 
 
 
@@ -2802,14 +2684,27 @@ class DoctorController extends Controller {
 									->where('id_patient','=',$patientId)
 		                            ->get();
 
+		$mHistory = DB::table('medical_history_present_past_more')
+									
+		                            ->get();
+		/*$medicalHistoryData =  MedicalHistoryModel::
+									where('id_patient','=',$patientId)
+		                            ->get();*/
+
 		$printData = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
 
 		   
 
-		$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData);
+		$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,
+								 'patientPersonalData'=>$patientPersonalData,
+								 'vitalsData'=>$vitalsData,
+								 'diagnosisData'=>$diagnosisData,
+								 'prescriptionData'=>$prescriptionData,
+								 'medicalHistoryData'=>$medicalHistoryData,
+								 'printData'=>$printData,
+								 'mHistory'=>$mHistory);
 
-		return Redirect::to('gynprecriptionformat')->with(array('parametersArray'=>$parametersArray));
-
+		//var_dump($printData);
 
 		switch ($specialization) {
 			case '1':
@@ -2848,7 +2743,7 @@ class DoctorController extends Controller {
 				break;
 		}
 
-		//return view('gynprecriptionformat');
+		
 
 		
 	}

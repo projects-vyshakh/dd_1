@@ -245,7 +245,7 @@ if(!empty($doctorData)){
 							 	</div>		
 									<div class="col-sm-8">
 										<span class="">
-											{!! Form::select('state',[], (!empty($patientData))?$patientState: Input::old('state'), $attributes = array('class' => 'form-control','id'=>'state')); !!}
+											{!! Form::select('state',[], (!empty($patientData))?$patientState: Input::old('state'), $attributes = array('class' => 'form-control','id'=>'state','class'=>'form-control state')); !!}
 										</span>
 									</div>
 								</div>
@@ -352,7 +352,7 @@ if(!empty($doctorData)){
 			$( "#country option:selected" ).val('101').text('India');
 
 			/*Dynamically adding state responding to country and also keeping selected value of state*/
-			var stateHidden = $('#state-hidden').val();
+			var stateHidden = $('#state-hidden').val(); 
           	var countryId  = $( "#country option:selected" ).val();
             //alert(country);
             $.ajax({
@@ -361,6 +361,7 @@ if(!empty($doctorData)){
                 data: "country_id="+ countryId ,
                 success: function(data){
                     $('#state').empty();
+                    
                     for(var s=0;s<data.length;s++){
 
                         $('#state').append('<option>'+data[s].state_name+'</option>');

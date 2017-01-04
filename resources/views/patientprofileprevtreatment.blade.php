@@ -14,6 +14,9 @@ else{
 if(!empty($doctorData)){
 	$doctorSpecialization = $doctorData->specialization;
 }
+else{
+	$doctorSpecialization = "";
+}
 
 
 
@@ -137,7 +140,7 @@ for($startYear;$startYear>=$endYear;$startYear--){
 		{!!Html::script('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')!!}
 	 	
 	 	{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
-	 	{!!Html::script('assets/js/previoustreatment.js')!!}
+	 	{!!Html::script('assets/js/patientprofileprevioustreatment.js')!!}
 	 	{!!Html::script('assets/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')!!}
 
 	 	{!!Html::script('assets/plugins/tokenizemultiselect/jquery.tokenize.js')!!}

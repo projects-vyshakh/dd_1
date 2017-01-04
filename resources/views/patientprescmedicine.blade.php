@@ -328,7 +328,7 @@ if(!empty($prescMedicine)){
 
 									<div class="form-group dd_menarche_4">
 										<div class="col-sm-4  dd_praji_followup dd_folloup_mg">
-											{!! Form::label('follow_up_date', 'Follow-up date', $attributes = array('class'=>"col-sm-4 dd_padding_follw "));  !!}
+											{!! Form::label('follow_up_date', 'Follow up date', $attributes = array('class'=>"col-sm-4 dd_padding_follw "));  !!}
 											{!! Form::text('follow_up_date', null , $attributes = array('class' => 'form-control  follow_up_date dd_praji_followup ', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
 										</div>
 										<div class="col-sm-8" >
@@ -467,7 +467,7 @@ if(!empty($prescMedicine)){
 									</div>
 									<div class="form-group dd_menarche_4">
 										<div class="col-sm-4  dd_praji_followup dd_folloup_mg">
-											{!! Form::label('follow_up_date', 'Follow-up date', $attributes = array('class'=>"col-sm-4 dd_padding_follw "));  !!}
+											{!! Form::label('follow_up_date', 'Follow up date', $attributes = array('class'=>"col-sm-4 dd_padding_follw "));  !!}
 											{!! Form::text('follow_up_date', null , $attributes = array('class' => 'form-control  follow_up_date dd_praji_followup ', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
 										</div>
 										<div class="col-sm-8" >

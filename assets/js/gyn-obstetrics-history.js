@@ -321,13 +321,18 @@ var obstetricsElements = function () {
 					
 
 					//Disabling abortion on loading
-					$('#type_of_abortion'+counter).attr('disabled',true);
+					//$('#type_of_abortion'+counter).attr('disabled',true);
 
 					// Enabling abortion on selecting abrotion preg term
 					$('#preg_term'+counter).change(function(){
 						var pregTermSelected = $('#preg_term'+counter).val();
 						if(pregTermSelected=="Abortion"){
-							$('#type_of_abortion'+counter).attr('disabled',false);
+							//$('#type_of_abortion'+counter).attr('disabled',false);
+							$('#preg_health'+counter).attr('disabled',true);
+							$('#gender'+counter).attr('disabled',true);
+							$('#weeks'+counter).attr('disabled',true);
+							$('#months'+counter).attr('disabled',true);
+							$('#years'+counter).attr('disabled',true);
 						}
 					})
 

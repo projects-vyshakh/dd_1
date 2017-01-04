@@ -94,7 +94,7 @@
 	        		<div class="row dd_mg_0">
 	        		 	<div class="col-sm-12 dd_pd_0">
 	        		 		<div class="logo_div">
-	    		 			   <a class="navbar-brand dd_logo_img_2" href="http://ww.doctorsdiary.co">
+	    		 			   <a class="navbar-brand dd_logo_img_2" href="http://www.doctorsdiary.co">
 				                   
 								</a>
 							</div>
@@ -252,7 +252,7 @@
 													</span>
 												</div>
 												<div class="col-sm-12">
-													<p><a href="patientforgetpassword" class="dd_textalign_center dd_16px">Forgot Password?</a></p>
+													<p><a href="patientforgetpassword" class="dd_textalign_center dd_16px">Forgot Your Password?</a></p>
 												</div>
 					        				</div>
 					        			<!-- 	<div class="form-group dd_mg_B_10">

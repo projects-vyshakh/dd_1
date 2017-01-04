@@ -369,8 +369,8 @@ var patientPrescMedicine = function () {
 				var currentUrl = window.location.href;
 				var shareLink  = currentUrl+"/shared/"+prescSharedId;
 				bootbox.dialog({
-					message		: '<h6 style="margin-top:34px; font-size:16px; color:#333; ">Copy and share link through email or SMS</h6>'+'<input type="text" value="'+ shareLink+'"  id="post-shortlink"  style="margin-top:25px; margin-bottom:20px;" class="form-control post-shorlink"/><button class="button btn btn-info btn-default copy-button" id="copy-button" data-clipboard-target="#post-shortlink" style="margin-top:10px;float:right; background:#335bbd; color:#fff;">Copy link and close</button><button class="button btn btn-info btn-default btn-cancel"  data-clipboard-target="#post-shortlink" style="margin-top:10px;float:left">Cancel</button>',
-					title 		: '<h4 style="font-weight:bold;">Share prescription link</h4>',
+					message		: '<h6 style="margin-top:34px; font-size:16px; color:#333; ">Copy and share link through email.</h6>'+'<input type="text" value="'+ shareLink+'"  id="post-shortlink"  style="margin-top:25px; margin-bottom:20px;" class="form-control post-shorlink"/><button class="button btn btn-info btn-default copy-button" id="copy-button" data-clipboard-target="#post-shortlink" style="margin-top:10px;float:right; background:#335bbd; color:#fff;">Copy link and close</button><button class="button btn btn-info btn-default btn-cancel"  data-clipboard-target="#post-shortlink" style="margin-top:10px;float:left">Cancel</button>',
+					title 		: '<h4 style="font-weight:bold;">Share Prescription Link</h4>',
 						
 				});
 		

@@ -9,7 +9,7 @@ var patientPrevElements = function () {
                        
         $.ajax({
             type: "POST",
-            url: "patientprofileprevtreatmentextended",
+            url: "patientprofileprevioustreatmentextended",
             data: 'year='+defaultYearSelected,
             success: function(data) {
                console.log(data);
@@ -17,6 +17,14 @@ var patientPrevElements = function () {
                     $("body").mLoading('hide');
                     runPrevTreatmentData(data);
                }
+               if(data.originalCreatedDate==""){
+                    $('.prev-contents').append( '<div class="row">'+
+                                                    '<div class="col-sm-12 dd_no_previous">'+
+                                                        '<div class="dd_no_prev_img"></div>'+  
+                                                    '</div>'+
+                                                '</div>'
+                                                );
+                }
                
             },
         });
@@ -27,12 +35,20 @@ var patientPrevElements = function () {
 
             $.ajax({
                 type: "POST",
-                url: "patientprofileprevtreatmentextended",
+                url: "patientprofileprevioustreatmentextended",
                 data: 'year='+defaultYearSelected,
                 success: function(data) {
                     if(data!==""){
                         $("body").mLoading('hide');
                         runPrevTreatmentData(data);
+                    }
+                    if(data.originalCreatedDate==""){
+                        $('.prev-contents').append( '<div class="row">'+
+                                                        '<div class="col-sm-12">'+
+                                                            '<div class="dd_no_prev_img"></div>'+  
+                                                        '</div>'+
+                                                    '</div>'
+                                                    );
                     }
                 },
             });
@@ -56,14 +72,17 @@ var patientPrevElements = function () {
 
     }
     var runPrevTreatmentData = function(data){
+        
         $('#prev-data-div-inner').remove();
+
+        var prescStatusArray = new Array();
 
         $('.prev-data-div').append( '<div class="prev-data-div-inner" id="prev-data-div-inner">'+
 
                                         '<div class="row">'+
                                             '<div class="col-sm-12">'+
-                                                '<div class="panel panel-default">'+
-                                                    '<div class="panel-body">' +
+                                                '<div class="">'+
+                                                    '<div class="">' +
                                                         '<div class="row">'+
                                                             '<div class="col-sm-12 dd_pd_30">'+
                                                                 '<div class="tabbable tabs-left">'+
@@ -86,20 +105,31 @@ var patientPrevElements = function () {
                     /*Side date tab loop*/ 
                     /*----------------------------------------------------------------------------------*/
                     var originalDateArray =[];
-                    console.log(data.originalCreatedDateDup)
+                    //console.log(data.originalCreatedDateDup)
                     for(i=0;i<data.originalCreatedDateDup.length;i++){
+                        if(data.originalCreatedDateDup[i]!=null){
+                            var dateObj = new Date(data.originalCreatedDateDup[i]);
+                            var month = dateObj.getUTCMonth() + 1; //months from 1-12
+                            var day = dateObj.getUTCDate();
+                            var year = dateObj.getUTCFullYear();
+                            var formattedDate = day+"-"+month+"-"+year;
+                        }
+                        else{
+                            var formattedDate = null;
+                        }
                         
+                        //console.log("FormattedDate--"+formattedDate);
                         $('#myTab3').append('<li class="">'+
                                                 '<a href="#panel_tab4_example1'+i+'" data-toggle="tab">'+
-                                                    data.originalCreatedDateDup[i]+
+                                                    formattedDate+
                                                 '</a>'+
                                             '</li>');
 
                         $('.prev-contents').append('<div class="tab-pane" id="panel_tab4_example1'+i+'">'+
                                                     '<input type="hidden" name="created-date" class="created-date" value="'+data.originalCreatedDateDup[i]+'">'+
                                                        '<p>'+ 
-                                                            '<div class="row">'+
-                                                                '<div class="col-sm-12">'+
+                                                            '<div class=" dd_prev_margine">'+
+                                                                '<div class="col-sm-12 dd_prev_hd_mg">'+
                                                                     '<div class="tabbable">'+
                                                                         '<ul id="myTab" class="nav nav-tabs tab-bricky dd_sidetab">'+
                                                                             '<li class="active">'+
@@ -149,14 +179,33 @@ var patientPrevElements = function () {
                                                                                 
                                                                             '</div>'+
                                                                             '<div class="tab-pane" id="prescription'+i+'">'+
+
+                                                                                    '<div class="panel-body ">'+
+                                                                                        '<div class="col-sm-12">'+
+                                                                                            '<div class="form-group form-horizontal">'+
+                                                                                                '<div class="form-group dd_presc_dummy dd_panel_body_font">'+
+                                                                                                    '<div class="col-sm-4">DrugName'+
+                                                                                                    '</div>'+
+                                                                                                    '<div class="col-sm-2">Dosage'+
+                                                                                                    '</div>'+
+                                                                                                    '<div class="col-sm-2">Duration'+
+                                                                                                    '</div>'+
+                                                                                                    '<div class="col-sm-4">Frequecy'+
+                                                                                                    '</div>'+
+                                                                                                '</div>'+
+                                                                                            '</div>'+
+                                                                                        '</div>'+
+                                                                                    '</div>'+
+                                                                                
+                                                                                
                                                                                 '<div id="presc-content'+i+'" class="presc-content">'+
-                                                                                               
+                                                                                       
                                                                                 '</div>'+
                                                                                
                                                                                 '<div class="created-date-div" id="created-date-div">'+
                                                                                 '</div>'+
                                                                                 /*'<input type="button" value="Print" class="btn btn-primary presc-print">'+*/
-                                                                                '<a class="btn btn-primary  pdfopen"> Print </a>'+
+                                                                               /* '<a class="btn btn-primary  pdfopen"> Print </a>'+*/
 
                                                                             '</div>'+
                                                                             '<div class="tab-pane" id="obstetrics'+i+'">'+
@@ -173,8 +222,7 @@ var patientPrevElements = function () {
                                                   );
                         
 
-
-                        if(data.vitalsData!=''){
+                        if(data.vitalsData!=''){ console.log(data.vitalsData)
                             for(v=0;v<data.vitalsData.length;v++){
                                 var t = data.vitalsData[v].created_date.split(/[- :]/);
                                 var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
@@ -190,83 +238,78 @@ var patientPrevElements = function () {
                                     $('#vitals'+i).append('<div class="panel-body">'+
                                                             '<div class="col-sm-12">'+
                                                                 '<div class="form-group form-horizontal">'+
-                                                                    '<div class="form-group ">'+
-
-                                                                    '<div class="col-sm-4 ">'+
-
-                                                                      '<label class="pull-left col-sm-6 dd_pd_0" for="weight">Weight:</label>'+
-                                                                            
-                                                                                    '<div class="dd_prev_color pull-left col-sm-6 dd_pd_0" for="weight">'+data.vitalsData[v].weight+' '+'Kg'+'</div>'+
-                                                                    
-
-                                                                    '<div class="dd_clear">'+'</div>'+
-                                                                    '</div>'+
+                                                                    '<div class=" ">'+
+                                                                        '<div class="col-sm-12 dd_prev_pd_2  dd_prev_mg_main">'+
+                                                                           '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="weight">Weight</label>'+
+                                                                                '<div class="dd_prev_color pull-left col-sm-4 dd_pd_0 dd_font_left" for="weight">: '+data.vitalsData[v].weight+' '+'Kg'+'</div>'+
+                                                                                    '<div class="dd_clear">'+'</div>'+
+                                                                        '</div>'+
                                                                       
-                                                                        '<div class="col-sm-4 ">'+
-                                                                        '<label class="pull-left col-sm-6 dd_pd_0" for="height">Height:</label>'+
+                                                                        '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                        '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="height">Height</label>'+
                                                                         
-                                                                        '<div class="dd_prev_color pull-left col-sm-6 dd_pd_0" for="height">'+data.vitalsData[v].height+' '+'cm'+'</div>'+
+                                                                        '<div class="dd_prev_color pull-left col-sm-4 dd_pd_0 dd_font_left" for="height"> : '+data.vitalsData[v].height+' '+'cm'+'</div>'+
                                                                             '<div class="dd_clear">'+'</div>'+   
                                                                             '</div>'+
 
 
-                                                                        '<div class="col-sm-4 ">'+   
-                                                                        '<label class=" col-sm-6 dd_pd_0" for="bmi">BMI:</label>'+
+                                                                        '<div class="col-sm-12 dd_prev_pd_2 ">'+   
+                                                                        '<label class=" pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" fdd_font_leftor="bmi">BMI</label>'+
                                                                             
-                                                                            '<div class="dd_prev_color  col-sm-6 dd_pd_0" for="bmi">'+data.vitalsData[v].height+' '+'bmi'+'</div>'+
+                                                                            '<div class="dd_prev_color  col-sm-4 dd_pd_0 dd_font_left" for="bmi"> : '+data.vitalsData[v].bmi+' '+'bmi'+'</div>'+
                                                                             '<div class="dd_clear">'+'</div>'+  
                                                                             '</div>'+
                                                                     '</div>'+
 
 
-                                                                    '<div class="form-group ">'+
+                                                                    '<div class="">'+
 
-                                                                    '<div class="col-sm-4 ">'+  
+                                                                    '<div class="col-sm-12 dd_prev_pd_2 ">'+  
                                                                        /* '<label class="pull-left" for="bmi">BMI:</label>'+*/
-                                                                        '<label class="col-sm-6 dd_pd_0" for="Pulse ">Pulse:</label>'+
+                                                                        '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="Pulse ">Pulse </label>'+
                                                                             
-                                                                        '<div class="dd_prev_color col-sm-6 dd_pd_0" for="weight">'+data.vitalsData[v].pulse+' '+'beats / min'+'</div>'+
+                                                                        '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left " for="weight"> : '+data.vitalsData[v].pulse+' '+'beats / min'+'</div>'+
                                                                          '<div class="dd_clear">'+'</div>'+         
                                                                         '</div>'+
 
 
-                                                                    '<div class="col-sm-4 ">'+         
-                                                                        '<label class="col-sm-6 dd_pd_0" for="resipiratory">Respiratory Rate :</label>'+
+                                                                    '<div class="col-sm-12 dd_prev_pd_2 ">'+         
+                                                                        '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="resipiratory">Respiratory Rate </label>'+
                                                                         
-                                                                        '<div class="dd_prev_color col-sm-6 dd_pd_0" for="resipiratory">'+data.vitalsData[v].respiratoryrate+' '+'breathes/min'+'</div>'+
+                                                                        '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left" for="resipiratory"> : '+data.vitalsData[v].respiratoryrate+' '+'breathes/min'+'</div>'+
                                                                         '<div class="dd_clear">'+'</div>'+   
                                                                         '</div>'+
 
-                                                                        '<div class="col-sm-4 ">'+ 
-                                                                        '<label class="col-sm-6 dd_pd_0" for="temperature">Temperature:</label>'+
+                                                                        '<div class="col-sm-12 dd_prev_pd_2">'+ 
+                                                                        '<label class=" pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="temperature">Temperature</label>'+
                                                                           
-                                                                        '<div class="dd_prev_color col-sm-6 dd_pd_0" for="temperature">'+data.vitalsData[v].temperature+' '+'Fahrenheit'+'</div>'+
-                                                                        '<div class="dd_clear">'+'</div>'+        
+                                                                        '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left" for="temperature"> : '+data.vitalsData[v].temperature+' '+'Fahrenheit'+'</div>'+
+                                                                        '<div class="dd_graclear">'+'</div>'+        
                                                                          '</div>'+
                                                                     '</div>'+ 
 
 
-                                                                    '<div class="form-group ">'+
+                                                                    '<div class="">'+
 
-                                                                    '<div class="col-sm-4 ">'+ 
-                                                                        '<label class="col-sm-6 dd_pd_0" for="spo2 ">SPO2:</label>'+
+                                                                    '<div class="col-sm-12 dd_prev_pd_2 ">'+ 
+                                                                        '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="spo2 ">SPO2</label>'+
                                                            
-                                                                            '<div class="dd_prev_color col-sm-6 dd_pd_0" for="spo2">'+data.vitalsData[v].sp+'%'+'</div>'+
+                                                                            '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left" for="spo2"> : '+data.vitalsData[v].sp+'%'+'</div>'+
                                                                             '<div class="dd_clear">'+'</div>'+     
                                                                     '</div>'+
 
-                                                                    '<div class="col-sm-4 ">'+ 
-                                                                        '<label class="col-sm-6 dd_pd_0" for="blood_group">Blood Group :</label>'+
+                                                                    '<div class="col-sm-12 dd_prev_pd_2 ">'+ 
+                                                                        '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="blood_group">Blood Group </label>'+
                                                                          
-                                                                            '<div class="dd_prev_color col-sm-6 dd_pd_0" for="blood_group">'+data.vitalsData[v].blood_group+'</div>'+
+                                                                            '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left" for="blood_group"> : '+data.vitalsData[v].blood_group+'</div>'+
                                                                             '<div class="dd_clear">'+'</div>'+  
                                                                     '</div>'+
 
 
-                                                                    '<div class="col-sm-4 ">'+ 
-                                                                        '<label class="pull-left col-sm-6 dd_pd_0" for="bp">Blood Pressure(Systolic/Diastolic):</label>'+
+                                                                    '<div class="col-sm-12 dd_prev_pd_2">'+ 
+                                                                        '<label class="pull-left pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold " for="bp">Blood Pressure(Systolic/Diastolic)</label>'+
                                                                           
-                                                                                    '<div class="dd_prev_color col-sm-6 dd_pd_0" for="temperature">'+data.vitalsData[v].systolic_pressure+'/'+data.vitalsData[v].diastolic_pressure+' '+'mm/Hg'+'</div>'+
+                                                                                    '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left" for="temperature"> : '+data.vitalsData[v].systolic_pressure+'/'+data.vitalsData[v].diastolic_pressure+' '+'mm/Hg'+'</div>'+
                                                                                
                                                                             '</div>'+
                                                                     '</div>'+       
@@ -334,10 +377,13 @@ var patientPrevElements = function () {
 
                                     
                                     //appending symptoms
-                                    for(r=0;r<res.length;r++){
-                                        var index = r+1;
-                                        $('#sym-data'+d).append('<label class="col-sm-10" for="sym">'+index+'. '+res[r]+'</label>')
-                                    } 
+                                    if(res!=null){
+                                        for(r=0;r<res.length;r++){
+                                            var index = r+1;
+                                            $('#sym-data'+d).append('<label class="col-sm-10" for="sym">'+index+'. '+res[r]+'</label>')
+                                        } 
+                                    }
+                                    
                                                
 
                                     
@@ -370,93 +416,152 @@ var patientPrevElements = function () {
                         if(data.obsData!=""){
                             for(o=0;o<data.obsData.length;o++){
                                  var createdDate = createdDateConvert(data.obsData[o].created_date);
-                                 if(createdDate==data.originalCreatedDateDup[i]){
+                                 if(createdDate==data.originalCreatedDateDup[i])
+                                 {
+                                    var gravida                 = data.obsData[o].gravida;
+                                    var para                    = data.obsData[o].para;
+                                    var living                  = data.obsData[o].living;
+                                    var marriedLife             = data.obsData[o].married_life;
+                                    var bloodGroup              = data.obsData[o].husband_blood_group;
+                                    var gestationalAge          = data.obsData[o].obs_gestational_age;
+                                    var lastDeliveryDate        = data.obsData[o].obs_last_delivery_date;
+                                    var expectedDeliveryDate    = data.obsData[o].obs_expected_delivery_date;
 
+                                    //console.log(expectedDeliveryDate);
+                                    if(gravida==null){
+                                        
+                                        gravida = '';
+                                    }
+                                    else{
+                                        gravida = data.obsData[o].gravida;
+                                    }
+                                    if(para==null){
+                                        
+                                        para = '';
+                                    }
+                                    else{
+                                        para = data.obsData[o].para;
+                                    }
+                                    if(living==null){
+                                        
+                                        living = '';
+                                    }
+                                    else{
+                                        living = data.obsData[o].living;
+                                    }
+                                    if(marriedLife==null){
+                                        
+                                        marriedLife = '';
+                                    }
+                                    else{
+                                        marriedLife = data.obsData[o].married_life;
+                                    }
+                                    if(bloodGroup==null){
+                                        
+                                        bloodGroup = '';
+                                    }
+                                    else{
+                                        bloodGroup = data.obsData[o].husband_blood_group;
+                                    }
+                                    if(gestationalAge==null){
+                                        
+                                        gestationalAge = '';
+                                    }
+                                    else{
+                                        gestationalAge = data.obsData[o].obs_gestational_age;
+                                    }
+                                    if(lastDeliveryDate==null || lastDeliveryDate=='0000-00-00'){
+                                        
+                                        lastDeliveryDate = '';
+                                    }
+                                    else{
+                                            lastDeliveryDate = data.obsData[o].obs_last_delivery_date;
+                                            var dateObj = new Date(lastDeliveryDate);
+                                            var month   = dateObj.getUTCMonth() + 1; //months from 1-12
+                                            var day     = dateObj.getUTCDate();
+                                            var year    = dateObj.getUTCFullYear();
+                                            var lastDeliveryDate = day+"-"+month+"-"+year;
+                                    }
+                                    if(expectedDeliveryDate==null || expectedDeliveryDate=='0000-00-00'){
+                                        
+                                        expectedDeliveryDate = '';
+                                    }
+                                    else{
+                                            expectedDeliveryDate = data.obsData[o].obs_expected_delivery_date;
+                                            var dateObj = new Date(expectedDeliveryDate);
+                                            var month   = dateObj.getUTCMonth() + 1; //months from 1-12
+                                            var day     = dateObj.getUTCDate();
+                                            var year    = dateObj.getUTCFullYear();
+                                            var expectedDeliveryDate = day+"-"+month+"-"+year;
+                                    }
+                                    console.log("s"+lastDeliveryDate);
 
-
-                                    $('#obstetrics'+i).append('<div class="panel-body">'+
-                                                                '<div class="col-sm-12">'+
-                                                                    '<div class="form-group form-horizontal">'+
-                                                                        '<div class="form-group ">'+
-
-                                                                            '<div class="col-sm-4 ">'+
-                                                                            '<label class=" col-sm-6 dd_pd_0" for="gravida">Gravida :</label>'+
-                                                                                
-                                                                                        '<div class="dd_prev_color  col-sm-6 dd_pd_0" for="gravida">'+data.obsData[o].gravida+'</div>'+
-                                                                                 
-                                                                            
-
-                                                                                '<div class="dd_clear">'+'</div>'+
-                                                                                '</div>'+ 
-
-
-                                                                         '<div class="col-sm-4 ">'+
-                                                                            '<label class=" col-sm-6 dd_pd_0" for="para">Para :</label>'+
-                                                                             
-                                                                                        '<div class="dd_prev_color  col-sm-6 dd_pd_0" for="para">'+data.obsData[o].para+'</div>'+
-                                                               
-
-                                                                                '<div class="dd_clear">'+'</div>'+
-                                                                          '</div>'+ 
-
-
-                                                                            '<div class="col-sm-4 ">'+
-                                                                               '<label class=" col-sm-6 dd_pd_0" for="living">Living :</label>'+
-                                                                                  
-                                                                                        '<div class="dd_prev_color  col-sm-6 dd_pd_0" for="living">'+data.obsData[o].living+'</div>'+
-                                                                          
-                                                                                '<div class="dd_clear">'+'</div>'+ 
-                                                                            '</div>'+ 
-                                                                        '</div>'+
-
-
-                                                                        '<div class="form-group ">'+
-                                                                            '<div class="col-sm-4 ">'+
-                                                                                 '<label class=" col-sm-6 dd_pd_0" for="marriedlife">Married Life :</label>'+
-                                                                               
-                                                                                 '<div class="dd_prev_color  col-sm-6 dd_pd_0" for="marriedlife">'+data.obsData[o].married_life+'</div>'+
-                                                                    
-                                                                                '<div class="dd_clear">'+'</div>'+ 
-                                                                                 '</div>'+
-
-                                                                           
-                                                                           '<div class="col-sm-4 ">'+
-                                                                            '<label class=" col-sm-6 dd_pd_0" for="bloodgroup">Blood Group :</label>'+
-                                                                               
-                                                                                        '<div class=" col-sm-6 dd_pd_0 dd_prev_color" for="bloodgroup">'+data.obsData[o].husband_blood_group+'</div>'+
+                                    if(gravida!=null || para!=null || living!=null || marriedLife!=null || bloodGroup!=null || gestationalAge!=null || lastDeliveryDate!=null || expectedDeliveryDate!=null)
+                                    {
+                                        $('#obstetrics'+i).append('<div class="panel-body">'+
+                                                                    '<div class="col-sm-12">'+
+                                                                        '<div class="form-group form-horizontal">'+
+                                                                            '<div class=" ">'+
+                                                                                '<div class="col-sm-12 dd_prev_pd_2 dd_prev_mg_main">'+
+                                                                                '<label class=" pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="gravida">Gravida</label>'+
+                                                                                    '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="gravida">: '+gravida+'</div>'+
+                                                                                    '<div class="dd_clear">'+'</div>'+
+                                                                                    '</div>'+ 
+                                                                            '</div>'+
+                                                                            '<div class=" ">'+
+                                                                                '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                                   '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="para">Para</label>'+
+                                                                                        '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="para">: '+para+'</div>'+
                                                                                         '<div class="dd_clear">'+'</div>'+
                                                                                 '</div>'+ 
-
-                                                                        '<div class="col-sm-4 ">'+
-                                                                            '<label class=" col-sm-6 dd_pd_0" for="gestationalage">Gestational Age :</label>'+
-                                                                               
-                                                                                        '<div class=" col-sm-6 dd_pd_0 dd_prev_color" for="gestationalage">'+data.obsData[o].obs_gestational_age+'</div>'+
-                                                                                  
+                                                                            '</div>'+ 
+                                                                            '<div class=" ">'+
+                                                                                '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                                   '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="living">Living</label>'+
+                                                                                        '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="living">: '+living+'</div>'+
+                                                                                    '<div class="dd_clear">'+'</div>'+ 
                                                                                 '</div>'+ 
-                                                                                 '<div class="dd_clear">'+'</div>'+          
-                                                                        '</div>'+ 
-                                                                        '<div class="form-group ">'+
-
-
-                                                                        '<div class="col-sm-4 ">'+
-                                                                            '<label class=" col-sm-6 dd_pd_0" for="lastdeliverydate">Last Delivery Date :</label>'+
-                                                                               
-                                                                                        '<div class=" col-sm-6 dd_pd_0 dd_prev_color" for="lastdeliverydate">'+data.obsData[o].obs_last_delivery_date+'</div>'+
-                                                                                   '<div class="dd_clear">'+'</div>'+  
+                                                                            '</div>'+
+                                                                            '<div class=" ">'+
+                                                                                '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="marriedlife">Married Life</label>'+
+                                                                                        '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="marriedlife">: '+marriedLife+'</div>'+
+                                                                                        '<div class="dd_clear">'+'</div>'+ 
                                                                                 '</div>'+
-
-
-                                                                        '<div class="col-sm-4 ">'+        
-                                                                            '<label class=" col-sm-6 dd_pd_0" for="expecteddeliverydate">Expected Delivery Date :</label>'+
-                                                                            
-                                                                                        '<div class=" col-sm-6 dd_pd_0 dd_prev_color" pull-left dd_prev_colorfor="lastdeliverydate">'+data.obsData[o].obs_expected_delivery_date+'</div>'+
-                                                                                 '<div class="dd_clear">'+'</div>'+    
-                                                                                '</div>'+      
-                                                                         '</div>'+                
+                                                                            '</div>'+
+                                                                            '<div class=" ">'+
+                                                                                '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="bloodgroup">Blood Group</label>'+
+                                                                                        '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="bloodgroup">: '+bloodGroup+'</div>'+
+                                                                                        '<div class="dd_clear">'+'</div>'+
+                                                                                '</div>'+ 
+                                                                            '</div>'+
+                                                                            '<div class=" ">'+
+                                                                                '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="gestationalage">Gestational Age</label>'+
+                                                                                        '<div class=" dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="gestationalage">: '+gestationalAge+'</div>'+
+                                                                                '</div>'+ 
+                                                                                '<div class="dd_clear">'+'</div>'+          
+                                                                            '</div>'+ 
+                                                                            '<div class="" >'+
+                                                                                '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="lastdeliverydate">Last Delivery Date</label>'+
+                                                                                        '<div class=" dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="lastdeliverydate">: '+lastDeliveryDate+'</div>'+
+                                                                                        '<div class="dd_clear">'+'</div>'+  
+                                                                                '</div>'+
+                                                                            '</div>'+
+                                                                            '<div class=" ">'+
+                                                                                '<div class="col-sm-12 dd_prev_pd_2">'+        
+                                                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="expecteddeliverydate">Expected Delivery Date</label>'+
+                                                                                        '<div class=" dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" pull-left dd_prev_colorfor="lastdeliverydate">: '+expectedDeliveryDate+'</div>'+
+                                                                                        '<div class="dd_clear">'+'</div>'+    
+                                                                                '</div>'+
+                                                                            '</div>'+      
+                                                                        '</div>'+ 
                                                                     '</div>'+ 
-                                                                '</div>'+ 
-                                                             '</div>'                   
-                                                        );
+                                                                 '</div>'                   
+                                                            );
+                                    }
                                    
                                     
                                 }
@@ -469,57 +574,70 @@ var patientPrevElements = function () {
                        if(data.obsData!=""){
                             for(o=0;o<data.obsData.length;o++){
                                  var createdDate = createdDateConvert(data.obsData[o].created_date);
-                                 if(createdDate==data.originalCreatedDateDup[i]){
-                                    $('#menstrual'+i).append('<div class="panel-body">'+
+                                    if(createdDate==data.originalCreatedDateDup[i])
+                                    {
+                                        if(data.obsData[o].obs_lmp_date==null || data.obsData[o].obs_lmp_date=='0000-00-00'){
+                                            lmpDate = '';
+                                        }
+                                        else{
+                                            var dateObj = new Date(data.obsData[o].obs_lmp_date);
+                                            var month   = dateObj.getUTCMonth() + 1; //months from 1-12
+                                            var day     = dateObj.getUTCDate();
+                                            var year    = dateObj.getUTCFullYear();
+                                            var lmpDate = day+"-"+month+"-"+year;
+                                        }
+
+                                        $('#menstrual'+i).append('<div class="panel-body">'+
                                                                 '<div class="col-sm-12">'+
                                                                     '<div class="form-group form-horizontal">'+
-                                                                        '<div class="form-group ">'+
-
-                                                                        '<div class="col-sm-4">'+
-                                                                            '<label class="pull-left" for="lmpdate">LMP :</label>'+
-                                                                           '<div class="dd_prev_color pull-left" for="lmpdate">'+'&nbsp;'+data.obsData[o].obs_lmp_date+'</div>'+
-                                                                            '<div class="dd_clear">'+ '</div>'+       
-                                                                        '</div>'+
-
-                                                                        '<div class="col-sm-4">'+
-                                                                            '<label class="pull-left" for="lmpflow">Lmp Flow : '+' '+'</label>'+
-                                                                        
-                                                                            '<div class="dd_prev_color pull-left" for="lmpflow">'+'&nbsp;'+data.obsData[o].obs_lmp_flow+'</div>'+
-                                                                        '<div class="dd_clear">'+ '</div>'+
-                                                                        '</div>'+
-
-
-                                                                        '<div class="col-sm-4">'+
-                                                                            '<label class="pull-left" for="lmpdysmenorrhea">Dysmenorrhea: '+' '+'</label>'+
-                                                                            '<div class="dd_prev_color pull-left" for="lmpdysmenorrhea">'+'&nbsp;'+data.obsData[o].obs_lmp_dysmenorrhea+'</div>'+
-                                                                            '<div class="dd_clear">'+ '</div>'+       
+                                                                        '<div class="">'+
+                                                                            '<div class="col-sm-12 dd_prev_pd_2 dd_prev_mg_main">'+
+                                                                                '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="lmpdate">LMP </label>'+
+                                                                                    '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="lmpdate">:'+'&nbsp;'+lmpDate+'</div>'+
+                                                                                        '<div class="dd_clear">'+ '</div>'+       
                                                                             '</div>'+
                                                                         '</div>'+
-                                                                        '<div class="form-group ">'+
 
-                                                                        '<div class="col-sm-4">'+
-                                                                            '<label class="pull-left" for="days">Days : '+' '+'</label>'+
-                                                                               
-                                                                                '<div class="dd_prev_color pull-left" for="days">'+'&nbsp;'+data.obsData[o].obs_lmp_days+'</div>'+
-                                                                                '<div class="dd_clear">'+ '</div>'+       
-                                                                                    
+                                                                        '<div class="">'+
+                                                                            '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                                '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="lmpflow">Lmp Flow  '+' '+'</label>'+
+                                                                                    '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="lmpflow">:'+'&nbsp;'+data.obsData[o].obs_lmp_flow+'</div>'+
+                                                                                        '<div class="dd_clear">'+ '</div>'+
+                                                                            '</div>'+
                                                                         '</div>'+
 
-                                                                        '<div class="col-sm-4">'+
-                                                                            '<label class="pull-left" for="cycle">Cycle : '+' '+'</label>'+
-                                                                             
-                                                                            '<div class="dd_prev_color pull-left" for="cycle">'+'&nbsp;'+data.obsData[o].obs_lmp_cycle+'</div>'+
-                                                                            '<div class="dd_clear">'+ '</div>'+             
+                                                                        '<div class="">'+
+                                                                            '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                                '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="lmpdysmenorrhea">Dysmenorrhea '+' '+'</label>'+
+                                                                                    '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="lmpdysmenorrhea">:'+'&nbsp;'+data.obsData[o].obs_lmp_dysmenorrhea+'</div>'+
+                                                                                        '<div class="dd_clear">'+ '</div>'+       
+                                                                            '</div>'+
                                                                         '</div>'+
 
+                                                                        '<div class="">'+
+                                                                            '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                                '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="days">Days  '+' '+'</label>'+
+                                                                                    '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="days">:'+'&nbsp;'+data.obsData[o].obs_lmp_days+'</div>'+
+                                                                                        '<div class="dd_clear">'+ '</div>'+       
+                                                                            '</div>'+  
+                                                                        '</div>'+
 
-                                                                        '<div class="col-sm-4">'+
-                                                                            '<label class="pull-left" for="menstrualtype">Menstrual Type: '+' '+'</label>'+
-                                                                                
-                                                                                        '<div class="dd_prev_color pull-left" for="menstrualtype">'+'&nbsp;'+data.obsData[o].obs_menstrual_type+'</div>'+
-                                                                                  '<div class="dd_clear">'+ '</div>'+  
-                                                                                '</div>'+
-                                                                        '</div>'+  
+                                                                        '<div class="">'+
+                                                                            '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                                '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="cycle">Cycle  '+' '+'</label>'+
+                                                                                    '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="cycle">:'+'&nbsp;'+data.obsData[o].obs_lmp_cycle+'</div>'+
+                                                                                        '<div class="dd_clear">'+ '</div>'+  
+                                                                            '</div>'+           
+                                                                        '</div>'+
+
+                                                                        '<div class="">'+
+                                                                            '<div class="col-sm-12 dd_prev_pd_2">'+
+                                                                                '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="menstrualtype">Menstrual Type '+' '+'</label>'+
+                                                                                    '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="menstrualtype">:'+'&nbsp;'+data.obsData[o].obs_menstrual_type+'</div>'+
+                                                                                        '<div class="dd_clear">'+ '</div>'+  
+                                                                            '</div>'+
+                                                                        '</div>'+ 
+
                                                                     '</div>'+ 
                                                                 '</div>'+ 
                                                             '</div>'
@@ -547,8 +665,7 @@ var patientPrevElements = function () {
                         for(p=0;p<data.prescMedicineData.length;p++){
                             var createdDate = createdDateConvert(data.prescMedicineData[p].created_date);
                             
-                            
-                            
+                           
                             for(dup=0;dup<data.originalCreatedDateDup.length;dup++){
                                 
 
@@ -556,7 +673,45 @@ var patientPrevElements = function () {
 
                                     //$('.presc-print').show();
                                     //console.log($('#prescription'+dup).show());
+                                    
 
+
+
+                                    $('.pdfopen').show();
+
+
+                                  $('#presc-content'+dup).append('<div class="panel-body dd_panel_body_pd">'+
+                                                                        '<div class="col-sm-12">'+
+                                                                            '<div class="form-group form-horizontal">'+
+                                                                                '<div class="form-group  dd_panel_body_font">'+
+                                                                                    '<div class="col-sm-4"><li class="dd_drug_name_li">'+
+                                                                                        data.prescMedicineData[p].drug_name+
+                                                                                    '</li></div>'+
+                                                                                    '<div class="col-sm-2">'+
+                                                                                       data.prescMedicineData[p].dosage+' '+data.prescMedicineData[p].dosage_unit+
+                                                                                    '</div>'+
+                                                                                    '<div class="col-sm-2">'+
+                                                                                       data.prescMedicineData[p].duration+' '+data.prescMedicineData[p].duration_unit+
+                                                                                    '</div>'+
+                                                                                    '<div class="col-sm-4">'+
+                                                                                      
+                                                                                       data.prescMedicineData[p].morning+' - '+
+                                                                                       
+                                                                                        
+                                                                                        data.prescMedicineData[p].noon+' - '+
+                                                                                       
+                                                                                        
+                                                                                        data.prescMedicineData[p].night+
+                                                                                       
+                                                                                    '</div>'+
+                                                                                '</div>'+
+                                                                            '</div>'+
+                                                                        '</div>'+
+                                                                    '</div>'
+                                                                    );
+
+
+/*
 
                                     $('#presc-content'+dup).append('<div class="panel-body">'+
                                                                         '<div class="col-sm-12">'+
@@ -627,12 +782,15 @@ var patientPrevElements = function () {
                                                                         '</div>'+ 
                                                                     '</div>'+
                                                                     '<div class="form-group dd_prev_pre_bt_line"></div>'
+                                                                    
                                                                     );          
-                                                                        
+                                                                        */
+                                       
                                                                                 
-
+                                    
                                  
                                 }
+                               
                                
                             }
                            
@@ -641,9 +799,21 @@ var patientPrevElements = function () {
                            
      
                         }
+                        if(data.prescMedicineData.id_prescription==null){
+                            console.log('vysha');
+                        }
+                        else{
+                            console.log('vivek');
+                        }
+                        for(q=0;q<data.prescMedicineData.length;q++){
+
+                            $('#presc-content'+q).append('<a class="btn btn-primary  pdfopen"> Print </a>')
+                        }
+                        
                         
                     }
 
+                   
                     /*Prescription Data ends*/
 
                     //Printing in prescription

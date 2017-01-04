@@ -358,7 +358,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 								</div>
 
 								<div class="dd_input_2">
-									<div class="dd_email_reg_label_2">Super specialization </div>
+									<div class="dd_email_reg_label_2">Super Specialization </div>
 
 
 									{!! Form::text('super_specialization', null,array('placeholder'=>'', 'class'=>'form-control  super_specialization dd_bodred_l_0', 'id'=>'super_specialization' ) ) !!}
@@ -374,7 +374,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
 
 
-						<div class="dd_email_reg_label_2">IMA Register Number</div>
+						<div class="dd_email_reg_label_2">IMA Registration Number</div>
 
 						<div class="form-group dd_mg_B_40">
 							<div class="col-sm-12">
@@ -393,11 +393,12 @@ $currentPath = Route::getCurrentRoute()->getPath();
 									<input type="checkbox" name="services" id="services" value="agree" class="services">
 								</span>
 								<p style="margin: -23px 20px 4px"> 
-									I agree to the Doctor's Diary 
+									I agree to the Doctor's Diary.
 
-
-									<a target="_blank"> Terms of Service </a> and
-									<a  target="_blank"> Privacy Policy </a>
+									We will give 
+									<a target="_blank"> Privacy Policy </a> and
+									<a  target="_blank"> Terms of Service. </a>
+									Please incorporate it.
 								</p>
 							</div>
 							<!--   -->

@@ -50,6 +50,7 @@
    		.help-block{
    			color:red;
    		}
+
    /* .swiper-container {
         width: 100%;
         height: 100%;
@@ -162,7 +163,7 @@
 				        	</div>
 
 			        		<div class="logo">
-			        			<span class="login_HD dd_signfont">We'll email or sms you a link to make a brand new password. </span>
+			        			<span class="login_HD dd_signfont">We'll email you a link to make a brand new password. </span>
 			        		</div>
 
 			        		 
@@ -174,8 +175,8 @@
 					        				<div class="form-group">
 												<div class="col-sm-12 dd_login">
 													<span class="input-icon ">
-														{!! Form::text('email_mobile', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Email / Mobile', 'id'=>'email'));  !!}
-														<span class="dd_input_phone"></span> 
+														{!! Form::text('email_mobile', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Email', 'id'=>'email'));  !!}
+														<!-- <span class="dd_input_phone"></span> --> 
 													</span>
 												</div>
 					        				</div>

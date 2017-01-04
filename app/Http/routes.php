@@ -59,6 +59,9 @@ Route::get('doctorsignupinformation',  array('as' => 'doctorsignupinformation', 
 Route::post('handleDoctorLogin', array('as' => 'handleDoctorLogin', 'uses' => 'LoginController@handleDoctorLogin')); 
 Route::post('handleDoctorSignUp', array('as' => 'handleDoctorSignUp', 'uses' => 'LoginController@handleDoctorSignUp'));
 
+
+Route::get('error',  array('as' => 'error', 'uses' => 'UtilityController@showErrorPage'));
+
 //PATIENT DETAILS
 Route::post('handlePatientLogin', array('as' => 'handlePatientLogin', 'uses' => 'LoginController@handlePatientLogin')); 
 Route::get('patientlogout',  array('as' => 'patientlogout', 'uses' => 'LoginController@handlePatientLogout'));
@@ -122,7 +125,7 @@ Route::post('addPatientPrescMedicine',  array('before'=>'isDoctorLoggedIn','as' 
 
 Route::post('showPatientPrescMedicine',  array('before'=>'isDoctorLoggedIn','as' => 'showPatientPrescMedicine', 'uses' => 'DoctorController@showPatientPrescMedicine'));
 
-Route::any('patientprescprint',  array('before'=>'isDoctorLoggedIn','as' => 'patientprescprint', 'uses' => 'DoctorController@patientPrescPrint'));
+// Route::any('patientprescprint',  array('before'=>'isDoctorLoggedIn','as' => 'patientprescprint', 'uses' => 'DoctorController@patientPrescPrint'));
 
 Route::get('patientprescmedicine/shared/{sharedId}', 'UtilityController@handleSharedPrescription');
 
@@ -162,8 +165,9 @@ Route::any('cardioprevioustreatment', array('as' => 'cardioprevioustreatment', '
 
 Route::any('cardioprevioustreatmentextended', array('before'=>'isDoctorLoggedIn','as'=>'cardioprevioustreatmentextended','uses'=>'CardiologyController@cardioPreviousTreatmentExtended'));
 
-
-
+// Pediatrician Controllers
+Route::any('pediapersonalinformation', array('before'=>'isDoctorLoggedIn','as'=>'pediapersonalinformation','uses'=>'PediatricsController@showPediaPersonalInformation'));
+Route::any('addPediaPersonalInformation', array('before'=>'isDoctorLoggedIn','as'=>'addPediaPersonalInformation','uses'=>'PediatricsController@addPediaPersonalInformation'));
 
 //Patient Controlls
 //------------------------------------------------------------
@@ -172,7 +176,7 @@ Route::any('patientprofilemanagement', array('as'=>'patientprofilemanagement','u
 Route::any('patientprofileprevtreatment', array('as'=>'patientprofileprevtreatment','uses'=>'PatientController@showPatientProfilePrevTreatment'));
 Route::any('patientprofileedit', array('as'=>'patientprofileedit','uses'=>'PatientController@showPatientProfileEdit'));
 Route::any('patientProfileEdit', array('as' => 'patientProfileEdit', 'uses' => 'PatientController@patientProfileEdit'));
-Route::any('patientprofileprevtreatmentextended', array('as'=>'patientprofileprevtreatmentextended','uses'=>'PatientController@patientProfilePreviousTreatmentExtended'));
+Route::any('patientprofileprevioustreatmentextended', array('as'=>'patientprofileprevioustreatmentextended','uses'=>'PatientController@patientProfilePreviousTreatmentExtended'));
 Route::any('patientchangepassword', array('as'=>'patientchangepassword','uses'=>'PatientController@showPatientChangePassword'));
 Route::any('handlePatientChangePassword', array('as'=>'handlePatientChangePassword','uses'=>'PatientController@handlePatientChangePassword'));
 
@@ -194,7 +198,7 @@ Route::any('handlePatientsDataMigration', array('as'=>'handlePatientsDataMigrati
 Route::any('handleUserDataMigration', array('as'=>'handleUserDataMigration','uses'=>'UserController@handleUserDataMigration'));
 
 //Print Controllers
-Route::post('patientPrescPrint', array('as'=>'patientPrescPrint','uses'=>'PrintController@patientPrescPrint'));
+Route::post('patientPrescPrint', array('before'=>'isDoctorLoggedIn','as'=>'patientPrescPrint','uses'=>'PrintController@patientPrescPrint'));
 
 
 //Services
