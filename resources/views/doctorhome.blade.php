@@ -74,7 +74,7 @@
        
          {!!Html::style('assets/css/dd-responsive.css')!!}
 
-         {!!Html::style('assets/plugins/Swiper-master/dist/css/swiper.min.css')!!}
+         
     
           
         
@@ -89,215 +89,185 @@
 
     ?>
     <body style="background-color:#f9f9f9">
-        <div class=" resize-login dd_login_header"><!-- navbar-fixed-top -->
+        <div class="resize-login dd_login_header"><!-- navbar-fixed-top -->
             <div class="inner_wrapper_2">
                 <div class="container dd_pd_0">
                     <div class="row dd_mg_0">
                         <div class="col-sm-12 dd_pd_0">
                             <div class="logo_div">
-                               <a class="navbar-brand dd_logo_img_2" href="http://www.doctorsdiary.co">
-                                   
-                                </a>
+                               <a class="navbar-brand dd_logo_img_2" href="http://www.doctorsdiary.co"></a>
                             </div>
-                                              
+                                    
                             <div class="navbar-tools  pull-right">
-                            <!-- start: TOP NAVIGATION MENU -->
-                            @if($currentPath=="doctorhome")
-                                <ul class="nav navbar-right dd_profil">
-                                    <li class="dropdown current-user">
-                                        <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
-                                            @if(!empty($doctorData->gender))
-                                                @if($doctorData->gender=="Male")
-                                                    <img src="assets/images/patient_profile_ms.jpg" class="circle-img" alt="">
-                                                @else
-                                                    <img src="assets/images/patient_profile_s.jpg" class="circle-img" alt="">
+                                <!-- start: TOP NAVIGATION MENU -->
+                                @if($currentPath=="doctorhome")
+                                    <ul class="nav navbar-right dd_profil">
+                                        <li class="dropdown current-user">
+                                            <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
+                                                @if(!empty($doctorData->gender))
+                                                    @if($doctorData->gender=="Male")
+                                                        <img src="assets/images/patient_profile_ms.jpg" class="circle-img" alt="">
+                                                    @else
+                                                        <img src="assets/images/patient_profile_s.jpg" class="circle-img" alt="">
+                                                    @endif
                                                 @endif
-                                            @endif
-                                            
-                                            <span class="username">{{ucfirst($doctorData->first_name)." ".ucfirst($doctorData->last_name)}}</span>
-                                            <i class="clip-chevron-down"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dd_dropdown_menu">
-                                            <li>
-                                                <a href="logout" class="dd_settings">
-                                                    <i class="clip-dd-logout"></i>
-                                                    <span>&nbsp;Log Out</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            @endif
-                    <!-- end: TOP NAVIGATION MENU -->
+                                                
+                                                <span class="username">{{ucfirst($doctorData->first_name)." ".ucfirst($doctorData->last_name)}}</span>
+                                                <i class="clip-chevron-down"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dd_dropdown_menu">
+                                                <li>
+                                                    <a href="logout" class="dd_settings">
+                                                        <i class="clip-dd-logout"></i>
+                                                        <span>&nbsp;Log Out</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                @endif
+                                <!-- end: TOP NAVIGATION MENU -->
                             </div>
-                            <!-- <div class="login_div">
-                                <a href="patientlogin" @if($currentPath=="login") class="topmenu-active" @endif>Login</a>&nbsp; | &nbsp;
-                                <a href="doctorsignup" @if($currentPath=="register") class="topmenu-active" @endif>Register</a>
-                            </div> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-       <!-- Swiper -->
-      
+        
+        <div class="inner_wrapper_3 ">
+            <div class="box_admin">
+             
+                <div class="dd_logo_responsive">
+                    <div class="navbar-tools  pull-right">
+                        <!-- start: TOP NAVIGATION MENU -->
+                        @if($currentPath=="doctorhome")
+                            <ul class="nav navbar-right dd_profil">
+                                <li class="dropdown current-user">
+                                    <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
+                                        <img src="assets/images/patient_profile_ms.jpg" class="circle-img" alt="">
+                                        <span class="username">{{ucfirst($doctorData->first_name)." ".ucfirst($doctorData->last_name)}}</span>
+                                        <i class="clip-chevron-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dd_dropdown_menu">
+                                        <li>
+                                            <a href="logout" class="dd_settings">
+                                                <i class="clip-exit"></i>
+                                                <span>&nbsp;Log Out</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        @endif
+                        <!-- end: TOP NAVIGATION MENU -->
+                    </div>                        
+                </div>
 
-           
-               
-            
-            <!-- Add Pagination -->
-           <!--  <div class="swiper-pagination swiper-pagination-white"></div> -->
-            <!-- Add Arrows -->
-      <!--       <div class="swiper-button-next swiper-button-white"></div>
-            <div class="swiper-button-prev swiper-button-white"></div> -->
-            <div class="inner_wrapper_3 ">
-                <div class="box_admin">
-                     @if(!empty($doctorData->gender))
-                        <div class="dd_profile_pic_div">
-                             @if($doctorData->gender=="Male")
-                                <div class="dd_profile_pic_male"></div> 
-                            @else
-                                <div class="dd_profile_pic"></div> 
-                            @endif
-                        </div>
-                    @endif
-                    <div class="dd_logo_responsive">
-                                    <div class="navbar-tools  pull-right">
-                                    <!-- start: TOP NAVIGATION MENU -->
-                                    @if($currentPath=="doctorhome")
-                                        <ul class="nav navbar-right dd_profil">
-                                            <li class="dropdown current-user">
-                                                <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
-                                                    <img src="assets/images/patient_profile_ms.jpg" class="circle-img" alt="">
-                                                    <span class="username">{{ucfirst($doctorData->first_name)." ".ucfirst($doctorData->last_name)}}</span>
-                                                    <i class="clip-chevron-down"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dd_dropdown_menu">
-                                                    <li>
-                                                        <a href="logout" class="dd_settings">
-                                                            <i class="clip-exit"></i>
-                                                            <span>&nbsp;Log Out</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    @endif
-                            <!-- end: TOP NAVIGATION MENU -->
-                                    </div>                        
+                   @if(!empty($doctorData->gender))
+                
+                    <div class="dd_profile_pic_div">
+                         @if($doctorData->gender=="Male") 
+                            <div class="dd_profile_pic_male"></div> 
+                        @else 
+                            <div class="dd_profile_pic"></div> 
+                        @endif
                     </div>
+                @endif
                 <div class="row dd_pd_LR_20">
                     <div class="col-sm-12 dd-id-hd dd-pd-B_10">
                         Welcome to Doctor’s Diary
                     </div>
   
                 </div>
-                <div class="row dd_padding_lr">
+                
+            </div>
+            <div class="dd_clear"></div>
+
+            <div class="row dd_padding_lr">
+                <!-- PatientId Submitting and Checking -->
+                {!! Form::open(array('route' => 'handleNewPatientId', 'role'=>'form', 'id'=>'handleNewPatientId','name'=>'handleNewPatientId', 'class'=>'form-horizontal handleNewPatientId','novalidate'=>'novalidate')) !!}
+
                     <div class="col-sm-6 dd_border_right dd_patient_pd_L">
                         <div class="row">
                             <div class=" dd_upper">New Patient ID</div>
                         </div>
-                       <!--  <div class="row">
-                             <div class="col-sm-12 dd_upper_2">Enter New Patient ID </div>
-                        </div> -->
                         <div class=" dd_margin_0 dd_width_90 dd_border_0">
-                           <!--  <div class="content"></div> -->
-                                {!! Form::open(array('route' => 'patientIdSubmit', 'role'=>'form', 'id'=>'addNewPatientPersonalInformation','name'=>'form-newpatient', 'class'=>'form-horizontal form-newpatient','novalidate'=>'novalidate')) !!}
-                                    <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-                           
-                                    <div class="form-group ">
-                                         {!! Form::hidden('patient_status', 'new', $attributes = array('class'=>'dd_form_id ','placeholder' => 'Enter New Patient Id'));  !!}
+                            <div class="form-group ">
+                                <div class="dd_my_from">
+                                    <div class="dd_form_id">
+                                        {!! Form::text('id_city', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_city_new','maxlength'=>'3'));  !!}
+                                        {!! Form::text('id_doctor', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_doctor_new','maxlength'=>'3'));  !!}
+                                        {!! Form::text('id_patient', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_patient_new'));  !!}
+                                        <!-- <i class="fa fa-user"></i>  -->
+                                    </div>
 
-                                        <div class="dd_my_from">
-                                            <div class="dd_form_id  ">
-                                                {!! Form::text('patient_id', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => ''));  !!}
-                                                <!-- <i class="fa fa-user"></i>  -->
-                                            </div>
-                                        </div>
-                                    
-                                        <div class="dd_my_btn  dd_btn_PD_0">
-                                            <div class="dd_btn_home_2">
-                                                <button type="submit" class="dd_btn_3">Submit</button>
-                                                
-                                            </div>
-                                        </div> 
-                                  </div>
+                                </div>
 
-
-
-                                {!! Form::close() !!}
+                                <div class="dd_my_btn  dd_btn_PD_0">
+                                    <div class="dd_btn_home_2">
+                                        <button type="submit" class="dd_btn_3">Submit</button>
+                                    </div>
+                                    <span class="error_msg_div"></span>
+                                </div> 
+                            </div>
                         </div>
-
                     </div>
+                {!! Form::close() !!}
 
-        
+                {!! Form::open(array('route' => 'handleOldPatientId', 'role'=>'form', 'id'=>'handleOldPatientId','name'=>'handleOldPatientId', 'class'=>'form-horizontal handleOldPatientId','novalidate'=>'novalidate')) !!}
                     <div class="col-sm-6 dd_patient_pd_R">
                         <div class="row">
                             <div class=" dd_upper">Old Patient ID </div>
                         </div>
-                    <!--     <div class="row">
-                            <div class="col-sm-12 dd_upper_2">Enter Old Patient ID </div>
-                        </div> -->
                         <div class=" dd_width_90 dd_border_0">
-                           <!--  <div class="content"></div> -->
-                            
-                                {!! Form::open(array('route' => 'patientIdSubmit', 'role'=>'form', 'id'=>'addPatientPersonalInformation', 'class'=>'form-horizontal form-existpatient','novalidate'=>'novalidate')) !!}
-                                    <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-                                    <div class="form-group ">
-                                        {!! Form::hidden('patient_status', 'old', $attributes = array('class'=>'form-control','placeholder' => 'Enter New Patient Id'));  !!}  
-                                        <div class="dd_my_from">
-                                            <div class="dd_form_id">
-                                                {!! Form::text('patient_id', null, $attributes = array('class'=>'dd_form_id','placeholder' => ''));  !!}
-                                                <!-- <i class="fa fa-user"></i> --> 
-                                            </div>
-                                        </div>
-                                        <div class="">
-                                            <div class="dd_my_btn  dd_btn_PD_0">
-                                                <div class="dd_btn_home_2">
-                                                    <button type="submit" class="dd_btn_3">Submit</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="form-group ">
+                                <div class="dd_my_from">
+                                    <div class="dd_form_id">
+                                        {!! Form::text('id_city', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_city_old','maxlength'=>'3'));  !!}
+                                        {!! Form::text('id_doctor', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_doctor_old','maxlength'=>'3'));  !!}
+                                        {!! Form::text('id_patient', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_patient_old'));  !!}
+                                        <!-- <i class="fa fa-user"></i>  -->
                                     </div>
-                                {!! Form::close() !!}
-                        </div>
-                    </div> 
 
-                  <div class=" core-box dd_margin_0 dd_width_90 dd_border_0 dd_relative">
-                        <div class="heading ">
-                              <?php $error = Session::get('error');
-                                $success = Session::get('success');
-                                Session::forget('error');
-                                Session::forget('success');
-                               
-                              ?>
-                              @if(!empty($error))
-                                <div class="dd_alert dd_abs dd_error_center col-sm-12 display-none" style="display: block;">
-                                  
-                                          {{$error}}
-                                          <a class="close_home" aria-hidden="true" href="#" data-dismiss="alert">×</a>
                                 </div>
-                              @elseif(!empty($success))
-                                <div class="dd_alert_2 dd_error_center display-none" style="display: block;">
-                                  
-                                          {{$success}}
-                                          <a class="close_home" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-                                </div>
-                              @endif
-                                    
+
+                                <div class="dd_my_btn  dd_btn_PD_0">
+                                    <div class="dd_btn_home_2">
+                                        <button type="submit" class="dd_btn_3">Submit</button>
+                                    </div>
+                                    <span class="error_msg_div"></span>
+                                </div> 
+                            </div>
                         </div>
-                    </div>  
+                    </div>
+
+
+                {!! Form::close() !!}
+            </div>
+            <div class=" dd_relative">
+                <div class="heading ">
+                      <?php $error = Session::get('error');
+                        $success = Session::get('success');
+                        Session::forget('error');
+                        Session::forget('success');
+                       
+                      ?>
+                      @if(!empty($error))
+                        <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
+                          <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+                                  {{$error}}
+                        </div>
+                      @elseif(!empty($success))
+                        <div class="dd_alert_2 display-none" style="display: block;">
+                          <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+                                  {{$success}}
+                        </div>
+                      @endif
+                            
                 </div>
-            </div>
-
-          
-
+            </div> 
             
-
-
-
-                <div class="dd_clear"></div>
-            </div>
+        </div>
 
 
         <footer>
@@ -372,26 +342,16 @@
         {!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
         {!!Html::script('assets/js/login.js')!!}
 
-         {!!Html::script('assets/plugins/Swiper-master/dist/js/swiper.min.js')!!}
+        {!!Html::script('assets/js/doctor-home.js')!!}
+        
         
     
         <script>
             jQuery(document).ready(function() {
                 //Main.init();
-                Login.init();
-                
-                var swiper = new Swiper('.swiper-container', {
-                    pagination: '.swiper-pagination',
-                    speed: 1500,
-                    paginationClickable: true,
-                    autoplay : 5000,
-                    preloadImages : true,
-                    nextButton: '.swiper-button-next',
-                    prevButton: '.swiper-button-prev',
-                    spaceBetween: 5000,
-                    effect: 'fade',
-
-                });
+                //Login.init();
+                doctorHome.init();
+               
                 
             });
         </script>

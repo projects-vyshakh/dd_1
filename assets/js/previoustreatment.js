@@ -11,7 +11,9 @@ var patientPrevElements = function () {
             type: "POST",
             url: "patientprevioustreatmentextended",
             data: 'year='+defaultYearSelected,
+            dataType :"JSON",
             success: function(data) {
+               //console.log(data.vitalsData[0].id_vitals);
                console.log(data);
                if(data!==""){
                     $("body").mLoading('hide');
@@ -32,11 +34,13 @@ var patientPrevElements = function () {
         $('#year').change(function(){
             var defaultYearSelected = $('#year option:selected').val();
         // alert(defaultYearSelected);
-
+            $("body").mLoading({ });
+                
             $.ajax({
                 type: "POST",
                 url: "patientprevioustreatmentextended",
                 data: 'year='+defaultYearSelected,
+                dataType :"JSON",
                 success: function(data) {
                     if(data!==""){
                         $("body").mLoading('hide');
@@ -64,8 +68,8 @@ var patientPrevElements = function () {
         month = String(date.getMonth()+1);
         day = String(date.getDate());
 
-        if(month.length==1){  month = "0" + month; }
-        if(day.length==1){  day = "0" + day; }
+        if(day<10){ day = '0'+day;  } else { day = day; } //assigning 0 before day
+        if(month<10){ month = '0'+month;  } else { month = month; } //assigning 0 before months
 
         var  createdDate = year+'-'+month+'-'+day; 
         return createdDate
@@ -87,7 +91,7 @@ var patientPrevElements = function () {
                                 '<div class="row">'+
                                     '<div class="col-sm-12 dd_pd_30">'+
                                         '<div class="tabbable tabs-left">'+
-                                            '<ul id="myTab3" class="nav nav-tabs tab-green dd_sidetab ">'+
+                                            '<ul id="myTab3" class="nav nav-tabs tab-green dd_sidetab mCustomScrollbar  ">'+
                                             '</ul>'+
                                             '<div class="tab-content prev-contents" style="height:500px">'+
                                                 
@@ -101,7 +105,23 @@ var patientPrevElements = function () {
                 '</div>'+
             '</div>'               
         );
-                    
+
+        if(data.obsData=='' && data.lmpData=='' && data.pregData=='' && data.prescMedicineData=='' &&
+           data.vitalsData=='' && data.diagnosisData==''){
+            $('#myTab3').hide();
+        }
+        else{
+            $('#myTab3').show();
+        }
+        
+        //This is for hiding dugname,dosage etc if there is no data for prescritpion
+        var prescDateArray = [];
+        for(k=0;k<data.prescMedicineData.length;k++){
+            var dateObj = createdDateConvert(data.prescMedicineData[k].created_date );
+            
+            prescDateArray.push(dateObj);
+        }   
+
 
         /*Side date tab loop*/ 
         /*----------------------------------------------------------------------------------*/
@@ -114,6 +134,8 @@ var patientPrevElements = function () {
                 var month = dateObj.getUTCMonth() + 1; //months from 1-12
                 var day = dateObj.getUTCDate();
                 var year = dateObj.getUTCFullYear();
+                if(day<10){ day = '0'+day;  } else { day = day; } //assigning 0 before day
+                if(month<10){ month = '0'+month;  } else { month = month; } //assigning 0 before months
                 var formattedDate = day+"-"+month+"-"+year;
             }
             else{
@@ -122,36 +144,36 @@ var patientPrevElements = function () {
             
             //console.log("FormattedDate--"+formattedDate);
             $('#myTab3').append(
-                '<li class="">'+
+                '<li class="content">'+
                     '<a href="#panel_tab4_example1'+i+'" data-toggle="tab">'+formattedDate+'</a>'+
                 '</li>'
             );
     
            $('.prev-contents').append(
                 '<div class="tab-pane" id="panel_tab4_example1'+i+'">'+
-                    '<input type="hidden" name="created-date" class="created-date" value="'+data.originalCreatedDateDup[i]+'">'+
-                    '<p>'+
+                    '<input type="hidden" name="created_date_hidden" class="created_date_hidden" value="'+data.originalCreatedDateDup[i]+'">'+
+                   /* '<p>'+*/
                     '<div class=" dd_prev_margine">'+
                         '<div class="col-sm-12 dd_prev_hd_mg">'+
                             '<div class="tabbable">'+
-                                '<ul id="myTab" class="nav nav-tabs tab-bricky dd_sidetab">'+
-                                    '<li class="active">'+
+                                '<ul id="myTab" class="nav nav-tabs tab-bricky dd_sidetab" style="border:0;">'+
+                                    '<li class="active" id="dummy">'+
                                         '<a href="#patient'+i+'" data-toggle="tab">'+
-                                            '<i class="green fa fa-male"></i> Patient'+
+                                            '<i class="icon pricon icon-pr-patient2" ng-show="navOption.key"></i> Patient'+
                                         '</a>'+
                                     '</li>'+
-                                    '<li class="">'+
+                                    '<li class="" id="dummy">'+
                                         '<a href="#diagnosis'+i+'" data-toggle="tab">'+
-                                            '<i class="green fa fa-heart"></i> Diagnosis'+
+                                            '<i class="icon pricon icon-pr-Diagnosis2" ng-show="navOption.key"></i> Diagnosis'+
                                         '</a>'+
                                     '</li>'+
-                                    '<li class="">'+
+                                    '<li class="" id="dummy">'+
                                         '<a href="#prescription'+i+'" data-toggle="tab">'+
-                                            '<i class="green fa fa-pencil-square-o"></i> Prescription'+ 
+                                            '<i class="icon pricon icon-pr-prescriptions2" ng-show="navOption.key"></i> Prescription'+ 
                                         '</a>'+
                                     '</li>'+
                                 '</ul>'+
-                                '<div class="tab-content prev-inner-content dd_pd_0">'+
+                                '<div class="tab-content prev-inner-content dd_pd_0" style="border:0px;">'+
                                     '<div class="tab-pane in active" id="patient'+i+'">'+
                                         '<div class="tab-pane" id="obs_general'+i+'"></div>'+
                                         '<div class="tab-pane" id="obs_lmp'+i+'"></div>'+
@@ -163,7 +185,7 @@ var patientPrevElements = function () {
                                     '</div>'+
                                     '<div class="tab-pane" id="prescription'+i+'">'+
                                         '<div class="tab-pane " id="presc_title'+i+'">'+
-                                            '<div class="panel-body ">'+
+                                            '<div class="panel-body " style="padding-bottom:5px; padding-top:30px;">'+
                                                 '<div class="col-sm-12 presc_title">'+
                                                     '<div class="form-group form-horizontal">'+
                                                         '<div class="form-group dd_presc_dummy dd_panel_body_font">'+
@@ -181,15 +203,27 @@ var patientPrevElements = function () {
                                             '</div>'+
                                         '</div>'+
                                         '<div class="tab-pane" id="presc_content'+i+'"></div>'+
+                                        '<div id="presc_print_btn'+i+'" class="dd_prev_print_btn presc_print_btn"></div>'+
                                     '</div>'+
+
                                 '</div>'+    
                             '</div>'+    
                         '</div>'+
                     '</div>'+    
                 '</div>'
             );
+           
             
-            
+            //This is for hiding dugname,dosage etc if there is no data for prescritpion
+            if($.inArray(data.originalCreatedDateDup[i],prescDateArray)!==-1){
+                $('#presc_title'+i).show();
+                $('#presc_print_btn'+i).append('<a class="btn btn-primary  pdfopen print_width"> Print </a>');
+            }
+            else{
+                $('#presc_title'+i).hide();
+            }
+
+          
 
             //General Obs Data
 
@@ -283,62 +317,62 @@ var patientPrevElements = function () {
                         if(gravida!=null || para!=null || living!=null || marriedLife!=null || bloodGroup!=null || gestationalAge!=null || lastDeliveryDate!=null || expectedDeliveryDate!=null)
                         {
                             $('#obs_general'+i).append(
-                                '<div class="panel-body">'+
+                                '<div class="panel-body" style="padding-top:35px;">'+
                                     '<div class="col-sm-12">'+
-                                    '<h3>Obstetrics History</h3>'+
-                                        '<div class="form-group form-horizontal">'+
+                                    '<h6>Obstetrics History</h6>'+
+                                        '<div class="form-group form-horizontal" style="margin-top:-10px;">'+
                                             '<div class=" ">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2 dd_prev_mg_main">'+
-                                                '<label class=" pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="gravida">Gravida</label>'+
+                                                '<label class=" pull-left col-sm-3 dd_pd_0 dd_font_left " for="gravida">Gravida</label>'+
                                                     '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="gravida">: '+gravida+'</div>'+
                                                     '<div class="dd_clear">'+'</div>'+
                                                     '</div>'+ 
                                             '</div>'+
                                             '<div class=" ">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                   '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="para">Para</label>'+
+                                                   '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left " for="para">Para</label>'+
                                                         '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="para">: '+para+'</div>'+
                                                         '<div class="dd_clear">'+'</div>'+
                                                 '</div>'+ 
                                             '</div>'+ 
                                             '<div class=" ">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                   '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="living">Living</label>'+
+                                                   '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left " for="living">Living</label>'+
                                                         '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="living">: '+living+'</div>'+
                                                     '<div class="dd_clear">'+'</div>'+ 
                                                 '</div>'+ 
                                             '</div>'+
                                             '<div class=" ">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="marriedlife">Married Life</label>'+
+                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left" for="marriedlife">Married Life</label>'+
                                                         '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="marriedlife">: '+marriedLife+'</div>'+
                                                         '<div class="dd_clear">'+'</div>'+ 
                                                 '</div>'+
                                             '</div>'+
                                             '<div class=" ">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="bloodgroup">Blood Group</label>'+
+                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left " for="bloodgroup">Blood Group</label>'+
                                                         '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="bloodgroup">: '+bloodGroup+'</div>'+
                                                         '<div class="dd_clear">'+'</div>'+
                                                 '</div>'+ 
                                             '</div>'+
                                             '<div class=" ">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="gestationalage">Gestational Age</label>'+
+                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left " for="gestationalage">Gestational Age</label>'+
                                                         '<div class=" dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="gestationalage">: '+gestationalAge+'</div>'+
                                                 '</div>'+ 
                                                 '<div class="dd_clear">'+'</div>'+          
                                             '</div>'+ 
                                             '<div class="" >'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="lastdeliverydate">Last Delivery Date</label>'+
+                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left " for="lastdeliverydate">Last Delivery Date</label>'+
                                                         '<div class=" dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="lastdeliverydate">: '+lastDeliveryDate+'</div>'+
                                                         '<div class="dd_clear">'+'</div>'+  
                                                 '</div>'+
                                             '</div>'+
                                             '<div class=" ">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+        
-                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="expecteddeliverydate">Expected Delivery Date</label>'+
+                                                    '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left " for="expecteddeliverydate">Expected Delivery Date</label>'+
                                                         '<div class=" dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" pull-left dd_prev_colorfor="lastdeliverydate">: '+expectedDeliveryDate+'</div>'+
                                                         '<div class="dd_clear">'+'</div>'+    
                                                 '</div>'+
@@ -373,13 +407,13 @@ var patientPrevElements = function () {
                             }
 
                             $('#obs_lmp'+i).append(
-                                '<div class="panel-body">'+
+                                '<div class="panel-body" style="padding-top:15px;">'+
                                     '<div class="col-sm-12">'+
-                                        '<h3>Menstrual History</h3>'+
-                                        '<div class="form-group form-horizontal">'+
+                                        '<h6>Menstrual History</h6>'+
+                                        '<div class="form-group form-horizontal" style="margin-top:-10px;">'+
                                             '<div class="">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2 dd_prev_mg_main">'+
-                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="lmpdate">LMP </label>'+
+                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left " for="lmpdate">LMP </label>'+
                                                         '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="lmpdate">:'+'&nbsp;'+lmpDate+'</div>'+
                                                             '<div class="dd_clear">'+ '</div>'+       
                                                 '</div>'+
@@ -387,7 +421,7 @@ var patientPrevElements = function () {
 
                                             '<div class="">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="lmpflow">Lmp Flow  '+' '+'</label>'+
+                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left " for="lmpflow">Lmp Flow  '+' '+'</label>'+
                                                         '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="lmpflow">:'+'&nbsp;'+data.obsData[o].obs_lmp_flow+'</div>'+
                                                             '<div class="dd_clear">'+ '</div>'+
                                                 '</div>'+
@@ -395,7 +429,7 @@ var patientPrevElements = function () {
 
                                             '<div class="">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="lmpdysmenorrhea">Dysmenorrhea '+' '+'</label>'+
+                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left " for="lmpdysmenorrhea">Dysmenorrhea '+' '+'</label>'+
                                                         '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="lmpdysmenorrhea">:'+'&nbsp;'+data.obsData[o].obs_lmp_dysmenorrhea+'</div>'+
                                                             '<div class="dd_clear">'+ '</div>'+       
                                                 '</div>'+
@@ -403,7 +437,7 @@ var patientPrevElements = function () {
 
                                             '<div class="">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="days">Days  '+' '+'</label>'+
+                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left " for="days">Days  '+' '+'</label>'+
                                                         '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="days">:'+'&nbsp;'+data.obsData[o].obs_lmp_days+'</div>'+
                                                             '<div class="dd_clear">'+ '</div>'+       
                                                 '</div>'+  
@@ -411,7 +445,7 @@ var patientPrevElements = function () {
 
                                             '<div class="">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="cycle">Cycle  '+' '+'</label>'+
+                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left " for="cycle">Cycle  '+' '+'</label>'+
                                                         '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="cycle">:'+'&nbsp;'+data.obsData[o].obs_lmp_cycle+'</div>'+
                                                             '<div class="dd_clear">'+ '</div>'+  
                                                 '</div>'+           
@@ -419,7 +453,7 @@ var patientPrevElements = function () {
 
                                             '<div class="">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="menstrualtype">Menstrual Type '+' '+'</label>'+
+                                                    '<label class="pull-left col-sm-3 dd_pd_0 dd_font_left " for="menstrualtype">Menstrual Type '+' '+'</label>'+
                                                         '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="menstrualtype">:'+'&nbsp;'+data.obsData[o].obs_menstrual_type+'</div>'+
                                                             '<div class="dd_clear">'+ '</div>'+  
                                                 '</div>'+
@@ -439,7 +473,7 @@ var patientPrevElements = function () {
             // Menstrual History ends
 
 
-            if(data.vitalsData!=''){ console.log(data.vitalsData)
+            if(data.vitalsData!=''){ 
                 for(v=0;v<data.vitalsData.length;v++){
                     var t = data.vitalsData[v].created_date.split(/[- :]/);
                     var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
@@ -453,19 +487,19 @@ var patientPrevElements = function () {
                     var createdDate = year+'-'+month+'-'+day; 
                     if(createdDate==data.originalCreatedDateDup[i]){
                         $('#diag_vitals'+i).append(
-                            '<div class="panel-body">'+
+                            '<div class="panel-body" style="padding-top:35px;">'+
                                 '<div class="col-sm-12">'+
-                                    '<h3>Vitals</h3>'+
-                                    '<div class="form-group form-horizontal">'+
+                                    '<h6>Vitals</h6>'+
+                                    '<div class="form-group form-horizontal" style="margin-top:-10px;">'+
                                         '<div class=" ">'+
                                             '<div class="col-sm-12 dd_prev_pd_2  dd_prev_mg_main">'+
-                                               '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="weight">Weight</label>'+
+                                               '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left " for="weight">Weight</label>'+
                                                     '<div class="dd_prev_color pull-left col-sm-4 dd_pd_0 dd_font_left" for="weight">: '+data.vitalsData[v].weight+' '+'Kg'+'</div>'+
                                                         '<div class="dd_clear">'+'</div>'+
                                             '</div>'+
                                           
                                             '<div class="col-sm-12 dd_prev_pd_2">'+
-                                            '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="height">Height</label>'+
+                                            '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left " for="height">Height</label>'+
                                             
                                             '<div class="dd_prev_color pull-left col-sm-4 dd_pd_0 dd_font_left" for="height"> : '+data.vitalsData[v].height+' '+'cm'+'</div>'+
                                                 '<div class="dd_clear">'+'</div>'+   
@@ -473,7 +507,7 @@ var patientPrevElements = function () {
 
 
                                             '<div class="col-sm-12 dd_prev_pd_2 ">'+   
-                                            '<label class=" pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" fdd_font_leftor="bmi">BMI</label>'+
+                                            '<label class=" pull-left col-sm-4 dd_pd_0 dd_font_left " fdd_font_leftor="bmi">BMI</label>'+
                                                 
                                                 '<div class="dd_prev_color  col-sm-4 dd_pd_0 dd_font_left" for="bmi"> : '+data.vitalsData[v].bmi+' '+'bmi'+'</div>'+
                                                 '<div class="dd_clear">'+'</div>'+  
@@ -485,7 +519,7 @@ var patientPrevElements = function () {
 
                                         '<div class="col-sm-12 dd_prev_pd_2 ">'+  
                                            /* '<label class="pull-left" for="bmi">BMI:</label>'+*/
-                                            '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="Pulse ">Pulse </label>'+
+                                            '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left 0" for="Pulse ">Pulse </label>'+
                                                 
                                             '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left " for="weight"> : '+data.vitalsData[v].pulse+' '+'beats / min'+'</div>'+
                                              '<div class="dd_clear">'+'</div>'+         
@@ -493,14 +527,14 @@ var patientPrevElements = function () {
 
 
                                         '<div class="col-sm-12 dd_prev_pd_2 ">'+         
-                                            '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="resipiratory">Respiratory Rate </label>'+
+                                            '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left 0" for="resipiratory">Respiratory Rate </label>'+
                                             
                                             '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left" for="resipiratory"> : '+data.vitalsData[v].respiratoryrate+' '+'breathes/min'+'</div>'+
                                             '<div class="dd_clear">'+'</div>'+   
                                             '</div>'+
 
                                             '<div class="col-sm-12 dd_prev_pd_2">'+ 
-                                            '<label class=" pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="temperature">Temperature</label>'+
+                                            '<label class=" pull-left col-sm-4 dd_pd_0 dd_font_left 0" for="temperature">Temperature</label>'+
                                               
                                             '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left" for="temperature"> : '+data.vitalsData[v].temperature+' '+'Fahrenheit'+'</div>'+
                                             '<div class="dd_graclear">'+'</div>'+        
@@ -511,14 +545,14 @@ var patientPrevElements = function () {
                                         '<div class="">'+
 
                                         '<div class="col-sm-12 dd_prev_pd_2 ">'+ 
-                                            '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="spo2 ">SPO2</label>'+
+                                            '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left 0" for="spo2 ">SPO2</label>'+
                                
                                                 '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left" for="spo2"> : '+data.vitalsData[v].sp+'%'+'</div>'+
                                                 '<div class="dd_clear">'+'</div>'+     
                                         '</div>'+
 
                                         '<div class="col-sm-12 dd_prev_pd_2 ">'+ 
-                                            '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold" for="blood_group">Blood Group </label>'+
+                                            '<label class="pull-left col-sm-4 dd_pd_0 dd_font_left 0" for="blood_group">Blood Group </label>'+
                                              
                                                 '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left" for="blood_group"> : '+data.vitalsData[v].blood_group+'</div>'+
                                                 '<div class="dd_clear">'+'</div>'+  
@@ -526,7 +560,7 @@ var patientPrevElements = function () {
 
 
                                         '<div class="col-sm-12 dd_prev_pd_2">'+ 
-                                            '<label class="pull-left pull-left col-sm-4 dd_pd_0 dd_font_left prev-bold " for="bp">Blood Pressure(Systolic/Diastolic)</label>'+
+                                            '<label class="pull-left pull-left col-sm-4 dd_pd_0 dd_font_left 0 " for="bp">Blood Pressure(Systolic/Diastolic)</label>'+
                                               
                                                         '<div class="dd_prev_color col-sm-4 dd_pd_0 dd_font_left" for="temperature"> : '+data.vitalsData[v].systolic_pressure+'/'+data.vitalsData[v].diastolic_pressure+' '+'mm/Hg'+'</div>'+
                                                    
@@ -553,9 +587,9 @@ var patientPrevElements = function () {
                         var res = JSON.parse(str);//JSON.parse("[" + str + "]");
 
                         $('#diag_sym'+i).append(
-                            '<div class="panel-body">'+
+                            '<div class="panel-body" style="padding-top:15px;">'+
                                 '<div class="col-sm-12">'+
-                                    '<h3>Symptoms & Suspected Diseases</h3>'+
+                                    '<h6>Symptoms & Suspected Diseases</h6>'+
                                     '<div class="form-group form-horizontal">'+
                                         '<div class="form-group ">'+
                                             '<label class="col-sm-12 dd_diag_hd" for="symptoms">Symptoms:</label>'+
@@ -613,7 +647,7 @@ var patientPrevElements = function () {
                         
                         for(dis=0;dis<array.length;dis++){
                             var index = dis+1;
-                            console.log("D--"+array[dis]);
+                            
                             $('#dis-data'+d).append('<label class="col-sm-10" for="diseases">'+index+'. '+array[dis]+'</label>')
                         }
 
@@ -666,48 +700,48 @@ var patientPrevElements = function () {
                     if(createdDate==data.originalCreatedDateDup[dup]){
                         
                         $('#obs_preg'+dup).append(
-                            '<div class="panel-body">'+
+                            '<div class="panel-body"style="padding-top:15px;">'+
                                 '<div class="col-sm-12">'+
-                                '<h3>Pregnancy History</h3>'+
-                                    '<div class="form-group form-horizontal">'+
+                                '<h6>Pregnancy History</h6>'+
+                                    '<div class="form-group form-horizontal" style="margin-top:-10px;">'+
                                         '<div class=" ">'+
                                             '<div class="col-sm-12 dd_prev_pd_2 dd_prev_mg_main">'+
-                                            '<label class=" pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="pk">Pregnancy Kind:</label>'+
+                                            '<label class=" pull-left col-sm-3 dd_pd_0 dd_font_left " for="pk">Pregnancy Kind:</label>'+
                                                 '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="pk">: '+data.pregData[p].obs_preg_kind+'</div>'+
                                                 '<div class="dd_clear">'+'</div>'+
                                                 '</div>'+ 
                                         '</div>'+
                                         '<div class=" ">'+
                                             '<div class="col-sm-12 dd_prev_pd_2">'+
-                                               '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="pt">Pregnancy Type:</label>'+
+                                               '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left " for="pt">Pregnancy Type:</label>'+
                                                     '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="pt">: '+data.pregData[p].obs_preg_type+'</div>'+
                                                     '<div class="dd_clear">'+'</div>'+
                                             '</div>'+ 
                                         '</div>'+ 
                                         '<div class=" ">'+
                                             '<div class="col-sm-12 dd_prev_pd_2">'+
-                                               '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="term">Term:</label>'+
+                                               '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left " for="term">Term:</label>'+
                                                     '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="term">: '+data.pregData[p].obs_preg_term+'</div>'+
                                                 '<div class="dd_clear">'+'</div>'+ 
                                             '</div>'+ 
                                         '</div>'+
                                         '<div class=" ">'+
                                             '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="ta">Type of Abortion:</label>'+
+                                                '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left " for="ta">Type of Abortion:</label>'+
                                                     '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="ta">: '+data.pregData[p].obs_preg_abortion+'</div>'+
                                                     '<div class="dd_clear">'+'</div>'+ 
                                             '</div>'+
                                         '</div>'+
                                         '<div class=" ">'+
                                             '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="health">Health:</label>'+
+                                                '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left " for="health">Health:</label>'+
                                                     '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="health">: '+data.pregData[p].obs_preg_health+'</div>'+
                                                     '<div class="dd_clear">'+'</div>'+
                                             '</div>'+ 
                                         '</div>'+
                                         '<div class=" ">'+
                                             '<div class="col-sm-12 dd_prev_pd_2">'+
-                                                '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left prev-bold" for="age">Age:</label>'+
+                                                '<label class="  pull-left col-sm-3 dd_pd_0 dd_font_left " for="age">Age:</label>'+
                                                     '<div class=" dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="age">: '+data.pregData[p].obs_preg_years+'Years'+' | '+data.pregData[p].obs_preg_weeks+''+'Weeks'+'</div>'+
                                             '</div>'+ 
                                             '<div class="dd_clear">'+'</div>'+          
@@ -799,18 +833,31 @@ var patientPrevElements = function () {
 
         }
 
-                               
+        $('.pdfopen').click(function(){
+            var createdDate = $(this).closest('.prev-contents').find('.active').find('.created_date_hidden').val();
+            //console.log(createdDate);
+            $("body").mLoading({  });
 
+            $.ajax({
+                type: "POST",
+                url: "patientprevioustreatmentprint",
+                data: 'created_date='+createdDate,
+                success: function(data) {
+                   console.log(data);
+                   if(data!=""){
+                        $("body").mLoading('hide');
+                        $('#myModal3').modal('show');
+                        $('iframe').remove();
+                        $('.pdf_print').append('<iframe src="storage/pdf/'+data+'.pdf" style="width:780px;height:500px;"></iframe>');
+                   }
+                   
+                },
+            });
+    
+
+           
+        });
                 
-
-                    
-
-                   
-                    
-                    
-
-
-                   
 
                    
     }

@@ -1054,398 +1054,399 @@
 								
 						</div>
 					</div>
-						
-						<div class="form-group">
-							<div class="container">
-								<div class="row">
-									<div class="dd_sample_F">
-										{!! Form::label('father', 'Father', $attributes = array('class'=>'checkbox-linline dd_sample_175' ));  !!}
-									</div>
-									
-									@if((!empty($medicalHistory)) && (!empty($fatherHistory)))
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" name="father[]"  
-												@if(in_array("Hypertension",$fatherHistory)) checked="checked" @endif>
-												Hypertension 
-											</label>
-
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="father[]"
-												@if(in_array("Diabetes",$fatherHistory)) checked="checked" @endif>
-												Diabetes 
-											</label>
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="father[]"
-												@if(in_array("Cancer",$fatherHistory)) checked="checked" @endif>
-												Cancer 
-											</label>
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="father[]"
-												@if(in_array("Other",$fatherHistory)) checked="checked" @endif >
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('father_other', !empty($fatherHistoryOther)?$fatherHistoryOther:Input::old('father_other'), $attributes = array('class'=>'form-control other-medical-history father_other','placeholder' => 'Other','disabled'=>'disabled'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline ">
-												<input type="checkbox" name="history_father_na" value="NA" class="family-history-na"
-												@if(in_array("NA",$fatherHistory)) checked="checked" @endif>
-												N/A 
-											</label>
-										</div>
-									@else
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" name="father[]" >
-												Hypertension 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="father[]">
-												Diabetes 
-											</label>
-
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="father[]">
-												Cancer 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="father[]">
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('father_other',null, $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline">
-												<input type="checkbox" name="history_father_na" value="NA" class="family-history-na">
-												N/A 
-											</label>
-										</div>
-									@endif
+					
+					<!-- Father -->
+					<div class="form-group">
+						<div class="container">
+							<div class="row">
+								<div class="dd_sample_F">
+									{!! Form::label('father', 'Father', $attributes = array('class'=>'checkbox-linline dd_sample_175' ));  !!}
 								</div>
+								
+								@if((!empty($medicalHistory)) && (!empty($fatherHistory)))
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" name="father[]"  
+											@if(in_array("Hypertension",$fatherHistory)) checked="checked" @endif>
+											Hypertension 
+										</label>
+
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="father[]"
+											@if(in_array("Diabetes",$fatherHistory)) checked="checked" @endif>
+											Diabetes 
+										</label>
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="father[]"
+											@if(in_array("Cancer",$fatherHistory)) checked="checked" @endif>
+											Cancer 
+										</label>
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="father[]"
+											@if(in_array("Other",$fatherHistory)) checked="checked" @endif >
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('father_other', !empty($fatherHistoryOther)?$fatherHistoryOther:Input::old('father_other'), $attributes = array('class'=>'form-control other-medical-history father_other','placeholder' => 'Other','disabled'=>'disabled'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline ">
+											<input type="checkbox" name="history_father_na" value="NA" class="family-history-na"
+											@if(in_array("NA",$fatherHistory)) checked="checked" @endif>
+											N/A 
+										</label>
+									</div>
+								@else
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" name="father[]" >
+											Hypertension 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="father[]">
+											Diabetes 
+										</label>
+
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="father[]">
+											Cancer 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="father[]">
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('father_other',null, $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="history_father_na" value="NA" class="family-history-na">
+											N/A 
+										</label>
+									</div>
+								@endif
 							</div>
 						</div>
+					</div>
 																
-						<!-- Mother -->
-						<div class="form-group">
-							<div class="container">
-								<div class="row">
-									<div class="dd_sample_F">
-										{!! Form::label('mother', 'Mother', $attributes = array('class'=>'checkbox-inline dd_sample_175'));  !!}
-									</div>
-									@if((!empty($medicalHistory)) && (!empty($motherHistory)))
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" name="mother[]"  
-												@if(in_array("Hypertension",$motherHistory)) checked="checked" @endif>
-												Hypertension 
-											</label>
-
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="mother[]"  
-												@if(in_array("Diabetes",$motherHistory)) checked="checked" @endif>
-												Diabetes 
-											</label>
-
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="mother[]"  
-												@if(in_array("Cancer",$motherHistory)) checked="checked" @endif>
-												Cancer 
-											</label>
-
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="mother[]"@if(in_array("Other",$motherHistory)) checked="checked" @endif>
-												Other 
-											</label>
-										</div>
-										
-										<div class="dd_sample_M">
-											{!! Form::text('mother_other', !empty($motherHistoryOther)?$motherHistoryOther:Input::old('mother_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline">
-												<input type="checkbox" name="history_mother_na" value="NA" class="family-history-na"  @if(in_array("NA",$motherHistory)) checked="checked" @endif>
-												N/A 
-											</label>
-										</div>
-									@else
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" name="mother[]">
-												Hypertension 
-											</label>
-
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="mother[]">
-												Diabetes 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="mother[]">
-												Cancer 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="mother[]">
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('mother_other', null, $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline">
-												<input type="checkbox" name="history_mother_na" value="NA" class="family-history-na">N/A 
-											</label>
-										</div>
-									@endif
+					<!-- Mother -->
+					<div class="form-group">
+						<div class="container">
+							<div class="row">
+								<div class="dd_sample_F">
+									{!! Form::label('mother', 'Mother', $attributes = array('class'=>'checkbox-inline dd_sample_175'));  !!}
 								</div>
-							</div>
-						</div>
-																										
-						<!-- Sibling -->
-						<div class="form-group">
-							<div class="container">
-								<div class="row">
-									<div class="dd_sample_F">
-										{!! Form::label('sibling', 'Sibling', $attributes = array('class'=>'checkbox-inline dd_sample_175'));  !!}
+								@if((!empty($medicalHistory)) && (!empty($motherHistory)))
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" name="mother[]"  
+											@if(in_array("Hypertension",$motherHistory)) checked="checked" @endif>
+											Hypertension 
+										</label>
+
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="mother[]"  
+											@if(in_array("Diabetes",$motherHistory)) checked="checked" @endif>
+											Diabetes 
+										</label>
+
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="mother[]"  
+											@if(in_array("Cancer",$motherHistory)) checked="checked" @endif>
+											Cancer 
+										</label>
+
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="mother[]"@if(in_array("Other",$motherHistory)) checked="checked" @endif>
+											Other 
+										</label>
 									</div>
-									@if((!empty($medicalHistory)) && (!empty($siblingHistory)))
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" name="sibling[]"  
-												@if(in_array("Hypertension",$siblingHistory)) checked="checked" @endif>
-												Hypertension 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="sibling[]"  
-												@if(in_array("Diabetes",$siblingHistory)) checked="checked" @endif>
-												Diabetes 
-											</label>
 									
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="sibling[]"
-												@if(in_array("Cancer",$siblingHistory)) checked=" checked" @endif>
-												Cancer 
-											</label>
-											<!-- {{$siblingHistoryOther}}
-											 -->
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="sibling[]" @if(in_array("Other",$siblingHistory)) checked="checked" @endif>
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('sibling_other',!empty($siblingHistoryOther)?$siblingHistoryOther:Input::old('sibling_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline ">
-												<input type="checkbox" name="history_sibling_na" value="NA" class="family-history-na"
-												@if(in_array("NA",$siblingHistory)) checked="checked" @endif>
-												N/A 
-											</label>
-										</div>
-									@else
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" name="sibling[]">
-												Hypertension 
-											</label>
-										
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="sibling[]">
-												Diabetes 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="sibling[]">
-												Cancer
-											</label>
+									<div class="dd_sample_M">
+										{!! Form::text('mother_other', !empty($motherHistoryOther)?$motherHistoryOther:Input::old('mother_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="history_mother_na" value="NA" class="family-history-na"  @if(in_array("NA",$motherHistory)) checked="checked" @endif>
+											N/A 
+										</label>
+									</div>
+								@else
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" name="mother[]">
+											Hypertension 
+										</label>
 
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="sibling[]">
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('sibling_other',null, $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline col-sm-1">
-												<input type="checkbox" name="history_sibling_na" value="NA" class="family-history-na">
-												N/A 
-											</label>
-										</div>
-									@endif
-								</div>
-							</div>
-						</div>
-						
-						<!-- Grandfather -->
-						<div class="form-group">
-							<div class="container">
-								<div class="row">
-									<div class="dd_sample_F">
-										{!! Form::label('grandfather', 'Grandfather', $attributes = array('class'=>'checkbox-inline dd_sample_175'));  !!}
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="mother[]">
+											Diabetes 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="mother[]">
+											Cancer 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="mother[]">
+											Other 
+										</label>
 									</div>
-									@if((!empty($medicalHistory)) && (!empty($siblingHistory)))
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" name="grandfather[]"  
-												@if(in_array("Hypertension",$grandfatherHistory)) checked="checked" @endif>
-												Hypertension 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandfather[]"  
-												@if(in_array("Diabetes",$grandfatherHistory)) checked="checked" @endif>
-												Diabetes 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="grandfather[]"  
-												@if(in_array("Cancer",$grandfatherHistory)) checked="checked" @endif>
-												Cancer 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="grandfather[]" 
-												@if(in_array("Other",$grandfatherHistory)) checked="checked" @endif>
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('grandfather_other', !empty($grandfatherHistoryOther)?$grandfatherHistoryOther:Input::old('grandfather_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline">
-												<input type="checkbox" name="history_grandfather_na" value="NA" class="family-history-na"  
-												@if(in_array("NA",$grandfatherHistory)) checked="checked" @endif>
-												N/A
-											 </label>
-										</div>
-									@else
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" name="grandfather[]" >
-												Hypertension 
-											</label>
-												
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandfather[]">
-												Diabetes 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="grandfather[]">
-												Cancer 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="grandfather[]">
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('grandfather_other', Input::old('grandfather_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline col-sm-1">
-												<input type="checkbox" name="history_grandfather_na" value="NA" class="family-history-na">
-												N/A 
-											</label>
-										</div>
-									@endif
-								</div>
-							</div>
-						</div>
-						
-						<!-- Grandmother -->
-						<div class="form-group">
-							<div class="container">
-								<div class="row">
-									<div class="dd_sample_F">
-										{!! Form::label('grandmother', 'Grandmother', $attributes = array('class'=>'checkbox-inline dd_sample_175'));  !!}
+									<div class="dd_sample_M">
+										{!! Form::text('mother_other', null, $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
 									</div>
-									@if((!empty($medicalHistory)) && (!empty($siblingHistory)))
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" id="hyp" name="grandmother[]"
-												@if(in_array("Hypertension",$grandmotherHistory)) checked="checked" @endif>
-												Hypertension 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandmother[]"  
-												@if(in_array("Diabetes",$grandmotherHistory)) checked="checked" @endif>
-												Diabetes 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="grandmother[]"  
-												@if(in_array("Cancer",$grandmotherHistory)) checked="checked" @endif>
-												Cancer 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="grandmother[]" 
-												@if(in_array("Other",$grandmotherHistory)) checked="checked" @endif >
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('grandmother_other', !empty($grandmotherHistoryOther)?$grandmotherHistoryOther:Input::old('grandmother_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline">
-												<input type="checkbox" name="history_grandmother_na" value="NA" class="family-history-na"
-												@if(in_array("NA",$grandmotherHistory)) checked="checked" @endif>
-												N/A 
-											</label>
-										</div>
-									@else
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" id="hyp" name="grandmother[]">
-												Hypertension 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandmother[]">
-												Diabetes 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="grandmother[]">
-												Cancer 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="grandmother[]">
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('grandmother_other', Input::old('grandmother_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline">
-												<input type="checkbox" name="history_grandmother_na" value="NA" class="family-history-na">
-												N/A 
-											</label>
-										</div>
-									@endif
-								</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="history_mother_na" value="NA" class="family-history-na">N/A 
+										</label>
+									</div>
+								@endif
 							</div>
 						</div>
+					</div>
+																									
+					<!-- Sibling -->
+					<div class="form-group">
+						<div class="container">
+							<div class="row">
+								<div class="dd_sample_F">
+									{!! Form::label('sibling', 'Sibling', $attributes = array('class'=>'checkbox-inline dd_sample_175'));  !!}
+								</div>
+								@if((!empty($medicalHistory)) && (!empty($siblingHistory)))
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" name="sibling[]"  
+											@if(in_array("Hypertension",$siblingHistory)) checked="checked" @endif>
+											Hypertension 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="sibling[]"  
+											@if(in_array("Diabetes",$siblingHistory)) checked="checked" @endif>
+											Diabetes 
+										</label>
+								
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="sibling[]"
+											@if(in_array("Cancer",$siblingHistory)) checked=" checked" @endif>
+											Cancer 
+										</label>
+										<!-- {{$siblingHistoryOther}}
+										 -->
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="sibling[]" @if(in_array("Other",$siblingHistory)) checked="checked" @endif>
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('sibling_other',!empty($siblingHistoryOther)?$siblingHistoryOther:Input::old('sibling_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline ">
+											<input type="checkbox" name="history_sibling_na" value="NA" class="family-history-na"
+											@if(in_array("NA",$siblingHistory)) checked="checked" @endif>
+											N/A 
+										</label>
+									</div>
+								@else
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" name="sibling[]">
+											Hypertension 
+										</label>
+									
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="sibling[]">
+											Diabetes 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="sibling[]">
+											Cancer
+										</label>
+
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="sibling[]">
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('sibling_other',null, $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline col-sm-1">
+											<input type="checkbox" name="history_sibling_na" value="NA" class="family-history-na">
+											N/A 
+										</label>
+									</div>
+								@endif
+							</div>
+						</div>
+					</div>
 						
+					<!-- Grandfather -->
+					<div class="form-group">
+						<div class="container">
+							<div class="row">
+								<div class="dd_sample_F">
+									{!! Form::label('grandfather', 'Grandfather', $attributes = array('class'=>'checkbox-inline dd_sample_175'));  !!}
+								</div>
+								@if((!empty($medicalHistory)) && (!empty($siblingHistory)))
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" name="grandfather[]"  
+											@if(in_array("Hypertension",$grandfatherHistory)) checked="checked" @endif>
+											Hypertension 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandfather[]"  
+											@if(in_array("Diabetes",$grandfatherHistory)) checked="checked" @endif>
+											Diabetes 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="grandfather[]"  
+											@if(in_array("Cancer",$grandfatherHistory)) checked="checked" @endif>
+											Cancer 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="grandfather[]" 
+											@if(in_array("Other",$grandfatherHistory)) checked="checked" @endif>
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('grandfather_other', !empty($grandfatherHistoryOther)?$grandfatherHistoryOther:Input::old('grandfather_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="history_grandfather_na" value="NA" class="family-history-na"  
+											@if(in_array("NA",$grandfatherHistory)) checked="checked" @endif>
+											N/A
+										 </label>
+									</div>
+								@else
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" name="grandfather[]" >
+											Hypertension 
+										</label>
+											
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandfather[]">
+											Diabetes 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="grandfather[]">
+											Cancer 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="grandfather[]">
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('grandfather_other', Input::old('grandfather_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline col-sm-1">
+											<input type="checkbox" name="history_grandfather_na" value="NA" class="family-history-na">
+											N/A 
+										</label>
+									</div>
+								@endif
+							</div>
+						</div>
+					</div>
+						
+					<!-- Grandmother -->
+					<div class="form-group">
+						<div class="container">
+							<div class="row">
+								<div class="dd_sample_F">
+									{!! Form::label('grandmother', 'Grandmother', $attributes = array('class'=>'checkbox-inline dd_sample_175'));  !!}
+								</div>
+								@if((!empty($medicalHistory)) && (!empty($siblingHistory)))
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" id="hyp" name="grandmother[]"
+											@if(in_array("Hypertension",$grandmotherHistory)) checked="checked" @endif>
+											Hypertension 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandmother[]"  
+											@if(in_array("Diabetes",$grandmotherHistory)) checked="checked" @endif>
+											Diabetes 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="grandmother[]"  
+											@if(in_array("Cancer",$grandmotherHistory)) checked="checked" @endif>
+											Cancer 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="grandmother[]" 
+											@if(in_array("Other",$grandmotherHistory)) checked="checked" @endif >
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('grandmother_other', !empty($grandmotherHistoryOther)?$grandmotherHistoryOther:Input::old('grandmother_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="history_grandmother_na" value="NA" class="family-history-na"
+											@if(in_array("NA",$grandmotherHistory)) checked="checked" @endif>
+											N/A 
+										</label>
+									</div>
+								@else
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" id="hyp" name="grandmother[]">
+											Hypertension 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandmother[]">
+											Diabetes 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="grandmother[]">
+											Cancer 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="grandmother[]">
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('grandmother_other', Input::old('grandmother_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="history_grandmother_na" value="NA" class="family-history-na">
+											N/A 
+										</label>
+									</div>
+								@endif
+							</div>
+						</div>
+					</div>
+					
 						<hr>
 						<div class="form-group">
 							<div class="col-sm-8">
@@ -1466,7 +1467,7 @@
 										@else
 											<input type="checkbox" value="NA" class="noSurgicalHistory" id="noSurgicalHistory" />
 											<input type="hidden" name="surgery-check-value" id="surgery-check-value" class="surgery-check-value" value="NA"> 
-											<span class="dd_past">No known surgical history to reports</span
+											<span class="dd_past">No known surgical history to reports</span>
 										@endif 
 
 									@endif 
@@ -1815,7 +1816,7 @@
 								<?php array_push($drugArray,0); ?>
 								@else
 								
-								<div class="form-group">
+								<div class="form-group dd_Social_History">
 									<div class="col-sm-6">
 										<div class="dd_top_mt">
 											Medication
@@ -1837,7 +1838,7 @@
 								@if(in_array(1,$drugArray))
 								
 								@else
-								<div class="form-group">
+								<div class="form-group dd_Social_History">
 									<div class="col-sm-6">
 										<div class="dd_top_mt">
 											Medication
@@ -1854,7 +1855,7 @@
 								</div>
 								@endif
 								@else
-								<div class="form-group">
+								<div class="form-group dd_Social_History">
 									<div class="col-sm-6">
 										<div class="dd_top_mt">
 											Medication
@@ -1871,7 +1872,7 @@
 								</div>
 								@endif
 							</div>
-							<div class="form-group">
+							<div class="form-group dd_Social_History">
 								<div class="col-sm-12">
 									<button class="btn btn-default btn-add-allergies pull-right">
 										<i class="fa fa-plus-circle "></i>
@@ -1880,10 +1881,11 @@
 								</div>
 								
 							</div>
-							<hr>
+						</div>
+						<hr>
 							
 							<!-- Social History -->
-							<div class="form-group">
+							<div class="form-group dd_Social_History">
 								<div class="col-sm-8">
 									<h3>Social History</h3>
 								</div>
@@ -2070,15 +2072,15 @@
 							@endif
 							<!-- Social History -->
 							
-							<hr>
+							<hr class="dd_Social_History">
 							
-							<div class="form-group">
+							<div class="form-group dd_Social_History">
 								<div class="col-sm-6">
 									<h3>Other History</h3>
 								</div>
 								
 							</div>
-							<div class="form-group">
+							<div class="form-group dd_Social_History">
 								<div class="col-sm-12">
 									@if(!empty($medicalHistory))
 									<textarea name="other_medical_history" class="form-control" rows="10" cols="40" >{{$otherHistory}}</textarea>						

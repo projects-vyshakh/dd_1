@@ -34,6 +34,10 @@ else{
 
 if(!empty($doctorData)){
 	$doctorSpecialization = $doctorData->specialization;
+	$doctorName = $doctorData->first_name." ".$doctorData->last_name;
+}
+else{
+	$doctorName = "";
 }
 
 if(!empty($printData)){
@@ -80,7 +84,7 @@ else{
     {!!Html::style('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')!!}
 
 @stop
-@extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
+@extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName,'doctorName'=>$doctorName])
 <style>
 
 </style>

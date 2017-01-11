@@ -2,10 +2,11 @@ var patientPrescMedicine = function () {
 	
 	var runPrescriptionDatePickers = function(){
 			$('.start_date').Zebra_DatePicker({
-				direction: -1,
+				direction: '1',
    				icon_position : 'left',
    				inside : true,
-   				show_icon : false
+   				show_icon : false,
+   				minDate: 0
 			});
 			
 			$('.follow_up_date').Zebra_DatePicker({

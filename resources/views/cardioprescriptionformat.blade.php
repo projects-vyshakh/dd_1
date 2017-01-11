@@ -218,13 +218,15 @@
 
 		.diag-column-left
 		{ 
-			float: left; 
+			/*float: left; */
+			display: inline-block;
 			width: 50%;
 			
 		}
 		.diag-column-right
 		{ 
-			float: right; 
+			/*float: right; */
+			display: inline-block;
 			width: 50%;
 			
 		}
@@ -271,6 +273,10 @@
 		}
 		.followup-inner-div{
 			width: 50%;
+		}
+		.print_pd_0{
+			
+			margin-left: 15px;
 		}
 
     </style>
@@ -423,74 +429,83 @@
 	   
 	    <div  class="" >
        		<h2>Diagnosis</h2>
-       		<div class="medical-hisotry-inner ">
-				<div class="diag-column-left">
-					<h4>Symptoms</h4>
-					<div class="symptoms-div">
-						<?php 
-							$symptoms = json_decode($diagnosisData->diag_symptoms);
-							
-							for($i=0;$i<count($symptoms);$i++){
-								echo "<li>".$symptoms[$i]."</li>";
-								echo "</br>";
-							}
-						?>
-					</div>
-				</div>
-			    <div class="diag-column-right">
-			    	<h4>Syndrome</h4>
-					<div class="symptoms-div">
-						<?php 
-							
-							$syndrome = $diagnosisData->diag_syndromes;
-							
-							echo "<li>".$syndrome."</li>";
-							echo "</br>";
-						?>
-					</div>
-			    </div>
+	       		<div class="medical-hisotry-inner ">
 
-			   <div class="clear"></div> 
+		       		
+       				<div class="print_dummy">
+       					<div class="diag-column-left">
+       						<h4>Symptoms</h4>
+							<div class="symptoms-div print_pd_0">
+								<?php 
+									$symptoms = json_decode($diagnosisData->diag_symptoms);
+									
+									for($i=0;$i<count($symptoms);$i++){
+										echo "<li>".$symptoms[$i]."</li>";
+										echo "</br>";
+									}
+								?>
+							</div>
+       					</div>
+       					<div class="diag-column-right">
+       						<h4>Syndrome</h4>
+							<div class="symptoms-div print_pd_0">
+								<?php 
+									
+									$syndrome = $diagnosisData->diag_syndromes;
+									
+									echo "<li>".$syndrome."</li>";
+									echo "</br>";
+								?>
+							</div>
+       					</div>
+       				</div>
 
-			   <div class="diag-column-left">
-					<h4>Diseases</h4>
-					<div class="symptoms-div">
-						<?php 
-							$diseases = json_decode($diagnosisData->diag_suspected_diseases);
-							
-							for($i=0;$i<count($diseases);$i++){
-								echo "<li>".$diseases[$i]."</li>";
-								echo "</br>";
-							}
-						?>
+       				<div class="print_dummy"> 
+
+					   <div class="diag-column-left">
+							<h4>Diseases</h4>
+							<div class="symptoms-div print_pd_0">
+								<?php 
+									$diseases = json_decode($diagnosisData->diag_suspected_diseases);
+									
+									for($i=0;$i<count($diseases);$i++){
+										echo "<li>".$diseases[$i]."</li>";
+										echo "</br>";
+									}
+								?>
+							</div>
+						</div>
+						<div class="diag-column-right">
+					    	<h4>Additional Comments</h4>
+							<div class="symptoms-div print_pd_0">
+								<?php 
+									
+									$comments = $diagnosisData->diag_comment;
+									
+									echo "<li>".$comments."</li>";
+									echo "</br>";
+								?>
+							</div>
+					    </div>
+
 					</div>
+					 
 				</div>
-				<div class="diag-column-right">
-			    	<h4>Additional Comments</h4>
-					<div class="symptoms-div">
-						<?php 
-							
-							$comments = $diagnosisData->diag_comment;
-							
-							echo "<li>".$comments."</li>";
-							echo "</br>";
-						?>
-					</div>
-			    </div>
-			</div>
-		    <div class="clear"></div> 
-		    
+			<div class="clear"></div>
+		</div>
+
+
 		    <!-- Prescription Data -->
-		    <div  class=""  style="margin-top: 30px;">
+		    <div  class=""  style="margin-top: 10px;">
 	       		<h2>Prescription</h2>
-	       		<div class="medical-hisotry-inner set-width">
+	       		
 
 	       		<table>
 	       			<thead>
-		       			<td><h4>Drugs</h4></td>
-		       			<td><h4>Dosage</h4></td>
-		       			<td><h4>Duration</h4></td>
-		       			<td><h4>Freuency</h4></td>
+		       			<td><h4 style="text-transform: uppercase;">Drugs</h4></td>
+		       			<td><h4 style="text-transform: uppercase;">Dosage</h4></td>
+		       			<td><h4 style="text-transform: uppercase;">Duration</h4></td>
+		       			<td><h4 style="text-transform: uppercase;">Frequency</h4></td>
 	       			</thead>
 
 	       			<tbody>
@@ -594,7 +609,7 @@
 						@endforeach
 					</div> -->
 
-				</div>
+				
 	       	</div>
 			<!-- Prescription Data -->
 		</div>
@@ -614,7 +629,7 @@
 		       	<textarea class="ta6">{{$treatment}}</textarea>
 			</div>
 	        <div class="followup-inner-div" style="margin-top: 30px;">
-	        	<h2>Followup Date: </h2>
+	        	<h2>Follow up Date: </h2>
 	        	<div>
 	        		@if(!empty($followUpDate) && $followUpDate!="0000-00-00") 
 	        			{{$followUpDate}}

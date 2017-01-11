@@ -395,10 +395,10 @@ $currentPath = Route::getCurrentRoute()->getPath();
 								<p style="margin: -23px 20px 4px"> 
 									I agree to the Doctor's Diary.
 
-									We will give 
+									
 									<a target="_blank"> Privacy Policy </a> and
 									<a  target="_blank"> Terms of Service. </a>
-									Please incorporate it.
+									
 								</p>
 							</div>
 							<!--   -->
@@ -559,7 +559,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 			jQuery(document).ready(function() {
 				//Main.init();
 				Login.init();
-				//doctorSignup.init();
+				doctorSignup.init();
 				$('#qualification').multiselect({ });
 					
 				

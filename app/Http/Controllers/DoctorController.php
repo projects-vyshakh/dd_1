@@ -110,14 +110,14 @@ class DoctorController extends Controller {
 
 		
 
-		$doctorData = DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+		$doctorData = DoctorsModel::where('id_doctor','=',$doctorId)->first();
 		
 
-		if(empty($doctorId )){
-			return Redirect::to('doctorlogin');
+		if(!empty($doctorData)){
+			return view('doctorhome',array('doctorData'=>$doctorData));
 		}
 		else{
-			return view('doctorhome',array('doctorData'=>$doctorData));
+			echo "sds";
 		}
 		
 		//echo 'Doctor ome'; 
@@ -131,7 +131,9 @@ class DoctorController extends Controller {
 
 		$patientId = Session::get('patientId');
 		$doctorId = Session::get('doctorId');
-		if(empty($patientId)){
+
+
+		if(empty($doctorId)){
 			//header('location:doctorlogin');
 			return Redirect::to('logout');
 		}
@@ -637,7 +639,7 @@ class DoctorController extends Controller {
 									->get();
 
 									
-		return array('obsData' => $obsData,'lmpData' => $lmpData,'pregData' => $pregData,'vitalsData'=>$vitalsData,'originalCreatedDate'=>$originalCreatedDate,'bloodGroup'=>$bloodGroup,'diagnosisData'=>$diagnosisData,'diseases'=>$diseases,'prescMedicineData'=>$prescMedicineData,'drugFrequency'=>$drugFrequency,'originalCreatedDateDup'=>$originalCreatedDateDup,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit);
+		return json_encode(array('obsData' => $obsData,'lmpData' => $lmpData,'pregData' => $pregData,'vitalsData'=>$vitalsData,'originalCreatedDate'=>$originalCreatedDate,'bloodGroup'=>$bloodGroup,'diagnosisData'=>$diagnosisData,'diseases'=>$diseases,'prescMedicineData'=>$prescMedicineData,'drugFrequency'=>$drugFrequency,'originalCreatedDateDup'=>$originalCreatedDateDup,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit));
 		//die();
 
 		//return view('patientprevioustreatment',array('obsData' => $obsData,'lmpData' => $lmpData,'pregData' => $pregData,'vitalsData'=>$vitalsData,'originalCreatedDate'=>$originalCreatedDate,'bloodGroup'=>$bloodGroup,'diagnosisData'=>$diagnosisData,'diseases'=>$diseases,'prescMedicineData'=>$prescMedicineData,'drugFrequency'=>$drugFrequency,'originalCreatedDateDup'=>$originalCreatedDateDup,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit));
@@ -1238,129 +1240,102 @@ class DoctorController extends Controller {
 		}
 	}
 
-	
-
-	public function patientIdSubmit(){
-		$patientId     = Input::get('patient_id');
-		$patientStatus = Input::get('patient_status');
+	public function handleNewPatientId(){
+		$input 			= Request::all();
+		$cityCode 		= $input['id_city'];
+		$doctorCode 	= $input['id_doctor'];
+		$patientCode 	= $input['id_patient'];
+		$patientId      = $cityCode.$doctorCode.$patientCode;
 		$specialization = Session::get('doctorSpecialization');
-		
-		
+		$doctorId 		= Session::get('doctorId');
 
-		if(empty($patientId)){
-			return Redirect::to('doctorhome')->with(array('error'=>'Please fill patient id'));
-		}
-		else{
-			//Keeping patient id in session for showing the details
-			Session::put('patientId',$patientId);
-
-			//Reference id 
-			$referenceId = DBUtils:: generate_random_password(5);
-			Session::put('referenceId',$referenceId);
+		//Keeping patient id in session for showing the details
+		Session::put('patientId',$patientId);
 		
-			$patientData = DB::table('patients As p')
-			    						 ->leftJoin('states As s','p.state','=','s.id')
-			    						 ->where('id_patient','=',$patientId)->get();
-		     //Log::info("Patientdata",array($patientData));
-
 		
-			if(!empty($patientData)){
-				foreach ($patientData as $key => $value) {
-						$patientId 	     = $value->id_patient;
-						$firstName 	     = $value->first_name;
-						$middleName      = $value->middle_name;
-						$lastName        = $value->last_name;
-						$aadharNo        = $value->id_aadhar;
-						$patientGender   = $value->gender;
-						$patientDob      = $value->dob;
-						$age             = $value->age;
-						$maritialStatus  = $value->maritial_status;
-						$house           = $value->house_name;
-						$street          = $value->street;
-						$city            = $value->city;
-						$state           = $value->state;
-						$country         = $value->country;
-						$pincode         = $value->pincode;
-						$phone           = $value->phone;
-						$email           = $value->email;
-						//echo $patientDob;
-				}
-				
-				$patientName = $firstName." ".$lastName;
-				Session::put('patientName',$patientName);
+		//Reference id to session
+		$referenceId = DBUtils:: generate_random_password(5);
+		Session::put('referenceId',$referenceId);
+		
+		
+			$patientExistCheck = DB::table('patients')->where('id_patient','=',$patientId)->first();
 			
+			if(count($patientExistCheck)>0){
+				
+				return Redirect::to('doctorhome')->with(array('error'=>'Patient ID already existed.'));
 			}
-			
-			if(!empty($patientId)){
-
-				$patientIdExistCheck = DB::table('patients')->where('id_patient','=',$patientId)->first();
-
-
-				if(count($patientIdExistCheck)>0){
-					
-					if($patientStatus=="new"){
-						//echo "Status from new and returns to home with exists message";
-						return Redirect::to('doctorhome')->with(array('error'=>'Patient already exists'));
-						//eturn view('doctorhome');
-					}
-					else{
-						//echo "Status from old and returns to patient information";
-						switch ($specialization) {
-							case '1':
-
-								return Redirect::to('patientpersonalinformation');
-								break;
-							case '2':
-								return Redirect::to('cardiopersonalinformation');
-								break;
-							case '3':
-								if($patientIdExistCheck->age<=16){
-									return Redirect::to('pediapersonalinformation');
-								}
-								else{
-									return Redirect::to('doctorhome')->with(array('error'=>'Invalid Patient.'));
-								}
-								
-								break;
-							default:
-								# code...
-								break;
-						}
-						
+			else{
 				
-				    }		
-						
-				}
-				else{
+				switch ($specialization) {
+					case '1':
+						return Redirect::to('patientpersonalinformation');
+					break;
+					case '2':
+						return Redirect::to('cardiopersonalinformation');
+					break;
 					
-					if($patientStatus=="old"){
-						return Redirect::to('doctorhome')->with(array('error'=>'Invalid patient Id'));
-					}
-					else{
-						 
-						switch ($specialization) {
-							case '1':
-								return Redirect::to('patientpersonalinformation');
-								break;
-							case '2':
-								return Redirect::to('cardiopersonalinformation');
-								break;
-							
-							default:
-								# code...
-								break;
-						}
-						
-					}
-					
+					default:
 
+					break;
 				}
-					
 			}
 
-		}
+		
+
+		
 		
 	}
+	public function handleOldPatientId(){
+		$input 			= Request::all();
+		$cityCode 		= $input['id_city'];
+		$doctorCode 	= $input['id_doctor'];
+		$patientCode 	= $input['id_patient'];
+		$patientId      = $cityCode.$doctorCode.$patientCode;
+		$specialization = Session::get('doctorSpecialization');
+		$doctorId 		= Session::get('doctorId');
+
+	
+		$patientExistCheck = PatientsModel::where('id_patient','=',$patientId)->first();
+
+			
+
+		//Keeping patient id in session for showing the details
+		Session::put('patientId',$patientId);
+		
+		
+		//Reference id to session
+		$referenceId = DBUtils:: generate_random_password(5);
+		Session::put('referenceId',$referenceId);
+
+			
+
+			//dd($patientExistCheck->first_name);
+			if($patientExistCheck){
+				Session::put('patientName',$patientExistCheck->first_name." ".$patientExistCheck->last_name);
+				switch ($specialization) {
+					case '1':
+							return Redirect::to('patientpersonalinformation');
+						break;
+					case '2':
+							return Redirect::to('cardiopersonalinformation');
+						break;
+					
+					default:
+						# code...
+						break;
+				}
+				
+			}
+			else{
+				Session::put('patientName','');
+				return Redirect::to('doctorhome')->with(array('error'=>"Invalid PatientID. Please check."));
+			}
+		
+		
+
+	}
+
+	
 	public function addPatientObstetricsHistory(){
 		$input = Request::all();
         

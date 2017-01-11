@@ -77,7 +77,9 @@ Route::post('handlePatientSetnewPassword', array('as' => 'handlePatientSetnewPas
 //---------------------------------------------------------------------------------------------------------------
 
 Route::any('doctorhome',  array('before'=>'isDoctorLoggedIn','as' => 'doctorhome', 'uses' => 'DoctorController@showDoctorHome'));
-Route::post('patientIdSubmit',  array('before'=>'isDoctorLoggedIn','as' => 'patientIdSubmit', 'uses' => 'DoctorController@patientIdSubmit'));
+/*Route::post('patientIdSubmit',  array('before'=>'isDoctorLoggedIn','as' => 'patientIdSubmit', 'uses' => 'DoctorController@patientIdSubmit'));*/
+Route::post('handleNewPatientId',  array('before'=>'isDoctorLoggedIn','as' => 'handleNewPatientId', 'uses' => 'DoctorController@handleNewPatientId'));
+Route::post('handleOldPatientId',  array('before'=>'isDoctorLoggedIn','as' => 'handleOldPatientId', 'uses' => 'DoctorController@handleOldPatientId'));
 /*
 Route::get('doctordashboard',  array('as' => 'doctordashboard', 'uses' => 'HomeController@doctorDashboard'));
 Route::get('patientinformation', 'DoctorController@showPatientInformation');*/
@@ -161,7 +163,7 @@ Route::any('addCardioDiagnosis', array('as' => 'addCardioDiagnosis', 'uses' => '
 
 Route::any('cardiolabdata', array('as' => 'cardiolabdata', 'uses' => 'CardiologyController@showCardiacLabdata'));
 
-Route::any('cardioprevioustreatment', array('as' => 'cardioprevioustreatment', 'uses' => 'CardiologyController@showCardioPreviousTreatment'));
+Route::any('cardioprevioustreatment', array('before'=>'isDoctorLoggedIn','as' => 'cardioprevioustreatment', 'uses' => 'CardiologyController@showCardioPreviousTreatment'));
 
 Route::any('cardioprevioustreatmentextended', array('before'=>'isDoctorLoggedIn','as'=>'cardioprevioustreatmentextended','uses'=>'CardiologyController@cardioPreviousTreatmentExtended'));
 
@@ -275,8 +277,8 @@ Route::filter('auths',function(){
 Route::filter('isDoctorLoggedIn',function(){
 	
 	$doctorId = Session::get('doctorId');
-	//echo $doctorId;
-	if(empty($doctorId) || $doctorId==" "){
+	//dd($doctorId);
+	if(empty($doctorId)){
 		return Redirect::to('doctorlogin');
 	}	
 });

@@ -94,7 +94,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 				<div class="row dd_mg_0">
 					<div class="col-sm-12 dd_pd_0">
 						<div class="logo_div">
-							<a class="navbar-brand dd_logo_img_2" href="http://ww.doctorsdiary.co">
+							<a class="navbar-brand dd_logo_img_2" href="http://www.doctorsdiary.co">
 
 							</a>
 						</div>
@@ -194,7 +194,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 	  									<div class="col-sm-12 dd_login">
 	  										<span class="input-icon ">
 	  										{!! Form::text('email_mobile', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Mobile', 'id'=>'email'));  !!}
-	  											<span class="dd_input_phone"></span> 
+	  											<span class="dd_input_email"></span> 
 	  										</span>
 	  									</div>
 	  								</div>

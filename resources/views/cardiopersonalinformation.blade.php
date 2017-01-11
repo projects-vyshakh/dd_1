@@ -247,7 +247,7 @@ if(!empty($doctorData)){
 							 	</div>		
 									<div class="col-sm-8">
 										<span class="">
-											{!! Form::select('state',[], (!empty($patientData))?$patientState: Input::old('state'), $attributes = array('class' => 'form-control','id'=>'state')); !!}
+											{!! Form::select('state',[], (!empty($patientData))?$patientState: Input::old('state'), $attributes = array('class' => 'form-control state','id'=>'state')); !!}
 										</span>
 									</div>
 								</div>
@@ -334,10 +334,10 @@ if(!empty($doctorData)){
 		{!!Html::script('assets/plugins/bootstrap-daterangepicker/moment.min.js')!!}
 		{!!Html::script('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')!!}
 		
-		{!!Html::script('assets/js/patient-personal-information.js')!!}
+		{!!Html::script('assets/js/cardio-personal-information.js')!!}
 		
 		{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
-		{!!Html::script('assets/js/patient-personal-information.js')!!}
+		
         {!!Html::style('assets/css/dd-responsive.css')!!}
 
 		
@@ -345,37 +345,10 @@ if(!empty($doctorData)){
 	<script>
 		$(document).ready(function() {
 			Main.init();
-			patientElements.init();
+			//patientElements.init();
+			cardioPersonalInformation.init();
 
-			$(window).load(function() {
-				$(".loader").fadeOut("slow");
-			})
-
-			$( "#country option:selected" ).val('101').text('India');
-
-			/*Dynamically adding state responding to country and also keeping selected value of state*/
-			var stateHidden = $('#state-hidden').val();
-          	var countryId  = $( "#country option:selected" ).val();
-            //alert(country);
-            $.ajax({
-                type: "POST",
-                url: "getState",
-                data: "country_id="+ countryId ,
-                success: function(data){
-                    $('#state').empty();
-                    for(var s=0;s<data.length;s++){
-
-                        $('#state').append('<option>'+data[s].state_name+'</option>');
-                        $('#state').val(stateHidden).attr("selected", "selected");
-
-                    }
-                }
-            });
-
-           	
-            
-			
-	
+		
 	 	});
 	</script>
 @stop	

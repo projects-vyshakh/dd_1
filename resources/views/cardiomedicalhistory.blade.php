@@ -39,36 +39,65 @@ if(!empty($doctorData)){
 
 $newPatientId = Session::get('patientId'); 
 
-if(!empty($medicalHistory)){
-	foreach($medicalHistory as $medicalHistoryVal){
-	
-		$fatherHistory =  json_decode($medicalHistoryVal->history_family_father);
-		$motherHistory =  json_decode($medicalHistoryVal->history_family_mother);
-		$siblingHistory = json_decode($medicalHistoryVal->history_family_sibling);
-		$grandfatherHistory 		= json_decode($medicalHistoryVal->history_family_grandfather);
-		$grandmotherHistory 		= json_decode($medicalHistoryVal->history_family_grandmother);
-		$fatherHistoryOther 		= $medicalHistoryVal->history_family_father_other;
-		$motherHistoryOther 		= $medicalHistoryVal->history_family_mother_other;
-		$siblingHistoryOther 		= $medicalHistoryVal->history_family_sibling_other;
-		$grandfatherHistoryOther 	= $medicalHistoryVal->history_family_grandfather_other;
-		$grandmotherHistoryOther 	= $medicalHistoryVal->history_family_grandmother_other;
+if (!empty($medicalHistory))
+	{
+		foreach ($medicalHistory as $medicalHistoryVal) 
+		{
+			
+			
+			
+			$fatherHistory			 = json_decode($medicalHistoryVal -> history_family_father);
+			$motherHistory 			 = json_decode($medicalHistoryVal -> history_family_mother);
+			$siblingHistory 		 = json_decode($medicalHistoryVal -> history_family_sibling);
+			$grandfatherHistory 	 = json_decode($medicalHistoryVal -> history_family_grandfather);
+			$grandmotherHistory 	 = json_decode($medicalHistoryVal -> history_family_grandmother);
+			$fatherHistoryOther		 = $medicalHistoryVal -> history_family_father_other;
+			$motherHistoryOther 	 = $medicalHistoryVal -> history_family_mother_other;
+			$siblingHistoryOther	 = $medicalHistoryVal -> history_family_sibling_other;
+			$grandfatherHistoryOther = $medicalHistoryVal -> history_family_grandfather_other;
+			$grandmotherHistoryOther = $medicalHistoryVal -> history_family_grandmother_other;
+			
+			$generalAllergyHistory = json_decode($medicalHistoryVal -> history_allergy_general);
+			
+			$alcohol 		= $medicalHistoryVal -> history_social_alcohol;
+			$tobacoSmoke 	= $medicalHistoryVal -> history_social_tobacco_smoke;
+			$tobacoChew 	= $medicalHistoryVal -> history_social_tobacco_chew;
+			$otherSocial 	= $medicalHistoryVal -> history_social_other;
+			$otherHistory 	= $medicalHistoryVal -> history_other;
+			
+			$anaesthesiaHistory = $medicalHistoryVal->history_prev_intervention_anaesthesia;
+			$otherMedicalHistory = $medicalHistoryVal->history_other;
 
-		$generalAllergyHistory = json_decode($medicalHistoryVal->history_allergy_general);
 
-		$alcohol = $medicalHistoryVal->history_social_alcohol;
-		$tobacoSmoke = $medicalHistoryVal->history_social_tobacco_smoke;
-		$tobacoChew = $medicalHistoryVal->history_social_tobacco_chew;
-		$otherSocial = $medicalHistoryVal->history_social_other;
-
-		$anaesthesiaHistory = $medicalHistoryVal->history_prev_intervention_anaesthesia;
-		$otherMedicalHistory = $medicalHistoryVal->history_other;
-
-		$presentPastNotKnown = $medicalHistoryVal ->history_presentpast_no;
-
+			$presentPastNotKnown 	= $medicalHistoryVal -> history_presentpast_no;
+			$familyNotKnown 		= $medicalHistoryVal -> history_family_no;
+			$surgeryNotKnown 		= $medicalHistoryVal -> history_surgery_no;
+			$generalAllergyNotKnown = $medicalHistoryVal -> history_generalallergy_no;
+			$drugAllergyNotKnown 	= $medicalHistoryVal -> history_drugallergy_no;
+			$socialNotKnown 		= $medicalHistoryVal -> history_social_no;
+		}
 	}	
-
-}
-
+	else{
+		$menarche 		= "";
+		$menopause  	= "";
+		$fatherHistoryOther	= "";
+		$motherHistoryOther = "";
+		$siblingHistoryOther= "";
+		$grandfatherHistoryOther = "";
+		$grandmotherHistoryOther = "";
+		$generalAllergyHistory = [""];
+		$alcohol = "";
+		$tobacoSmoke = "";
+		$tobacoChew = "";
+		$otherSocial = "";
+		$otherHistory = "";
+		
+		$presentPastNotKnown = "";
+		$familyNotKnown = "";
+		$surgeryNotKnown = "";
+		$generalAllergyNotKnown = "";
+		$drugAllergyNotKnown = "";
+	}
 //Present Past History
 if(!empty($medicalHistoryPresentPastMore)){
 	$illnessNameArray	=	array();
@@ -77,8 +106,8 @@ if(!empty($medicalHistoryPresentPastMore)){
 	}
 	
 	for($i=0;$i<count($medicalHistoryPresentPastMore);$i++){
-		$illnessName 												 = $medicalHistoryPresentPastMore[$i]->illness_name;
-		$medication													 = $medicalHistoryPresentPastMore[$i]->medication;
+		$illnessName = $medicalHistoryPresentPastMore[$i]->illness_name;
+		$medication	 = $medicalHistoryPresentPastMore[$i]->medication;
 		$illnessDataArray[$illnessName]	 =	[$medicalHistoryPresentPastMore[$i]->illness_status,$medicalHistoryPresentPastMore[$i]->medication];
 	}
 }
@@ -376,9 +405,9 @@ if(!empty($medicalHistoryPresentPastMore)){
 								<label class="radio-inline"> {!! Form::radio('illness_status4','NA','' , ['class' => 'present-past-na']) !!}N/A </label>
 							</div>
 							@endif
-							@if(!empty($illnessDataArray['Hyperthyroidism'][1]))
+							@if(!empty($illnessDataArray['Hypothyroidism'][1]))
 							<div class="col-sm-4">
-								{!! Form::text('illness_medication4',$illnessDataArray['Hyperthyroidism'][1], $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
+								{!! Form::text('illness_medication4',$illnessDataArray['Hypothyroidism'][1], $attributes = array('class'=>'form-control present-past-medication-empty','placeholder' => 'Medication'));  !!}
 							</div>
 							@else
 							<div class="col-sm-4">
@@ -754,7 +783,7 @@ if(!empty($medicalHistoryPresentPastMore)){
 						</div>
 						
 						<!-- Addmore illness -->
-						<?php $counter = 10; ?>
+						<?php $counter = 11; ?>
 						@foreach($medicalHistoryPresentPastMore as $medicalHistoryPresentPastMoreVal)
 							<?php
 								$illnessName 		= $medicalHistoryPresentPastMoreVal->illness_name;
@@ -1048,91 +1077,110 @@ if(!empty($medicalHistoryPresentPastMore)){
 						</div>
 						<div class="col-sm-4 dd_Present_PD" >
 							
-							<label class="checkbox-inline col-sm-12">
-								<input type="checkbox" value="NA" class="noFamilyHistory" id="noFamilyHistory" />
-								<!-- <input type="hidden" name="noFamilyHistory" id="noFamilyHistory" class="noFamilyHistory"> --> <span class="dd_past">No known family history to report</span> </label>
+							@if(!empty($familyNotKnown))
+								@if($familyNotKnown=="NA")
+									<label class="checkbox-inline col-sm-12">
+										<input type="checkbox" value="NA" class="noFamilyHistory" id="noFamilyHistory" checked="checked" />
+										<input type="hidden" name="family-check-value" id="family-check-value" class="family-check-value"> 
+										<span class="dd_past">No known family history to report</span> 
+									</label>
+								@else
+									<label class="checkbox-inline col-sm-12">
+										<input type="checkbox" value="NA" class="noFamilyHistory" id="noFamilyHistory" />
+										<input type="hidden" name="family-check-value" id="family-check-value" class="family-check-value"> 
+										<span class="dd_past">No known family history to report</span> 
+									</label>
+								@endif
+							@else
+								<label class="checkbox-inline col-sm-12">
+									<input type="checkbox" value="NA" class="noFamilyHistory" id="noFamilyHistory"  />
+									<input type="hidden" name="family-check-value" id="family-check-value" class="family-check-value"> 
+									<span class="dd_past">No known family history to report</span> 
+								</label>
+							@endif
 								
 						</div>
 					</div>
 						
-						<div class="form-group">
-							<div class="container">
-								<div class="row">
-									<div class="dd_sample_F">
-										{!! Form::label('father', 'Father', $attributes = array('class'=>'checkbox-linline dd_sample_175' ));  !!}
-									</div>
-									
-									@if((!empty($medicalHistory)) && (!empty($fatherHistory)))
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" name="father[]"  
-												@if(in_array("Hypertension",$fatherHistory)) checked="checked" @endif>
-												Hypertension 
-											</label>
-
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="father[]"
-												@if(in_array("Diabetes",$fatherHistory)) checked="checked" @endif>
-												Diabetes 
-											</label>
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="father[]"
-												@if(in_array("Cancer",$fatherHistory)) checked="checked" @endif>
-												Cancer 
-											</label>
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="father[]"
-												@if(in_array("Other",$fatherHistory)) checked="checked" @endif >
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('father_other', !empty($fatherHistoryOther)?$fatherHistoryOther:Input::old('father_other'), $attributes = array('class'=>'form-control other-medical-history father_other','placeholder' => 'Other','disabled'=>'disabled'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline ">
-												<input type="checkbox" value="NA" class="family-history-na"
-												@if(in_array("NA",$fatherHistory)) checked="checked" @endif>
-												N/A 
-											</label>
-										</div>
-									@else
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" name="father[]" >
-												Hypertension 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="father[]">
-												Diabetes 
-											</label>
-
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="father[]">
-												Cancer 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="father[]">
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('father_other',null, $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline">
-												<input type="checkbox" value="NA" class="family-history-na">
-												N/A 
-											</label>
-										</div>
-									@endif
+					<!-- Father -->
+					<div class="form-group">
+						<div class="container">
+							<div class="row">
+								<div class="dd_sample_F">
+									{!! Form::label('father', 'Father', $attributes = array('class'=>'checkbox-linline dd_sample_175' ));  !!}
 								</div>
+								
+								@if((!empty($medicalHistory)) && (!empty($fatherHistory)))
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" name="father[]"  
+											@if(in_array("Hypertension",$fatherHistory)) checked="checked" @endif>
+											Hypertension 
+										</label>
+
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="father[]"
+											@if(in_array("Diabetes",$fatherHistory)) checked="checked" @endif>
+											Diabetes 
+										</label>
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="father[]"
+											@if(in_array("Cancer",$fatherHistory)) checked="checked" @endif>
+											Cancer 
+										</label>
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="father[]"
+											@if(in_array("Other",$fatherHistory)) checked="checked" @endif >
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('father_other', !empty($fatherHistoryOther)?$fatherHistoryOther:Input::old('father_other'), $attributes = array('class'=>'form-control other-medical-history father_other','placeholder' => 'Other','disabled'=>'disabled'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline ">
+											<input type="checkbox" name="history_father_na" value="NA" class="family-history-na"
+											@if(in_array("NA",$fatherHistory)) checked="checked" @endif>
+											N/A 
+										</label>
+									</div>
+								@else
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" name="father[]" >
+											Hypertension 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="father[]">
+											Diabetes 
+										</label>
+
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="father[]">
+											Cancer 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="father[]">
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('father_other',null, $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="history_father_na" value="NA" class="family-history-na">
+											N/A 
+										</label>
+									</div>
+								@endif
 							</div>
 						</div>
+					</div>
 																
-						<!-- Mother -->
+					<!-- Mother -->
 						<div class="form-group">
 							<div class="container">
 								<div class="row">
@@ -1170,7 +1218,7 @@ if(!empty($medicalHistoryPresentPastMore)){
 										</div>
 										<div class="dd_sample_R">
 											<label class="checkbox-inline">
-												<input type="checkbox" value="NA" class="family-history-na"  @if(in_array("NA",$motherHistory)) checked="checked" @endif>
+												<input type="checkbox" name="history_mother_na" value="NA" class="family-history-na"  @if(in_array("NA",$motherHistory)) checked="checked" @endif>
 												N/A 
 											</label>
 										</div>
@@ -1201,13 +1249,14 @@ if(!empty($medicalHistoryPresentPastMore)){
 										</div>
 										<div class="dd_sample_R">
 											<label class="checkbox-inline">
-												<input type="checkbox" value="NA" class="family-history-na">N/A 
+												<input type="checkbox" name="history_mother_na" value="NA" class="family-history-na">N/A 
 											</label>
 										</div>
 									@endif
 								</div>
 							</div>
 						</div>
+										
 																										
 						<!-- Sibling -->
 						<div class="form-group">
@@ -1247,7 +1296,7 @@ if(!empty($medicalHistoryPresentPastMore)){
 										</div>
 										<div class="dd_sample_R">
 											<label class="checkbox-inline ">
-												<input type="checkbox" value="NA" class="family-history-na"
+												<input type="checkbox" name="history_sibling_na" value="NA" class="family-history-na"
 												@if(in_array("NA",$siblingHistory)) checked="checked" @endif>
 												N/A 
 											</label>
@@ -1279,7 +1328,7 @@ if(!empty($medicalHistoryPresentPastMore)){
 										</div>
 										<div class="dd_sample_R">
 											<label class="checkbox-inline col-sm-1">
-												<input type="checkbox" value="NA" class="family-history-na">
+												<input type="checkbox" name="history_sibling_na" value="NA" class="family-history-na">
 												N/A 
 											</label>
 										</div>
@@ -1326,7 +1375,7 @@ if(!empty($medicalHistoryPresentPastMore)){
 										</div>
 										<div class="dd_sample_R">
 											<label class="checkbox-inline">
-												<input type="checkbox" value="NA" class="family-history-na"  
+												<input type="checkbox" name="history_grandfather_na" value="NA" class="family-history-na"  
 												@if(in_array("NA",$grandfatherHistory)) checked="checked" @endif>
 												N/A
 											 </label>
@@ -1358,7 +1407,7 @@ if(!empty($medicalHistoryPresentPastMore)){
 										</div>
 										<div class="dd_sample_R">
 											<label class="checkbox-inline col-sm-1">
-												<input type="checkbox" value="NA" class="family-history-na">
+												<input type="checkbox" name="history_grandfather_na" value="NA" class="family-history-na">
 												N/A 
 											</label>
 										</div>
@@ -1368,84 +1417,84 @@ if(!empty($medicalHistoryPresentPastMore)){
 						</div>
 						
 						<!-- Grandmother -->
-						<div class="form-group">
-							<div class="container">
-								<div class="row">
-									<div class="dd_sample_F">
-										{!! Form::label('grandmother', 'Grandmother', $attributes = array('class'=>'checkbox-inline dd_sample_175'));  !!}
-									</div>
-									@if((!empty($medicalHistory)) && (!empty($siblingHistory)))
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" id="hyp" name="grandmother[]"
-												@if(in_array("Hypertension",$grandmotherHistory)) checked="checked" @endif>
-												Hypertension 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandmother[]"  
-												@if(in_array("Diabetes",$grandmotherHistory)) checked="checked" @endif>
-												Diabetes 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="grandmother[]"  
-												@if(in_array("Cancer",$grandmotherHistory)) checked="checked" @endif>
-												Cancer 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="grandmother[]" 
-												@if(in_array("Other",$grandmotherHistory)) checked="checked" @endif >
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('grandmother_other', !empty($grandmotherHistoryOther)?$grandmotherHistoryOther:Input::old('grandmother_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline">
-												<input type="checkbox" value="NA" class="family-history-na"
-												@if(in_array("NA",$grandmotherHistory)) checked="checked" @endif>
-												N/A 
-											</label>
-										</div>
-									@else
-										<div class="dd_sample_L">
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Hypertension" class="family-hypertension" id="hyp" name="grandmother[]">
-												Hypertension 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandmother[]">
-												Diabetes 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Cancer" class="family-cancer" name="grandmother[]">
-												Cancer 
-											</label>
-											
-											<label class="checkbox-inline dd_sample_125">
-												<input type="checkbox" value="Other" class="family-other" name="grandmother[]">
-												Other 
-											</label>
-										</div>
-										<div class="dd_sample_M">
-											{!! Form::text('grandmother_other', Input::old('grandmother_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
-										</div>
-										<div class="dd_sample_R">
-											<label class="checkbox-inline">
-												<input type="checkbox" value="NA" class="family-history-na">
-												N/A 
-											</label>
-										</div>
-									@endif
+					<div class="form-group">
+						<div class="container">
+							<div class="row">
+								<div class="dd_sample_F">
+									{!! Form::label('grandmother', 'Grandmother', $attributes = array('class'=>'checkbox-inline dd_sample_175'));  !!}
 								</div>
+								@if((!empty($medicalHistory)) && (!empty($siblingHistory)))
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" id="hyp" name="grandmother[]"
+											@if(in_array("Hypertension",$grandmotherHistory)) checked="checked" @endif>
+											Hypertension 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandmother[]"  
+											@if(in_array("Diabetes",$grandmotherHistory)) checked="checked" @endif>
+											Diabetes 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="grandmother[]"  
+											@if(in_array("Cancer",$grandmotherHistory)) checked="checked" @endif>
+											Cancer 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="grandmother[]" 
+											@if(in_array("Other",$grandmotherHistory)) checked="checked" @endif >
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('grandmother_other', !empty($grandmotherHistoryOther)?$grandmotherHistoryOther:Input::old('grandmother_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="history_grandmother_na" value="NA" class="family-history-na"
+											@if(in_array("NA",$grandmotherHistory)) checked="checked" @endif>
+											N/A 
+										</label>
+									</div>
+								@else
+									<div class="dd_sample_L">
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Hypertension" class="family-hypertension" id="hyp" name="grandmother[]">
+											Hypertension 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Diabetes" class="family-diabetes" name="grandmother[]">
+											Diabetes 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Cancer" class="family-cancer" name="grandmother[]">
+											Cancer 
+										</label>
+										
+										<label class="checkbox-inline dd_sample_125">
+											<input type="checkbox" value="Other" class="family-other" name="grandmother[]">
+											Other 
+										</label>
+									</div>
+									<div class="dd_sample_M">
+										{!! Form::text('grandmother_other', Input::old('grandmother_other'), $attributes = array('class'=>'form-control other-medical-history','placeholder' => 'Other'));  !!}
+									</div>
+									<div class="dd_sample_R">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="history_grandmother_na" value="NA" class="family-history-na">
+											N/A 
+										</label>
+									</div>
+								@endif
 							</div>
 						</div>
-
+					</div>
+					
 					<hr>
 					<div class="form-group">
 						<div class="col-sm-8">
@@ -1454,44 +1503,74 @@ if(!empty($medicalHistoryPresentPastMore)){
 						<div class="col-sm-4  dd_Present_PD"> 
 							<label class="checkbox-inline col-sm-12">
 								@if(!empty($surgeryHistory))
-									<input type="checkbox" value="NA" class="noSurgicalHistory" id="noSurgicalHistory" disabled="disabled" />
-									 <span class="dd_past">No known surgical history to report</span> 
-								@else
-									<input type="checkbox" value="NA" class="noSurgicalHistory" id="noSurgicalHistory" />
-									<span class="dd_past">No known surgical history to reports</span>	  
-								@endif
+										<input type="checkbox" value="NA" class="noSurgicalHistory" id="noSurgicalHistory" disabled="disabled" />
+										<input type="hidden" name="surgery-check-value" id="surgery-check-value" class="surgery-check-value" value=""> 
+										<span class="dd_past">No known surgical history to report</span> 
+											
+									@else
+										@if($surgeryNotKnown=="NA")
+											<input type="checkbox" value="NA" class="noSurgicalHistory" id="noSurgicalHistory" checked="checked" />
+											<input type="hidden" name="surgery-check-value" id="surgery-check-value" class="surgery-check-value" value="NA"> 
+											<span class="dd_past">No known surgical history to reports</span>
+										@else
+											<input type="checkbox" value="NA" class="noSurgicalHistory" id="noSurgicalHistory" />
+											<input type="hidden" name="surgery-check-value" id="surgery-check-value" class="surgery-check-value" value="NA"> 
+											<span class="dd_past">No known surgical history to reports</span>
+										@endif 
+
+									@endif 
 							</label>
 						</div>
 					</div>
-					<div class="surgery" id="surgery">
-						@if(!empty($surgeryHistory))
-							@foreach($surgeryHistory as $surgeryHistoryVal)			
-								<div class="form-group">
-								 	  <div class="col-sm-12">
-										<span>
-											{!! Form::text('surgery[]',  $surgeryHistoryVal->surgery_name, $attributes = array('class'=>'form-control surgicalhistory','placeholder' => '','disabled'=>'disabled'));  !!}
-											
-										</span>
+					<?php    $statusArray =  array();    ?> 
+						<div class="surgery" id="surgery">
+							@if(!empty($surgeryHistory))
+								@foreach($surgeryHistory as $surgeryHistoryVal)
+									@if($surgeryHistoryVal->surgery_name=="Nil" || $surgeryHistoryVal->surgery_name=="NA"  || $surgeryHistoryVal->surgery_name=="na" || $surgeryHistoryVal->surgery_name=="nil" )
+									<!-- Assigning 0 to array  -->
+						
+										<?php    array_push($statusArray,0);     ?>
+									@else
+										<div class="form-group">
+											<div class="col-sm-12">
+												<span>
+													{!! Form::text('surgery[]',  $surgeryHistoryVal->surgery_name, $attributes = array('class'=>'form-control surgicalhistory','placeholder' => '','disabled'=>'disabled'));  !!}
+												</span>
+											</div>
+										</div>
+										<?php    array_push($statusArray,1);     ?>
+									@endif
+								@endforeach
+									<!-- if all surgery names are NA,Nil etc then this code works -->
+									@if(in_array(1,$statusArray))
+									@else
+										<div class="form-group">
+											<div class="col-sm-12">
+												<span>
+													{!! Form::text('surgery[]','', $attributes = array('class'=>'form-control surgicalhistory','placeholder' => ''));  !!}
+												</span>
+											</div>
+										</div>
+									@endif
+							@else
+									<div class="form-group">
+										<!-- {!! Form::label('surgery', 'Surgery', $attributes = array('class'=>'col-sm-2'));  !!} -->
+										<div class="col-sm-12">
+											<span > 
+												{!! Form::text('surgery[]', Input::old('surgery'), $attributes = array('class'=>'form-control surgicalhistory','placeholder' => 'Surgery'));  !!} 
+											</span>
+										</div>
 									</div>
-								</div>
-							@endforeach
-						@else
-								<div class="form-group">
-								    <!-- {!! Form::label('surgery', 'Surgery', $attributes = array('class'=>'col-sm-2'));  !!} -->	
-								    <div class="col-sm-12">
-										<span >
-											{!! Form::text('surgery[]', Input::old('surgery'), $attributes = array('class'=>'form-control surgicalhistory','placeholder' => 'Surgery'));  !!}
-											
-										</span>
-									</div>
-								</div>
-						@endif
-					</div>	
-					<div class="form-group">	
-						<div class="col-sm-12">
-							<button class="btn btn-default btn-add-surgery pull-right" style="margin-top: 10px"><i class="fa fa-plus-circle "></i>Add More Surgery</button>
+							@endif
 						</div>
-					</div>
+							
+						<div class="form-group">
+							<div class="col-sm-12">
+								<button class="btn btn-default btn-add-surgery pull-right" style="margin-top: 10px">
+									<i class="fa fa-plus-circle "></i>Add More Surgery
+								</button>
+							</div>
+						</div>
 					
 					<hr>
 					<div class="form-group">
@@ -1521,13 +1600,21 @@ if(!empty($medicalHistoryPresentPastMore)){
 						</div>
 						<div class="col-sm-4  dd_Present_PD"> 
 							<label class="checkbox-inline col-sm-12">
-								@if(!empty($generalAllergyHistory))
-									<input type="checkbox" value="NA" class="noAllergyHistory" id="noAllergyHistory" disabled="disabled" />
-									 <span class="dd_past">No known allergy history to report</span> 
-								@else
-									<input type="checkbox" value="NA" class="noAllergyHistory" id="noAllergyHistory" />
-									<span class="dd_past">No known allergy history to reports</span>	  
-								@endif
+								@if(in_array("",$generalAllergyHistory)) 
+										@if($generalAllergyNotKnown=="NA")
+											<input type="checkbox" value="NA" class="noAllergyHistory" id="noAllergyHistory" checked="checked" />
+											<input type="hidden" name="generalallergy-check-value" id="generalallergy-check-value" class="generalallergy-check-value" value="NA"> 
+											<span class="dd_past">No known allergy history to reports</span> 
+										@else 
+											<input type="checkbox" value="NA" class="noAllergyHistory" id="noAllergyHistory" />
+											<input type="hidden" name="generalallergy-check-value" id="generalallergy-check-value" class="generalallergy-check-value" value="NA"> 
+											<span class="dd_past">No known allergy history to reports</span> 
+										@endif
+									@else 
+										<input type="checkbox" value="NA" class="noAllergyHistory" id="noAllergyHistory" disabled="disabled" />
+										<input type="hidden" name="generalallergy-check-value" id="generalallergy-check-value" class="generalallergy-check-value" value="NA"> 
+										<span class="dd_past">No known allergy history to report</span> 
+									@endif
 							</label>
 						</div>
 					</div>
@@ -1538,504 +1625,510 @@ if(!empty($medicalHistoryPresentPastMore)){
 						</div>
 					</div>
 					<div class="form-group">
-						<!-- <div class="col-sm-1"></div> -->
-						
 						<div class="col-sm-12">
 							@if(!empty($medicalHistory))
-
 								<div class="col-sm-12 dd_genaral_mg">
 									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Casein" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Casein",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Casein
+										<input class="allergy_general" type="checkbox" value="Casein" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Casein",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Casein 
 									</label>
 									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Egg" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Egg",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Egg
+										<input	class="allergy_general"  type="checkbox" value="Egg" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Egg",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Egg 
 									</label>
 									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Fish" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Fish",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Fish
+										<input	class="allergy_general"	 type="checkbox" value="Fish" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Fish",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Fish 
 									</label>
 									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Milk" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Milk",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Milk
+										<input 	class="allergy_general"	type="checkbox" value="Milk" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Milk",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Milk 
 									</label>
 									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Nut" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Nut",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Nut
+										<input 	class="allergy_general"	type="checkbox" value="Nut" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Nut",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Nut 
 									</label>
-
-	 								<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Shellfish" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Shellfish",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Shellfish
+									<label class="checkbox-inline col-sm-2">
+										<input 	class="allergy_general"	type="checkbox" value="Shellfish" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Shellfish",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Shellfish 
 									</label>
-
+									<label class="checkbox-inline col-sm-2">
+										<input 	class="allergy_general"	type="checkbox" value="Sulfite" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Sulfite",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Sulfite 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input 	class="allergy_general"	type="checkbox" value="Soy" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Soy",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Soy 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input 	class="allergy_general"	type="checkbox" value="Wheat" class="" name="allergy_general[]"@if(!empty($generalAllergyHistory)) @if(in_array("Wheat",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Wheat 
+									</label>
+								</div>
+								<div class="col-sm-12 dd_genaral_mg">
+									<label class="checkbox-inline col-sm-2">
+										<input 	class="allergy_general"	type="checkbox" value="Spring" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Spring",$generalAllergyHistory)) checked="checked" @endif @endif>
+											Spring 
+										</label>
 										<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Sulfite" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Sulfite",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Sulfite
-									</label>
-									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Soy" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Soy",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Soy
-									</label>
-									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Wheat" class="" name="allergy_general[]"@if(!empty($generalAllergyHistory)) @if(in_array("Wheat",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Wheat
-									</label>
-								</div>
-
-								
-								<div class="col-sm-12 dd_genaral_mg">
-								
-									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Spring" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Spring",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Spring
-									</label>
-									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Summer" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Summer",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Summer
-									</label>
-									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Fall" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Fall",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Fall
-									</label>
-									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Winter" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Winter",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Winter
-									</label>
-
-
-
-
-								</div>
-								<div class="col-sm-12 dd_genaral_mg">
-								
+											<input 	class="allergy_general"	type="checkbox" value="Summer" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Summer",$generalAllergyHistory)) checked="checked" @endif @endif>
+											Summer 
+										</label>
 										<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Bee" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Bee",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Bee
+											<input 	class="allergy_general"	type="checkbox" value="Fall" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Fall",$generalAllergyHistory)) checked="checked" @endif @endif>
+											Fall 
+										</label>
+										<label class="checkbox-inline col-sm-2">
+											<input 	class="allergy_general"	type="checkbox" value="Winter" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Winter",$generalAllergyHistory)) checked="checked" @endif @endif>
+											Winter
+										</label>
+									</div>
+									<div class="col-sm-12 dd_genaral_mg">
+										<label class="checkbox-inline col-sm-2">
+											<input 	class="allergy_general"	type="checkbox" value="Bee" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Bee",$generalAllergyHistory)) checked="checked" @endif @endif>
+											Bee 
+										</label>
+										<label class="checkbox-inline col-sm-2">
+											<input 	class="allergy_general"	type="checkbox" value="Cat" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Cat",$generalAllergyHistory)) checked="checked" @endif @endif>
+											Cat 
+										</label>
+										<label class="checkbox-inline col-sm-2">
+											<input class="allergy_general"	type="checkbox" value="Dog" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Dog",$generalAllergyHistory)) checked="checked" @endif @endif>
+											Dog 
+										</label>
+										<label class="checkbox-inline col-sm-2">
+											<input 	class="allergy_general"	type="checkbox" value="Insect" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Insect",$generalAllergyHistory)) checked="checked" @endif @endif>
+											Insect 
+										</label>
+									</div>
+									<div class="col-sm-12 dd_genaral_mg">
+										<label class="checkbox-inline col-sm-2">
+											<input 	class="allergy_general"	type="checkbox" value="Dust" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Dust",$generalAllergyHistory)) checked="checked" @endif @endif>
+											Dust
 									</label>
 									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Cat" class="" name="allergy_generals[]" @if(!empty($generalAllergyHistory)) @if(in_array("Cat",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Cat
+										<input 	class="allergy_general"	type="checkbox" value="Mold" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Mold",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Mold 
 									</label>
 									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Dog" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Dog",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Dog
+										<input 	class="allergy_general"	type="checkbox" value="Plant" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Plant",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Plant 
 									</label>
 									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Insect" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Insect",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Insect
-									</label>
-									
-								</div>
-								<div class="col-sm-12 dd_genaral_mg">
-									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Dust" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Dust",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Dust
+										<input 	class="allergy_general"	type="checkbox" value="Pollen" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Pollen",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Pollen 
 									</label>
 									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Mold" class="" name="allergy_general[]"  @if(!empty($generalAllergyHistory)) @if(in_array("Mold",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Mold
+										<input 	class="allergy_general"	type="checkbox" value="Sun" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Sun",$generalAllergyHistory)) checked="checked" @endif @endif>
+										Sun 
 									</label>
-									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Plant" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Plant",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Plant
-									</label>
-									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Pollen" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Pollen",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Pollen
-									</label>
-									<label class="checkbox-inline col-sm-2">
-										<input type="checkbox" value="Sun" class="" name="allergy_general[]" @if(!empty($generalAllergyHistory)) @if(in_array("Sun",$generalAllergyHistory)) checked="checked" @endif @endif>
-										Sun
-									</label>
-								
 								</div>
 							@else
-
-							<div class="col-sm-12 dd_genaral_mg">
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Casein" class="allergy_general" name="allergy_general[]">
-									Casein
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Egg" class="allergy_general" name="allergy_general[]">
-									Egg
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Fish" class="allergy_general" name="allergy_general[]">
-									Fish
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Milk" class="allergy_general" name="allergy_general[]">
-									Milk
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Nut" class="allergy_general" name="allergy_general[]">
-									Nut
-								</label>
-						
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Shellfish" class="allergy_general" name="allergy_general[]">
-									Shellfish
-								</label>
-
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Sulfite" class="allergy_general" name="allergy_general[]">
-									Sulfite
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Soy" class="allergy_general" name="allergy_general[]">
-									Soy
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Wheat" class="allergy_general" name="allergy_general[]">
-									Wheat
-								</label>
-
-							</div>
-
-							<div class="col-sm-12 dd_genaral_mg">
-						
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Spring" class="allergy_general" name="allergy_general[]">
-									Spring
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Summer" class="allergy_general" name="allergy_general[]">
-									Summer
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Fall" class="allergy_general" name="allergy_general[]">
-									Fall
-								</label>
-
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Winter" class="allergy_general" name="allergy_general[]">
-									Winter
-								</label>
-
-							</div>
-
-							<div class="col-sm-12 dd_genaral_mg">
-
-
-								
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Bee" class="allergy_general" name="allergy_general[]">
-									Bee
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Cat" class="allergy_general" name="allergy_generals[]">
-									Cat
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Dog" class="allergy_general" name="allergy_general[]">
-									Dog
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Insect" class="allergy_general" name="allergy_general[]">
-									Insect
-								</label>
-							
-							</div>
-
-
-							<div class="col-sm-12 dd_genaral_mg">
-
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Dust" class="allergy_general" name="allergy_general[]">
-									Dust
-								</label>
-
-
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Mold" class="allergy_general" name="allergy_general[]">
-									Mold
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Plant" class="allergy_general" name="allergy_general[]">
-									Plant
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Pollen" class="allergy_general" name="allergy_general[]">
-									Pollen
-								</label>
-								<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="Sun" class="allergy_general" name="allergy_general[]">
-									Sun
-								</label>
-							<!-- 	<label class="checkbox-inline col-sm-2">
-									<input type="checkbox" value="NA" class="allergy_general_na" id="allergy_general_na" name="allergy_general[]">
-									N/A
-								</label> -->
-							</div>
+			
+								<div class="col-sm-12 dd_genaral_mg">
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Casein" class="allergy_general" name="allergy_general[]">
+										Casein 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Egg" class="allergy_general" name="allergy_general[]">
+										Egg 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Fish" class="allergy_general" name="allergy_general[]">
+										Fish 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Milk" class="allergy_general" name="allergy_general[]">
+										Milk 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Nut" class="allergy_general" name="allergy_general[]">
+										Nut 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Shellfish" class="allergy_general" name="allergy_general[]">
+										Shellfish 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Sulfite" class="allergy_general" name="allergy_general[]">
+										Sulfite 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Soy" class="allergy_general" name="allergy_general[]">
+										Soy 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Wheat" class="allergy_general" name="allergy_general[]">
+										Wheat 
+									</label>
+								</div>
+								<div class="col-sm-12 dd_genaral_mg">
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Spring" class="allergy_general" name="allergy_general[]">
+										Spring 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Summer" class="allergy_general" name="allergy_general[]">
+										Summer 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Fall" class="allergy_general" name="allergy_general[]">
+										Fall 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Winter" class="allergy_general" name="allergy_general[]">
+										Winter 
+									</label>
+								</div>
+								<div class="col-sm-12 dd_genaral_mg">
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Bee" class="allergy_general" name="allergy_general[]">
+										Bee 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Cat" class="allergy_general" name="allergy_general[]">
+										Cat 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Dog" class="allergy_general" name="allergy_general[]">
+										Dog 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Insect" class="allergy_general" name="allergy_general[]">
+										Insect 
+									</label>
+								</div>
+								<div class="col-sm-12 dd_genaral_mg">
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Dust" class="allergy_general" name="allergy_general[]">
+										Dust 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Mold" class="allergy_general" name="allergy_general[]">
+										Mold 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Plant" class="allergy_general" name="allergy_general[]">
+										Plant 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Pollen" class="allergy_general" name="allergy_general[]">
+										Pollen 
+									</label>
+									<label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="Sun" class="allergy_general" name="allergy_general[]">
+										Sun 
+									</label>
+								<!-- <label class="checkbox-inline col-sm-2">
+										<input type="checkbox" value="NA" class="allergy_general_na" id="allergy_general_na" name="allergy_general[]">
+										N/A
+									</label> -->
+								</div>
 							@endif
-							
 						</div>
 					</div>
 					
-				
-			<hr>
+					<hr>
 					
 					<div class="form-group">
 						<div class="col-sm-8">
 							<h4>Drug</h4>
 						</div>
-						<div class="col-sm-4 dd_Present_PD">
-							@if(!empty($drugAllergyHistory))
+						<div class="col-sm-4 dd_Present_PD"> 
+							@if(!empty($drugAllergyHistory)) 
 								<label class="checkbox-inline col-sm-12">
-									<input type="checkbox" value="NA" class="" id="noDrugAllergy" class="noDrugAllergy" disabled="disabled" checked="checked" />
-									 <span class="dd_past">No known  drug allergy history to report</span> 
-								</label>
+									<input type="checkbox" value="NA" class="" id="noDrugAllergy" class="noDrugAllergy" disabled="disabled" />
+									<input type="hidden" name="drugallergy-check-value" id="drugallergy-check-value" class="drugallergy-check-value" value=""> 
+									<span class="dd_past">No known  drug allergy history to report</span> 
+								<label>
 							@else
-								<label class="checkbox-inline col-sm-12">
-									<input type="checkbox" value="NA" class="" id="noDrugAllergy" class="noDrugAllergy"  />
-									 <span class="dd_past">No known  drug allergy history to report</span> 
+							
+								@if($drugAllergyNotKnown=="NA") 
+									<label class="checkbox-inline col-sm-12">
+										<input type="checkbox" value="NA" class="" id="noDrugAllergy" class="noDrugAllergy"  checked="checked" />
+										<input type="hidden" name="drugallergy-check-value" id="drugallergy-check-value" class="drugallergy-check-value" value="NA"> 
+										<span class="dd_past">No known  drug allergy history to report</span> 
+									<label>
+								@else 
+									<label class="checkbox-inline col-sm-12">
+										<input type="checkbox" value="NA" class="" id="noDrugAllergy" class="noDrugAllergy"  />
+										<input type="hidden" name="drugallergy-check-value" id="drugallergy-check-value" class="drugallergy-check-value" value=""> 
+										<span class="dd_past">No known  drug allergy history to report</span> 
+									<label>
+								@endif
+								
 							@endif
 						</div>
-					</div>
-					
+					</div>	
+							
+					<?php $drugArray = array(); ?>
 					<div class="allergy" id="allergy">
 						@if(!empty($drugAllergyHistory))
 							@foreach($drugAllergyHistory as $drugAllergyHistoryVal)
-							<div class="form-group">
-							    <div class="col-sm-6">
-							    <div class="dd_top_mt">Medication</div>
-									<span >
-										{!! Form::text('medication-drug-allergy[]', $drugAllergyHistoryVal->drug_name, $attributes = array('class'=>'form-control medication-drug-allergy allergy-validation-class','disabled'=>'disabled'));  !!}
-										
-									</span>
+						
+								@if($drugAllergyHistoryVal->drug_name=="Nil" ||  	 
+								    $drugAllergyHistoryVal->drug_name=="NA" ||  $drugAllergyHistoryVal->drug_name=="nil" ||  $drugAllergyHistoryVal->drug_name=="na")
+									<?php array_push($drugArray,0); ?>
+								@else
+						
+								<div class="form-group dd_Social_History">
+									<div class="col-sm-6">
+										<div class="dd_top_mt">
+											Medication
+										</div>
+										<span > {!! Form::text('medication-drug-allergy[]', $drugAllergyHistoryVal->drug_name, $attributes = array('class'=>'form-control medication-drug-allergy allergy-validation-class','disabled'=>'disabled'));  !!} </span>
+									</div>
+									<!-- {!! Form::label('reaction-drug-allergy', 'Reaction', $attributes = array('class'=>'col-sm-2 '));  !!}-->
+									<div class="col-sm-6">
+										<div class="dd_top_mt">
+											Reaction
+										</div>
+										<span > {!! Form::text('reaction-drug-allergy[]', $drugAllergyHistoryVal->reaction, $attributes = array('class'=>'form-control reaction-drug-allergy allergy-validation-class','disabled'=>'disabled'));  !!} </span>
+									</div>
 								</div>
-								 <!-- {!! Form::label('reaction-drug-allergy', 'Reaction', $attributes = array('class'=>'col-sm-2 '));  !!}-->
-							    <div class="col-sm-6">
-							    <div class="dd_top_mt">Reaction</div>
-									<span >
-										{!! Form::text('reaction-drug-allergy[]', $drugAllergyHistoryVal->reaction, $attributes = array('class'=>'form-control reaction-drug-allergy allergy-validation-class','disabled'=>'disabled'));  !!}
-										 
-									</span>
-								</div>
-							</div>
+								<?php array_push($drugArray,1); ?>
+								@endif
 							@endforeach
-						@else
-							<div class="form-group">
-							    <div class="col-sm-6">
-							     <div class="dd_top_mt">Medication</div>
-									<span class="">
-										{!! Form::text('medication-drug-allergy[]', Input::old('medication-drug-allergy'), $attributes = array('class'=>'form-control medication-drug-allergy allergy-validation-class'));  !!}
-										<!-- <i class="clip-user-3"></i>  -->
-									</span>
+						
+							@if(in_array(1,$drugArray))
+							
+							@else
+								<div class="form-group dd_Social_History">
+									<div class="col-sm-6">
+										<div class="dd_top_mt">
+											Medication
+										</div>
+										<span > {!! Form::text('medication-drug-allergy[]', '', $attributes = array('class'=>'form-control medication-drug-allergy allergy-validation-class'));  !!} </span>
+									</div>
+									<!-- {!! Form::label('reaction-drug-allergy', 'Reaction', $attributes = array('class'=>'col-sm-2 '));  !!}-->
+									<div class="col-sm-6">
+										<div class="dd_top_mt">
+											Reaction
+										</div>
+										<span > {!! Form::text('reaction-drug-allergy[]', '', $attributes = array('class'=>'form-control reaction-drug-allergy allergy-validation-class'));  !!} </span>
+									</div>
 								</div>
-								 <!-- {!! Form::label('reaction-drug-allergy', 'Reaction', $attributes = array('class'=>'col-sm-2 '));  !!}-->
-							    <div class="col-sm-6">
-							    <div class="dd_top_mt">Reaction</div>
-									<span class="">
-										{!! Form::text('reaction-drug-allergy[]', Input::old('reaction-drug-allergy'), $attributes = array('class'=>'form-control reaction-drug-allergy allergy-validation-class'));  !!}
-										<!-- <i class="clip-user-3"></i>  -->
-									</span>
+							@endif
+						@else
+							<div class="form-group dd_Social_History">
+								<div class="col-sm-6">
+									<div class="dd_top_mt">
+										Medication
+									</div>
+									<span class=""> {!! Form::text('medication-drug-allergy[]', Input::old('medication-drug-allergy'), $attributes = array('class'=>'form-control medication-drug-allergy allergy-validation-class'));  !!} <!-- <i class="clip-user-3"></i>  --> </span>
+								</div>
+								<!-- {!! Form::label('reaction-drug-allergy', 'Reaction', $attributes = array('class'=>'col-sm-2 '));  !!}-->
+								<div class="col-sm-6">
+									<div class="dd_top_mt">
+										Reaction
+									</div>
+									<span class=""> {!! Form::text('reaction-drug-allergy[]', Input::old('reaction-drug-allergy'), $attributes = array('class'=>'form-control reaction-drug-allergy allergy-validation-class'));  !!} <!-- <i class="clip-user-3"></i>  --> </span>
 								</div>
 							</div>
 						@endif
-					</div>	
-					<div class="form-group">
+					</div>
+					<div class="form-group dd_Social_History">
 						<div class="col-sm-12">
 							<button class="btn btn-default btn-add-allergies pull-right">
 								<i class="fa fa-plus-circle "></i>
-							Add More Allergies</button>
+								Add More Allergies
+							</button>
 						</div>
-					
+						
 					</div>
+				
 					<hr>
-					<div class="form-group">
+					<!-- Social History -->
+					<div class="form-group dd_Social_History">
 						<div class="col-sm-8">
 							<h3>Social History</h3>
 						</div>
-						<div class="col-sm-4  dd_Present_PD"> 
-							<label class="checkbox-inline col-sm-12">
-								<input type="checkbox" value="NA" class="noSocialHistory" id="noSocialHistory" />
-								<span class="dd_past">No known social history to reports</span>	 
-								<!-- @if(!empty($medicalHistory))
-									<input type="checkbox" value="NA" class="noSocialHistory" id="noSocialHistory" disabled="disabled" />
-									 <span class="dd_past">No known social history to report</span> 
-								@else -->
-									 
-								<!-- @endif -->
+						@if(!empty($medicalHistory)) 
+							@if($socialNotKnown=="NA")
+								<div class="col-sm-4  dd_Present_PD">
+									<label class="checkbox-inline col-sm-12">
+										<input type="checkbox" value="NA" class="noSocialHistory" id="noSocialHistory" checked="checked" />
+										<input type="hidden" name="social-check-value" id="social-check-value" class="social-check-value" value="NA"> 
+										<span class="dd_past">No known social history to reports</span>  
+									</label>
+								</div>
+							@else 
+								<div class="col-sm-4  dd_Present_PD">
+									<label class="checkbox-inline col-sm-12">
+										<input type="checkbox" value="" class="noSocialHistory" id="noSocialHistory" />
+										<input type="hidden" name="social-check-value" id="social-check-value" class="social-check-value" value=" "> 
+										<span class="dd_past">No known social history to reports</span>  
+									</label>
+								</div>
+							@endif
+
+							
+
+						@else
+							<div class="col-sm-4  dd_Present_PD">
+								<label class="checkbox-inline col-sm-12">
+									<input type="checkbox" value="" class="noSocialHistory" id="noSocialHistory" />
+									<input type="hidden" name="social-check-value" id="social-check-value" class="social-check-value" value=""> 
+									<span class="dd_past">No known social history to reports</span>  
+								</label>
+							</div>
+							
+						@endif
+						
+					</div>
+					@if(!empty($medicalHistory))
+					<div class="form-group dd_Social_History">
+						{!! Form::label('alcohol', 'Alcohol', $attributes = array('class'=>'col-sm-2'));  !!}
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Current" name="alcohol" class="social-history" @if(($alcohol=="Current") && !empty($alcohol)) checked="checked" @endif />Current 
+							</label>
+						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Past" name="alcohol" class="social-history" @if(($alcohol=="Past") && !empty($alcohol)) checked="checked" @endif />Past
+							</label>
+						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="NA" name="alcohol" class="social-history-na" @if(($alcohol=="NA") && !empty($alcohol)) checked="checked" @endif />N/A
 							</label>
 						</div>
 					</div>
-
-					@if(!empty($medicalHistory))
-
-						<div class="form-group dd_Social_History">
-						    {!! Form::label('alcohol', 'Alcohol', $attributes = array('class'=>'col-sm-2'));  !!}	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Current" name="alcohol" class="social-history" @if(($alcohol=="Current") && !empty($alcohol)) checked="checked" @endif>Current
-								</label>
-							</div>	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Past" name="alcohol" class="social-history" @if(($alcohol=="Past") && !empty($alcohol)) checked="checked" @endif>
-									Past
-								</label>
-							</div>
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="NA" name="alcohol" class="social-history-na" @if(($alcohol=="NA") && !empty($alcohol)) checked="checked" @endif>
-									N/A
-								</label>
-							</div>
+					<div class="form-group dd_Social_History">
+						{!! Form::label('tobacco', 'Tobacco (Smoke)', $attributes = array('class'=>'col-sm-2'));  !!}
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Current" name="tobaco-smoke" class="social-history" @if(($tobacoSmoke=="Current") && !empty($tobacoSmoke)) checked="checked" @endif />Current
+							</label>
 						</div>
-						<div class="form-group dd_Social_History">
-						    {!! Form::label('tobacco', 'Tobacco (Smoke)', $attributes = array('class'=>'col-sm-2'));  !!}	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Current" name="tobaco-smoke" class="social-history" @if(($tobacoSmoke=="Current") && !empty($tobacoSmoke)) checked="checked" @endif>
-									Current
-								</label>
-							</div>	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Past" name="tobaco-smoke" class="social-history"  @if(($tobacoSmoke=="Past") && !empty($tobacoSmoke)) checked="checked" @endif>
-									Past
-								</label>
-							</div>
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="NA" name="tobaco-smoke" class="social-history-na" @if(($tobacoSmoke=="NA") && !empty($tobacoSmoke)) checked="checked" @endif>
-									N/A
-								</label>
-							</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Past" name="tobaco-smoke" class="social-history"  @if(($tobacoSmoke=="Past") && !empty($tobacoSmoke)) checked="checked" @endif />Past
+							</label>
 						</div>
-						<div class="form-group dd_Social_History">
-						    {!! Form::label('tobacco-chew', 'Tobacco (Chewable)', $attributes = array('class'=>'col-sm-2'));  !!}	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Current" name="tobaco-chew" class="social-history" @if(($tobacoChew=="Current") && !empty($tobacoChew)) checked="checked" @endif>
-									Current
-								</label>
-							</div>	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Past" name="tobaco-chew" class="social-history" @if(($tobacoChew=="Past") && !empty($tobacoChew)) checked="checked" @endif>
-									Past
-								</label>
-							</div>
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="NA" name="tobaco-chew" class="social-history-na"  @if(($tobacoChew=="NA") && !empty($tobacoChew)) checked="checked" @endif>
-									N/A
-								</label>
-							</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="NA" name="tobaco-smoke" class="social-history-na" @if(($tobacoSmoke=="NA") && !empty($tobacoSmoke)) checked="checked" @endif />N/A
+							</label>
 						</div>
-						<div class="form-group dd_Social_History">
-						    {!! Form::label('other-social', 'Other Substances', $attributes = array('class'=>'col-sm-2'));  !!}	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Current" name="other-social-history" class="social-history"  @if(($otherSocial=="Current") && !empty($otherSocial)) checked="checked" @endif>
-									Current
-								</label>
-							</div>	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Past" name="other-social-history" class="social-history" @if(($otherSocial=="Past") && !empty($otherSocial)) checked="checked" @endif>
-									Past
-								</label>
-							</div>
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="NA" name="other-social-history" class="social-history-na"  @if(($otherSocial=="NA") && !empty($otherSocial)) checked="checked" @endif>
-									N/A
-								</label>
-							</div>
+					</div>
+					<div class="form-group dd_Social_History">
+						{!! Form::label('tobacco-chew', 'Tobacco (Chewable)', $attributes = array('class'=>'col-sm-2'));  !!}
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Current" name="tobaco-chew" class="social-history" @if(($tobacoChew=="Current") && !empty($tobacoChew)) checked="checked" @endif />Current
+							</label>
 						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Past" name="tobaco-chew" class="social-history" @if(($tobacoChew=="Past") && !empty($tobacoChew)) checked="checked" @endif />Past
+							</label>
+						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="NA" name="tobaco-chew" class="social-history-na"  @if(($tobacoChew=="NA") && !empty($tobacoChew)) checked="checked" @endif />N/A
+							</label>
+						</div>
+					</div>
+					<div class="form-group dd_Social_History">
+						{!! Form::label('other-social', 'Other Substances', $attributes = array('class'=>'col-sm-2'));  !!}
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Current" name="other-social-history" class="social-history"  @if(($otherSocial=="Current") && !empty($otherSocial)) checked="checked" @endif/>Current
+							</label>
+						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Past" name="other-social-history" class="social-history" @if(($otherSocial=="Past") && !empty($otherSocial)) checked="checked" @endif />Past
+							</label>
+						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="NA" name="other-social-history" class="social-history-na"  @if(($otherSocial=="NA") && !empty($otherSocial)) checked="checked" @endif />N/A
+							</label>
+						</div>
+					</div>
 					@else
-						<div class="form-group dd_Social_History">
-						    {!! Form::label('alcohol', 'Alcohol', $attributes = array('class'=>'col-sm-2'));  !!}	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Current" name="alcohol" class="social-history">
-									Current
-								</label>
-							</div>	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Past" name="alcohol" class="social-history">
-									Past
-								</label>
-							</div>
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="NA" name="alcohol" class="social-history-na">
-									N/A
-								</label>
-							</div>
+					<div class="form-group dd_Social_History">
+						{!! Form::label('alcohol', 'Alcohol', $attributes = array('class'=>'col-sm-2'));  !!}
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Current" name="alcohol" class="social-history" />Current
+							</label>
 						</div>
-						<div class="form-group dd_Social_History">
-						    {!! Form::label('tobacco', 'Tobacco (Smoke)', $attributes = array('class'=>'col-sm-2'));  !!}	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Current" name="tobaco-smoke" class="social-history">
-									Current
-								</label>
-							</div>	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Past" name="tobaco-smoke" class="social-history">
-									Past
-								</label>
-							</div>
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="NA" name="tobaco-smoke" class="social-history-na">
-									N/A
-								</label>
-							</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Past" name="alcohol" class="social-history">Past
+							</label>
 						</div>
-						<div class="form-group dd_Social_History">
-						    {!! Form::label('tobacco-chew', 'Tobacco (Chewable)', $attributes = array('class'=>'col-sm-2'));  !!}	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Current" name="tobaco-chew" class="social-history">
-									Current
-								</label>
-							</div>	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Past" name="tobaco-chew" class="social-history">
-									Past
-								</label>
-							</div>
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="NA" name="tobaco-chew" class="social-history-na">
-									N/A
-								</label>
-							</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="NA" name="alcohol" class="social-history-na">N/A
+							</label>
 						</div>
-						<div class="form-group dd_Social_History">
-						    {!! Form::label('other-social', 'Other Substances', $attributes = array('class'=>'col-sm-2'));  !!}	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Current" name="other-social-history" class="social-history">
-									Current
-								</label>
-							</div>	
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="Past" name="other-social-history" class="social-history">
-									Past
-								</label>
-							</div>
-							<div class="col-sm-1">
-								<label class="radio-inline">
-									<input type="radio" value="NA" name="other-social-history" class="social-history-na">
-									N/A
-								</label>
-							</div>
+					</div>
+					<div class="form-group dd_Social_History">
+						{!! Form::label('tobacco', 'Tobacco (Smoke)', $attributes = array('class'=>'col-sm-2'));  !!}
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Current" name="tobaco-smoke" class="social-history" />Current
+							</label>
 						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Past" name="tobaco-smoke" class="social-history" />Past
+							</label>
+						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="NA" name="tobaco-smoke" class="social-history-na" />N/A
+							</label>
+						</div>
+					</div>
+					<div class="form-group dd_Social_History">
+						{!! Form::label('tobacco-chew', 'Tobacco (Chewable)', $attributes = array('class'=>'col-sm-2'));  !!}
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Current" name="tobaco-chew" class="social-history" />Current
+							</label>
+						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Past" name="tobaco-chew" class="social-history" />Past
+							</label>
+						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="NA" name="tobaco-chew" class="social-history-na" />N/A
+							</label>
+						</div>
+					</div>
+					<div class="form-group dd_Social_History">
+						{!! Form::label('other-social', 'Other Substances', $attributes = array('class'=>'col-sm-2'));  !!}
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Current" name="other-social-history" class="social-history" />Current
+							</label>
+						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="Past" name="other-social-history" class="social-history" />Past
+							</label>
+						</div>
+						<div class="col-sm-2">
+							<label class="radio-inline">
+								<input type="radio" value="NA" name="other-social-history" class="social-history-na" />N/A
+							</label>
+						</div>
+					</div>
+					
 					@endif
-					<hr>
+					<!-- Social History -->
+					
+					<hr class="dd_Social_History">
+					
 					<div class="form-group">
 						<div class="col-sm-6">
 							<h3>Other History</h3>

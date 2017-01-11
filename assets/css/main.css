@@ -1731,10 +1731,18 @@ span.star:before {
 	min-width: 60px;
 }
 .tabs-left > .nav-tabs {
-	border-color: #DDDDDD;
+/*	border-color: #DDDDDD;
 	float: left;
 	margin-bottom: 0;
-	top: auto;
+	top: auto;*/
+
+	  border-color: hsl(0, 0%, 87%);
+    float: left;
+    height: 500px;
+    margin-bottom: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    top: auto;
 }
 .tabs-left > .nav-tabs > li {
 	float: none;
@@ -6208,6 +6216,11 @@ ul.dd_menu_bd > li:first-child {
 .dd_btn_mg_T_5px{
 	margin-top: 5px;
 }
+.dd_Social_History{
+	padding-left: 15px;
+}
+
+
 .dd_Social_History .col-sm-1{
 	width: auto;padding: 0 15px;
 
@@ -6511,6 +6524,27 @@ padding-bottom: 0;
 #patient-top-menu-li.active #patient-menu .pricon.icon-pr-patient {
      background-position: -39px -363px;
 }
+ .pricon.icon-pr-patient2 {
+   background-position: 1px -363px;
+}
+#dummy.active a .pricon.icon-pr-patient2 {
+     background-position: -37px -363px;
+}
+
+ .pricon.icon-pr-Diagnosis2 {
+    background-position: 0px -343px;
+}
+
+#dummy.active a .pricon.icon-pr-Diagnosis2 {
+     background-position: -37px -343px;
+}
+
+ .pricon.icon-pr-prescriptions2 {
+    background-position:0px -92px;
+}
+#dummy.active a .pricon.icon-pr-prescriptions2 {
+     background-position: -37px -92px;
+}
 .dd_print{
 	background-color: #428bca;
     border-color: #357ebd;
@@ -6771,7 +6805,7 @@ height: auto;
 	margin-right: 10px
 }
 .dd_prev_color {
-	 color: #418bca;
+	/* color: #418bca;*/
     font-size: 15px;
     margin-top: 0px;
 }
@@ -6829,7 +6863,7 @@ height: auto;
 }
 .dd_diag_hd{
 	font-weight: bold;
-
+	text-transform: uppercase;
 }
 .dd_mg_top_30{
 	margin-top: 20px;
@@ -6897,7 +6931,7 @@ table.dataTable thead th, table.dataTable thead td {
 
 }
 .tab-content .col-sm-12 .form-horizontal{
-	font-size: 16px;
+	font-size: 15px;
 	/*text-align: center;*/
 	color: #787878;
 
@@ -7134,6 +7168,7 @@ table.dataTable thead th, table.dataTable thead td {
 	height: 45px;
 	background: #fff;
 	border:1px solid #cbcbcb;
+	width : 32.5%;
 }
 .dd_btn_home_2 .dd_btn_3:hover {
     background-color: #266382;
@@ -7215,11 +7250,12 @@ table.dataTable thead .sorting_asc::after {
 }
 .dd_dummy_year .dd_year .form-control {
 	 margin-left: 6px;
-    width: 99px;
+    width:118px;
 
 }
 .dd_prev_margine{
-	margin: -12px;
+	/*margin: -12px;*/
+	box-sizing: border-box;
 }
 .dd_border_none{
 	border: 0;
@@ -7234,7 +7270,8 @@ table.dataTable thead .sorting_asc::after {
 	height: 30px;
 }
 .dd_prev_hd_mg{
-	margin-left: -4px;
+	  margin-left: -16px;
+    margin-top: -2px;
 }
 .dropdown-menu > li > a {
     padding: 0 20px !important;
@@ -7394,7 +7431,7 @@ table.dataTable thead .sorting_asc::after {
     width: 21px;
 }
 .btn.btn-purple.share-prescription.dd_share {
-    border-radius: 0 0 5px 5px;
+    border-radius: 0;
     position: absolute;
     top: -20px;
 }
@@ -7409,9 +7446,10 @@ table.dataTable thead .sorting_asc::after {
 
 }
 .dd_presc_dummy{
-	font-weight: 600;
+	font-weight: 700;
 	font-family: 'Open Sans', sans-serif;
 	margin-top: 20px;
+	text-transform: uppercase;
 }
 .dd_panel_body_pd{
 	padding: 0 15px;
@@ -7421,6 +7459,7 @@ table.dataTable thead .sorting_asc::after {
 }
 .dd_prev_pd_2{
 	margin-bottom: 10px;
+	padding-left: 0;
 }
 .dd_prev_mg_main{
 	margin-top: 20px;
@@ -7434,4 +7473,42 @@ table.dataTable thead .sorting_asc::after {
 .dd_kids_space{
 	margin-bottom: 40px;
     margin-top: 40px;
+}
+h6{
+	font-weight: 600;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
+	color: #005a7d;
+	text-transform: uppercase;
+}
+#dummy a{
+	font-size: 16px;
+}
+.dd_input_email{
+	  background: hsla(0, 0%, 0%, 0) url("../images/Icon_email.png") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 19px;
+    left: 14px;
+    position: absolute;
+    top: 15px;
+    width: 19px;
+}
+.dd_login .error {
+    color: hsl(6, 90%, 56%) !important;
+}
+.dd_remove_padding{
+
+	padding-left:  5px !important;
+	padding-right:  5px !important;
+}
+.dd_prev_print_btn{
+    bottom: 0;
+    width: 100%;
+    background : #fff;
+    position: relative;
+    padding-left: 18px;
+    margin-top: 50px;
+}
+.btn.btn-primary.pdfopen.print_width{
+    width: 100px;
 }

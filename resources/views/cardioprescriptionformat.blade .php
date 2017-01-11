@@ -547,7 +547,7 @@
 		       	<textarea class="ta6">{{$treatment}}</textarea>
 			</div>
 	        <div class="followup-inner-div">
-	        	<h2>Followup Date: </h2>
+	        	<h2>Follow up Date: </h2>
 	        	<div>
 	        		@if(!empty($followUpDate) && $followUpDate!="0000-00-00") 
 	        			{{$followUpDate}}

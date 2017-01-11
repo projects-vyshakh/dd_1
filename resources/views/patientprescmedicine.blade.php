@@ -239,7 +239,7 @@ if(!empty($prescMedicine)){
 																</td>
 																<td>
 																    <div class="dd_dosage1_text">
-																    	{!! Form::text('dosage'.$index, (!empty($prescMedicineVal->dosage))?$prescMedicineVal->dosage:Input::old('dosage'.$index), $attributes = array('class'=>'input-mini ng-pristine ng-valid'));  !!}
+																    	{!! Form::text('dosage'.$index, (!empty($prescMedicineVal->dosage))?$prescMedicineVal->dosage:Input::old('dosage'.$index), $attributes = array('class'=>'input-mini ng-pristine ng-valid dd_remove_padding'));  !!}
 
 																    	{!! Form::select('dosage_unit'.$index, $dosageUnit,(!empty($prescMedicineVal->dosage_unit))?$prescMedicineVal->dosage_unit:Input::old('dosage_unit'.$index), $attributes = array('class'=>''));  !!}
 																	</div>
@@ -405,7 +405,7 @@ if(!empty($prescMedicine)){
 														</td>
 														<td>
 														    <div class="dd_dosage1_text">
-														    	{!! Form::text('dosage1', Input::old('dosage1'), $attributes = array('class'=>'input-mini ng-pristine ng-valid'));  !!}
+														    	{!! Form::text('dosage1', Input::old('dosage1'), $attributes = array('class'=>'input-mini ng-pristine ng-valid dd_remove_padding'));  !!}
 
 														    	{!! Form::select('dosage_unit', $dosageUnit,Input::old('dosage_unit1'), $attributes = array('class'=>''));  !!}
 															</div>

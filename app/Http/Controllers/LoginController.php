@@ -69,6 +69,8 @@ class LoginController extends Controller {
 
 		$checkLoginCredentials = DB::table('doctors')->where('email','=',$email)->where('status','=','1')->first();
 		
+		
+		
 		if(!empty($checkLoginCredentials))
 		{
 			$passwordEncrypted = $checkLoginCredentials->password;

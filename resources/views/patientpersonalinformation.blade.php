@@ -179,7 +179,7 @@ if(!empty($doctorData)){
 
 
 									<div class="col-sm-4">
-										Maritial Status
+										Marital Status
 								 		<span class="symbol required"></span> 	
 								 	</div>	
 									<div class="col-sm-8">
@@ -245,7 +245,7 @@ if(!empty($doctorData)){
 							 	</div>		
 									<div class="col-sm-8">
 										<span class="">
-											{!! Form::select('state',[], (!empty($patientData))?$patientState: Input::old('state'), $attributes = array('class' => 'form-control','id'=>'state','class'=>'form-control state')); !!}
+											{!! Form::select('state',[], (!empty($patientData))?$patientState: Input::old('state'), $attributes = array('class' => 'form-control state','id'=>'state')); !!}
 										</span>
 									</div>
 								</div>

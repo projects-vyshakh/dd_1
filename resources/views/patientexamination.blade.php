@@ -87,7 +87,7 @@ if(!empty($doctorData)){
 					 {!! Form::label('bmi', 'BMI', $attributes = array('class'=>"col-sm-2"));  !!} 
 					<div class="col-sm-2">
 						<span>
-						{!! Form::text('bmi',  $vitalExist->bmi, $attributes = array('class'=>'form-control'));  !!}
+						{!! Form::text('bmi',  $vitalExist->bmi, $attributes = array('class'=>'form-control','readonly'=>'readonly'));  !!}
 												
 						</span>
 					</div>
@@ -107,7 +107,7 @@ if(!empty($doctorData)){
 												
 						</span>
 					</div>
-					{!! Form::label('bmi', 'Temperature (Fahrenheit)', $attributes = array('class'=>"col-sm-2"));  !!} 
+					{!! Form::label('temperature', 'Temperature (Fahrenheit)', $attributes = array('class'=>"col-sm-2"));  !!} 
 					<div class="col-sm-2">
 						<span>
 						{!! Form::text('temperature',  $vitalExist->temperature, $attributes = array('class'=>'form-control'));  !!}
@@ -180,7 +180,7 @@ if(!empty($doctorData)){
 					<div class="col-sm-2">
 					
 						<span>
-						{!! Form::text('bmi',  Input::old('bmi'), $attributes = array('class'=>'form-control'));  !!}
+						{!! Form::text('bmi',  Input::old('bmi'), $attributes = array('class'=>'form-control','readonly'=>'readonly'));  !!}
 												
 						</span>
 					</div>
@@ -203,7 +203,7 @@ if(!empty($doctorData)){
 						</span>
 					</div>
 
-					{!! Form::label('bmi', 'Temperature (Fahrenheit)', $attributes = array('class'=>"col-sm-2"));  !!} 
+					{!! Form::label('temperature', 'Temperature (Fahrenheit)', $attributes = array('class'=>"col-sm-2"));  !!} 
 					<div class="col-sm-2">
 				
 						<span>
@@ -1079,75 +1079,14 @@ if(!empty($doctorData)){
 		{!!Html::script('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')!!}
 		
 		{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
-		{!!Html::script('assets/js/patient-personal-information.js')!!}
+		{!!Html::script('assets/js/gyn-diag-examination.js')!!}
 
 		{!!Html::script('assets/plugins/tooltip-validation/jquery-validate.bootstrap-tooltip.js')!!}
 	<script>
 		$(document).ready(function() {
 			Main.init();
-			patientElements.init();
-
-			$(window).load(function() {
-				$(".loader").fadeOut("slow");
-				
-			});
-
-
-			$('.tooltip tooltip-inner').css("background-color","red"); 
-
-    $("#addPatientExamination").validate({
-    	rules: {
-           weight: { digits:true },
-           height: { digits:true },
-           systolic_pressure: 
-           					{ 
-           						digits:true, 
-           						required: true,
-           						range:[57,200]
-           					},
-           	diastolic_pressure: 
-           					{ 
-           						digits:true, 
-           						required: true,
-           						range:[40,120]
-           					},
-           	
-           	pulse : { number:true, range:[40,220]},
-            respiratory_rate : { number:true, range:[12,50]},
-            temperature : { number:true, range:[75,111.2]},
-            spo2 : { number:true, range:[55,100]},
-           
-            
-        },
-        tooltip_options: {
-           weight: { placement: 'top' },
-           weight: { placement: 'top' },
-           systolic_pressure: { placement: 'bottom' },
-           diastolic_pressure: { placement: 'bottom' },
-           pulse : { placement: 'top' },
-           temperature : { placement: 'left' },
-           spo2: { placement: 'bottom' },
-        }
-        /*rules: {
-            height: { required: true},
-            weight: {required: true}
-        },
-        messages: {
-            example5: "Just check the box<h5 class='text-danger'>You aren't going to read the EULA</h5>"
-        },
-        tooltip_options: {
-            height: {trigger:'focus'},
-            weight: {placement:'left',html:true}
-        },*/
-    });
-
-
-
-
-
-		
-			
-
+			gynDiagExamination.init();
+	
 	 	});
 	</script>
 @stop	
