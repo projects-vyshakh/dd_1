@@ -5034,8 +5034,8 @@ td.column-right {
 	margin-top: 70px;
  }
  .box_admin .dd_pd_LR_20{
- 	margin: 30px 0 10px 0;
- }
+    margin: 30px 14px 10px 5px;
+}
 .inner_wrapper{
 	max-width: 970px;
 	margin: 0 auto;
@@ -5236,7 +5236,7 @@ td.column-right {
 	margin: 0;
 }
 .dd_patient_pd_L{
-	padding-right: 60px;
+	padding-right: 50px;
 }
 .dd_patient_pd_R{
 	padding-left: 60px;
@@ -7096,7 +7096,7 @@ table.dataTable thead th, table.dataTable thead td {
 
 .inner_wrapper_3 {
     margin: 0 auto;
-    width: 850px;
+    width: 800px;
 }
 .dd_mg_B_15 .dd_agree p{
 	font-size: 16px;
@@ -7169,6 +7169,7 @@ table.dataTable thead th, table.dataTable thead td {
 	background: #fff;
 	border:1px solid #cbcbcb;
 	width : 32.5%;
+	font-size: 20px !important;
 }
 .dd_btn_home_2 .dd_btn_3:hover {
     background-color: #266382;
@@ -7511,4 +7512,43 @@ h6{
 }
 .btn.btn-primary.pdfopen.print_width{
     width: 100px;
+}
+.dd_input_icon_print {
+    background: hsla(0, 0%, 0%, 0) url("../images/icons/print.svg") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 27px;
+    left: 13px;
+    position: absolute;
+    top: 13px;
+    width: 27px;
+}
+.dd_my_from div .dd_form_id_op_1  {
+	height: 45px;
+	background: #fff;
+	border:1px solid #cbcbcb;
+	width : 32.5%;
+	font-size: 20px !important;
+	border-right: 0
+}
+.dd_my_from div .dd_form_id_op_2  {
+	height: 45px;
+	background: #fff;
+	border:1px solid #cbcbcb;
+	width : 32.5%;
+	font-size: 20px !important;
+	margin-left: -5px;
+	
+}
+.dd_my_from div .dd_form_id_op_3  {
+	margin-left: -4px !important;
+	height: 45px;
+	background: #fff;
+	border:1px solid #cbcbcb;
+	width : 32.5%;
+	font-size: 20px !important;
+	border-left: 0
+
+}
+.dd_btn_home_2{
+	margin-right: 10px;
 }

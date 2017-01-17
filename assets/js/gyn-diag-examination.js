@@ -6,15 +6,23 @@ var gynDiagExamination = function () {
 			});
 	}
 	var runBmiCalculation = function () {
-		 var weight = $('#weight').val();
+		var weight = $('#weight').val();
         var height = $('#height').val();
 
         $('#weight,#height').on('input',function() {
             var weight = $('#weight').val();
             var height = $('#height').val();
-            var heightSquare = Math.pow(parseInt(height)*0.01,2);
-            var bmi = Math.round(parseInt(weight)/heightSquare);
-            $('#bmi').val(bmi);
+            if(weight=='' || height==''){
+                //alert('s')
+                $('#bmi').val('');
+            }
+            else{
+                var heightSquare = Math.pow(parseInt(height)*0.01,2);
+                var bmi = Math.round(parseInt(weight)/heightSquare);
+                $('#bmi').val(bmi);
+            }
+            
+            
         }) ;
 
     };

@@ -88,14 +88,14 @@
 .box_admin {
 
  background: none;
-    left: 50%;
-    margin-left: -150px;
-    margin-top: -210px;
+    left:0;
+    margin-left: 0;
+    margin-top: 0;
     opacity: 0.97;
-    padding: 20px;
-    position: absolute;
-    top: 50%;
-    width: 298px;
+    padding: 0;
+    position: re;
+    top: 0;
+    width: auto;
     z-index: 999;
 
     }
@@ -109,12 +109,19 @@
 
 
 }
-.dd_form_id {
-    display: table;
-    margin: 0 auto 5px auto;
-    text-align: center;
-    width: 100%;
+
+/*.dd_form_id_op_2 {
+    display: table !important;
+    margin: 0 auto 5px auto !important;
+    text-align: center !important;
+    width: 100% !important;
 }
+.dd_form_id_op_3 {
+    display: table !important;
+    margin: 0 auto 5px auto !important;
+    text-align: center !important;
+    width: 100% !important;
+}*/
 .dd_form_id_2 {
     width: 100%;
 }
@@ -255,6 +262,10 @@
 	}
 
 @media only screen and (max-width: 767px){
+
+    .navbar-fixed-bottom {
+        position: relative;
+    }
 
 .dd_bodred_l_0{
     border-left: 1px solid hsl(0, 0%, 77%) !important;
@@ -532,9 +543,7 @@ display: none;
 .footer_div_2{
 		display: none;
 	}
-	.footer_div_2{
-		display: none;
-	}
+
 	.footer_pd{
 		padding: 10px 0;
 	}
@@ -569,6 +578,13 @@ display: none;
 
 
 @media only screen and (max-width: 460px){
+
+.dd_form_id_op_1,.dd_form_id_op_2,.dd_form_id_op_3 {
+    display: table !important;
+    margin: 0 auto 5px auto !important;
+    text-align: center !important;
+    width: 100% !important;
+}
 
 
 .form-group .col-sm-12 .input-icon .dd_input_2 {
@@ -726,6 +742,9 @@ li.dropdown.current-user .dropdown-menu li a {
 .navbar > .container .navbar-brand, .logo {
     margin-top: 0;
 
+}
+.box_register {
+    margin-top: -136px;
 }
 
 }

@@ -127,11 +127,90 @@ class UserController extends Controller {
     public function showUserHome(){
     	$userName = Session::get('user_name');
     	$userId   = Session::get('user_id');
+
+
+
     	return view('userhome',array('userName'=>$userName,'userId'=>$userId));
     }
-    /*public function showUserImport(){
-    	return view('userjsonimport');
-    }*/
+   
+
+    public function showPatientSearch(){
+    	$userName = Session::get('user_name');
+    	$userId   = Session::get('user_id');
+
+    	//$dataArray = array();
+    	/*for($i=80483;$i<100000;$i++){
+    		$data = array('title'=>'vy'.$i);
+    		//array_push($dataArray, $data);s
+    		echo 'vy'.$i;
+    		echo "</br>";
+    		DB::table('testServices')->insert($data);
+    	}*/
+
+    	//$patientsLists = PatientsModel::all();
+    	$patientsLists = DB::table('testServices')->get();
+    	
+    	return view('patientsearch',array('userName'=>$userName,'userId'=>$userId,'patientsLists'=>$patientsLists));
+    	
+    }
+
+    public function getPatientList(){
+    	
+    	//$patientsLists = DB::table('testServices')->get();
+    	
+    	$data = array(
+                            array('Name'=>'parvez', 'Empid'=>11, 'Salary'=>101),
+                            array('Name'=>'alam', 'Empid'=>1, 'Salary'=>102),
+                            array('Name'=>'phpflow', 'Empid'=>21, 'Salary'=>103)                            );
+             
+
+		    $results = array(
+		            "sEcho" => 1,
+		        "iTotalRecords" => count($data),
+		        "iTotalDisplayRecords" => count($data),
+		          "aaData"=>$data);
+		
+
+		echo json_encode($results);
+    }
+
+    public function handleSearchPatient(){
+    	$input 			= Request::all();
+    	$patientId 		= $input['searchby_id'];
+    	$patientName 	= $input['searchby_name'];
+
+            
+            $data = PatientsModel::where('id_patient', 'like', '%'.$patientId.'%')
+            		->where('first_name', 'like', '%'.$patientName.'%')
+            		->orderBy('first_name', 'ASC')
+            	    ->get();
+
+                       
+
+		    $results = array(
+		            "sEcho" => 1,
+		        "iTotalRecords" => count($data),
+		        "iTotalDisplayRecords" => count($data),
+		          "aaData"=>$data);
+		
+
+		echo json_encode($results);
+
+		
+    	
+    	
+
+    }
+
+
+
+
+
+
+
+
+
+
     public function showUserJsonImport(){
     	$userName = Session::get('user_name');
     	$userId   = Session::get('user_id');

@@ -322,6 +322,7 @@
 
 	    {!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 	    {!!Html::script('assets/js/login.js')!!}
+	    {!!Html::script('assets/js/doctor-login.js')!!}
 
 	   
 	
@@ -329,7 +330,7 @@
 			jQuery(document).ready(function() {
 				//Main.init();
 				Login.init();
-				
+				doctorLogin.init();
 			  	$('.doctor-register-btn').click(function(e){
 			  		e.preventDefault();
 			  		window.location.href = "doctorsignup";

@@ -59,8 +59,8 @@ Route::get('doctorsignupinformation',  array('as' => 'doctorsignupinformation', 
 Route::post('handleDoctorLogin', array('as' => 'handleDoctorLogin', 'uses' => 'LoginController@handleDoctorLogin')); 
 Route::post('handleDoctorSignUp', array('as' => 'handleDoctorSignUp', 'uses' => 'LoginController@handleDoctorSignUp'));
 
-
-Route::get('error',  array('as' => 'error', 'uses' => 'UtilityController@showErrorPage'));
+Route::get('prescriptionshare',  array('uses' => 'UtilityController@showPrescriptionShare'));
+Route::any('error',  array('as' => 'error', 'uses' => 'UtilityController@showErrorPage'));
 
 //PATIENT DETAILS
 Route::post('handlePatientLogin', array('as' => 'handlePatientLogin', 'uses' => 'LoginController@handlePatientLogin')); 
@@ -77,7 +77,9 @@ Route::post('handlePatientSetnewPassword', array('as' => 'handlePatientSetnewPas
 //---------------------------------------------------------------------------------------------------------------
 
 Route::any('doctorhome',  array('before'=>'isDoctorLoggedIn','as' => 'doctorhome', 'uses' => 'DoctorController@showDoctorHome'));
-/*Route::post('patientIdSubmit',  array('before'=>'isDoctorLoggedIn','as' => 'patientIdSubmit', 'uses' => 'DoctorController@patientIdSubmit'));*/
+
+Route::any('flushAllSessions',  array('before'=>'isDoctorLoggedIn','as' => 'flushAllSessions', 'uses' => 'DoctorController@flushAllSessions'));
+
 Route::post('handleNewPatientId',  array('before'=>'isDoctorLoggedIn','as' => 'handleNewPatientId', 'uses' => 'DoctorController@handleNewPatientId'));
 Route::post('handleOldPatientId',  array('before'=>'isDoctorLoggedIn','as' => 'handleOldPatientId', 'uses' => 'DoctorController@handleOldPatientId'));
 /*
@@ -133,14 +135,14 @@ Route::get('patientprescmedicine/shared/{sharedId}', 'UtilityController@handleSh
 
 Route::post('getState',  array('as' => 'getState', 'uses' => 'UtilityController@getState'));
 
-/*Route::any('doctorsettings',  array('before'=>'isDoctorLoggedIn','as' => 'doctorsettings', 'uses' => 'DoctorController@doctorSettings'));*/
-
-Route::any('printsetup',  array('before'=>'isDoctorLoggedIn','as' => 'printsetup', 'uses' => 'DoctorController@showPrintSetup')); 
 
 
-Route::post('addPrintSettings',  array('before'=>'isDoctorLoggedIn','as' => 'addPrintSettings', 'uses' => 'DoctorController@addPrintSettings'));
+// Settings Controller
+Route::any('printsetup',  array('before'=>'isDoctorLoggedIn','as' => 'printsetup', 'uses' => 'SettingsController@showPrintSetup')); 
 
-Route::any('fetchprintsetupdata',  array('before'=>'isDoctorLoggedIn','as' => 'fetchprintsetupdata', 'uses' => 'DoctorController@fetchPrintSetupData')); 
+Route::post('addPrintSettings',  array('before'=>'isDoctorLoggedIn','as' => 'addPrintSettings', 'uses' => 'SettingsController@addPrintSettings'));
+
+Route::any('fetchprintsetupdata',  array('before'=>'isDoctorLoggedIn','as' => 'fetchprintsetupdata', 'uses' => 'SettingsController@fetchPrintSetupData')); 
 
 
 //Cardio
@@ -199,8 +201,14 @@ Route::any('handleDoctorsDataMigration', array('as'=>'handleDoctorsDataMigration
 Route::any('handlePatientsDataMigration', array('as'=>'handlePatientsDataMigration','uses'=>'UserController@showPatientsDataMigration'));
 Route::any('handleUserDataMigration', array('as'=>'handleUserDataMigration','uses'=>'UserController@handleUserDataMigration'));
 
+Route::any('patientsearch', array('as'=>'patientsearch','uses'=>'UserController@showPatientSearch'));
+
+Route::any('handleSearchPatient', array('as'=>'handleSearchPatient','uses'=>'UserController@handleSearchPatient'));
+
+Route::any('getPatientList', array('as'=>'getPatientList','uses'=>'UserController@getPatientList'));
+
 //Print Controllers
-Route::post('patientPrescPrint', array('before'=>'isDoctorLoggedIn','as'=>'patientPrescPrint','uses'=>'PrintController@patientPrescPrint'));
+Route::post('patientPrescPrint', array('before'=>'isDoctorLoggedIn','as'=>'patientPrescPrint','uses'=>'SettingsController@patientPrescPrint'));
 
 
 //Services

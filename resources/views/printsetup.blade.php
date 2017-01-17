@@ -121,6 +121,55 @@ else{
 				{!! Form::open(array('route' => 'addPrintSettings', 'role'=>'form', 'id'=>'addPrintSettings', 'class'=>'form-horizontal addPrintSettings','novalidate'=>'novalidate')) !!}
 					<div class="form-group">
 						<div class="col-sm-2">
+							{!! Form::label('header_settings', 'Show Header', $attributes = array('class'=>'control-label header_settings'));  !!}
+						</div>
+						
+						@if(!empty($printData) && !empty($printData->header_settings))
+							@if($printData->header_settings=="Yes") 
+								<div class="col-sm-1">
+									<label class="radio-inline"> 
+										<input type="radio" value="Yes" name="print_header" checked="checked">Yes
+									</label>
+								</div> 
+								<div class="col-sm-1">
+									<label class="radio-inline"> 
+										<input type="radio" value="No" name="print_header" >No
+									</label>
+								</div>
+								
+							@elseif($printData->header_settings=="No")
+								<div class="col-sm-1">
+									<label class="radio-inline"> 
+										<input type="radio" value="Yes" name="print_header" >Yes
+									</label>
+								</div> 
+								<div class="col-sm-1">
+									<label class="radio-inline"> 
+										<input type="radio" value="No" name="print_header" checked="checked">No
+									</label>
+								</div>
+								
+							@endif
+						@else
+
+							<div class="col-sm-1">
+								<label class="radio-inline"> 
+									<input type="radio" value="Yes" name="print_header" >Yes
+								</label>
+							</div> 
+							<div class="col-sm-1">
+								<label class="radio-inline"> 
+									<input type="radio" value="No" name="print_header" >No
+								</label>
+							</div>
+							
+						
+						@endif
+					<div class="error_div"></div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-2">
 							{!! Form::label('unit', 'Unit', $attributes = array('class'=>'control-label'));  !!}
 						</div> 
 						<div class="col-sm-3">

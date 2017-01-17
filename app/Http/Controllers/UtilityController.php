@@ -71,6 +71,19 @@ class UtilityController extends Controller {
 	  
 	    return $password;
     }
+
+    public function showPrescriptionShare(){
+    	/*$patientId = Session::get('patientId');
+		$doctorId  = Session::get('doctorId');
+    	$doctorPersonalData  = DB::table('doctors As d')
+		                                            ->leftJoin('specialization As s','d.specialization','=','s.id_specialization')
+				                                     ->where('d.id_doctor','=',$doctorId)->first();
+
+				$patientPersonalData = DB::table('patients')
+				                                   ->where('patients.id_patient','=',$patientId)->first();*/
+
+		return view('prescriptionshare');
+    }
   	
   	public function handleSharedPrescription($sharedId){
   		$prescriptionData = DB::table('prescription')->where('id_share_prescription',$sharedId)->get();
@@ -129,51 +142,28 @@ class UtilityController extends Controller {
 
 
 				/*$parametersArray = array('printData'=>$printData,'prescriptionData'=>$prescriptionData,'doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData);*/
+				
 
 
-					$pdf 		= App::make('dompdf.wrapper');
-				 	$view 		=  View::make('gynprecriptionformat',$parametersArray)->render();
-				 	$pdf->loadHTML($view);
-				 	//$pdf->stream();
-				 	return $pdf->stream();;
-
-				/*switch ($specialization) {
-					case '1':
+					try{
 						$pdf = App::make('dompdf.wrapper');
-				        //$pdf->loadHTML('<h1>Test</h1>');
-				        $view =  View::make('gynprecriptionformat',$parametersArray)->render();
+		        		//$pdf->loadHTML('<h1>Test</h1>');
+		        		$view =  View::make('gynprecriptionformat',$parametersArray)->render();
 
-				       
-				        
-				        $pdf->loadHTML($view)->setWarnings(false)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+		       
+		        
+		        		$pdf->loadHTML($view)->setWarnings(false)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+					 	return Redirect::to('prescriptionshare')->with(array('pdfFileName'=>$pdfFileName));
+					}
+					catch (\Exception $e)
+				    {
+				        session(['message' => [ 'danger' => 'Error: ' . $e->getMessage() ]]);
+				        return back();
+			    	}
 
-				        // add the header
-						
-						
-
-				        return $pdfFileName;
-				        
-				    	//return $pdf->stream($pdfFileName.'.'.'pdf');
-				    	//return $pdf->inline();
-						break;
-
-					case '2':
-						$pdf = App::make('dompdf.wrapper');
-				        //$pdf->loadHTML('<h1>Test</h1>');
-				        $view =  View::make('gynprecriptionformat',$parametersArray)->render();
-				         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
-
-				        return $pdfFileName;
-				        
-				    	//return $pdf->stream($pdfFileName.'.'.'pdf');
-				    	//return $pdf->inline();
-						break;
 					
-					default:
-						# code...
-						break;
-				}
-		*/
+
+				
 	  }
 
   	}

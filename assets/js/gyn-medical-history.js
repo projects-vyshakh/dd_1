@@ -41,10 +41,12 @@ var patientMedicalHistoryElements = function (dosageUnit) {
     		            ignore: "",
     		            rules: {
     		                menarche: {
-    		                    number : true
+    		                    number : true,
+                                max : 20,
     		                },
     		                menopause: {
     		                    number : true,
+                                min : 20
     		                },
     		                /*'surgery[]': {
     		                    required : true,
@@ -57,8 +59,14 @@ var patientMedicalHistoryElements = function (dosageUnit) {
     			              
     		         	},
     		            messages: {
-    		                menarche    : "Please type a valid number",
-    		              	menopause   : "Please type a valid number",
+    		                menarche    : {
+                                number:"Please type a valid number",
+                                max : "Menarche cannot be more than 20",
+                            },
+    		              	menopause    : {
+                                number:"Please type a valid number",
+                                min : "Menopause cannot be less than 20",
+                            }
     		              		  
     		         	 },
     		            invalidHandler: function (event, validator) { //display error alert on form submit

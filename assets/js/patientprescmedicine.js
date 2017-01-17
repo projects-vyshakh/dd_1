@@ -1,5 +1,8 @@
 var patientPrescMedicine = function () {
-	
+	var runOnPageLoad = function(){
+		
+		
+	}
 	var runPrescriptionDatePickers = function(){
 			$('.start_date').Zebra_DatePicker({
 				direction: '1',
@@ -24,7 +27,7 @@ var patientPrescMedicine = function () {
 				   		 data: dataString,
 				    	success: function(data)
 				    	{
-				    		console.log(data);
+				    		
 
 
 
@@ -86,18 +89,18 @@ var patientPrescMedicine = function () {
                                                         	'<input type="text" name="drug_name'+counter+'" class="dd_input_mini drug_name" id="drug_name'+counter+'">'+
                                                     '</td>'+
                                                     '<td>'+
-	                                                        '<div class="dd_dosage1_text">'+
-	                                                             	'<input type="text" name="dosage'+counter+'" class="input-mini ng-pristine ng-valid dosage" id="dosage'+counter+'">'+
-	                              									'<select class="dosage_unit" name="dosage_unit'+counter+'" id="dosage_unit'+counter+'">'+
-																	 '</select>'+
-	                                                     	 '</div>'+
+                                                        '<div class="dd_dosage1_text">'+
+                                                             	'<input type="text" name="dosage'+counter+'" class="input-mini ng-pristine ng-valid dosage" id="dosage'+counter+'">'+
+                              									'<select class="dosage_unit" name="dosage_unit'+counter+'" id="dosage_unit'+counter+'">'+
+																 '</select>'+
+                                                     	 '</div>'+
                                                     '</td>'+
                                                     '<td >'+
-															'<div class="dd_dosage1_text">'+
-																	'<input type="text" name="duration'+counter+'" class="input-mini ng-pristine ng-valid duration" id="duration'+counter+'" >'+
-																	'<select class="duration_unit" name="duration_unit'+counter+'" id="duration_unit'+counter+'">'+
-																	 '</select>'+
-															'</div>'+
+														'<div class="dd_dosage1_text">'+
+															'<input type="text" name="duration'+counter+'" class="input-mini ng-pristine ng-valid duration" id="duration'+counter+'" >'+
+															'<select class="duration_unit" name="duration_unit'+counter+'" id="duration_unit'+counter+'">'+
+															 '</select>'+
+														'</div>'+
 													'</td>'+
 													'<td>'+
 															'<input type="text" name="morning'+counter+'" class="col-sm-8 morning" id="morning'+counter+'"  >'+
@@ -179,6 +182,7 @@ var patientPrescMedicine = function () {
 										
 								if(prescMedicine!="")
 								{
+									
 									counter = prescMedicine.length;
 									$('.pdfopen').attr('disabled',false);
 									$('.share-prescription').attr('disabled',false);
@@ -325,8 +329,9 @@ var patientPrescMedicine = function () {
 								}
 								else
 								{
-									$('.pdfopen').attr('disabled',false);
-									$('.share-prescription').attr('disabled',false);
+									$(this).attr('disabled',false); //Enabling Load Pev if no data is there
+									$('.pdfopen').attr('disabled',true);
+									$('.share-prescription').attr('disabled',true);
 								}	
 
 								
@@ -480,15 +485,16 @@ var patientPrescMedicine = function () {
 
 	var runPrescPrintManagement = function(){
 		$('.pdfopen').click(function(){
+			$("body").mLoading({ });
 			$.ajax({
                 type	: "POST",
                 url 	: "patientPrescPrint",
                 //data 	: dataString,
                 success : function(data) {
-                	console.log(data);
+                	console.log("Data"+data);
                 	if(data!="")
                 	{
-	            		//console.log(data);
+	            		console.log(data);
 	            		//location.href = "patientprescmedicine";
 	            		if(data!=""){
 	            			$('.success-status').val('Data saved successfully');
@@ -519,6 +525,7 @@ var patientPrescMedicine = function () {
 	return {
 		//main function to initiate template pages
 		init: function () {
+			runOnPageLoad();
 		   runPrescriptionData();
 		   runPrescriptionDatePickers();
 		   runPatientPrescMedicineValidator();

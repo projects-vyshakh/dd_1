@@ -52,9 +52,9 @@
 						<p>
 							Something's wrong!
 							<br>
-							It looks as though we've broken something on our system.
+							It looks as invalid url.
 							<br>
-							Don't panic, we are fixing it! Please come back in a while.
+							
 						</p>
 					</div>
 				</div>

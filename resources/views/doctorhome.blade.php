@@ -195,9 +195,9 @@
                             <div class="form-group ">
                                 <div class="dd_my_from">
                                     <div class="dd_form_id">
-                                        {!! Form::text('id_city', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_city_new','maxlength'=>'3'));  !!}
-                                        {!! Form::text('id_doctor', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_doctor_new','maxlength'=>'3'));  !!}
-                                        {!! Form::text('id_patient', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_patient_new'));  !!}
+                                        {!! Form::text('id_city', null, $attributes = array('class'=>'dd_form_id_op_1 dd_border_0','placeholder' => '','id'=>'id_city_new','maxlength'=>'3'));  !!}
+                                        {!! Form::text('id_doctor', null, $attributes = array('class'=>'dd_form_id_op_2  dd_border_0','placeholder' => '','id'=>'id_doctor_new','maxlength'=>'3'));  !!}
+                                        {!! Form::text('id_patient', null, $attributes = array('class'=>'dd_form_id_op_3 dd_border_0','placeholder' => '','id'=>'id_patient_new','maxlength'=>'7'));  !!}
                                         <!-- <i class="fa fa-user"></i>  -->
                                     </div>
 
@@ -223,9 +223,9 @@
                             <div class="form-group ">
                                 <div class="dd_my_from">
                                     <div class="dd_form_id">
-                                        {!! Form::text('id_city', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_city_old','maxlength'=>'3'));  !!}
-                                        {!! Form::text('id_doctor', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_doctor_old','maxlength'=>'3'));  !!}
-                                        {!! Form::text('id_patient', null, $attributes = array('class'=>'dd_form_id dd_border_0','placeholder' => '','id'=>'id_patient_old'));  !!}
+                                        {!! Form::text('id_city', null, $attributes = array('class'=>'dd_form_id_op_1  dd_border_0','placeholder' => '','id'=>'id_city_old','maxlength'=>'3'));  !!}
+                                        {!! Form::text('id_doctor', null, $attributes = array('class'=>'dd_form_id_op_2 dd_border_0','placeholder' => '','id'=>'id_doctor_old','maxlength'=>'3'));  !!}
+                                        {!! Form::text('id_patient', null, $attributes = array('class'=>'dd_form_id_op_3  dd_border_0','placeholder' => '','id'=>'id_patient_old','maxlength'=>'7'));  !!}
                                         <!-- <i class="fa fa-user"></i>  -->
                                     </div>
 
@@ -271,7 +271,7 @@
 
 
         <footer>
-                <div class="navbar-fixed-bottom dd_footer" style="z-index: 20000; bottom: 0;">
+                <div class="navbar-fixed-bottom dd_footer" style="z-index: 20000; bottom: 0; ">
                   <div class="container " style="height:">
                     <div class="row">
                         <div class="col-sm-12">

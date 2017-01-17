@@ -1,11 +1,38 @@
 var doctorHome = function () {
 
 	var runOnPageLoad = function(){
-		
-		/*$('#id_city').bind('blur', function () {
-        
-    		jQuery(this).next("#id_doctor").focus();
-    	});*/
+      
+     
+		  var pathname = window.location.pathname;
+     
+      var rest = pathname.substring(0, pathname.lastIndexOf("/") + 1);
+      var last = pathname.substring(pathname.lastIndexOf("/") + 1, pathname.length);
+      
+
+
+		  if (window.history && window.history.pushState) {
+          window.history.pushState('', null, ''+last);
+          $(window).on('popstate', function() {
+               //alert('Back button was pressed.');
+
+              $.ajax({
+                type: "POST",
+                url: "flushAllSessions",
+                dataType :"JSON",
+                success: function(data) {
+                  
+                   //console.log(data)
+                   if(data==1){
+                      document.location.href = 'doctorlogin';
+                   }
+                   
+                },
+              });
+
+              //document.location.href = 'doctorlogin';
+
+          });
+      }
     	$('#id_city_new').keyup(function(){
     		var cityLength = $('#id_city_new').val().length;
     		var cityUpper  = $('#id_city_new').val().toUpperCase();
@@ -44,6 +71,43 @@ var doctorHome = function () {
 	        }
 	    });
 
+      $('#id_doctor_new').keyup(function(e){
+        if(e.keyCode == 8){
+           var doctorCodeLength = $('#id_doctor_new').val().length;
+           
+          if(doctorCodeLength==0){
+            $(this).prev().focus();
+          }
+        }
+      }); 
+      $('#id_patient_new').keyup(function(e){
+        if(e.keyCode == 8){
+           var patientCodeLength = $('#id_patient_new').val().length;
+           
+          if(patientCodeLength==0){
+            $(this).prev().focus();
+          }
+        }
+      }); 
+      $('#id_doctor_old').keyup(function(e){
+        if(e.keyCode == 8){
+           var doctorCodeLength = $('#id_doctor_old').val().length;
+           
+          if(doctorCodeLength==0){
+            $(this).prev().focus();
+          }
+        }
+      }); 
+      $('#id_patient_old').keyup(function(e){
+        if(e.keyCode == 8){
+           var patientCodeLength = $('#id_patient_old').val().length;
+           
+          if(patientCodeLength==0){
+            $(this).prev().focus();
+          }
+        }
+      }); 
+
 	};
 
 	var handleNewPatientIdValidation = function () {
@@ -75,17 +139,18 @@ var doctorHome = function () {
             rules: {
                id_city : {
                		minlength: 3,
-                    required: true,
-                    regex:"^[a-zA-Z- ]+$",
-                    maxlength : 3
+                  required: true,
+                  regex:"^[a-zA-Z- ]+$",
+                  maxlength : 3
 
                },
                id_doctor : {
                		minlength: 3,
-                    required: true,
-                    regex:"^[a-zA-Z- ]+$"
+                  required: true,
+                  regex:"^[a-zA-Z- ]+$"
                },
                id_patient : {
+                  minlength: 7,
                		required : true,
                		number : true,
                		maxlength : 7
@@ -96,16 +161,16 @@ var doctorHome = function () {
               
                 id_doctor : {
                		required : "Required Doctor code",
-               		minlength : "Please type a valid Doctor code.",
+               		minlength : "Please type a valid Doctor code(3 characters required).",
                 },
                 id_patient : {
                		required : "Required Patient code",
                		number   : "Please type a valid patient code",
-               		minlength : "Please type a valid patient code.",
+               		minlength : "Please type a valid Patient code (7 characters required).",
                 },
                 id_city : {
                		required : "Required City code",
-               		minlength : "Please type a valid city code.",
+               		minlength : "Please type a valid City code (3 characters required).",
                 },
                 
             },
@@ -166,40 +231,41 @@ var doctorHome = function () {
                 }
             },
             ignore: "",
-            rules: {
+           rules: {
                id_city : {
-               		minlength: 3,
-                    required: true,
-                    regex:"^[a-zA-Z- ]+$",
-                    maxlength : 3
+                  minlength: 3,
+                  required: true,
+                  regex:"^[a-zA-Z- ]+$",
+                  maxlength : 3
 
                },
                id_doctor : {
-               		minlength: 3,
-                    required: true,
-                    regex:"^[a-zA-Z- ]+$"
+                  minlength: 3,
+                  required: true,
+                  regex:"^[a-zA-Z- ]+$"
                },
                id_patient : {
-               		required : true,
-               		number : true,
-               		maxlength : 7
+                  minlength: 7,
+                  required : true,
+                  number : true,
+                  maxlength : 7
 
                },
             },
             messages: {
               
                 id_doctor : {
-               		required : "Required Doctor code",
-               		minlength : "Please type a valid Doctor code.",
+                  required : "Required Doctor code",
+                  minlength : "Please type a valid Doctor code(3 characters required).",
                 },
                 id_patient : {
-               		required : "Required Patient code",
-               		number   : "Please type a valid patient code",
-               		minlength : "Please type a valid patient code.",
+                  required : "Required Patient code",
+                  number   : "Please type a valid patient code",
+                  minlength : "Please type a valid Patient code (7 characters required).",
                 },
                 id_city : {
-               		required : "Required City code",
-               		minlength : "Please type a valid city code.",
+                  required : "Required City code",
+                  minlength : "Please type a valid City code (3 characters required).",
                 },
                 
             },

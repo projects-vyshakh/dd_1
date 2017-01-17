@@ -77,7 +77,7 @@ if(!empty($doctorData)){
 						{!! Form::text('weight', $vitalExist->weight, $attributes = array('class'=>'form-control','data-validetta'=>"required,minLength[2],maxLength[3]"));  !!}
 						</span>
 					</div>
-				 {!! Form::label('height', 'Height (cm)', $attributes = array('class'=>"col-sm-2"));  !!} 
+					{!! Form::label('height', 'Height (cm)', $attributes = array('class'=>"col-sm-2"));  !!} 
 					<div class="col-sm-2">
 						<span>
 						{!! Form::text('height', $vitalExist->height, $attributes = array('class'=>'form-control','data-validetta'=>"required,minLength[2],maxLength[3]"));  !!}
