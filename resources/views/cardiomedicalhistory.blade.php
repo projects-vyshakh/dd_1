@@ -139,6 +139,13 @@ if(!empty($medicalHistoryPresentPastMore)){
                 </div>
               @endif
 
+              	@if(empty($patientPersonalData))
+	                <div class="alert alert-danger display-none" style="display: block;">
+	                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+	                          {{"Please save patient personal information."}}
+	                </div>
+	            @endif
+
 			<!-- start: TEXT FIELDS PANEL -->
 			<div class="panel">
 				
@@ -2149,13 +2156,23 @@ if(!empty($medicalHistoryPresentPastMore)){
 					</div>	
 					
 					<hr>
-
-					<div class="form-group">
-						<div class="col-sm-10"></div>
-						<div class="col-sm-12">
-							<button type="submit" class="btn btn-primary btn-block btn-medical-save dd_save"><!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->Save</button>
+					@if(!empty($patientPersonalData))
+						<div class="form-group">
+							<div class="col-sm-10"></div>
+							<div class="col-sm-12">
+								<button type="submit" class="btn btn-primary btn-block btn-medical-save dd_save "><!-- <i class="fa fa-floppy-o"></i> --> Save</button>
+							</div>
 						</div>
-					</div>
+					@else
+						<div class="form-group">
+							<div class="col-sm-10"></div>
+							<div class="col-sm-12">
+								<button type="submit" class="btn btn-primary btn-block btn-medical-save dd_save " disabled="disabled"><!-- <i class="fa fa-floppy-o"></i> --> Save
+								</button>
+							</div>
+						</div>
+					@endif
+					
 					
 					{!! Form::close() !!}
 				</div>

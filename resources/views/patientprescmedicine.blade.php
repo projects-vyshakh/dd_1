@@ -177,6 +177,13 @@ if(!empty($prescMedicine)){
 						                          {{$success}}
 						                </div>
 						              @endif
+
+						              	@if(empty($patientPersonalData))
+							                <div class="alert alert-danger display-none" style="display: block;">
+							                  	<a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+							                        {{"Please save patient personal information."}}
+							                </div>
+						            	@endif
 								</div>
 							</div>
 						</div>
@@ -239,26 +246,26 @@ if(!empty($prescMedicine)){
 																</td>
 																<td>
 																    <div class="dd_dosage1_text">
-																    	{!! Form::text('dosage'.$index, (!empty($prescMedicineVal->dosage))?$prescMedicineVal->dosage:Input::old('dosage'.$index), $attributes = array('class'=>'input-mini ng-pristine ng-valid dd_remove_padding'));  !!}
+																    	{!! Form::text('dosage'.$index, (!empty($prescMedicineVal->dosage) && ($prescMedicineVal->dosage!=0))?$prescMedicineVal->dosage:Input::old('dosage'.$index), $attributes = array('class'=>'input-mini ng-pristine ng-valid dd_remove_padding'));  !!}
 
 																    	{!! Form::select('dosage_unit'.$index, $dosageUnit,(!empty($prescMedicineVal->dosage_unit))?$prescMedicineVal->dosage_unit:Input::old('dosage_unit'.$index), $attributes = array('class'=>''));  !!}
 																	</div>
 																</td>
 																<td>
 																	<div class="dd_dosage1_text">
-																		{!! Form::text('duration'.$index, (!empty($prescMedicineVal->duration))?$prescMedicineVal->duration:Input::old('duration'.$index), $attributes = array('class'=>'input-mini ng-pristine ng-valid'));  !!}
+																		{!! Form::text('duration'.$index, (!empty($prescMedicineVal->duration) && ($prescMedicineVal->duration!=0))?$prescMedicineVal->duration:Input::old('duration'.$index), $attributes = array('class'=>'input-mini ng-pristine ng-valid'));  !!}
 																			
 																		{!! Form::select('duration_unit'.$index, $drugDurationUnit,(!empty($prescMedicineVal->duration_unit))?$prescMedicineVal->duration_unit:Input::old('duration_unit'.$index), $attributes = array('class'=>''));  !!}
 																	</div>
 																</td>
 																<td>
-																	{!! Form::text('morning'.$index, (!empty($prescMedicineVal->morning))?$prescMedicineVal->morning:Input::old('morning'.$index), $attributes = array('class'=>'col-sm-10 morning'));  !!}
+																	{!! Form::text('morning'.$index, (!empty($prescMedicineVal->morning) && ($prescMedicineVal->morning!=0) )?$prescMedicineVal->morning:Input::old('morning'.$index), $attributes = array('class'=>'col-sm-10 morning'));  !!}
 																</td>
 																<td>
-																	{!! Form::text('noon'.$index, (!empty($prescMedicineVal->noon))?$prescMedicineVal->noon:Input::old('noon'.$index), $attributes = array('class'=>'col-sm-10 noon'));  !!}
+																	{!! Form::text('noon'.$index, (!empty($prescMedicineVal->noon) && ($prescMedicineVal->noon!=0))?$prescMedicineVal->noon:Input::old('noon'.$index), $attributes = array('class'=>'col-sm-10 noon'));  !!}
 																</td>
 																<td>
-																	{!! Form::text('night'.$index, (!empty($prescMedicineVal->night))?$prescMedicineVal->night:Input::old('night'.$index), $attributes = array('class'=>'col-sm-10 night'));  !!}
+																	{!! Form::text('night'.$index, (!empty($prescMedicineVal->night) && ($prescMedicineVal->night!=0))?$prescMedicineVal->night:Input::old('night'.$index), $attributes = array('class'=>'col-sm-10 night'));  !!}
 																</td>
 																<td></td>
 															</tr>
@@ -407,7 +414,7 @@ if(!empty($prescMedicine)){
 														    <div class="dd_dosage1_text">
 														    	{!! Form::text('dosage1', Input::old('dosage1'), $attributes = array('class'=>'input-mini ng-pristine ng-valid dd_remove_padding'));  !!}
 
-														    	{!! Form::select('dosage_unit', $dosageUnit,Input::old('dosage_unit1'), $attributes = array('class'=>''));  !!}
+														    	{!! Form::select('dosage_unit1', $dosageUnit,Input::old('dosage_unit1'), $attributes = array('class'=>''));  !!}
 															</div>
 														</td>
 														<td>
@@ -482,14 +489,22 @@ if(!empty($prescMedicine)){
 											</div>
 										</div>
 									<hr style="margin-top:30px;">
-										<div class="">
+										@if(!empty($patientPersonalData))
 											<div class="form-group">
+												<div class="col-sm-10"></div>
 												<div class="col-sm-12">
-													<button type="submit" class="btn btn-primary presc-save dd_btn_center"><!-- <i class="fa fa-floppy-o dd_pres_save_icon" aria-hidden="true"></i> -->Save</button>
-													<!-- <input type="submit" class="btn btn-primary presc-save dd_btn_center" value="Save"> -->
+													<button type="submit" class="btn btn-primary btn-block dd_save presc-save"><!-- <i class="fa fa-floppy-o"></i> --> Save</button>
 												</div>
 											</div>
-										</div>
+										@else
+											<div class="form-group">
+												<div class="col-sm-10"></div>
+												<div class="col-sm-12">
+													<button type="submit" class="btn btn-primary btn-block dd_save " disabled="disabled"><!-- <i class="fa fa-floppy-o"></i> --> Save
+													</button>
+												</div>
+											</div>
+										@endif
 								</div>
 							</div>
 						</div>

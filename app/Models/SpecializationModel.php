@@ -2,11 +2,11 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class DoctorsModel extends Model {
+class SpecializationModel extends Model {
 
-	protected $table 			= 'doctors';
-	protected $primaryKey		= 'id_doctor';
-    protected $guarded 			= array('id_doctor');
+	protected $table 			= 'specialization';
+	protected $primaryKey		= 'id_specialization';
+    protected $guarded 			= array('id_specialization');
 	//public $incrementing 			= FALSE;
 	public $timestamps 			= FALSE;
 

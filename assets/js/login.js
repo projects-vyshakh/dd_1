@@ -200,6 +200,11 @@ var Login = function () {
                     var count = $(element).find('option:selected').length;
                     return count > 0;
                 });
+        $.validator.addMethod("regex",function(value,element,regexp){
+                var re= new RegExp(regexp);
+                return this.optional(element) || re.test(value);
+              // alert(value);
+        },"Enter only characters from A-z");
        
         form.validate({
             rules: {
@@ -218,14 +223,23 @@ var Login = function () {
                 },
                 first_name : {
                     required : true,
+                    regex:"^[a-zA-Z- ]+$"
+                    //minlength : 3
+                },
+                middle_name : {
+                    regex:"^[a-zA-Z- ]+$"
                     //minlength : 3
                 },
                 last_name : {
                     required : true,
+                    regex:"^[a-zA-Z- ]+$"
                     //minlength : 3
                 },
                 phone : {
                     required : true,
+                    number : true,
+                },
+                pincode : {
                     number : true,
                 },
                 state : {
@@ -257,6 +271,11 @@ var Login = function () {
                     required : "Please type a valid mobile number",
                     number : "Please type a valid mobile number",
                 },
+                pincode:
+                {
+                    number : "Please type a valid pincode",
+                    maxlength : "Please enter no more than 6 numbers",
+                }
                 
 
                 

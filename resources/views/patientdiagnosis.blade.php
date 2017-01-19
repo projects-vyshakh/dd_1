@@ -61,6 +61,13 @@ if(!empty($doctorData)){
                           {{$success}}
                 </div>
               @endif
+
+              	@if(empty($patientPersonalData))
+	                <div class="alert alert-danger display-none" style="display: block;">
+	                  	<a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+	                        {{"Please save patient personal information."}}
+	                </div>
+            	@endif
 		</div>
 		
 	</div>
@@ -69,78 +76,93 @@ if(!empty($doctorData)){
 		{!! Form::open(array('route' => 'addPatientDiagnosis', 'role'=>'form', 'id'=>'addPatientDiagnosis', 'class'=>'form-horizontal','novalidate'=>'novalidate')) !!}	
 		<div class="for-group">
 			<div class="col-sm-12 dd_dignosis_dummy">
-					@if(!empty($diag))
-							<div class="form-group">
-										{!! Form::label('symptoms', 'Symptoms', $attributes = array('class'=>"col-sm-2"));  !!}
-										<div class="col-sm-10">
-												<?php	$diagSymptoms = array_filter(json_decode($diag->diag_symptoms)); ?>
-												<span>
-														{!! Form::select('symptoms[]', $symptoms, $diagSymptoms, $attributes = array('class' => 'tokenize-sample','id'=>'symptoms','multiple' => 'multiple','name'=>'symptoms[]')); !!}
-												</span>
-										</div>
+				@if(!empty($diag))
+					<div class="form-group">
+						{!! Form::label('symptoms', 'Symptoms', $attributes = array('class'=>"col-sm-2"));  !!}
+						<div class="col-sm-10">
+							<?php	
+								$diagSymptoms = array_filter(json_decode($diag->diag_symptoms)); 
+							?>
+							<span>
+									{!! Form::select('symptoms[]', $symptoms, $diagSymptoms, $attributes = array('class' => 'tokenize-sample','id'=>'symptoms','multiple' => 'multiple','name'=>'symptoms[]')); !!}
+							</span>
+						</div>
+					</div>
+					<div class="form-group">
+						{!! Form::label('syndromes', 'Syndromes', $attributes = array('class'=>"col-sm-2"));  !!}
+							<div class="col-sm-10">
+								<span>
+									{!! Form::textarea('syndromes',$diag->diag_syndromes,['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
+								</span>
 							</div>
-							<div class="form-group">
-									{!! Form::label('syndromes', 'Syndromes', $attributes = array('class'=>"col-sm-2"));  !!}
-									<div class="col-sm-10">
-											<span>
-													{!! Form::textarea('syndromes',$diag->diag_syndromes,['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
-											</span>
-									</div>
+					</div>
+					<div class="form-group">
+						{!! Form::label('suspected_disease', 'Suspected Disease', $attributes = array('class'=>"col-sm-2"));  !!}
+							<?php 
+								var_dump($diag->diag_suspected_diseases);
+								$diagDiseases = array_filter(json_decode($diag->diag_suspected_diseases)); ?>
+							<div class="col-sm-10">
+								<span>
+									{!! Form::select('diseases[]', $diseases, $diagDiseases , $attributes = array('class' => 'tokenize-sample','id'=>'diseases','multiple' => 'multiple','name'=>'diseases[]')); !!}
+								</span>
 							</div>
-							<div class="form-group">
-									{!! Form::label('suspected_disease', 'Suspected Disease', $attributes = array('class'=>"col-sm-2"));  !!}
-									<?php $diagDiseases = array_filter(json_decode($diag->diag_suspected_diseases)); ?>
-									<div class="col-sm-10">
-											<span>
-													{!! Form::select('diseases[]', $diseases, $diagDiseases , $attributes = array('class' => 'tokenize-sample','id'=>'diseases','multiple' => 'multiple','name'=>'diseases[]')); !!}
-											</span>
-									</div>
+					</div>
+					<div class="form-group">
+							{!! Form::label('additional_comment', 'Additional Comment', $attributes = array('class'=>"col-sm-2"));  !!}
+							<div class="col-sm-10">
+								{!! Form::textarea('additional_comment',$diag->diag_comment,['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
 							</div>
-							<div class="form-group">
-									{!! Form::label('additional_comment', 'Additional Comment', $attributes = array('class'=>"col-sm-2"));  !!}
-									<div class="col-sm-10">
-											{!! Form::textarea('additional_comment',$diag->diag_comment,['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
-									</div>
-							</div>
+					</div>
 				@else
-						<div class="form-group">
-								{!! Form::label('symptoms', 'Symptoms', $attributes = array('class'=>"col-sm-2"));  !!}
-								<div class="col-sm-10">
-									<span>
-											{!! Form::select('symptoms[]', $symptoms, Input::old('symptoms'), $attributes = array('class' => 'tokenize-sample','id'=>'symptoms','multiple' => 'multiple','name'=>'symptoms[]')); !!}
-									</span>
-								</div>
+					<div class="form-group">
+						{!! Form::label('symptoms', 'Symptoms', $attributes = array('class'=>"col-sm-2"));  !!}
+						<div class="col-sm-10">
+							<span>
+								{!! Form::select('symptoms[]', $symptoms, Input::old('symptoms'), $attributes = array('class' => 'tokenize-sample','id'=>'symptoms','multiple' => 'multiple','name'=>'symptoms[]')); !!}
+							</span>
 						</div>
-						<div class="form-group">
-								{!! Form::label('syndromes', 'Syndromes', $attributes = array('class'=>"col-sm-2"));  !!}
-								<div class="col-sm-10">
-									<span>
-											{!! Form::textarea('syndromes',Input::old('syndromes'),['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
-									</span>
-								</div>
+					</div>
+					<div class="form-group">
+						{!! Form::label('syndromes', 'Syndromes', $attributes = array('class'=>"col-sm-2"));  !!}
+						<div class="col-sm-10">
+							<span>
+								{!! Form::textarea('syndromes',Input::old('syndromes'),['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
+							</span>
 						</div>
-						<div class="form-group">
-								{!! Form::label('suspected_disease', 'Suspected Disease', $attributes = array('class'=>"col-sm-2"));  !!}
-								<div class="col-sm-10">
-										<span>
-												{!! Form::select('diseases[]', $diseases, Input::old('diseases'), $attributes = array('class' => 'tokenize-sample','id'=>'diseases','multiple' => 'multiple','name'=>'diseases[]')); !!}
-										</span>
-								</div>
+					</div>
+					<div class="form-group">
+						{!! Form::label('suspected_disease', 'Suspected Disease', $attributes = array('class'=>"col-sm-2"));  !!}
+						<div class="col-sm-10">
+							<span>
+								{!! Form::select('diseases[]', $diseases, Input::old('diseases'), $attributes = array('class' => 'tokenize-sample','id'=>'diseases','multiple' => 'multiple','name'=>'diseases[]')); !!}
+							</span>
 						</div>
-						<div class="form-group">
-								{!! Form::label('additional_comment', 'Additional Comment', $attributes = array('class'=>"col-sm-2"));  !!}
-								<div class="col-sm-10">
-									{!! Form::textarea('additional_comment',Input::old('additional_comment'),['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
-								</div>
+					</div>
+					<div class="form-group">
+						{!! Form::label('additional_comment', 'Additional Comment', $attributes = array('class'=>"col-sm-2"));  !!}
+						<div class="col-sm-10">
+							{!! Form::textarea('additional_comment',Input::old('additional_comment'),['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
 						</div>
+					</div>
 				@endif
 					
 					<hr>
-					<div class="form-group ">
+					@if(!empty($patientPersonalData))
+						<div class="form-group">
+							<div class="col-sm-10"></div>
 							<div class="col-sm-12">
-										<button type="submit" class="btn btn-primary btn-block dd_btn_center"><!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->Save</button>
+								<button type="submit" class="btn btn-primary btn-block dd_save "><!-- <i class="fa fa-floppy-o"></i> --> Save</button>
 							</div>
-					</div>
+						</div>
+					@else
+						<div class="form-group">
+							<div class="col-sm-10"></div>
+							<div class="col-sm-12">
+								<button type="submit" class="btn btn-primary btn-block dd_save " disabled="disabled"><!-- <i class="fa fa-floppy-o"></i> --> Save
+								</button>
+							</div>
+						</div>
+					@endif
 			</div>
 		</div>
 		<hr>
@@ -181,8 +203,9 @@ if(!empty($doctorData)){
 	<script>
 
 		jQuery(document).ready(function() {
+				Main.init();
 				patientElements.init();
-			   
+			    
 			$(window).load(function() {
 				$(".loader").fadeOut("slow");
 				

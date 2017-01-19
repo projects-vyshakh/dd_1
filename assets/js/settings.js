@@ -230,12 +230,45 @@ var generalSettings = function () {
             rules: {
              	print_header : { 
              		required : true,
-             	}
+             	},
+             	 top: {
+                    number : true,
+                   	range:[0,9],
+                },
+                bottom: {
+                   number : true,
+                   	range:[0,9],
+                },
+                left : {
+                    number : true,
+                    range:[0,9],
+                },
+                right : {
+                    number : true,
+                   	range:[0,9],
+                },
             },
             messages: {
               	print_header : { 
              		required : "Please choose an option",
-             	}
+             	},
+             	top : {
+                   	number : "Please type a valid number",
+                    range : "Number must be less than 10",
+                },
+                bottom : {
+                    number : "Please type a valid number",
+                    range : "Number must be less than 10",
+                },
+                left : {
+                   number : "Please type a valid number",
+                    range : "Number must be less than 10",
+                },
+                right:
+                {
+                    number : "Please type a valid number",
+                    range : "Number must be less than 10",
+                }
                 
             },
             invalidHandler: function (event, validator) { //display error alert on form submit
@@ -270,12 +303,15 @@ var generalSettings = function () {
      
     };
 
+    
+
 	return {
 		//main function to initiate template pages
 		init: function () {
-		   runPrintSettings();
-		   handlePrintSettingsValidations();
-		   
+			//runPrintSettingslimit();
+		  	runPrintSettings();
+		   	handlePrintSettingsValidations();
+		  
 		}
     };
 }();

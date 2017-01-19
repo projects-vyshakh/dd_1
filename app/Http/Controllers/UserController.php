@@ -148,31 +148,13 @@ class UserController extends Controller {
     	}*/
 
     	//$patientsLists = PatientsModel::all();
-    	$patientsLists = DB::table('testServices')->get();
     	
-    	return view('patientsearch',array('userName'=>$userName,'userId'=>$userId,'patientsLists'=>$patientsLists));
+    	
+    	return view('patientsearch',array('userName'=>$userName,'userId'=>$userId));
     	
     }
 
-    public function getPatientList(){
-    	
-    	//$patientsLists = DB::table('testServices')->get();
-    	
-    	$data = array(
-                            array('Name'=>'parvez', 'Empid'=>11, 'Salary'=>101),
-                            array('Name'=>'alam', 'Empid'=>1, 'Salary'=>102),
-                            array('Name'=>'phpflow', 'Empid'=>21, 'Salary'=>103)                            );
-             
-
-		    $results = array(
-		            "sEcho" => 1,
-		        "iTotalRecords" => count($data),
-		        "iTotalDisplayRecords" => count($data),
-		          "aaData"=>$data);
-		
-
-		echo json_encode($results);
-    }
+   
 
     public function handleSearchPatient(){
     	$input 			= Request::all();
@@ -202,8 +184,96 @@ class UserController extends Controller {
 
     }
 
+    public function showDoctorSearch(){
+    	$userName = Session::get('user_name');
+    	$userId   = Session::get('user_id');
+
+    	//$dataArray = array();
+    	/*for($i=80483;$i<100000;$i++){
+    		$data = array('title'=>'vy'.$i);
+    		//array_push($dataArray, $data);s
+    		echo 'vy'.$i;
+    		echo "</br>";
+    		DB::table('testServices')->insert($data);
+    	}*/
+
+    	//$patientsLists = PatientsModel::all();
+    	
+    	
+    	return view('doctorsearch',array('userName'=>$userName,'userId'=>$userId));
+    	
+    }
+
+    public function handleSearchDoctor(){
+
+    	$input 			= Request::all();
+    	$doctorId 		= $input['searchby_id'];
+    	$doctorName 	= $input['searchby_name'];
 
 
+
+           /* $data = DoctorsModel::where('id_doctor', 'like', '%'.$doctorId.'%')
+            		->leftJoin('specialization As s','s.id_specialization','=',)
+            		->where('first_name', 'like', '%'.$doctorName.'%')
+            		->orderBy('first_name', 'ASC')
+            	    ->get();
+
+            	    dd($data);*/
+
+           	$data = DB::table('doctors as d')->where('id_doctor', 'like', '%'.$doctorId.'%')
+           			->leftJoin('specialization As s','s.id_specialization','=','d.specialization')
+            		->where('first_name', 'like', '%'.$doctorName.'%')
+            		->orderBy('first_name', 'ASC')
+            	    ->get();
+
+              
+
+		    $results = array(
+		            "sEcho" => 1,
+		        "iTotalRecords" => count($data),
+		        "iTotalDisplayRecords" => count($data),
+		          "aaData"=>$data);
+		
+
+		echo json_encode($results);
+
+		
+    	
+    	
+
+    }
+
+    public function showDoctorAuthorize(){
+    	$userName = Session::get('user_name');
+    	$userId   = Session::get('user_id');
+	
+    	return view('doctorauthorize',array('userName'=>$userName,'userId'=>$userId));
+    }
+    public function handleDoctorAuthorize(){
+
+    	//$data = DoctorsModel::where('registration_status','=','0')->get();
+           	$data = DB::table('doctors as d')
+           	            ->where('registration_status','=','0')
+           			    ->leftJoin('specialization As s','s.id_specialization','=','d.specialization')
+            		    ->orderBy('d.first_name', 'ASC')
+            	        ->get();
+
+              
+
+		    $results = array(
+		            "sEcho" => 1,
+		        "iTotalRecords" => count($data),
+		        "iTotalDisplayRecords" => count($data),
+		          "aaData"=>$data);
+		
+
+		echo json_encode($results);
+
+		
+    	
+    	
+
+    }
 
 
 

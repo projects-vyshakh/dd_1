@@ -177,12 +177,9 @@ class SettingsController extends Controller {
 		$patientId = Session::get('patientId');
 		$doctorId  = Session::get('doctorId');
 
-		if(empty($patientId)){
-			//header('location:doctorlogin');
-			return Redirect::to('logout');
-		}
-		else{
-			    $patientData 	= DB::table('patients')->where('id_patient','=',$patientId)->get();
+		if(!empty($doctorId)){
+			if(!empty($patienId)){
+				$patientData 	= DB::table('patients')->where('id_patient','=',$patientId)->get();
 			    $doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 			   	$printData 		= DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
 				
@@ -194,8 +191,20 @@ class SettingsController extends Controller {
 				
 		
 
-			return view('printsetup',array('patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'printData'=>$printData,'printUnits'=>$printUnits,'diagYesNo'=>$diagYesNo));
+				return view('printsetup',array('patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'printData'=>$printData,'printUnits'=>$printUnits,'diagYesNo'=>$diagYesNo));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>"You are not authorised to view the page"));
+			}
 		}
+		else{
+			return Redirect::to('logout');
+		}
+		
+			
+		
+
+		
 	}
 	
 	public function addPrintSettings(){
@@ -319,5 +328,66 @@ class SettingsController extends Controller {
 
 		return json_encode($printData);
 	}
+
+	public function patientPreviousTreatmentPrint(){
+		$input = Request::all();
+
+		$createdDate 	= $input['created_date'];
+		$specialization = Session::get('doctorSpecialization');;
+		$patientId 		= Session::get('patientId');
+		$doctorId 		= Session::get('doctorId');
+		
+		$todayDate 		= date('Y-m-d');
+		$splitDate 		= explode('-',$todayDate);
+
+		$pdfFileName = $patientId."_".$splitDate[0].$splitDate[1].$splitDate[2];
+
+		
+
+		$prescriptionData    = DB::table('prescription')
+									->where('created_date','LIKE','%'.$createdDate.'%')
+		                            ->where('id_patient','=',$patientId)
+		                            
+		                            ->get();
+
+		$printData = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
+
+		  //return $prescriptionData;
+		  //die();
+
+		$parametersArray = array('prescriptionData'=>$prescriptionData,'printData'=>$printData);
+
+
+		switch ($specialization) {
+			case '1':
+				$pdf = App::make('dompdf.wrapper');
+		        //$pdf->loadHTML('<h1>Test</h1>');
+		        $view =  View::make('previoustreatmentprescprint',$parametersArray)->render();
+		         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+
+		        return $pdfFileName;
+		        
+		    	//return $pdf->stream($pdfFileName.'.'.'pdf');
+		    	//return $pdf->inline();
+				break;
+
+			case '2':
+				$pdf = App::make('dompdf.wrapper');
+		        //$pdf->loadHTML('<h1>Test</h1>');
+		        $view =  View::make('previoustreatmentprescprint',$parametersArray)->render();
+		         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+
+		        return $pdfFileName;
+		        
+		    	//return $pdf->stream($pdfFileName.'.'.'pdf');
+		    	//return $pdf->inline();
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+	}
+
 
 }

@@ -72,6 +72,13 @@ if(!empty($doctorData)){
                           {{$success}}
                 </div>
               @endif
+
+              	@if(empty($patientPersonalData))
+	                <div class="alert alert-danger display-none" style="display: block;">
+	                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+	                          {{"Please save patient personal information."}}
+	                </div>
+	            @endif
 		</div>
 		<div class="col-sm-8">
 			<h3 class="dd_h3_Pd_t_0">General Examination</h3>
@@ -540,16 +547,28 @@ if(!empty($doctorData)){
 							</div>
 						</div>
 					</div>
-					<div class="form-group dd_fromgroup_MG_0">
-							 	<div class="col-sm-12 ">
-									<div class="col-sm-12">
-										<button type="submit" class="btn btn-primary btn-block dd_btn_center">
-										<!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
-										Save
-										</button>
-									</div>
+					@if(!empty($patientPersonalData))
+						<div class="form-group dd_fromgroup_MG_0">
+						 	<div class="col-sm-12 ">
+								<div class="col-sm-12">
+									<button type="submit" class="btn btn-primary btn-block dd_btn_center"><!-- <i class="fa fa-floppy-o"></i> --> Save</button>
+									</button>
 								</div>
 							</div>
+						</div>
+					
+					@else
+						<div class="form-group dd_fromgroup_MG_0">
+						 	<div class="col-sm-12 ">
+								<div class="col-sm-12">
+									<button type="submit" class="btn btn-primary btn-block dd_btn_center" " disabled="disabled"><!-- <i class="fa fa-floppy-o"></i> --> Save</button>
+									</button>
+								</div>
+							</div>
+						</div>
+					
+					@endif
+				
 				</div>			
 			@endif
 				

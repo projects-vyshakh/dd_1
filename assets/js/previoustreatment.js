@@ -195,7 +195,9 @@ var patientPrevElements = function () {
                                                             '</div>'+
                                                             '<div class="col-sm-2">Duration'+
                                                             '</div>'+
-                                                            '<div class="col-sm-4">Frequecy'+
+                                                            '<div class="col-sm-2">Frequency'+
+                                                            '</div>'+
+                                                            '<div class="col-sm-2">Start Date'+
                                                             '</div>'+
                                                         '</div>'+
                                                     '</div>'+
@@ -791,9 +793,61 @@ var patientPrevElements = function () {
                     if(createdDate==data.originalCreatedDateDup[dup]){
                         
                         
-                        $('.pdfopen').show();
+                        //$('.pdfopen').show();
+
+                        
+                       
+                        if(data.prescMedicineData[p].dosage=='' || data.prescMedicineData[p].dosage==0){
+                            var dosage = '--';
+                        }
+                        else{
+                            var dosage = data.prescMedicineData[p].dosage+' '+data.prescMedicineData[p].dosage_unit;
+                        }
+
+                        if(data.prescMedicineData[p].duration=='' || data.prescMedicineData[p].duration==0){
+                            var duration = '--';
+                        }
+                        else{
+                            var duration = data.prescMedicineData[p].duration+' '+data.prescMedicineData[p].duration_unit;
+                        }
+
+                        if(data.prescMedicineData[p].morning=='' || data.prescMedicineData[p].morning==0){
+                            var morning = '--';
+                        }
+                        else{
+                            var morning = data.prescMedicineData[p].morning;
+                        }
+                        if(data.prescMedicineData[p].noon=='' || data.prescMedicineData[p].noon==0){
+                            var noon = '--';
+                        }
+                        else{
+                            var noon = data.prescMedicineData[p].noon;
+                        }
+                        if(data.prescMedicineData[p].night=='' || data.prescMedicineData[p].night==0){
+                            var night = '--';
+                        }
+                        else{
+                            var night = data.prescMedicineData[p].night;
+                        }
+
+                        if(data.prescMedicineData[p].start_date=='' || data.prescMedicineData[p].start_date=='0000-00-00'){
+                            var startDate = '--';
+                        }
+                        else{
+                            
+                            var dateObj = new Date(data.prescMedicineData[p].start_date);
+                            var month   = dateObj.getUTCMonth() + 1; //months from 1-12
+                            var day     = dateObj.getUTCDate();
+                            var year    = dateObj.getUTCFullYear();
+
+                            (day<10)?day = '0'+day:day=day;
+                            (month<10)?month = '0'+month:month=month;
+
+                            var startDate = day+"-"+month+"-"+year;
+                        }
 
 
+                         
                         $('#presc_content'+dup).append(
                             '<div class="panel-body dd_panel_body_pd">'+
                                 '<div class="col-sm-12">'+
@@ -803,21 +857,20 @@ var patientPrevElements = function () {
                                                 data.prescMedicineData[p].drug_name+
                                             '</li></div>'+
                                             '<div class="col-sm-2">'+
-                                               data.prescMedicineData[p].dosage+' '+data.prescMedicineData[p].dosage_unit+
+                                                dosage+
                                             '</div>'+
                                             '<div class="col-sm-2">'+
-                                               data.prescMedicineData[p].duration+' '+data.prescMedicineData[p].duration_unit+
+                                               duration+
                                             '</div>'+
-                                            '<div class="col-sm-4">'+
+                                            '<div class="col-sm-2">'+
                                               
-                                               data.prescMedicineData[p].morning+' - '+
+                                                morning+' - '+
+                                                noon+' - '+
+                                                night+
                                                
-                                                
-                                                data.prescMedicineData[p].noon+' - '+
-                                               
-                                                
-                                                data.prescMedicineData[p].night+
-                                               
+                                            '</div>'+
+                                            '<div class="col-sm-2">'+
+                                                startDate+
                                             '</div>'+
                                         '</div>'+
                                     '</div>'+

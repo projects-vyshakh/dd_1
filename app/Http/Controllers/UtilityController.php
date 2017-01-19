@@ -153,6 +153,7 @@ class UtilityController extends Controller {
 		       
 		        
 		        		$pdf->loadHTML($view)->setWarnings(false)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+		        		// return Redirect::to('prescriptionshare')->with(array('pdfFileName'=>$pdfFileName,'parametersArray'=>$parametersArray));
 					 	return Redirect::to('prescriptionshare')->with(array('pdfFileName'=>$pdfFileName));
 					}
 					catch (\Exception $e)

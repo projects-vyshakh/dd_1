@@ -1061,7 +1061,9 @@ $todayDate = date('d-M-Y');
                     @if($currentPath == 'userhome' || 
                         $currentPath == 'userpersonalinformation' ||
                         $currentPath == 'patientsearch' ||
-                        $currentPath == 'doctorsearch')
+                        $currentPath == 'doctorsearch' ||
+                        $currentPath == 'authorize' ||
+                        $currentPath == 'doctorauthorize')
                         
                          <div id="user-side-menu">
                             <ul class="main-navigation-menu">
@@ -1077,32 +1079,44 @@ $todayDate = date('d-M-Y');
                                         <span class="title"> Personal Information </span><span class="selected"></span>
                                     </a>
                                 </li>
-                                <li @if($currentPath=='patientsearch' || $currentPath == 'doctorsearch') class="active" @endif>
+                                <li @if($currentPath == 'patientsearch' || 
+                                        $currentPath == 'doctorsearch') class="active" 
+                                    @endif>
                                     <a href="javascript:void(0)">
-                                  
                                         <span class="dd_input_icon_Medicine"></span>
                                         <span class="title"> Search </span><span class="selected"></span>
+                                            <span class="selected"></span>
                                     </a>
-                                  
                                     <ul class="sub-menu">
-                                        <li  @if($currentPath == 'patientsearch') class="active open" @endif>
+                                        <li @if($currentPath == 'patientsearch') class="active" @endif>
                                             <a href="patientsearch">
                                                 <span class="title"> Patients </span>
                                             </a>
                                         </li>
-                                       
-                                        
-                                    </ul> 
-                                    <ul class="sub-menu">
-                                        <li  @if($currentPath == 'doctorsearch') class="active open" @endif>
+                                        <li @if($currentPath == 'doctorsearch') class="active" @endif>
                                             <a href="doctorsearch">
                                                 <span class="title"> Doctors </span>
                                             </a>
                                         </li>
-                                       
-                                        
-                                    </ul>           
+                                    </ul>
                                 </li>
+                                <li @if($currentPath == 'doctorauthorize' ) class="active"  @endif>
+                                   
+                                    <a href="javascript:void(0)">
+                                        <span class="dd_input_icon_Medicine"></span>
+                                        <span class="title"> Authorize </span><span class="selected"></span>
+                                            <span class="selected"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li @if($currentPath == 'doctorauthorize') class="active" @endif>
+                                            <a href="doctorauthorize">
+                                                <span class="title"> Doctors </span>
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </li>
+                               
                                 <!-- <li @if($currentPath=='userjsonimport') class="active " @endif>
                                     <a href="javascript:void(0)">
                                   
@@ -1135,7 +1149,11 @@ $todayDate = date('d-M-Y');
                                 <div class="col-sm-8">
                                     @if($currentPath == 'patientprofilemanagement' || $currentPath == 'patientprofileprevtreatment' || $currentPath == 'patientprofileedit' || $currentPath == 'patientchangepassword')
                                     @else
-                                        @if($currentPath=='userhome' || $currentPath=='patientsearch' || $currentPath=='userjsonimport')
+                                        @if($currentPath=='userhome' || 
+                                            $currentPath=='patientsearch'  || 
+                                            $currentPath=='doctorsearch' || 
+                                            $currentPath == 'doctorauthorize')
+                                        
                                             <a style="font-size: 14px;text-decoration: none;float: left">
                                             USER ID: {{strtoupper($userId)}}
                                            
@@ -1152,7 +1170,7 @@ $todayDate = date('d-M-Y');
                                     @endif
                                 </div>
                                 <div class="">
-                                    @if($currentPath=='userhome' || $currentPath=='patientsearch' || $currentPath=='userjsonimport')
+                                    @if($currentPath=='userhome' || $currentPath=='patientsearch' || $currentPath=='doctorsearch' || $currentPath == 'doctorauthorize')
                                         <a style="font-size: 14px;text-decoration: none;float: right">
                                             USER NAME: {{strtoupper($userName)}}
                                         </a>
@@ -1161,7 +1179,7 @@ $todayDate = date('d-M-Y');
                                             DOCTOR NAME: {{strtoupper($doctorName)}}
                                         </a>
                                     @else
-                                        <a style="font-size: 14px;text-decoration: none;float: right">
+                                        <a style="font-size: 14px;text-decoration: none;float: right" class="patient_name_res">
                                             PATIENT NAME: {{strtoupper($patientName)}}
                                         </a>
                                     @endif
@@ -1233,6 +1251,7 @@ $todayDate = date('d-M-Y');
        headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
     });
     jQuery(document).ready(function() {
+        //Main.init();
         masterElements.init();
     });
   </script>

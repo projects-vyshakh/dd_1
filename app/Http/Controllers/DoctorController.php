@@ -24,6 +24,7 @@ use App\Models\MedicalHistoryModel;
 use App\Models\MedicalHistoryPresentPastModel;
 use App\Models\SurgeryHistoryModel;
 use App\Models\DrugAllergyHistoryModel;
+use App\Models\PrescriptionModel;
 
 class DoctorController extends Controller {
 
@@ -142,127 +143,157 @@ class DoctorController extends Controller {
 			return Redirect::to('logout');
 		}
 		else{
-			$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->orderBy('business_value')->lists('business_value', 'business_value');
+			if(!empty($patientId)){
+				$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->orderBy('business_value')->lists('business_value', 'business_value');
 		
-			$maritialStatus = DB::table('business_key_details')->where('business_key', '=', 'MARITIAL_STATUS')->lists('business_value', 'business_value');
+				$maritialStatus = DB::table('business_key_details')->where('business_key', '=', 'MARITIAL_STATUS')->lists('business_value', 'business_value');
+				
+				$country =  DB::table('countries')->select('country_name','sortname','id')->orderBy('country_name', 'asc')->lists('country_name', 'id'); 	
+
+				$doctorsList = DB::table('doctors')->select('first_name','last_name','id_doctor')->orderBy('first_name', 'asc')->lists('first_name', 'id_doctor'); 	
+				
+				
+				/*$state =  DB::table('states')->select('id','state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); 	*/
+				
+				$city =  DB::table('cities')->select('city_name','state_id')->orderBy('city_name', 'asc')->lists('city_name', 'city_name'); 	
+				    	
+
+				    if(in_array('', $gender)){
+				     	 array_unshift($gender, 'Female');
+				    }	
+				    if(!in_array('', $maritialStatus)){
+				     	 array_unshift($maritialStatus, '');
+				    } 
+				    if(!in_array('', $country)){
+				     	 array_unshift($country, '');
+				    } 
+				    /*if(!in_array('', $state)){
+				     	 array_unshift($state, '');
+				    } */
+				    if(!in_array('', $city)){
+				     	 array_unshift($city, '');
+				    }
+				   
+
+				    $patientId = Session::get('patientId');  		
+				    $patientData = DB::table('patients')
+				    						 ->where('id_patient','=',$patientId)->get();
+
+				    $doctorData = DB::table('doctors')
+				    						 ->where('id_doctor','=',$doctorId)->first();
+				    						 
+				//Log::info("Patientdata",array($patientData));
+
+				return view('patientpersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country,  'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'doctorsList'=>$doctorsList));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+			}
 			
-			$country =  DB::table('countries')->select('country_name','sortname','id')->orderBy('country_name', 'asc')->lists('country_name', 'id'); 	
-
-			$doctorsList = DB::table('doctors')->select('first_name','last_name','id_doctor')->orderBy('first_name', 'asc')->lists('first_name', 'id_doctor'); 	
-			
-			
-			/*$state =  DB::table('states')->select('id','state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); 	*/
-			
-			$city =  DB::table('cities')->select('city_name','state_id')->orderBy('city_name', 'asc')->lists('city_name', 'city_name'); 	
-			    	
-
-			    if(in_array('', $gender)){
-			     	 array_unshift($gender, 'Female');
-			    }	
-			    if(!in_array('', $maritialStatus)){
-			     	 array_unshift($maritialStatus, '');
-			    } 
-			    if(!in_array('', $country)){
-			     	 array_unshift($country, '');
-			    } 
-			    /*if(!in_array('', $state)){
-			     	 array_unshift($state, '');
-			    } */
-			    if(!in_array('', $city)){
-			     	 array_unshift($city, '');
-			    }
-			   
-
-			    $patientId = Session::get('patientId');  		
-			    $patientData = DB::table('patients')
-			    						 ->where('id_patient','=',$patientId)->get();
-
-			    $doctorData = DB::table('doctors')
-			    						 ->where('id_doctor','=',$doctorId)->first();
-			    						 
-			//Log::info("Patientdata",array($patientData));
-
-			return view('patientpersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country,  'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'doctorsList'=>$doctorsList));
 		}
 		
 		
 	}
 	public function showPatientObstetricsHistory(){
+		$patientId = Session::get('patientId');
+		$doctorId  = Session::get('doctorId');
+
+
+		if(empty($doctorId)){
+			//header('location:doctorlogin');
+			return Redirect::to('logout');
+		}
+		else{
+			if(!empty($patientId)){
+				$lmpFlow = DB::table('business_key_details')->where('business_key', '=', 'OBS_LMP_FLOW')->lists('business_value', 'business_value');
+				$lmpDysmenohrrea = DB::table('business_key_details')->where('business_key', '=', 'OBS_LMP_DYSMENORRHEA')->lists('business_value', 'business_value');
+				$lmpMensusType = DB::table('business_key_details')->where('business_key', '=', 'OBS_LMP_MENSUS_TYPE')->lists('business_value', 'business_value');
+				$pregKind = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_KIND')->lists('business_value', 'business_value');
+				$pregType = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_TYPE')->lists('business_value', 'business_value');
+				$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->lists('business_value', 'business_value');
+				$pregTerm = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_TERM')->lists('business_value', 'business_value');
+				$pregChildHealth = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_HEALTH')->lists('business_value', 'business_value');
+				$bloodGroup = DB::table('business_key_details')->where('business_key', '=', 'BLOOD_GROUP')->lists('business_value', 'business_value');
+
+
+				if(!in_array('', $lmpFlow)){
+				     	 array_unshift($lmpFlow, '');
+				}
+				if(!in_array('', $lmpDysmenohrrea)){
+				     	 array_unshift($lmpDysmenohrrea, '');
+				}	
+				if(!in_array('', $lmpMensusType)){
+				     	 array_unshift($lmpMensusType, '');
+				}
+				if(!in_array('', $pregKind)){
+				     	 array_unshift($pregKind, '');
+				}
+				if(!in_array('', $pregType)){
+				     	 array_unshift($pregType, '');
+				}
+				if(!in_array('', $gender)){
+				     	 array_unshift($gender, '');
+				}	
+				if(!in_array('', $pregTerm)){
+				     	 array_unshift($pregTerm, '');
+				}	
+				if(!in_array('', $pregChildHealth)){
+				     	 array_unshift($pregChildHealth, '');
+				}	
+				if(!in_array('', $bloodGroup)){
+				     	 array_unshift($bloodGroup, '');
+				}
+
+
+				
+		        $patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+
+		        $doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+
+		    
+		        
+		        $patientGynObsData	 	= DB::table('sp_gynaecology_obs')
+		        										->where('id_patient','=',$patientId)
+		        										->where('id_gyn', DB::raw("(select max(`id_gyn`) from sp_gynaecology_obs where 		id_patient='$patientId')"))
+		        										->where('id_gyn',DB::raw("(select max(`id_gyn`) from sp_gynaecology_obs where id_patient='$patientId')"))
+		        										->first();
+		        
+		        $patientGynObsPregData  = DB::table('sp_gynaecology_obs_preg')
+		        											->where('id_patient','=',$patientId)
+		        											->where('created_date', DB::raw("(select max(`created_date`) from sp_gynaecology_obs_preg where id_patient='$patientId')"))
+		        											->where('id_gyn_preg',DB::raw("(select max(`id_gyn_preg`) from sp_gynaecology_obs_preg where id_patient='$patientId')"))
+		        											->get();
+				
+
+
+		        $pregnancyCount = DB::table('sp_gynaecology_obs_preg')->where('id_patient','=',$patientId)->count();
+
+
+
+				return view('patientobstetricshistory',
+					   array('lmpFlow' 					=> $lmpFlow,
+					   	     'lmpDysmenohrrea'			=>$lmpDysmenohrrea, 
+					   	     'lmpMensusType' 			=> $lmpMensusType, 
+					   	     'pregKind' 				=> $pregKind, 
+					   	     'pregType' 				=> $pregType,
+					   	     'gender' 					=> $gender, 
+					   	     'pregTerm' 				=>$pregTerm, 
+					   	     'pregChildHealth' 			=> $pregChildHealth,
+					   	     'patientPersonalData' 		=>$patientPersonalData, 
+					   	     'patientGynObsData' 		=>$patientGynObsData,  
+					   	     'patientGynObsPregData' 	=>$patientGynObsPregData,
+					   	     'bloodGroup' 				=> $bloodGroup,
+					   	     'doctorData'				=>$doctorData,
+					   	     'pregnancyCount'			=>$pregnancyCount));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+			}
 		
+		}
+			
+
 		
-
-		$lmpFlow = DB::table('business_key_details')->where('business_key', '=', 'OBS_LMP_FLOW')->lists('business_value', 'business_value');
-		$lmpDysmenohrrea = DB::table('business_key_details')->where('business_key', '=', 'OBS_LMP_DYSMENORRHEA')->lists('business_value', 'business_value');
-		$lmpMensusType = DB::table('business_key_details')->where('business_key', '=', 'OBS_LMP_MENSUS_TYPE')->lists('business_value', 'business_value');
-		$pregKind = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_KIND')->lists('business_value', 'business_value');
-		$pregType = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_TYPE')->lists('business_value', 'business_value');
-		$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->lists('business_value', 'business_value');
-		$pregTerm = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_TERM')->lists('business_value', 'business_value');
-		$pregChildHealth = DB::table('business_key_details')->where('business_key', '=', 'OBS_PREG_HEALTH')->lists('business_value', 'business_value');
-		$bloodGroup = DB::table('business_key_details')->where('business_key', '=', 'BLOOD_GROUP')->lists('business_value', 'business_value');
-
-
-		if(!in_array('', $lmpFlow)){
-		     	 array_unshift($lmpFlow, '');
-		}
-		if(!in_array('', $lmpDysmenohrrea)){
-		     	 array_unshift($lmpDysmenohrrea, '');
-		}	
-		if(!in_array('', $lmpMensusType)){
-		     	 array_unshift($lmpMensusType, '');
-		}
-		if(!in_array('', $pregKind)){
-		     	 array_unshift($pregKind, '');
-		}
-		if(!in_array('', $pregType)){
-		     	 array_unshift($pregType, '');
-		}
-		if(!in_array('', $gender)){
-		     	 array_unshift($gender, '');
-		}	
-		if(!in_array('', $pregTerm)){
-		     	 array_unshift($pregTerm, '');
-		}	
-		if(!in_array('', $pregChildHealth)){
-		     	 array_unshift($pregChildHealth, '');
-		}	
-		if(!in_array('', $bloodGroup)){
-		     	 array_unshift($bloodGroup, '');
-		}
-
-
-		$patientId = Session::get('patientId'); 
-        $doctorId  = Session::get('doctorId');  //echo "DoctorId".$doctorId;
-
-        $patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-
-        $doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
-
-    
-        
-        $patientGynObsData	 	= DB::table('sp_gynaecology_obs')
-        										->where('id_patient','=',$patientId)
-        										->where('id_gyn', DB::raw("(select max(`id_gyn`) from sp_gynaecology_obs where 		id_patient='$patientId')"))
-        										->where('id_gyn',DB::raw("(select max(`id_gyn`) from sp_gynaecology_obs where id_patient='$patientId')"))
-        										->first();
-        
-        $patientGynObsPregData  = DB::table('sp_gynaecology_obs_preg')
-        											->where('id_patient','=',$patientId)
-        											->where('created_date', DB::raw("(select max(`created_date`) from sp_gynaecology_obs_preg where id_patient='$patientId')"))
-        											->where('id_gyn_preg',DB::raw("(select max(`id_gyn_preg`) from sp_gynaecology_obs_preg where id_patient='$patientId')"))
-        											->get();
-		
-		/*$lastLmpDate = 	DB::table('sp_gynaecology_obs_lmp')
-												->where('id_patient','=',$patientId)
-        										->where('obs_lmp_date', DB::raw("(select max(`obs_lmp_date`) from sp_gynaecology_obs_lmp where id_patient='$patientId')"))
-        										->first();*/
-
-
-        $pregnancyCount = DB::table('sp_gynaecology_obs_preg')->where('id_patient','=',$patientId)->count();
-
-
-
-		return view('patientobstetricshistory',array('lmpFlow' => $lmpFlow,'lmpDysmenohrrea'=>$lmpDysmenohrrea, 'lmpMensusType' => $lmpMensusType, 'pregKind' => $pregKind, 'pregType' => $pregType,'gender' => $gender, 'pregTerm' =>$pregTerm, 'pregChildHealth' => $pregChildHealth,'patientPersonalData' =>$patientPersonalData, 'patientGynObsData' =>$patientGynObsData, /*'patientGynObsLmpData' =>$patientGynObsLmpData,*/ 'patientGynObsPregData' =>$patientGynObsPregData,'bloodGroup' => $bloodGroup,'doctorData'=>$doctorData,'pregnancyCount'=>$pregnancyCount));
 	}
 
 	public function patientObstetricsDataAjax(){
@@ -360,34 +391,46 @@ class DoctorController extends Controller {
 
 		$patientId 	= Session::get('patientId');
 		$doctorId 	= Session::get('doctorId');
-		
-		$patientPersonalData = PatientsModel::where('id_patient','=',$patientId)->first();
-		$doctorData 		 = DoctorsModel::where('id_doctor','=',$doctorId)->first();
-      	$medicalHistory		 = DB::table('medical_history')
-      	                                    ->where('id_patient','=',$patientId)
-      	                                    ->where('created_date', DB::raw("(select max(`created_date`) from medical_history where id_patient='$patientId')"))
-      	                                    ->get();
-      	                                    
 
-      	/*$medicalHistory		 = DB::table('medical_history')
-      	                                    ->where('id_patients','=',$patientId)
-      	                                    ->where('id_medical_history', DB::raw("(select max(`id_medical_history`) from medical_history where id_patient='$patientId')"))
-      	                                    ->get();*/
-      	    //dd($medicalHistory);
+		if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$patientPersonalData = PatientsModel::where('id_patient','=',$patientId)->first();
+				$doctorData 		 = DoctorsModel::where('id_doctor','=',$doctorId)->first();
+		      	$medicalHistory		 = DB::table('medical_history')
+		      	                                    ->where('id_patient','=',$patientId)
+		      	                                    ->where('created_date', DB::raw("(select max(`created_date`) from medical_history where id_patient='$patientId')"))
+		      	                                    ->get();
+		      	                                    
 
-		$medicalHistoryPresentPastMore  	= MedicalHistoryPresentPastModel::where('id_patient','=',$patientId)
-		                                          ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_present_past_more  where  id_patient='$patientId')"))->get();							
-		$surgeryHistory = DB::table('medical_history_surgical')
-		                                ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_surgical  where  id_patient='$patientId')"))
-		                                ->where('id_patient','=',$patientId)
-		                                ->get();
-		$drugAllergyHistory = DB::table('medical_history_drug_allergy')
-		                                    ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_drug_allergy  where  id_patient='$patientId')"))
-		                                   
-		                                    ->where('id_patient','=',$patientId)->get();
+		      	/*$medicalHistory		 = DB::table('medical_history')
+		      	                                    ->where('id_patients','=',$patientId)
+		      	                                    ->where('id_medical_history', DB::raw("(select max(`id_medical_history`) from medical_history where id_patient='$patientId')"))
+		      	                                    ->get();*/
+		      	    //dd($medicalHistory);
+
+				$medicalHistoryPresentPastMore  	= MedicalHistoryPresentPastModel::where('id_patient','=',$patientId)
+				                                          ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_present_past_more  where  id_patient='$patientId')"))->get();							
+				$surgeryHistory = DB::table('medical_history_surgical')
+				                                ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_surgical  where  id_patient='$patientId')"))
+				                                ->where('id_patient','=',$patientId)
+				                                ->get();
+				$drugAllergyHistory = DB::table('medical_history_drug_allergy')
+				                                    ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_drug_allergy  where  id_patient='$patientId')"))
+				                                   
+				                                    ->where('id_patient','=',$patientId)->get();
+				
+			
+				return view('patientmedicalhistory',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'medicalHistory'=>$medicalHistory,'medicalHistoryPresentPastMore'=>$medicalHistoryPresentPastMore,'surgeryHistory'=>$surgeryHistory,'drugAllergyHistory'=>$drugAllergyHistory));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+			}
+		}
+		else{
+
+		}
 		
-	
-		return view('patientmedicalhistory',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'medicalHistory'=>$medicalHistory,'medicalHistoryPresentPastMore'=>$medicalHistoryPresentPastMore,'surgeryHistory'=>$surgeryHistory,'drugAllergyHistory'=>$drugAllergyHistory));
+		
 	}
 
 	public function patientPreviousTreatmentExtended(){
@@ -648,10 +691,19 @@ class DoctorController extends Controller {
 	public function showPatientPreviousTreatment(){
 		$patientId 	= Session::get('patientId');
 		$doctorId 	= Session::get('doctorId');
-		$patientPersonalData = DB::table('patients')->where('id_patient','=',$patientId)->first();
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 
-		return view('patientprevioustreatment',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+		if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$patientPersonalData = DB::table('patients')->where('id_patient','=',$patientId)->first();
+				$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+
+		        return view('patientprevioustreatment',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+			}
+		}
+		
 	}
 
 	public function showPatientPreviousTreatmentTest(){
@@ -909,180 +961,245 @@ class DoctorController extends Controller {
 	public function showPatientExamination(){
 		$patientId = Session::get('patientId');
 		$doctorId  = Session::get('doctorId');
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
 
-        
-		$bloodGroup = DB::table('business_key_details')->where('business_key', '=', 'BLOOD_GROUP')->lists('business_value', 'business_value');
-		$diagNormalAbnormal = DB::table('business_key_details')->where('business_key', '=', 'GENERAL_NORMAL_ABNORMAL')->lists('business_value', 'business_value');
-		$diagYesNo = DB::table('business_key_details')->where('business_key', '=', 'GENERAL_YES_NO')->lists('business_value', 'business_value');
-		$diagAvafRvrf = DB::table('business_key_details')->where('business_key', '=', 'DIAGNOSIS_PELVIC_AVAF_RVRF')->lists('business_value', 'business_value');
+		if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+				$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
 
-		$vitalExist = DB::table('vitals')->where('id_patient','=',$patientId)
-										 ->where('id_vitals', DB::raw("(select max(`id_vitals`) from vitals where id_patient = '$patientId')"))
-										 ->first();
+		        
+				$bloodGroup = DB::table('business_key_details')->where('business_key', '=', 'BLOOD_GROUP')->lists('business_value', 'business_value');
+				$diagNormalAbnormal = DB::table('business_key_details')->where('business_key', '=', 'GENERAL_NORMAL_ABNORMAL')->lists('business_value', 'business_value');
+				$diagYesNo = DB::table('business_key_details')->where('business_key', '=', 'GENERAL_YES_NO')->lists('business_value', 'business_value');
+				$diagAvafRvrf = DB::table('business_key_details')->where('business_key', '=', 'DIAGNOSIS_PELVIC_AVAF_RVRF')->lists('business_value', 'business_value');
 
-		$diagExam = DB::table('diagnosis_gynaecology_exam')->where('id_patient','=',$patientId)
-										 ->where('id_diag_gynaecology_exam', DB::raw("(select max(`id_diag_gynaecology_exam`) from diagnosis_gynaecology_exam where id_patient = '$patientId')"))
-										 ->first();								 
+				$vitalExist = DB::table('vitals')->where('id_patient','=',$patientId)
+												 ->where('id_vitals', DB::raw("(select max(`id_vitals`) from vitals where id_patient = '$patientId')"))
+												 ->first();
 
-		if(!in_array('', $bloodGroup)){
-		     	 array_unshift($bloodGroup, '');
+				$diagExam = DB::table('diagnosis_gynaecology_exam')->where('id_patient','=',$patientId)
+												 ->where('id_diag_gynaecology_exam', DB::raw("(select max(`id_diag_gynaecology_exam`) from diagnosis_gynaecology_exam where id_patient = '$patientId')"))
+												 ->first();								 
+
+				if(!in_array('', $bloodGroup)){
+				     	 array_unshift($bloodGroup, '');
+				}
+				if(!in_array('', $diagNormalAbnormal)){
+				     	 array_unshift($diagNormalAbnormal, '');
+				}
+				if(!in_array('', $diagAvafRvrf)){
+				     	 array_unshift($diagAvafRvrf, '');
+				}
+				if(!in_array('', $diagYesNo)){
+				     	 array_unshift($diagYesNo, '');
+				}
+				return view('patientexamination',array('bloodGroup'=>$bloodGroup,'diagNormalAbnormal'=>$diagNormalAbnormal,'diagYesNo'=>$diagYesNo,'diagAvafRvrf'=>$diagAvafRvrf,'vitalExist'=>$vitalExist,'diagExam'=>$diagExam,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+			}
 		}
-		if(!in_array('', $diagNormalAbnormal)){
-		     	 array_unshift($diagNormalAbnormal, '');
+		else{
+			return Redirect::to('logout');
 		}
-		if(!in_array('', $diagAvafRvrf)){
-		     	 array_unshift($diagAvafRvrf, '');
-		}
-		if(!in_array('', $diagYesNo)){
-		     	 array_unshift($diagYesNo, '');
-		}
-		return view('patientexamination',array('bloodGroup'=>$bloodGroup,'diagNormalAbnormal'=>$diagNormalAbnormal,'diagYesNo'=>$diagYesNo,'diagAvafRvrf'=>$diagAvafRvrf,'vitalExist'=>$vitalExist,'diagExam'=>$diagExam,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+
+		
 	}
 	public function showPatientDiagnosis(){
 		$patientId = Session::get('patientId');
 		$doctorId  = Session::get('doctorId');
-		$doctorData 			= DoctorsModel::where('id_doctor','=',$doctorId)->first();
-		$patientPersonalData 	= PatientsModel::where('id_patient','=',$patientId)->first();
-
-		$symptomsArray = array();
-		
-		$diseases =  DB::table('diseases')->select('disease_name')->orderBy('disease_name', 'asc')->lists('disease_name', 'disease_name'); 
-
-		$symptoms =  DB::table('symptoms')->select('symptoms')->orderBy('symptoms', 'asc')->lists('symptoms','symptoms'); 
-
-		
-		//var_dump($symptoms);
 
 
-		$diag = DB::table('diagnosis')
-									->where('id_patient','=',$patientId)
-									// ->where('created_date', DB::raw("(select max(`created_date`) from diagnosis where id_patient='$patientId')"))
-									->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis where id_patient='$patientId')"))
-									->first();
+		if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$doctorData 			= DoctorsModel::where('id_doctor','=',$doctorId)->first();
+				$patientPersonalData 	= PatientsModel::where('id_patient','=',$patientId)->first();
 
-		$diag2 = DB::table('diagnosis')
-		                    ->select('diag_symptoms','diag_suspected_diseases')
-							->where('id_patient','=',$patientId)
-							->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis      where id_patient='$patientId')"))
-							->first();
+				$symptomsArray = array();
+				
+				$diseases =  DB::table('diseases')->select('disease_name')->orderBy('disease_name', 'asc')->lists('disease_name', 'disease_name'); 
 
-
-
-					//$sym = (array)$diag2->diag_symptoms;
-				if(!empty($diag2)){
-					//Symptoms Merging
-					if(!empty($diag->diag_symptoms)){
-						$symFetchedArray = array();
-						$symptomsName 	 = explode('"',$diag->diag_symptoms);
-						
-						for($i=0;$i<sizeof($symptomsName);$i++){
-							
-							if($i%2!=0){
-								array_push($symFetchedArray,$symptomsName[$i]);
-							}
-							
-						}
-						
-						$finalSymptomsFetchArray = array();
-						foreach($symFetchedArray as $index=>$value){
-							//var_dump($value);
-							$finalSymptomsFetchArray[$value] = $value;
-						}
-						
-						$symptoms = array_merge($symptoms,$finalSymptomsFetchArray);
-					}
-					else{
-						$symptoms = $symptoms;
-					}
-
-					//Diseases Merging
-					if(!empty($diag->diag_suspected_diseases)){
-						$disFetchedArray = array();
-						$diseasesName 	 = explode('"',$diag->diag_suspected_diseases);
-						
-						for($i=0;$i<sizeof($diseasesName);$i++){
-							
-							if($i%2!=0){
-								array_push($disFetchedArray,$diseasesName[$i]);
-							}
-							
-						}
-						
-						$finalDiseasesFetchArray = array();
-						foreach($disFetchedArray as $index=>$value){
-							//var_dump($value);
-							$finalDiseasesFetchArray[$value] = $value;
-						}
-						
-						$diseases = array_merge($diseases,$finalDiseasesFetchArray);
-					}
-					else{
-						$symptoms = $symptoms;
-					}
-					
-					
-				}
-				else{
-					$symptoms = $symptoms;
-				}				
-					
+				$symptoms =  DB::table('symptoms')->select('symptoms')->orderBy('symptoms', 'asc')->lists('symptoms','symptoms'); 
 
 				
+				//var_dump($symptoms);
 
-		return View('patientdiagnosis',array('diseases'=>$diseases,'diag'=>$diag,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+
+				$diag = DB::table('diagnosis')
+											->where('id_patient','=',$patientId)
+											// ->where('created_date', DB::raw("(select max(`created_date`) from diagnosis where id_patient='$patientId')"))
+											->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis where id_patient='$patientId')"))
+											->first();
+
+				$diag2 = DB::table('diagnosis')
+				                    ->select('diag_symptoms','diag_suspected_diseases')
+									->where('id_patient','=',$patientId)
+									->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis      where id_patient='$patientId')"))
+									->first();
+
+
+
+							//$sym = (array)$diag2->diag_symptoms;
+						if(!empty($diag2)){
+							//Symptoms Merging
+							if(!empty($diag->diag_symptoms)){
+								$symFetchedArray = array();
+								$symptomsName 	 = explode('"',$diag->diag_symptoms);
+								
+								for($i=0;$i<sizeof($symptomsName);$i++){
+									
+									if($i%2!=0){
+										array_push($symFetchedArray,$symptomsName[$i]);
+									}
+									
+								}
+								
+								$finalSymptomsFetchArray = array();
+								foreach($symFetchedArray as $index=>$value){
+									//var_dump($value);
+									$finalSymptomsFetchArray[$value] = $value;
+								}
+								
+								$symptoms = array_merge($symptoms,$finalSymptomsFetchArray);
+							}
+							else{
+								$symptoms = $symptoms;
+							}
+
+							//Diseases Merging
+							if(!empty($diag->diag_suspected_diseases)){
+								$disFetchedArray = array();
+								$diseasesName 	 = explode('"',$diag->diag_suspected_diseases);
+								
+								for($i=0;$i<sizeof($diseasesName);$i++){
+									
+									if($i%2!=0){
+										array_push($disFetchedArray,$diseasesName[$i]);
+									}
+									
+								}
+								
+								$finalDiseasesFetchArray = array();
+								foreach($disFetchedArray as $index=>$value){
+									//var_dump($value);
+									$finalDiseasesFetchArray[$value] = $value;
+								}
+								
+								$diseases = array_merge($diseases,$finalDiseasesFetchArray);
+							}
+							else{
+								$symptoms = $symptoms;
+							}
+							
+							
+						}
+						else{
+							$symptoms = $symptoms;
+						}				
+							
+
+						
+
+				return View('patientdiagnosis',array('diseases'=>$diseases,'diag'=>$diag,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+			}
+		}
+		else{
+			return Redirect::to('logout');
+		}
+
+
+
+		
 	}
 	public function showPatientLabdata(){
 		$patientId = Session::get('patientId');
 		$doctorId  = Session::get('doctorId');
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-		return View('patientlabdata',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+
+		if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+				$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+				return View('patientlabdata',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+			}
+		}
+		else{
+			return Redirect::to('logout');
+		}
+		
 	}
 
 	public function showPatientPrescManagement(){
 		$patientId = Session::get('patientId');
 		$doctorId  = Session::get('doctorId');
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-        
-		$prescGynData = DB::table('prescription_gynaecology')->where('id_patient','=',$patientId)
-											->where('created_date', DB::raw("(select max(`created_date`) from prescription_gynaecology where id_patient='$patientId')"))
-											->where('id_prescription_gynaecology', DB::raw("(select max(`id_prescription_gynaecology`) from prescription_gynaecology where id_patient='$patientId')"))
-											->first();
-		return View('patientprescmanagement',array('prescGynData'=>$prescGynData,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+
+		if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+				$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+		        
+				$prescGynData = DB::table('prescription_gynaecology')->where('id_patient','=',$patientId)
+													->where('created_date', DB::raw("(select max(`created_date`) from prescription_gynaecology where id_patient='$patientId')"))
+													->where('id_prescription_gynaecology', DB::raw("(select max(`id_prescription_gynaecology`) from prescription_gynaecology where id_patient='$patientId')"))
+													->first();
+				return View('patientprescmanagement',array('prescGynData'=>$prescGynData,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+			}
+		}
+		else{
+			return Redirect::to('logout');
+		}
+		
 	}
 
 	public function showPatientPrescMedicine(){
 		$patientId = Session::get('patientId');
 		$doctorId  = Session::get('doctorId');
 		
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-       
-		$presentDrugStatus = Input::get('present_drug');
+		if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+				$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+		       
+				$presentDrugStatus = Input::get('present_drug');
+				
+				$drugFrequency = DB::table('drug_frequency')->lists('frequency_name', 'id_drug_frequency');
+				
+
+
+				$prescMedicine = DB::table('prescription')
+											->where('id_patient','=',$patientId)
+											->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
+											->get();
+
+				$dosageUnit = DB::table('business_key_details')->where('business_key', '=', 'MED_DOSE_UNIT')->lists('business_value', 'business_value');
+
+				$drugDurationUnit = DB::table('business_key_details')->where('business_key', '=', 'MED_DURATION_UNIT')->lists('business_value', 'business_value');
+
+
+
+										//var_dump($prescMedicine);
+										//die();
+
+											
+				return View('patientprescmedicine',array('drugFrequency'=>$drugFrequency,'prescMedicine' => $prescMedicine,'patientPersonalData'=>$patientPersonalData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit,'doctorData'=>$doctorData));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+			}
+		}
+		else{
+			return Redirect::to('logout');
+		}
+
 		
-		$drugFrequency = DB::table('drug_frequency')->lists('frequency_name', 'id_drug_frequency');
-		
-
-
-		$prescMedicine = DB::table('prescription')
-									->where('id_patient','=',$patientId)
-									->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
-									->get();
-
-		$dosageUnit = DB::table('business_key_details')->where('business_key', '=', 'MED_DOSE_UNIT')->lists('business_value', 'business_value');
-
-		$drugDurationUnit = DB::table('business_key_details')->where('business_key', '=', 'MED_DURATION_UNIT')->lists('business_value', 'business_value');
-
-
-
-								//var_dump($prescMedicine);
-								//die();
-
-									
-		return View('patientprescmedicine',array('drugFrequency'=>$drugFrequency,'prescMedicine' => $prescMedicine,'patientPersonalData'=>$patientPersonalData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit,'doctorData'=>$doctorData));
 									
 		
 
@@ -2248,11 +2365,15 @@ class DoctorController extends Controller {
 	    	elseif (in_array(2, $responseFlag)) {
 	    		return Redirect::to('patientexamination')->with(array('success'=>"Data saved successfully"));
 	    	}
+	    	else
+	    	{
+	    		return Redirect::to('patientexamination')->with(array('success'=>"Data saved successfully"));
+	    	}
 		    
 	    	
         }
         else{
-        	return Redirect::to('patientexamination')->with(array('error'=>"Please add patient personal information"));
+        	return Redirect::to('patientexamination')->with(array('error'=>"Please save patient personal information"));
         }
 
     	
@@ -2265,7 +2386,7 @@ class DoctorController extends Controller {
     	$patientId 			= Session::get('patientId'); 
         $doctorId 	 		= Session::get('doctorId');
         $referenceId 		= Session::get('referenceId'); 
-        $createdDate 		= date('Y-m-d');
+        $createdDate 		= date('Y-m-d h:i:s');
 		
 		//dd($input);
 		
@@ -2304,7 +2425,7 @@ class DoctorController extends Controller {
 	    						  'id_doctor' 				=>$doctorId,
 	    						  'edited_date'				=>$createdDate);
 	    		
-	    		//$diseases = array_filter($diseases);
+	    		$diseases = array_filter($diseases);
 	    		
 	    		if(!empty($diseases)){
 	    			
@@ -2340,7 +2461,8 @@ class DoctorController extends Controller {
 		    						  'diag_reference' 			=> $referenceId,
 		    						  'created_date'			=>$createdDate);
 
-	    		//$diseases = array_filter($diseases);
+	    		$diseases = array_filter($diseases);
+	    		//dd($diseases);
 	    		if(!empty($diseases)){
 		    		$diagSave = DB::table('diagnosis')->insert($diagData);
 		    		if($diagSave){
@@ -2467,13 +2589,8 @@ class DoctorController extends Controller {
 
 		
 		$patientExistCheck = PatientsModel::where('id_patient','=',$patientId)->first();
+		$prescExist = PrescriptionModel::where('id_patient','=',$patientId)->where('presc_ref_id','=',$referenceId)->get();
 		
-		if(!empty($patientExistCheck)){
-		
-		}
-		else{
-			return Redirect::to('patientprescmedicine')->with(array('error'=>'Please save patient personal data'));
-		}
 		
 
     	$idSharePrescription = DBUtils:: id_share_prescription(6);
@@ -2493,7 +2610,7 @@ class DoctorController extends Controller {
     	
 
     	
-    		if(!empty($patientExistCheck)){
+    			if(!empty($patientExistCheck)){
     		
     				for($i=1;$i<=$defaultCount;$i++){
     					//echo "Enter into loop";
@@ -2548,10 +2665,28 @@ class DoctorController extends Controller {
 
 			    	}
 
+			    	if(count($prescExist)>0){
+			    		$prescExistDataDelete = PrescriptionModel::where('id_patient','=',$patientId)->where('presc_ref_id','=',$referenceId)->delete();
+
+			    		if($prescExistDataDelete){
+			    			if(in_array(1, $flagArray)){
+			    				 PrescriptionModel::insert($multi);
+			    				return Redirect::to('patientprescmedicine')->with(array('success'=>'Data updated successfully'));
+			    			}
+			    		}
+			    	}
+			    	else{
+			    		if(in_array(1, $flagArray)){
+			    				$prescSave = PrescriptionModel::insert($multi);
+			    				if($prescSave){
+			    					return Redirect::to('patientprescmedicine')->with(array('success'=>'Data saved successfully'));
+			    				}
+			    		}
+			    	}
 			    	
 
 
-			    	if($printData=="printTrue"){
+			    	/*if($printData=="printTrue"){
 			    		if(in_array(1, $flagArray)){
 				    		if($defaultCount>$extraCount){
 				    			
@@ -2597,7 +2732,7 @@ class DoctorController extends Controller {
 				    		return Redirect::to('patientprescmedicine')->with(array('error'=>'Failed to save data'));
 				    	}
 
-			    	}
+			    	}*/
 			    
 
 			    	
@@ -2607,7 +2742,7 @@ class DoctorController extends Controller {
 		    	else{
 		    		//$status = array('status'=>"Error",'message'=>'Invalid patient ID');
 			    	//$result = $status;
-			    	return Redirect::to('patientprescmedicine')->with(array('error'=>'Please save patient personal data'));
+			    	return Redirect::to('patientpersonalinformation')->with(array('error'=>'Please save patient personal information'));
 			    	//return response()->json($result);	
 		    	}
 		    	
@@ -2723,66 +2858,7 @@ class DoctorController extends Controller {
 		
 	}
 
-	public function patientPreviousTreatmentPrint(){
-		$input = Request::all();
-
-		$createdDate 	= $input['created_date'];
-		$specialization = Session::get('doctorSpecialization');;
-		$patientId 		= Session::get('patientId');
-		$doctorId 		= Session::get('doctorId');
-		
-		$todayDate 		= date('Y-m-d');
-		$splitDate 		= explode('-',$todayDate);
-
-		$pdfFileName = $patientId."_".$splitDate[0].$splitDate[1].$splitDate[2];
-
-		
-
-		$prescriptionData    = DB::table('prescription')
-									->where('created_date','LIKE','%'.$createdDate.'%')
-		                            ->where('id_patient','=',$patientId)
-		                            ->where('id_doctor','=',$doctorId)
-		                            ->get();
-
-		$printData = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
-
-		  //return $prescriptionData;
-		  //die();
-
-		$parametersArray = array('prescriptionData'=>$prescriptionData,'printData'=>$printData);
-
-
-		switch ($specialization) {
-			case '1':
-				$pdf = App::make('dompdf.wrapper');
-		        //$pdf->loadHTML('<h1>Test</h1>');
-		        $view =  View::make('previoustreatmentprescprint',$parametersArray)->render();
-		         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
-
-		        return $pdfFileName;
-		        
-		    	//return $pdf->stream($pdfFileName.'.'.'pdf');
-		    	//return $pdf->inline();
-				break;
-
-			case '2':
-				$pdf = App::make('dompdf.wrapper');
-		        //$pdf->loadHTML('<h1>Test</h1>');
-		        $view =  View::make('previoustreatmentprescprint',$parametersArray)->render();
-		         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
-
-		        return $pdfFileName;
-		        
-		    	//return $pdf->stream($pdfFileName.'.'.'pdf');
-		    	//return $pdf->inline();
-				break;
-			
-			default:
-				# code...
-				break;
-		}
-	}
-
+	
 
 	
 

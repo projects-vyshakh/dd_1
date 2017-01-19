@@ -108,53 +108,63 @@ class CardiologyController extends Controller {
 
 		$patientId = Session::get('patientId');
 		$doctorId = Session::get('doctorId');
-		if(empty($patientId)){
-			//header('location:doctorlogin');
-			return Redirect::to('logout');
+
+		
+
+		if(!empty($doctorId)){ 
+			if(!empty($patientId)){ 
+				$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->orderBy('business_value')->lists('business_value', 'business_value');
+		
+				$maritialStatus = DB::table('business_key_details')->where('business_key', '=', 'MARITIAL_STATUS')->lists('business_value', 'business_value');
+				
+				$country =  DB::table('countries')->select('country_name','sortname','id')->orderBy('country_name', 'asc')->lists('country_name', 'id'); 	
+
+				$doctorsList = DB::table('doctors')->select('first_name','last_name','id_doctor')->orderBy('first_name', 'asc')->lists('first_name', 'id_doctor'); 	
+				
+				
+				/*$state =  DB::table('states')->select('id','state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); 	*/
+				
+				$city =  DB::table('cities')->select('city_name','state_id')->orderBy('city_name', 'asc')->lists('city_name', 'city_name'); 	
+				    	
+
+				    if(in_array('', $gender)){
+				     	 array_unshift($gender, 'Female');
+				    }	
+				    if(!in_array('', $maritialStatus)){
+				     	 array_unshift($maritialStatus, '');
+				    } 
+				    if(!in_array('', $country)){
+				     	 array_unshift($country, '');
+				    } 
+				    /*if(!in_array('', $state)){
+				     	 array_unshift($state, '');
+				    } */
+				    if(!in_array('', $city)){
+				     	 array_unshift($city, '');
+				    }
+				   
+
+				    $patientId = Session::get('patientId');  		
+				    $patientData = DB::table('patients')
+				    						 ->where('id_patient','=',$patientId)->get();
+
+				    $doctorData = DB::table('doctors')
+				    						 ->where('id_doctor','=',$doctorId)->first();
+				    						 
+				//Log::info("Patientdata",array($patientData));
+
+				return view('cardiopersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country,  'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'doctorsList'=>$doctorsList));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>"You are not authorised to view the page"));
+			}
 		}
 		else{
-			$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->orderBy('business_value')->lists('business_value', 'business_value');
-		
-			$maritialStatus = DB::table('business_key_details')->where('business_key', '=', 'MARITIAL_STATUS')->lists('business_value', 'business_value');
-			
-			$country =  DB::table('countries')->select('country_name','sortname','id')->orderBy('country_name', 'asc')->lists('country_name', 'id'); 	
-
-			$doctorsList = DB::table('doctors')->select('first_name','last_name','id_doctor')->orderBy('first_name', 'asc')->lists('first_name', 'id_doctor'); 	
-			
-			
-			/*$state =  DB::table('states')->select('id','state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); 	*/
-			
-			$city =  DB::table('cities')->select('city_name','state_id')->orderBy('city_name', 'asc')->lists('city_name', 'city_name'); 	
-			    	
-
-			    if(in_array('', $gender)){
-			     	 array_unshift($gender, 'Female');
-			    }	
-			    if(!in_array('', $maritialStatus)){
-			     	 array_unshift($maritialStatus, '');
-			    } 
-			    if(!in_array('', $country)){
-			     	 array_unshift($country, '');
-			    } 
-			    /*if(!in_array('', $state)){
-			     	 array_unshift($state, '');
-			    } */
-			    if(!in_array('', $city)){
-			     	 array_unshift($city, '');
-			    }
-			   
-
-			    $patientId = Session::get('patientId');  		
-			    $patientData = DB::table('patients')
-			    						 ->where('id_patient','=',$patientId)->get();
-
-			    $doctorData = DB::table('doctors')
-			    						 ->where('id_doctor','=',$doctorId)->first();
-			    						 
-			//Log::info("Patientdata",array($patientData));
-
-			return view('cardiopersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country,  'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'doctorsList'=>$doctorsList));
+			return Redirect::to('logout');
 		}
+		
+			
+		
 	}
 
 	public function addCardioPersonalInformation(){
@@ -279,30 +289,46 @@ class CardiologyController extends Controller {
 		
 		$patientId 	= Session::get('patientId');
 		$doctorId 	= Session::get('doctorId');
-		
-		$patientPersonalData = PatientsModel::where('id_patient','=',$patientId)->first();
-		$doctorData 		 = DoctorsModel::where('id_doctor','=',$doctorId)->first();
-      	$medicalHistory		 = DB::table('cardiac_medical_history')
-      	                                    ->where('id_patient','=',$patientId)
-      	                                    ->where('created_date', DB::raw("(select max(`created_date`) from cardiac_medical_history where id_patient='$patientId')"))
-      	                                    ->get();
 
-		$medicalHistoryPresentPastMore = CardioMedicalHistoryPresentPastModel::where('id_patient','=',$patientId)
-		                                          ->where('created_date', DB::raw("(select max(`created_date`) from cardiac_medical_history_present_past_more  where  id_patient='$patientId')"))->get();	
-													//dd($medicalHistoryPresentPastMore);
+		if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$patientPersonalData = PatientsModel::where('id_patient','=',$patientId)->first();
+				$doctorData 		 = DoctorsModel::where('id_doctor','=',$doctorId)->first();
+		      	$medicalHistory		 = DB::table('cardiac_medical_history')
+		      	                                    ->where('id_patient','=',$patientId)
+		      	                                    ->where('created_date', DB::raw("(select max(`created_date`) from cardiac_medical_history where id_patient='$patientId')"))
+		      	                                    ->get();
+
+				$medicalHistoryPresentPastMore = CardioMedicalHistoryPresentPastModel::where('id_patient','=',$patientId)
+				                                          ->where('created_date', DB::raw("(select max(`created_date`) from cardiac_medical_history_present_past_more  where  id_patient='$patientId')"))->get();	
+															//dd($medicalHistoryPresentPastMore);
 
 
-		$surgeryHistory = DB::table('medical_history_surgical')
-		                                ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_surgical  where  id_patient='$patientId')"))
-		                                ->where('id_patient','=',$patientId)
-		                                ->get();
-		$drugAllergyHistory = DB::table('medical_history_drug_allergy')
-		                                    ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_drug_allergy  where  id_patient='$patientId')"))
-		                                   
-		                                    ->where('id_patient','=',$patientId)->get();
+				$surgeryHistory = DB::table('medical_history_surgical')
+				                                ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_surgical  where  id_patient='$patientId')"))
+				                                ->where('id_patient','=',$patientId)
+				                                ->get();
+				$drugAllergyHistory = DB::table('medical_history_drug_allergy')
+				                                    ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_drug_allergy  where  id_patient='$patientId')"))
+				                                   
+				                                    ->where('id_patient','=',$patientId)->get();
+				
+				
+				return view('cardiomedicalhistory',array('medicalHistory'=>$medicalHistory,'medicalHistoryPresentPastMore'=>$medicalHistoryPresentPastMore,'surgeryHistory'=>$surgeryHistory,'drugAllergyHistory'=>$drugAllergyHistory,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>"You are not authorised to view the page"));
+			}
+		}
+		else{
+			return Redirect::to('logout');
+		}
+		
+			
+		
+
 		
 		
-		return view('cardiomedicalhistory',array('medicalHistory'=>$medicalHistory,'medicalHistoryPresentPastMore'=>$medicalHistoryPresentPastMore,'surgeryHistory'=>$surgeryHistory,'drugAllergyHistory'=>$drugAllergyHistory,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
 	}
 
 
@@ -672,10 +698,26 @@ class CardiologyController extends Controller {
     public function showCardioPreviousTreatment(){
 		$patientId 	= Session::get('patientId');
 		$doctorId = Session::get('doctorId');
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 
-		return view('cardioprevioustreatment',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+		if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+				$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+
+				return view('cardioprevioustreatment',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>"You are not authorised to view the page"));
+			}
+		}
+		else{
+			return Redirect::to('logout');
+		}
+		
+		
+
+
+		
 	}
 	public function cardioPreviousTreatmentExtended(){
 		$year = Input::get('year');
@@ -934,28 +976,41 @@ class CardiologyController extends Controller {
     public function showCardioExamination(){
     	$patientId = Session::get('patientId');
     	$doctorId = Session::get('doctorId');
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 
-        
-		$bloodGroup = DB::table('business_key_details')->where('business_key', '=', 'BLOOD_GROUP')->lists('business_value', 'business_value');
-		
+    	if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+				$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 
-		$vitalExist = DB::table('vitals')->where('id_patient','=',$patientId)
-										 ->where('id_vitals', DB::raw("(select max(`id_vitals`) from vitals where id_patient = '$patientId')"))
-										 ->first();
+		        
+				$bloodGroup = DB::table('business_key_details')->where('business_key', '=', 'BLOOD_GROUP')->lists('business_value', 'business_value');
+				
 
-		$cardiacExamData = DB::table('cardiac_examination')
-											->where('id_patient','=',$patientId)
-											->where('id_cardiac_examination', DB::raw("(select max(`id_cardiac_examination`) from cardiac_examination where id_patient = '$patientId')"))
-											->first();
+				$vitalExist = DB::table('vitals')->where('id_patient','=',$patientId)
+												 ->where('id_vitals', DB::raw("(select max(`id_vitals`) from vitals where id_patient = '$patientId')"))
+												 ->first();
 
-		
-		if(!in_array('', $bloodGroup)){
-		     	 array_unshift($bloodGroup, '');
+				$cardiacExamData = DB::table('cardiac_examination')
+													->where('id_patient','=',$patientId)
+													->where('id_cardiac_examination', DB::raw("(select max(`id_cardiac_examination`) from cardiac_examination where id_patient = '$patientId')"))
+													->first();
+
+				
+				if(!in_array('', $bloodGroup)){
+				     	 array_unshift($bloodGroup, '');
+				}
+				
+				return view('cardioexamination',array('bloodGroup'=>$bloodGroup,'vitalExist'=>$vitalExist,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'cardioExamData'=>$cardiacExamData));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>"You are not authorised to view the page"));
+			}
+		}
+		else{
+			return Redirect::to('logout');
 		}
 		
-		return view('cardioexamination',array('bloodGroup'=>$bloodGroup,'vitalExist'=>$vitalExist,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'cardioExamData'=>$cardiacExamData));
+		
     }
 
     public function addCardiacExamination(){
@@ -1124,7 +1179,15 @@ class CardiologyController extends Controller {
 	    	elseif (in_array(2, $responseFlag)) {
 	    		return Redirect::to('cardioexamination')->with(array('success'=>"Data saved successfully"));
 	    	}
-	    }	
+	    	else
+	    	{
+	    		return Redirect::to('cardioexamination')->with(array('success'=>"Data saved successfully"));
+	    	}
+	    }
+	    else{	
+			return Redirect::to('cardiopersonalinformation')->with(array('error'=>'Please save patient personal information'));
+			    	
+		}	
 
     }
 
@@ -1133,33 +1196,65 @@ class CardiologyController extends Controller {
 		$doctorId 		= Session::get('doctorId');
 		$symptomsArray = array();
 
-		$patientPersonalData 	= PatientsModel::where('id_patient','=',$patientId)->first();
-		$doctorData 			= DoctorsModel::where('id_doctor','=',$doctorId)->first();
+		if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$patientPersonalData 	= PatientsModel::where('id_patient','=',$patientId)->first();
+				$doctorData 			= DoctorsModel::where('id_doctor','=',$doctorId)->first();
+				
+		     
+				$diseases =  DB::table('diseases')->select('disease_name')->orderBy('disease_name', 'asc')->lists('disease_name', 'disease_name'); 
+				$symptoms =  DB::table('symptoms')->select('symptoms')->orderBy('symptoms', 'asc')->lists('symptoms','symptoms'); 
+
+				
+
+
+				$diag = DB::table('diagnosis')
+											->where('id_patient','=',$patientId)
+											->where('created_date', DB::raw("(select max(`created_date`) from diagnosis where id_patient='$patientId')"))
+											->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis where id_patient='$patientId')"))
+											->first();
+
+
+
+				return View('cardiodiagnosis',array('diseases'=>$diseases,'diag'=>$diag,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>"You are not authorised to view the page"));
+			}
+		}
+		else{
+			return Redirect::to('logout');
+		}
 		
-     
-		$diseases =  DB::table('diseases')->select('disease_name')->orderBy('disease_name', 'asc')->lists('disease_name', 'disease_name'); 
-		$symptoms =  DB::table('symptoms')->select('symptoms')->orderBy('symptoms', 'asc')->lists('symptoms','symptoms'); 
-
+			
 		
 
-
-		$diag = DB::table('diagnosis')
-									->where('id_patient','=',$patientId)
-									->where('created_date', DB::raw("(select max(`created_date`) from diagnosis where id_patient='$patientId')"))
-									->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis where id_patient='$patientId')"))
-									->first();
-
-
-
-		return View('cardiodiagnosis',array('diseases'=>$diseases,'diag'=>$diag,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+		
 	}
 	public function showCardiacLabdata(){
 		$patientId = Session::get('patientId');
 		$doctorId 		= Session::get('doctorId');
-		$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-		$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
-		return View('cardiolabdata',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
-	}
+
+		if(!empty($doctorId)){
+			if(!empty($patientId)){
+				$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
+					$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+					return View('cardiolabdata',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
+				
+			}
+			else{
+				return Redirect::to('doctorhome')->with(array('error'=>"You are not authorised to view the page"));
+			}
+		}
+		else{
+			return Redirect::to('logout');
+		}
+	}	
+			
+		
+
+
+		
 	public function addCardioDiagnosis(){
     	
 		$input 				= Request::all();

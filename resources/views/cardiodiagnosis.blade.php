@@ -61,6 +61,12 @@ if(!empty($doctorData)){
                           {{$success}}
                 </div>
               @endif
+              	@if(empty($patientPersonalData))
+	                <div class="alert alert-danger display-none" style="display: block;">
+	                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+	                          {{"Please save patient personal information."}}
+	                </div>
+	            @endif
 		</div>
 		
 	</div>
@@ -136,11 +142,21 @@ if(!empty($doctorData)){
 				@endif
 					
 					<hr>
-					<div class="form-group ">
+					@if(!empty($patientPersonalData))
+						<div class="form-group ">
 							<div class="col-sm-12">
-										<button type="submit" class="btn btn-primary btn-block dd_btn_center"><!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->Save</button>
+								<button type="submit" class="btn btn-primary btn-block dd_btn_center"><!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->Save</button>
 							</div>
-					</div>
+						</div>
+					@else
+						<div class="form-group ">
+							<div class="col-sm-12">
+								<button type="submit" class="btn btn-primary btn-block dd_btn_center" disabled="disabled"><!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->Save</button>
+							</div>
+						</div>
+					@endif
+
+					
 			</div>
 		</div>
 		<hr>
@@ -181,6 +197,7 @@ if(!empty($doctorData)){
 	<script>
 
 		jQuery(document).ready(function() {
+				Main.init();
 				patientElements.init();
 			   
 			$(window).load(function() {

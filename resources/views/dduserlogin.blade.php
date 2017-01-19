@@ -8,7 +8,7 @@
 	<!-- start: HEAD -->
 	<head>
 
-		<title>Doctor's Diary | Login</title>
+		<title>Doctor's Diary | User Login</title>
 		<!-- start: META -->
 		<meta charset="utf-8" />
 		<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
@@ -134,11 +134,12 @@
 
 	        <div class="dd_doctor_login_main_hd">
 
-	       		 <span>Sign in or create an account</span></div>
+	       		 <!-- <span>Administrator / User Login</span> -->
+	       	</div>
 
 	        <div class="doctor_login_main">		       
 				<div class="box_2">
-				 <div class="box_2_main">
+				 <div class="">
 		        	<!-- <div class="main-login"> -->
 		        	<div>
 
@@ -212,9 +213,9 @@
 												<button type="submit" class="btn btn-primary btn-block dd_btn_new">Login</button>
 											</span>
 										</div>
-										<div class="col-sm-12 dd">
+										<!-- <div class="col-sm-12 dd">
 											<a href="doctorforgetpassword" class="dd_textalign_center dd_16px ">Forgot Your Password?</a>
-										</div>
+										</div> -->
 									
 			        				</div>
         			
@@ -227,7 +228,7 @@
 				</div>
 
 
-					<div class="box_right">
+					<!-- <div class="box_right">
 			        	<div class="logo">
 			        		<span class="login_HD dd_signfont">New to Doctor's Diary?</span>
 			        	</div>
@@ -238,7 +239,7 @@
 								
 							</span>
 						</div>
-					</div>
+					</div> -->
 
 
 

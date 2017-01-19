@@ -1,9 +1,24 @@
+<?php
+if(!empty($printData)){
+	$marginTop 		= $printData->margin_top;
+	$marginBottom 	= $printData->margin_bottom;
+	$marginLeft 	= $printData->margin_left;
+	$marginRight 	= $printData->margin_right;
+	
 
+}
+else{
+	$marginTop 		= 0;
+	$marginBottom 	= 0;
+	$marginLeft 	= 0;
+	$marginRight 	= 0;
+}
+?>
 
 
 <!DOCTYPE html>
 <html>
-	<title> Patient Prescriton Copy</title>
+	<title> Patient Prescription Copy</title>
 	<head>
 		<style>
 			body
@@ -227,11 +242,11 @@
 					margin: 0;
 					padding:-2px 0;
 				}
-				.full-cover{
-					margin-top: 	<?php echo $printData->margin_top."px"; ?> ;
-					margin-bottom: 	<?php echo $printData->margin_bottom."px"; ?> ;
-					margin-left:	<?php echo $printData->margin_left."px"; ?> ;
-					margin-right:	<?php echo $printData->margin_right."px"; ?> ;
+				.full_cover{
+					margin-top: 	<?php echo $marginTop."px"; ?> ;
+					margin-bottom: 	<?php echo $marginBottom."px"; ?> ;
+					margin-left:	<?php echo $marginLeft."px"; ?> ;
+					margin-right:	<?php echo $marginRight."px"; ?> ;
 
 				}
 
@@ -264,9 +279,43 @@
 				@foreach($prescriptionData as $index=>$precriptionDataVal)
 				<tr>
 					<td class="pd_text_L_2">{{$index+1}}. {{$precriptionDataVal->drug_name}}</td>
-					<td class="pd_text_L_2" >{{$precriptionDataVal->dosage}} {{$precriptionDataVal->dosage_unit}}</td>
-					<td class="pd_text_L_2">Morning :{{$precriptionDataVal->morning}}, Noon : {{$precriptionDataVal->noon}}, Night : {{$precriptionDataVal->night}}</td>
-					<td class="pd_text_L_2">{{$precriptionDataVal->duration}} {{$precriptionDataVal->duration_unit}}</td>
+					<td class="pd_text_L_2" >
+					
+						@if($precriptionDataVal->dosage!="0" && $precriptionDataVal->dosage!=="")
+							{{$precriptionDataVal->dosage}} {{$precriptionDataVal->dosage_unit}}
+						@else
+							{{"----"}}
+						@endif
+					</td>
+					<td class="pd_text_L_2">
+						@if($precriptionDataVal->morning!="0" && $precriptionDataVal->morning!="")
+							Morning :{{$precriptionDataVal->morning}}, 
+						@else
+							Morning: {{"--"}}, 
+						@endif
+
+						@if($precriptionDataVal->noon!="0" && $precriptionDataVal->noon!="")
+							Noon :{{$precriptionDataVal->noon}}, 
+						@else
+							Noon: {{"--"}}, 
+						@endif
+
+						@if($precriptionDataVal->night!="0" && $precriptionDataVal->night!="")
+							Night :{{$precriptionDataVal->night}}, 
+						@else
+							Night: {{"--"}}
+						@endif
+						
+						
+					</td>
+					<td class="pd_text_L_2">
+						@if($precriptionDataVal->duration!="0" && $precriptionDataVal->duration!=="")
+							{{$precriptionDataVal->duration}} {{$precriptionDataVal->duration_unit}}
+						@else
+							{{"----"}}
+						@endif
+						
+					</td>
 				</tr>
 				@endforeach
 			@else
@@ -285,7 +334,7 @@
 		<table style="margin-top:50px">
 			<tr>
 				<th style="text-align:left">Treatment</th>
-				<th style="text-align:right">Followup Date</th>
+				<th style="text-align:right">Follow up Date</th>
 			</tr>
 			<tr>
 				@if(empty($treatment) && empty($followupDate))

@@ -192,7 +192,7 @@
                             <div class=" dd_upper">New Patient ID</div>
                         </div>
                         <div class=" dd_margin_0 dd_width_90 dd_border_0">
-                            <div class="form-group ">
+                            <div class="form-group dd_dhome ">
                                 <div class="dd_my_from">
                                     <div class="dd_form_id">
                                         {!! Form::text('id_city', null, $attributes = array('class'=>'dd_form_id_op_1 dd_border_0','placeholder' => '','id'=>'id_city_new','maxlength'=>'3'));  !!}
@@ -220,7 +220,7 @@
                             <div class=" dd_upper">Old Patient ID </div>
                         </div>
                         <div class=" dd_width_90 dd_border_0">
-                            <div class="form-group ">
+                            <div class="form-group dd_dhome ">
                                 <div class="dd_my_from">
                                     <div class="dd_form_id">
                                         {!! Form::text('id_city', null, $attributes = array('class'=>'dd_form_id_op_1  dd_border_0','placeholder' => '','id'=>'id_city_old','maxlength'=>'3'));  !!}

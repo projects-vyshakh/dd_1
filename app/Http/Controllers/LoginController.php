@@ -711,7 +711,7 @@ class LoginController extends Controller {
 				
 
 				if($doctorRegistration){
-					return Redirect::to('doctorlogin')->with(array('success'=>"Doctor registered successfully. Please wait for administrator authorisation"));
+					return Redirect::to('doctorlogin')->with(array('success'=>"Doctor registered successfully. Please wait for administrator authorization"));
 				}
 				else{
 					return Redirect::to('doctorsignup')->with(array('error'=>"Failed to register doctor"));

@@ -102,7 +102,7 @@ Route::any('patientprevioustreatment', array('before'=>'isDoctorLoggedIn','as'=>
 
 Route::any('patientprevioustreatmentextended', array('before'=>'isDoctorLoggedIn','as'=>'patientprevioustreatmentextended','uses'=>'DoctorController@patientPreviousTreatmentExtended'));
 
-Route::any('patientprevioustreatmentprint', array('before'=>'isDoctorLoggedIn','as'=>'patientprevioustreatmentprint','uses'=>'DoctorController@patientPreviousTreatmentPrint'));
+Route::any('patientprevioustreatmentprint', array('before'=>'isDoctorLoggedIn','as'=>'patientprevioustreatmentprint','uses'=>'SettingsController@patientPreviousTreatmentPrint'));
 
 Route::any('patientprevioustreatmenttest', array('before'=>'isDoctorLoggedIn','as'=>'patientprevioustreatmenttest','uses'=>'DoctorController@showPatientPreviousTreatmentTest'));
 
@@ -205,8 +205,12 @@ Route::any('patientsearch', array('as'=>'patientsearch','uses'=>'UserController@
 
 Route::any('handleSearchPatient', array('as'=>'handleSearchPatient','uses'=>'UserController@handleSearchPatient'));
 
-Route::any('getPatientList', array('as'=>'getPatientList','uses'=>'UserController@getPatientList'));
 
+Route::any('doctorsearch', array('as'=>'doctorsearch','uses'=>'UserController@showDoctorSearch'));
+Route::any('handleSearchDoctor', array('as'=>'handleSearchDoctor','uses'=>'UserController@handleSearchDoctor'));
+
+Route::any('doctorauthorize', array('as'=>'doctorauthorize','uses'=>'UserController@showDoctorAuthorize'));
+Route::any('handleDoctorAuthorize', array('as'=>'handleDoctorAuthorize','uses'=>'UserController@handleDoctorAuthorize'));
 //Print Controllers
 Route::post('patientPrescPrint', array('before'=>'isDoctorLoggedIn','as'=>'patientPrescPrint','uses'=>'SettingsController@patientPrescPrint'));
 

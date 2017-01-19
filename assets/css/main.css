@@ -5034,7 +5034,7 @@ td.column-right {
 	margin-top: 70px;
  }
  .box_admin .dd_pd_LR_20{
-    margin: 30px 14px 10px 5px;
+    margin: 30px 31px 10px 20px;
 }
 .inner_wrapper{
 	max-width: 970px;
@@ -5209,6 +5209,7 @@ td.column-right {
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 5px;
+    margin-left: 15px;
 }
 .dd_form_id{
 	width: 100%;
@@ -7527,7 +7528,7 @@ h6{
 	background: #fff;
 	border:1px solid #cbcbcb;
 	width : 32.5%;
-	font-size: 20px !important;
+	font-size: 18px !important;
 	border-right: 0
 }
 .dd_my_from div .dd_form_id_op_2  {
@@ -7545,10 +7546,20 @@ h6{
 	background: #fff;
 	border:1px solid #cbcbcb;
 	width : 32.5%;
-	font-size: 20px !important;
+	font-size: 18px !important;
 	border-left: 0
 
 }
 .dd_btn_home_2{
 	margin-right: 10px;
+}
+.dd_dhome{
+	padding: 0 15px;
+}
+.dd_prinshare h2{
+	font-size: 18px;
+	text-transform: uppercase;
+	font-weight: 600;
+	margin-bottom: 15px;
+
 }

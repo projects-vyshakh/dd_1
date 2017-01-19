@@ -528,6 +528,45 @@ display: none;
         line-height: 0;
 
 }
+.dd_btn_home_2 .help-block{
+    margin: 0 auto !important;
+    display: table !important;
+    text-align: center !important;
+}
+.pressure{
+    display: none;
+}
+.tabs-left > .nav-tabs {
+    border-color: hsl(0, 0%, 87%);
+    float: none;
+    height: auto;
+    margin-bottom: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    top: auto;
+    margin-bottom: 15px;
+}
+#dummy a {
+    font-size: 16px;
+    padding: 20px 15px;
+}
+.pricon {
+    
+    float: left;
+    height: 22px;
+    margin-right: 5px;
+    margin-top: -9px;
+    width: 22px;
+}
+.dd_prev_margine .nav-tabs {
+    margin-right: 0;
+}
+.dd_sidetab {
+    margin-right: 0px;
+}
+.tabs-left .tab-content {
+    border-top: 1px solid hsl(0, 0%, 87%);
+}
 
 
 }
@@ -579,13 +618,46 @@ display: none;
 
 @media only screen and (max-width: 460px){
 
+.patient_name_res{
+        display: none;
+}
+.dd_my_from div .dd_form_id_op_1  {
+    height: 45px;
+    background: #fff;
+    border:1px solid #cbcbcb;
+    width : 32.5%;
+    font-size: 20px !important;
+    border-right: 1px solid #cbcbcb
+}
+.dd_my_from div .dd_form_id_op_2  {
+    height: 45px;
+    background: #fff;
+    border:1px solid #cbcbcb;
+    width : 32.5%;
+    font-size: 20px !important;
+    margin-left:0px !important;
+    
+}
+.dd_my_from div .dd_form_id_op_3  {
+    margin-left: 0px !important;
+    height: 45px;
+    background: #fff;
+    border:1px solid #cbcbcb;
+    width : 32.5%;
+    font-size: 20px !important;
+    border-left: 1px solid #cbcbcb;
+
+}
+
 .dd_form_id_op_1,.dd_form_id_op_2,.dd_form_id_op_3 {
     display: table !important;
     margin: 0 auto 5px auto !important;
     text-align: center !important;
     width: 100% !important;
 }
-
+.dd_btn_home_2 {
+    margin-right: 0px;
+}
 
 .form-group .col-sm-12 .input-icon .dd_input_2 {
     width: 100%;
@@ -747,9 +819,64 @@ li.dropdown.current-user .dropdown-menu li a {
     margin-top: -136px;
 }
 
+.dd_Present_mg {
+    margin-bottom: 10px;
+    margin-right: 0;
+    position: inherit;
+    right: 0;
+    top: 0;
+    width: 100%;
+}
+
+.btn.btn-primary.pdfopen {
+    margin-bottom: 10px;
+    margin-left: 0;
+}
+.dd_print {
+    color: hsl(0, 0%, 100%);
+    padding: 6px 20px;
+    position: inherit;
+    right: 0;
+    top: 0;
+    width: 100%;
+}
+.btn.btn-purple.share-prescription.dd_share {
+    border-radius: 0;
+    box-sizing: border-box;
+    float: none;
+    margin-bottom: 10px;
+    position: inherit;
+    top: 0;
+    width: 100%;
+}
+.dd_menarche_4 .col-sm-4 {
+    float: none;
+    width: 100%;
+}
+.dd_praji_followup input {
+    margin-bottom: 10px;
+    width: 100%;
+}
+.dd_btn_center {
+    width: 100%;
+}
+.dd_addmore_0 {
+    text-align: center;
+    width: 100%;
+}
+.dd_menarche_4 col-sm-8{
+    width: 100%;
+}
+.dd_menarche_4 .col-sm-8 {
+    float: none;
+    width: 100%;
+}
+
 }
 
 @media only screen and (max-width: 400px){
+
+
 
 
 }

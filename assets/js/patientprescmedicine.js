@@ -220,6 +220,12 @@ var patientPrescMedicine = function () {
 										var prescSharedId        = prescMedicine[i].id_share_prescription;
 										var foodStatus 			 = prescMedicine[i].food_status;
 
+										(dosage==0)?dosage='':dosage = dosage;
+										(duration==0)?duration='':duration = duration;
+										(morning==0)?morning='':morning = morning;
+										(noon==0)?noon='':noon = noon;
+										(night==0)?night='':night = night;
+
 										//Checking  start date and follow up dates
 										(startDate=='0000-00-00')?startDate = '':startDate=startDate;
 										(followUpDate=='0000-00-00')?followUpDate = '':followUpDate=followUpDate;

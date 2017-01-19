@@ -44,23 +44,30 @@ if(!empty($doctorData)){
 
 	<div class="row dd_menarche">
 		<div class="col-md-12">
-				<?php $error = Session::get('error');
-                            $success = Session::get('success');
-                            Session::forget('error');
-                            Session::forget('success');
-                           
-                          ?>
-	                      @if(!empty($error))
-	                        <div class="alert alert-danger display-none" style="display: block;">
-	                          <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-	                                  {{$error}}
-	                        </div>
-	                      @elseif(!empty($success))
-	                        <div class="alert alert-success display-none" style="display: block;">
-	                          <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-	                                  {{$success}}
-	                        </div>
-	                      @endif
+				<?php 
+					$error 		= Session::get('error');
+                    $success 	= Session::get('success');
+                    Session::forget('error');
+                    Session::forget('success');
+                ?>
+	              	@if(!empty($error))
+		                <div class="alert alert-danger display-none" style="display: block;">
+		                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+		                          {{$error}}
+		                </div>
+	              	@elseif(!empty($success))
+		                <div class="alert alert-success display-none" style="display: block;">
+		                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+		                          {{$success}}
+		                </div>
+	              	@endif
+
+	              	@if(empty($patientPersonalData))
+		                <div class="alert alert-danger display-none" style="display: block;">
+		                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+		                          {{"Please save patient personal information."}}
+		                </div>
+		            @endif
 	                     
 			<div class="panel">
 			
@@ -621,14 +628,22 @@ if(!empty($doctorData)){
 								</div>
 							
 								<hr>
-								
-								<div class="form-group">
-									<div class="col-sm-10"></div>
-									<div class="col-sm-12">
-										<button type="submit" class="btn btn-primary btn-block dd_save "><!-- <i class="fa fa-floppy-o"></i> --> Save</button>
+								@if(!empty($patientPersonalData))
+									<div class="form-group">
+										<div class="col-sm-10"></div>
+										<div class="col-sm-12">
+											<button type="submit" class="btn btn-primary btn-block dd_save "><!-- <i class="fa fa-floppy-o"></i> --> Save</button>
+										</div>
 									</div>
-								</div>
-										
+								@else
+									<div class="form-group">
+										<div class="col-sm-10"></div>
+										<div class="col-sm-12">
+											<button type="submit" class="btn btn-primary btn-block dd_save " disabled="disabled"><!-- <i class="fa fa-floppy-o"></i> --> Save
+											</button>
+										</div>
+									</div>
+								@endif
 							</div>	
 
 

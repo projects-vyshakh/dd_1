@@ -1,10 +1,5 @@
-<?php
-		$currentPath = Route::getCurrentRoute()->getPath();
-		//echo $currentPath;
-		$filename = Session::get('pdfFileName');
-		
 
-?>
+
 <!DOCTYPE html>
 <!-- Template Name: Clip-One - Responsive Admin Template build with Twitter Bootstrap 3.x Version: 1.4 Author: ClipTheme -->
 <!--[if IE 8]><html class="ie8 no-js" lang="en"><![endif]-->
@@ -15,7 +10,7 @@
 	<!-- start: HEAD -->
 	<head>
 
-		<title>Doctor's Diary | Share Prescription</title>
+		<title>Doctor's Diary | Prescription Copy</title>
 		<!-- start: META -->
 		<meta charset="utf-8" />
 		<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
@@ -55,14 +50,10 @@
         height: 100%;
     }
 
-    .swiper-container {
-        width: 100%;
-        height: 100%;
-    }
-    .swiper-slide {
-        background-position: center;
-        background-size: cover;
-    }
+  	.doctor_login_main {
+   	 padding: 0px;
+	}
+	
 		</style>
 		<!-- end: META -->
 		<!-- start: MAIN CSS -->
@@ -79,15 +70,9 @@
 	    {!!Html::style('assets/css/print.css',array('media' => 'print')) !!}
 
 	   
-	    {!!Html::style('assets/css/dd-responsive.css')!!}
+	     {!!Html::style('assets/css/dd-responsive.css')!!}
 
-	    {!!Html::style('assets/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css')!!}
-		{!!Html::style('assets/plugins/select2/select2.css')!!}
-		{!!Html::style('assets/plugins/tokenizemultiselect/jquery.tokenize.css')!!}
-
-
-		{!!Html::style('assets/plugins/ajax-loader/src/jquery.mloading.css')!!}
-		{!!Html::style('assets/plugins/bootstrap-modal/css/bootstrap-modal.css')!!}	
+	     {!!Html::style('assets/plugins/Swiper-master/dist/css/swiper.min.css')!!}
 	
 	      
 	    
@@ -96,63 +81,152 @@
 	</head>
 	<!-- end: HEAD -->
 	<!-- start: BODY -->
+	<?php
+		$currentPath = Route::getCurrentRoute()->getPath();
+		$filename = Session::get('pdfFileName');
+		$parametersArray = Session::get('parametersArray');
+		var_dump($parametersArray);
+
+
+		//echo $currentPath;
+	?>
+
 	
-	<body class="error-full-page">
-		
-	@if(!empty($filename))
-		<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content" style="width:800px;height:580px">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-							&times;
-						</button>
-						<h4 class="modal-title">Prescription Copy</h4>
-					</div>
-					<div class="modal-body">
-						<p class="pdf_print">
-							<iframe src="storage/pdf/{{$filename}}.pdf" style="width:780px;height:500px;" id="iFrame"></iframe>
-						</p>	
+	
+	<body style="background-color:#f9f9f9">
 
-		
-					</div>
-					<!-- <div class="modal-footer">
-						<button class="btn btn-default printBtnOk" data-dismiss="modal">
-							OK
-						</button>
-					</div> -->
-				</div>
-			</div>
-		</div>
-	@else
-			<!-- start: PAGE -->
-		<div class="container">
-			<div class="row">
-				<!-- start: 500 -->
-				<div class="col-sm-12 page-error">
-					<div class="error-number bricky">
-						500
-					</div>
-					<div class="error-details col-sm-6 col-sm-offset-3">
-						<!-- <h3>Oops! You are stuck at 500</h3> -->
-						<p>
-							Something's wrong!
-							<br>
-							It looks as invalid url.
-							<br>
+	
+		<div class=" navbar-fixed-top resize-login dd_login_header"><!-- navbar-fixed-top -->
+			<div class="inner_wrapper_2">
+				<div class="container dd_pd_0">
+	        		<div class="row dd_mg_0">
+	        		 	<div class="col-sm-12 dd_pd_0">
+	        		 		<div class="logo_div">
+	    		 			   <a class="navbar-brand dd_logo_img_2" href="http://www.doctorsdiary.co">				                   
+								</a>
+							</div>
+							<div class="login_div">
+								<div class="doctorlogin_main">
+									<!-- <span class="doctor_login"><img src="assets/images/doctor_icon.png"></span> -->
+									<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #a9f2ff" @endif>Doctor Login</a>&nbsp;  &nbsp;
+								</div>
+		        		 		<div class="patientlogin_main"> 		
+		        		 		 	<!-- <span class="patient_login"><img src="assets/images/patient_icon.png">
+		        		 		 	</span>	   -->      		 		 	
+		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #a9f2ff" @endif>
+		        		 		 		Patient Login
+		        		 		 	</a>
+		        		 		</div>
+	        		 		</div>
 							
-						</p>
+	        		 	</div>
+	        		</div>
+	        	</div>
+	        </div>
+        </div>
+       
+       <div class="inner_wrapper_3 ">
+		  	<div class="doctor_login_main">		       
+				<div class="box_2">
+				 	<div class="box_2_main">
+		        	<!-- <div class="main-login"> -->
+		        		<div>
+
+				        	<div class="dd_logo_responsive">
+					        	<img src="assets/images/logo-mob.png" alt="">			        		
+					        </div>
+							<div class="dd_drlogin_responsive">
+					        	<div class="login_div2">
+									<div class="doctorlogin_main2">								
+										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+									</div>
+			        		 		<div class="patientlogin_main2"> 							        		 		       	
+			        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
+			        		 		 		Patient Login
+			        		 		 	</a>
+			        		 		</div>
+		        		 		</div> 	
+				        	</div>
+			        		
+							
+			        			
+			        			
+						</div>
 					</div>
 				</div>
-				<!-- end: 500 -->
+
+				
+				
+				
+
+
+			
 			</div>
+			<div class="dd_clear"></div>
+			<!-- <iframe src="storage/pdf/{{$filename}}.pdf" style="width:1000px;height:500px;" id="iFrame"></iframe> -->
+
+			
+
 		</div>
+		<object data="storage/pdf/{{$filename}}.pdf" type="application/pdf"  style="padding-top: 40px;width: 100%;height:100%">
+			    <embed src="storage/pdf/{{$filename}}.pdf">
+			       
+			    </embed>
+			</object>
 
-	@endif
+
+		<footer>
+				<div class="navbar-fixed-bottom dd_footer" style="z-index: 20000; bottom: 0;">
+			      <div class="container " style="height:">
+			        <div class="row">
+			        	<div class="col-sm-12">
+			        	<div class="inner_wrapper_2">
+			        		<div class="footer_div footer_pd dd_left ">
+			        			&copy 2016 Doctor's Diary | Powered by Brainpan <!-- Innovations.  -->
+			        		</div>
+			        		<div class="footer_div_2 dd_right">
+				        		<ul class="footer_ul">
+					        		<li class="footer_li">
+					        		 <a href="" class="footer_a">Terms & Conditions</a>	
+					        		</li>
+					        		<li class="footer_li">
+					        		<a href="" class="footer_a">Blog</a>
+					        		</li>
+					        		<li class="footer_li">
+					        		<a href="" class="footer_a">Career</a>
+					        		</li>
+					        		<li class="footer_li">
+					        		<a href="" class="footer_a">About Us</a>
+					        		</li>
+				        			
+				        		</ul>
+			        			
+			        		</div>
+			        		</div>
+			        	</div>
+			        </div>
+			      </div>
+				</div>
+			</footer>
 
 
+
+
+
+
+
+
+	   
+	  	
 
 		
+		<!-- start: MAIN JAVASCRIPTS -->
+		<!--[if lt IE 9]>
+		<script src="assets/plugins/respond.min.js"></script>
+		<script src="assets/plugins/excanvas.min.js"></script>
+		<script type="text/javascript" src="assets/plugins/jQuery-lib/1.10.2/jquery.min.js"></script>
+		<![endif]-->
+		<!--[if gte IE 9]><!-->
 		{!!Html::script('assets/plugins/jQuery-lib/2.0.3/jquery.min.js')!!}
      
 	    {!!Html::script('assets/plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js')!!}
@@ -167,20 +241,23 @@
 	    {!!Html::script('assets/plugins/less/less-1.5.0.min.js')!!}
 	    {!!Html::script('assets/plugins/jquery-cookie/jquery.cookie.js')!!}
 	    {!!Html::script('assets/plugins/bootstrap-colorpalette/js/bootstrap-colorpalette.js')!!}
-	   
-	  	{!!Html::script('assets/plugins/bootstrap-modal/js/bootstrap-modal.js')!!}
-		{!!Html::script('assets/plugins/bootstrap-modal/js/bootstrap-modalmanager.js')!!}
-		{!!Html::script('assets/js/ui-modals.js')!!}
-		{!!Html::script('assets/plugins/bootbox/bootbox.min.js')!!}
+	    {!!Html::script('assets/js/main.js')!!}
 
 
+	    {!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
+	    {!!Html::script('assets/js/login.js')!!}
 
 	   
 	
 		<script>
 			jQuery(document).ready(function() {
-				$('#myModal3').modal('show');
+				//Main.init();
+				Login.init();
 				
+			  	$('.doctor-register-btn').click(function(e){
+			  		e.preventDefault();
+			  		window.location.href = "doctorsignup";
+			  	})
 				
 			});
 		</script>
