@@ -4,16 +4,21 @@ var patientPrescMedicine = function () {
 		
 	}
 	var runPrescriptionDatePickers = function(){
+			var today = new Date();
+			var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			console.log(date)
+			
 			$('.start_date').Zebra_DatePicker({
-				direction: '1',
+				direction: true,
    				icon_position : 'left',
    				inside : true,
    				show_icon : false,
-   				minDate: 0
+   				minDate:'0',
+   				
 			});
 			
 			$('.follow_up_date').Zebra_DatePicker({
-				direction: 1,
+				direction: true,
    				icon_position : 'left',
    				inside : true,
    				show_icon : false
@@ -67,7 +72,7 @@ var patientPrescMedicine = function () {
 								extraPrescCounter = parseInt(extraPrescCounter) + 1;
 								$('.extra-presc-count').val(extraPrescCounter);
 		       					var counter	=	$('.default-div-count').val();
-		       							console.log(counter++);
+		       							console.log('counter'+counter++);
        							e.preventDefault();
        							$('.presc-medicine').append(
 	           						'<div class="presc-inner contaner dd_border_table">'+
@@ -86,11 +91,13 @@ var patientPrescMedicine = function () {
                                        		'<tbody>'+
                 								'<tr class="drugs_row">'+
                                                     '<td class="dd_presc_medicin">'+
-                                                        	'<input type="text" name="drug_name'+counter+'" class="dd_input_mini drug_name" id="drug_name'+counter+'">'+
+                                                    		
+                                                        	'<input type="text" name="drug_name'+counter+'" class="dd_input_mini drug_name " id="drug_name'+counter+'">'+
+                                                    		
                                                     '</td>'+
                                                     '<td>'+
                                                         '<div class="dd_dosage1_text">'+
-                                                             	'<input type="text" name="dosage'+counter+'" class="input-mini ng-pristine ng-valid dosage" id="dosage'+counter+'">'+
+                                                             	'<input type="text" name="dosage'+counter+'" class="input-mini ng-pristine ng-valid dosage dd_remove_padding " id="dosage'+counter+'" maxlength="4">'+
                               									'<select class="dosage_unit" name="dosage_unit'+counter+'" id="dosage_unit'+counter+'">'+
 																 '</select>'+
                                                      	 '</div>'+
@@ -121,13 +128,13 @@ var patientPrescMedicine = function () {
 															'<input type="button" onclick="return removeInstruction(this);" name="remove-instruction-btn" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs remove-instruction-btn" value="- Remove Instruction" style="display:none" >' +
 													'</td>'+
 													'<td colspan="2" style="vertical-align: top;" >'+
-															'<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date</div>'+		
-																	'<div class="dd_dosage1_text_2 pull-left">'+
-							  												'<span class="dd_instruction"> '+
-																						'<input type="text" name="start_date'+counter+'" class="form-control  start_date" id="start_date'+counter+'" data-date-format="dd-mm-yyyy">'+
-																			'</span>'+
-																	'</div>'+
+														'<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date</div>'+		
+															'<div class="dd_dosage1_text_2 pull-left">'+
+				  												'<span class="dd_instruction"> '+
+																	'<input type="text" name="start_date'+counter+'" class="form-control  start_date" id="start_date'+counter+'" data-date-format="dd-mm-yyyy">'+
+																'</span>'+
 															'</div>'+
+														'</div>'+
 													'</td>'+
 													'<td colspan="2" class="dd_relative" style="vertical-align: top;">'+
 						   									 '<div class="dd_beforfood ">'+
@@ -147,7 +154,7 @@ var patientPrescMedicine = function () {
                              		'</div>'
 								);
 												  		
-												 
+											 
 				 	  			for( dosageUnitVal in data.dosageUnit){
 									$('#dosage_unit'+counter).append('<option value='+dosageUnitVal+'>'+data.dosageUnit[dosageUnitVal]+'</option>');
 								}
@@ -159,19 +166,19 @@ var patientPrescMedicine = function () {
 								$('.noon').tooltip({'trigger':'focus', 'title': 'Noon medicine count'}); 
 								$('.night').tooltip({'trigger':'focus', 'title': 'Night medicine count'}); 
 							 	$('.default-div-count').val(counter++);
-									
+
+							 	//Calling medicine autocomplete
+								runMedicineListAutoComplete();	
 								//Initiating start date after add more
-								$('.start_date').Zebra_DatePicker({
-				   				direction: -1,
-					   				icon_position : 'left',
-					   				inside : true,
-					   				show_icon : false
-				   				});	 	
+								runPrescriptionDatePickers();
+				   				
+
 							});
 				       				
 				       				
 				       		//Load Previous Drug Click
 		       				$('.present-drug-btn').click(function(e){
+
 		       					$('.success-status').val(''); // Success is keeping null on clicking load prev else clicking on share works twice
 		       					$('.present-drug-btn').attr('disabled',true);
 	       						var prescMedicine = data.prescMedicine;
@@ -248,11 +255,13 @@ var patientPrescMedicine = function () {
 			                                        '<tbody>'+
 	                               	 				 	'<tr class="drugs_row">'+
 		                                                    '<td class="dd_presc_medicin">'+
-		                                                        '<input type="text" name="drug_name'+counter+'" class="dd_input_mini drug_name" id="drug_name'+counter+'" value="'+drugName+'">'+
+		                                                    	'<div id="bloodhound">'+
+		                                                        	'<input type="text" name="drug_name'+counter+'" class="dd_input_mini drug_name typeahead" id="drug_name'+counter+'" value="'+drugName+'">'+
+		                                                    	'</div>'+
 		                                                    '</td>'+
 		                                                    '<td>'+
 		                                                        '<div class="dd_dosage1_text">'+
-		                                                            '<input type="text" name="dosage'+counter+'" class="input-mini ng-pristine ng-valid dosage" id="dosage'+i+'" value='+dosage+'>'+
+		                                                            '<input type="text" name="dosage'+counter+'" maxlength="4" class="input-mini ng-pristine ng-valid dosage dd_remove_padding" id="dosage'+i+'" value='+dosage+'>'+
 		                              									'<select class="dosage_unit" name="dosage_unit'+counter+'" id="dosage_unit'+counter+'">'+
 		                              										'<option value='+dosageUnitDefault+'>'+dosageUnitDefault+'</option>'+
 																		'</select>'+
@@ -305,9 +314,13 @@ var patientPrescMedicine = function () {
 														'</tr>'+
 												 	'</tbody>'+
 												'</table>'+
-												'<div class="instruction-div" id="instruction-div'+counter+'"></div>'+
+												'<div class="instruction-div" id="instruction-div'+counter+'">'+
+													
+												'</div>'+
 											'</div>'
 			                            );
+
+										
 										
 										//Appending dosage and duration 
 										for( dosageUnitVal in data.dosageUnit){
@@ -323,11 +336,24 @@ var patientPrescMedicine = function () {
 											
 										}
 
+
+										if(instruction==null || instruction==''){
+											//alert('no'+instruction)
+											$('#instruction-div'+counter).hide();
+										}
+										else{
+											//alert(counter+instruction)
+											$('#instruction-div'+counter).append('<textarea id="instruction'+counter+'" class=" form-control instruction" name="instruction'+counter+'" cols="30">'+instruction+'</textarea>');
+											$('#remove-instruction-btn'+counter).show();
+											$('#add-instruction-btn'+counter).hide();
+										}
+
+
 									}
 									//Ending forloop
 
 									
-
+									
 													 
 								 	$('.default-div-count').val(counter);
 
@@ -340,7 +366,17 @@ var patientPrescMedicine = function () {
 									$('.share-prescription').attr('disabled',true);
 								}	
 
-								
+								//Calling Medicine autocomplete
+								runMedicineListAutoComplete();
+								//Initiating start date after add more
+								runPrescriptionDatePickers();
+				   				/*$('.start_date').Zebra_DatePicker({
+									direction: true,
+					   				icon_position : 'left',
+					   				inside : true,
+					   				show_icon : false,
+					   				minDate: 0
+								});*/
 
 				       		});		
 
@@ -468,11 +504,11 @@ var patientPrescMedicine = function () {
                 $(element).closest('.form-group').removeClass('has-error');
                 // set error class to the control group
             },
-            success: function (label, element) {
+            /*success: function (label, element) {
                 label.addClass('help-block valid');
                 // mark the current input as valid and display OK icon
                 $(element).closest('.form-group').removeClass('has-error').addClass('has-success').find('.symbol').removeClass('required').addClass('ok');
-            },
+            },*/
             submitHandler: function (form) {
                 successHandler2.show();
                 errorHandler2.hide();
@@ -528,6 +564,30 @@ var patientPrescMedicine = function () {
 	        });
 		});
 	};
+
+	var runMedicineListAutoComplete = function(){
+		$('.drug_name').typeahead({
+			
+			items : 12,
+	  		scrollBar: false,
+	  		alignWidth: true,
+	  		
+			ajax: {
+
+			    url: 'getMedicineList',
+				timeout: 300,
+				method: 'get',
+				triggerLength: 1,
+				loadingClass: null,
+			    preDispatch: null,
+				preProcess: null
+
+			}
+	       
+	    });
+
+		
+	};
 	return {
 		//main function to initiate template pages
 		init: function () {
@@ -536,6 +596,7 @@ var patientPrescMedicine = function () {
 		   runPrescriptionDatePickers();
 		   runPatientPrescMedicineValidator();
 		   runPrescPrintManagement();
+		   runMedicineListAutoComplete();
 		   
 		}
     };

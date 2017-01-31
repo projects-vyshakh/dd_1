@@ -173,6 +173,25 @@ class UtilityController extends Controller {
   		return view('error');
   	}
 
+  	public function getMedicineList(){
+  		$medicineList =  DB::table('medicine_list')->get();
+
+  		// $medicineListArray =  DB::table('medicine_list')->select('medicine_name')->orderBy('medicine_name', 'asc')->lists('medicine_name','medicine_name'); 
+
+
+  		$medicineListArray = 	[];
+  		foreach($medicineList as $index=>$val){
+  			//array_push($medicineListArray,$val->medicine_name);
+  			$medicine['name'] =  $val->medicine_name;
+  			//var_dump($val->medicine_name);
+  			//$medicineListArray['name'] = $val->medicine_name;
+  			array_push($medicineListArray,$medicine);
+  		}
+
+  		return $medicineListArray;
+
+
+  	}
   
 	
 	

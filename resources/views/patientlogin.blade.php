@@ -88,7 +88,7 @@
 		//echo $currentPath;
 	?>
 	<body style="background-color:#f9f9f9">
-		<div class=" navbar-fixed-top resize-login dd_login_header"><!-- navbar-fixed-top -->
+		<div class=" navbar-fixed-top resize-login dd_login_header dd_login_header_2"><!-- navbar-fixed-top -->
 			<div class="inner_wrapper_2">
 				<div class="container dd_pd_0">
 	        		<div class="row dd_mg_0">
@@ -377,7 +377,7 @@
 	    {!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 	    {!!Html::script('assets/js/login.js')!!}
 
-	     {!!Html::script('assets/plugins/Swiper-master/dist/js/swiper.min.js')!!}
+	    
 	   	
 	
 		<script>
@@ -385,18 +385,7 @@
 				//Main.init();
 				Login.init();
 				
-			  	var swiper = new Swiper('.swiper-container', {
-			        pagination: '.swiper-pagination',
-			        speed: 1500,
-			        paginationClickable: true,
-			        autoplay : 5000,
-			        preloadImages : true,
-			        nextButton: '.swiper-button-next',
-			        prevButton: '.swiper-button-prev',
-			        spaceBetween: 5000,
-			        effect: 'fade',
-
-			    });
+			  	
 				
 			});
 		</script>

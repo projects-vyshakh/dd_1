@@ -178,7 +178,7 @@ class SettingsController extends Controller {
 		$doctorId  = Session::get('doctorId');
 
 		if(!empty($doctorId)){
-			if(!empty($patienId)){
+			if(!empty($patientId)){
 				$patientData 	= DB::table('patients')->where('id_patient','=',$patientId)->get();
 			    $doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 			   	$printData 		= DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();

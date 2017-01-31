@@ -85,7 +85,7 @@
 		$currentPath = Route::getCurrentRoute()->getPath();
 		$filename = Session::get('pdfFileName');
 		$parametersArray = Session::get('parametersArray');
-		var_dump($parametersArray);
+		/*var_dump($parametersArray);*/
 
 
 		//echo $currentPath;
@@ -96,7 +96,7 @@
 	<body style="background-color:#f9f9f9">
 
 	
-		<div class=" navbar-fixed-top resize-login dd_login_header"><!-- navbar-fixed-top -->
+		<div class="  resize-login dd_login_header"><!-- navbar-fixed-top -->
 			<div class="inner_wrapper_2">
 				<div class="container dd_pd_0">
 	        		<div class="row dd_mg_0">
@@ -124,51 +124,8 @@
 	        	</div>
 	        </div>
         </div>
-       
-       <div class="inner_wrapper_3 ">
-		  	<div class="doctor_login_main">		       
-				<div class="box_2">
-				 	<div class="box_2_main">
-		        	<!-- <div class="main-login"> -->
-		        		<div>
-
-				        	<div class="dd_logo_responsive">
-					        	<img src="assets/images/logo-mob.png" alt="">			        		
-					        </div>
-							<div class="dd_drlogin_responsive">
-					        	<div class="login_div2">
-									<div class="doctorlogin_main2">								
-										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
-									</div>
-			        		 		<div class="patientlogin_main2"> 							        		 		       	
-			        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
-			        		 		 		Patient Login
-			        		 		 	</a>
-			        		 		</div>
-		        		 		</div> 	
-				        	</div>
-			        		
-							
-			        			
-			        			
-						</div>
-					</div>
-				</div>
-
-				
-				
-				
-
-
-			
-			</div>
-			<div class="dd_clear"></div>
-			<!-- <iframe src="storage/pdf/{{$filename}}.pdf" style="width:1000px;height:500px;" id="iFrame"></iframe> -->
-
-			
-
-		</div>
-		<object data="storage/pdf/{{$filename}}.pdf" type="application/pdf"  style="padding-top: 40px;width: 100%;height:100%">
+      
+		<object data="storage/pdf/{{$filename}}.pdf" type="application/pdf"  style=";width: 100%;height:100%">
 			    <embed src="storage/pdf/{{$filename}}.pdf">
 			       
 			    </embed>

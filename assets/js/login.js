@@ -1,4 +1,15 @@
 var Login = function () {
+
+    var runOnPageLoad = function(){
+        $('#id_patient').keyup(function(){
+            var str = $(this).val();
+            var res = str.toUpperCase();
+            $(this).val(res); 
+
+        });
+
+    };
+
     var runLoginButtons = function () {
         /*$('.forgot').bind('click', function () {
             $('.box-login').hide();
@@ -156,8 +167,8 @@ var Login = function () {
                     $('#state').empty();
                     $('#state').append('<option value="0"></option>');
                     for(var s=0;s<data.length;s++){
-
-                        $('#state').append('<option value='+data[s].state_name+'>'+data[s].state_name+'</option>');
+                        console.log("State--"+data[s].state_name)
+                        $('#state').append('<option value="'+data[s].state_name+'">'+data[s].state_name+'</option>');
                         //$('#state').val(data[0].state_name).prop("selected", true);
 
                     }
@@ -175,7 +186,7 @@ var Login = function () {
                     $('#state').append('<option value="0"></option>');
                     for(var s=0;s<data.length;s++){
 
-                        $('#state').append('<option value='+data[s].state_name+'>'+data[s].state_name+'</option>');
+                        $('#state').append('<option value="'+data[s].state_name+'">'+data[s].state_name+'</option>');
                         //$('#state').val("Uttar Pradhesh").attr("selected", "selected");
                         
                        
@@ -289,11 +300,13 @@ var Login = function () {
             }
         });
     };
-  
+    
+
     
     return {
         //main function to initiate template pages
         init: function () {
+            runOnPageLoad();
             runLoginButtons();
             runSetDefaultValidation();
             runLoginValidator();

@@ -263,6 +263,8 @@
 
 @media only screen and (max-width: 767px){
 
+
+
     .navbar-fixed-bottom {
         position: relative;
     }
@@ -421,7 +423,7 @@
 	padding: 0 10px;
 }
 .main-container {
-    margin-top: 51px;
+    margin-top: -17px;/*for header top main*/
 }
 .nav li a {
     font-family: "Open Sans",sans-serif;
@@ -550,8 +552,7 @@ display: none;
     font-size: 16px;
     padding: 20px 15px;
 }
-.pricon {
-    
+.pricon {   
     float: left;
     height: 22px;
     margin-right: 5px;
@@ -566,6 +567,30 @@ display: none;
 }
 .tabs-left .tab-content {
     border-top: 1px solid hsl(0, 0%, 87%);
+}
+
+.dd_chang_sm1 .col-sm-1 {
+    padding-right: 0 !important;
+    width: 98% !important;
+}
+.dd_press_pd{ 
+    padding-left: 15px;
+    margin-top: 10px;
+
+}
+.pricon {
+    float: left;
+    height: 22px;
+    margin-right: 5px;
+    margin-top: 2px;
+    width: 22px;
+}
+.navbar-fixed-top, .navbar-fixed-bottom {
+    left: 0;
+    position: inherit !important;
+    right: 0;
+    transform: translate3d(0px, 0px, 0px);
+    z-index: 1030;
 }
 
 
@@ -617,6 +642,10 @@ display: none;
 
 
 @media only screen and (max-width: 460px){
+
+.navbar-brand img{
+    margin-top: -17px;
+}
 
 .patient_name_res{
         display: none;
@@ -705,29 +734,29 @@ display: none;
     text-align: center;
 }
 
-    .dd_patient_name{
-        display: none;
-    }
+.dd_patient_name{
+    display: none;
+}
 
 
-    .dd_personal_phone{
-        width: 100%;
-        margin-bottom: 10px;
-    }
+.dd_personal_phone{
+    width: 100%;
+    margin-bottom: 10px;
+}
 
 .footer_div{
-        display: block;
+    display: block;
 }
     .dd_profil {
     margin-right: 0;
     margin-top: 0;
 }
-    .dd_login_header{
-        display: none;
-    }
-    .dd_drlogin_responsive{
-        display: inline;
-    }
+.dd_login_header{
+     /*display: none;*/
+}
+.dd_drlogin_responsive{
+    display: inline;
+}
 .dd_logo_responsive{
 
     display: table;
@@ -870,6 +899,47 @@ li.dropdown.current-user .dropdown-menu li a {
 .dd_menarche_4 .col-sm-8 {
     float: none;
     width: 100%;
+}
+
+.dd_logo_img_2 {
+    background-image: url("../images/doctors_diary_logo_2.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: table;
+    height: 62px;
+    margin:0 auto;
+    width: 144px;
+    margin-top: 20px;
+}
+.logo_div {
+    float: none;
+    height: 72px;
+    width: 100%;
+}
+.navbar-brand {
+    float: none;
+}
+.login_div {
+    float: none;
+    margin: 28px 10px 21px 0; 
+}
+.doctorlogin_main {
+    display: flex;
+    float: none;
+}
+.patientlogin_main {
+    display: flex;
+    float: none;
+    position: relative;
+    margin-top: 10px;
+}
+.login_div a {
+    width: 100%;
+    text-align: center;
+    display: table;
+}
+.dd_login_header_2{
+    display: none;
 }
 
 }

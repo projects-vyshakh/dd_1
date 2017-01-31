@@ -18,12 +18,7 @@ if(!empty($doctorData)){
 @section('head')
 
 <style>
-	.pressure{
-		font-size: 18px;
-	    position: absolute;
-	    right: 84px;
-	    top: 5px;
-	}
+
 	.sys_dia_pressure input{
 		padding: 5px;
 		text-align: center;
@@ -58,14 +53,6 @@ if(!empty($doctorData)){
                           {{$success}}
                 </div>
               @endif
-
-              	@if(empty($patientPersonalData))
-	                <div class="alert alert-danger display-none" style="display: block;">
-	                  	<a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-	                        {{"Please save patient personal information."}}
-	                </div>
-            	@endif
-
 		</div>
 		<div class="col-sm-8">
 			<h3 class="dd_h3_Pd_t_0">General Examination</h3>
@@ -145,7 +132,7 @@ if(!empty($doctorData)){
 						</span>
 					</div>
 
-					<div class="dd_relative"> 
+					<div class="dd_relative dd_chang_sm1"> 
 					 {!! Form::label('pressure', 'Blood Pressure (Systolic / Diastolic [mm/Hg])', $attributes = array('class'=>"col-sm-2"));  !!} 
 					<div class="col-sm-1">
 						<span class="sys_dia_pressure">
@@ -154,6 +141,7 @@ if(!empty($doctorData)){
 						</span>
 					</div>
 					<!--  {!! Form::label('diastolic_pressure', 'Blood Pressure (Diastolic [mm/Hg])', $attributes = array('class'=>"col-sm-2"));  !!}  -->
+					<div class="pressure">/</div>
 
 					<div class="col-sm-1">
 						<span class="sys_dia_pressure">
@@ -161,7 +149,7 @@ if(!empty($doctorData)){
 												
 						</span>
 					</div>
-					<div class="pressure">/</div>
+					
 					</div>
 
 				</div>
@@ -237,7 +225,7 @@ if(!empty($doctorData)){
 						</span>
 					</div>
 					
-					<div class="dd_relative"> 
+					<div class="dd_relative dd_chang_sm1"> 
 					 {!! Form::label('pressure', 'Blood Pressure (Systolic / Diastolic [mm/Hg])', $attributes = array('class'=>"col-sm-2"));  !!} 
 					<div class="col-sm-1">
 						<span class="sys_dia_pressure">
@@ -246,14 +234,16 @@ if(!empty($doctorData)){
 						</span>
 					</div>
 					<!--  {!! Form::label('diastolic_pressure', 'Blood Pressure (Diastolic [mm/Hg])', $attributes = array('class'=>"col-sm-2"));  !!}  -->
+						<div class="pressure">/</div>
 
-					<div class="col-sm-1">
+
+					<div class="col-sm-1 dd_press_pd">
 						<span class="sys_dia_pressure">
 						{!! Form::text('diastolic_pressure', null, $attributes = array('class'=>'form-control dd_ellips '));  !!}
 												
 						</span>
 					</div>
-					<div class="pressure">/</div>
+				
 					</div>
 
 
@@ -1059,22 +1049,13 @@ if(!empty($doctorData)){
 			@endif	
 				<!-- Pelvic Examination -->
 				<hr>
-				@if(!empty($patientPersonalData))
-					<div class="form-group">
-						<div class="col-sm-10"></div>
-						<div class="col-sm-12">
-							<button type="submit" class="btn btn-primary btn-block dd_save "><!-- <i class="fa fa-floppy-o"></i> --> Save</button>
-						</div>
+				<div class="form-group dd_fromgroup_MG_0 ">
+					<div class="col-sm-12">
+						<button type="submit" class="btn btn-primary btn-block dd_btn_center">
+						<!-- <i class="fa fa-floppy-o" aria-hidden="true"></i> -->
+						Save</button>
 					</div>
-				@else
-					<div class="form-group">
-						<div class="col-sm-10"></div>
-						<div class="col-sm-12">
-							<button type="submit" class="btn btn-primary btn-block dd_save " disabled="disabled"><!-- <i class="fa fa-floppy-o"></i> --> Save
-							</button>
-						</div>
-					</div>
-				@endif
+				</div>
 			</div>
 				
 		</div>

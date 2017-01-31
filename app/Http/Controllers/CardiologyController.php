@@ -193,7 +193,8 @@ class CardiologyController extends Controller {
 		(!empty($input['pincode']))?$pincode 				= $input['pincode']:$pincode = "";
 		(!empty($input['phone']))?$phone 					= $input['phone']:$phone = "";
 		(!empty($input['email']))?$email 					= $input['email']:$email = "";
-		(!empty($input['refferedby']))?$refferedby 			= $input['refferedby']:$refferedby = "";	
+		(!empty($input['refferedby']))?$refferedby 			= $input['refferedby']:$refferedby = "";
+		($gender=="Male")?$profileImageName = "patient_profile_m.jpg":$profileImageName="patient_profile_L.jpg";	
        
 		if($patientExistCheck>0){
 			//return Redirect::to('patientpersonalinformation')->
@@ -221,6 +222,7 @@ class CardiologyController extends Controller {
 									'country' 			=> 	$country,
 									'phone' 			=> 	$phone,
 									'email' 			=> 	$email,
+									'profile_image_large'=>$profileImageName,
 									'id_doctor' 		=> 	$doctorId,
 									'edited_date' 		=> $editedDate);
 
@@ -268,6 +270,7 @@ class CardiologyController extends Controller {
 									'country' => $country,
 									'phone' => $phone,
 									'email' => $email,
+									'profile_image_large'=>$profileImageName,
 									'id_doctor' => $doctorId,
 									'created_date' => $createdDate);
 									
@@ -1261,7 +1264,7 @@ class CardiologyController extends Controller {
     	$patientId 			= Session::get('patientId'); 
         $doctorId 	 		= Session::get('doctorId');
         $referenceId 		= Session::get('referenceId'); 
-        $createdDate 		= date('Y-m-d');
+        $createdDate 		= date('Y-m-d h:i:s');
 		
 		//dd($input);
 		
@@ -1282,67 +1285,44 @@ class CardiologyController extends Controller {
         $patientExistCheck = DB::table('patients')->where('id_patient','=',$patientId)->count();
 
         if($patientExistCheck>0){
-        		$diagExistCheck = DB::table('diagnosis')->where('id_patient','=',$patientId)->where('diag_reference','=',$referenceId)->first();
+        	$diagExistCheck = DB::table('diagnosis')
+        	                            ->where('id_patient','=',$patientId)
+        	                            ->where('diag_reference','=',$referenceId)
+        	                            ->first();
     											
-		    	(!empty($input['symptoms']))?$symptoms= $input['symptoms']:$symptoms =[""];
-		    	(!empty($input['syndromes']))?$syndromes= $input['syndromes']:$syndromes ="";
-		    	(!empty($input['diseases']))?$diseases= $input['diseases']:$diseases =[""];
-		    	(!empty($input['additional_comment']))?$additionalComment= $input['additional_comment']:$additionalComment ="";
+	    	(!empty($input['symptoms']))?$symptoms= $input['symptoms']:$symptoms =[""];
+	    	(!empty($input['syndromes']))?$syndromes= $input['syndromes']:$syndromes ="";
+	    	(!empty($input['diseases']))?$diseases= $input['diseases']:$diseases =[""];
+	    	(!empty($input['additional_comment']))?$additionalComment= $input['additional_comment']:$additionalComment ="";
 
 	    	
-
-			    	//Adding Symptoms
-			    	$newSymptomsArray = array();
-			    	$symptomsExist =  DB::table('symptoms')->orderBy('symptoms')->lists('symptoms');
-			    	
-			    	foreach($symptoms as $index=>$symptomsVal){
-			    		
-			    		if(in_array($symptomsVal, $symptomsExist)){
 		
-			    		}
-			    		else{
-			    			$insertData = array('symptoms'=>$symptomsVal,'symptoms_subclass'=>'');
-			    			array_push($newSymptomsArray,$insertData);
-			    		}
-			    	}
-		
-			    	DB::table('symptoms')->insert($newSymptomsArray);
-
-
-		    	//Adding Diseasess
-		    	$newDiseasesArray = array();
-		    	$diseasesExist =  DB::table('diseases')->orderBy('disease_name')->lists('disease_name');
-		    	
-		    	foreach($diseases as $index=>$diseasesVal){
-		    		
-		    		if(in_array($diseasesVal, $diseasesExist)){
-
-		    		}
-		    		else{
-		    			$insertData = array('disease_name'=>$diseasesVal);
-		    			array_push($newDiseasesArray,$insertData);
-		    		}
-		    	}
-
-		    	DB::table('diseases')->insert($newDiseasesArray);
-
-
-
 	    			
 	    	if(!empty($diagExistCheck)){
-	    		$diagData = array('diag_symptoms'=>json_encode($symptoms),
-	    						  'diag_syndromes'=>$syndromes,
-	    						  'diag_suspected_diseases'=>json_encode($diseases),
-	    						  'diag_comment' => $additionalComment,
-	    						  'edited_date'=>$createdDate);
-	    		//var_dump($diseases);
 	    		$diseases = array_filter($diseases);
+	    		$symptoms = array_filter($symptoms);
+	    		$diagData = array('diag_symptoms'			=>json_encode($symptoms),
+	    						  'diag_syndromes'			=>$syndromes,
+	    						  'diag_suspected_diseases'	=>json_encode($diseases),
+	    						  'diag_comment' 			=> $additionalComment,
+	    						  'id_doctor' 				=>$doctorId,
+	    						  'edited_date'				=>$createdDate
+	    						);
 	    		
-	    		if(!empty($diseases)){
-	    			//echo "dises ok";
-		    		$diagUpdate = DB::table('diagnosis')->where('id_patient','=',$patientId)->update($diagData);
-		    		//var_dump($diagUpdate);
-		    		//return Redirect::to('patientdiagnosis')->with(array('success'=>"Data updated successfully"));
+	    		
+	    		
+	    		
+
+		    	if(empty($symptoms) && empty($syndromes) && empty($diseases) && empty($additionalComment))
+		    	{
+		    		return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to update data. Please fill the empty fields"));	
+		    	}
+		    	else{
+		    		$diagUpdate = DB::table('diagnosis')
+		    		                            ->where('id_patient','=',$patientId)
+		    		                            ->where('diag_reference','=',$referenceId)
+		    		                            ->update($diagData);
+		    		
 		    		if($diagUpdate){
 		    			
 		    			return Redirect::to('cardiodiagnosis')->with(array('success'=>"Data updated successfully",'newSymptoms'=>$symptoms));	
@@ -1351,25 +1331,28 @@ class CardiologyController extends Controller {
 		    		//echo "dises nsss ok";
 		    			return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to update data."));	
 		    		}	
-		    		
 		    	}
-		    	else{
-		    		//echo "dises n ok";
-		    			return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to update data. Diseases field is empty"));	
-		    		}	
 
 	    	}
 	    	else{
-	    		$diagData = array('diag_symptoms'=>json_encode($symptoms),
-		    						  'diag_syndromes'=>$syndromes,
-		    						  'diag_suspected_diseases'=>json_encode($diseases),
-		    						  'diag_comment' => $additionalComment,
-		    						  'id_patient'=>$patientId,
-		    						  'id_doctor'=>$doctorId,
-		    						  'diag_reference' => $referenceId,
-		    						  'created_date'=>$createdDate);
+
 	    		$diseases = array_filter($diseases);
-	    		if(!empty($diseases)){
+	    		$symptoms = array_filter($symptoms);
+	    		$diagData = array('diag_symptoms'				=>json_encode($symptoms),
+		    						  'diag_syndromes'			=>$syndromes,
+		    						  'diag_suspected_diseases'	=>json_encode($diseases),
+		    						  'diag_comment' 			=> $additionalComment,
+		    						  'id_patient'				=>$patientId,
+		    						  'id_doctor'				=>$doctorId,
+		    						  'diag_reference' 			=> $referenceId,
+		    						  'created_date'			=>$createdDate);
+
+
+		    	if(empty($symptoms) && empty($syndromes) && empty($diseases) && empty($additionalComment))
+		    	{
+		    		return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to save data. Please fill the empty fields"));	
+		    	}
+		    	else{
 		    		$diagSave = DB::table('diagnosis')->insert($diagData);
 		    		if($diagSave){
 		    			return Redirect::to('cardiodiagnosis')->with(array('success'=>"Data saved successfully"));	
@@ -1378,21 +1361,16 @@ class CardiologyController extends Controller {
 		    		//echo "dises nsss ok";
 		    			return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to save data."));	
 		    		}
-		    		
-	    		}
-	    		else
-	    		{
-		    		return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to save data. Diseases field is empty"));	
 		    	}
+
+
 
 	    	}		
 
         }
         else{
-        	return Redirect::to('patientdiagnosis')->with(array('error'=>"Please save patient personal data "));	
+        	return Redirect::to('cardiodiagnosis')->with(array('error'=>"Please save patient personal data "));	
         }	
-
-    								
 
     	
 

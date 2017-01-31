@@ -50,6 +50,8 @@ $todayDate = date('d-M-Y');
     <!-- Admin -->
     @if($currentPath=="userhome")<title>Home</title> @endif
     @if($currentPath=="patientsearch")<title>Search Patients</title> @endif
+    @if($currentPath=="doctorsearch")<title>Search Doctors</title> @endif
+    @if($currentPath=="doctorauthorize")<title>Authorize Doctors</title> @endif
     @if($currentPath=="userjsonimport")<title>Import</title> @endif
     
     {!!Html::style('assets/plugins/bootstrap/css/bootstrap.min.css')!!}
@@ -101,7 +103,59 @@ $todayDate = date('d-M-Y');
                 
 
                 <!-- Top Menu Starts-->
-                @if(($currentPath =='patientprofileprevtreatment') || ($currentPath =='patientprofilemanagement') || ($currentPath =='patientprofileedit') || ($currentPath=='patientchangepassword' ))
+                @if(($currentPath =='patientprofileprevtreatment')  || 
+                    ($currentPath =='patientprofilemanagement')     || 
+                    ($currentPath =='patientprofileedit')           || ($currentPath=='patientchangepassword'))         
+                    
+                    
+                @elseif($currentPath=="userhome" || 
+                        $currentPath=="userpersonalinformation" ||
+                        $currentPath=="patientsearch" ||
+                        $currentPath=="doctorsearch" ||
+                        $currentPath=="doctorauthorize")
+                    <div class="nav navbar-left">
+                        <div class="horizontal-menu navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <div class="dd_resp_menu" id="user_respo_menu" >
+                                    <li id="user_respo_home_menu" @if($currentPath=="userhome") class="active" @endif>
+                                        <a href="userhome">
+                                            <span class="dd_input_icon_dashboard"></span>
+                                            <span class="title"> Dashboard </span>
+                                        </a>
+                                       
+                                    </li>
+                                    <li id="user_respo_personal_menu" @if($currentPath=="userpersonalinformation") class="active" @endif>
+                                        <a href="userpersonalinformation">
+                                            <span class="dd_input_icon_patientpersonalinformation"></span>
+                                            <span class="title"> Personal Information </span>
+                                        </a>
+                                       
+                                    </li>
+                                    <li id="user_respo_patient_search_menu" @if($currentPath=="patientsearch") class="active" @endif>
+                                        <a href="patientsearch">
+                                             <span class="dd_input_icon_search"></span>
+                                            <span class="title"> Patient Search </span>
+                                        </a>
+                                       
+                                    </li>
+                                    <li id="user_respo_doctor_search_menu" @if($currentPath=="doctorsearch") class="active" @endif>
+                                        <a href="doctorsearch">
+                                             <span class="dd_input_icon_search"></span>
+                                            <span class="title"> Doctor Search </span>
+                                        </a>
+                                       
+                                    </li>
+                                    <li id="user_respo_doctor_authorize_menu" @if($currentPath=="doctorauthorize") class="active" @endif>
+                                        <a href="doctorauthorize">
+                                            <span class="dd_input_icon_authorize"></span>
+                                            <span class="title"> Doctor Authorize </span>
+                                        </a>
+                                       
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div> 
                 @else
                 <div class="nav navbar-left">
                     <div class="horizontal-menu navbar-collapse collapse">
@@ -205,6 +259,7 @@ $todayDate = date('d-M-Y');
                                             </li>
                                         </ul>
                                     </div>
+                                
                                 @endif
                             </li>
                             
@@ -335,6 +390,8 @@ $todayDate = date('d-M-Y');
 
 
                             </li>
+
+
                         </ul>
                     </div>
                 </div>
@@ -1065,78 +1122,140 @@ $todayDate = date('d-M-Y');
                         $currentPath == 'authorize' ||
                         $currentPath == 'doctorauthorize')
                         
-                         <div id="user-side-menu">
-                            <ul class="main-navigation-menu">
-                                <li @if($currentPath == 'userhome') class="active open" @endif>
-                                    <a href="userhome">
-                                     <span class="dd_input_icon_Management"></span>
-                                        <span class="title"> Dashboard </span><span class="selected"></span>
-                                    </a>
-                                </li>
-                                <li @if($currentPath == 'userpersonalinformation') class="active" @endif>
-                                    <a href="userpersonalinformation">
-                                     <span class="dd_input_icon_Management"></span>
-                                        <span class="title"> Personal Information </span><span class="selected"></span>
-                                    </a>
-                                </li>
-                                <li @if($currentPath == 'patientsearch' || 
-                                        $currentPath == 'doctorsearch') class="active" 
-                                    @endif>
-                                    <a href="javascript:void(0)">
-                                        <span class="dd_input_icon_Medicine"></span>
-                                        <span class="title"> Search </span><span class="selected"></span>
+                        <div id="user-side-menu">
+                            <div class="user_side_menu_normal">
+                                <ul class="main-navigation-menu">
+                                    <li @if($currentPath == 'userhome') class="active open" @endif>
+                                        <a href="userhome">
+                                         <span class="dd_input_icon_dashboard"></span>
+                                            <span class="title"> Dashboard </span><span class="selected"></span>
+                                        </a>
+                                    </li>
+                                    <li @if($currentPath == 'userpersonalinformation') class="active" @endif>
+                                        <a href="userpersonalinformation">
+                                            <span class="dd_input_icon_patientpersonalinformation"></span>
+                                            <span class="title"> Personal Information </span><span class="selected"></span>
+                                        </a>
+                                    </li>
+                                    <li @if($currentPath == 'patientsearch' || 
+                                            $currentPath == 'doctorsearch') class="active" 
+                                        @endif>
+                                        <a href="javascript:void(0)">
+                                            <span class="dd_input_icon_search"></span>
+                                            <span class="title"> Search </span><span class="selected"></span>
                                             <span class="selected"></span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li @if($currentPath == 'patientsearch') class="active" @endif>
-                                            <a href="patientsearch">
-                                                <span class="title"> Patients </span>
-                                            </a>
-                                        </li>
-                                        <li @if($currentPath == 'doctorsearch') class="active" @endif>
-                                            <a href="doctorsearch">
-                                                <span class="title"> Doctors </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li @if($currentPath == 'doctorauthorize' ) class="active"  @endif>
-                                   
-                                    <a href="javascript:void(0)">
-                                        <span class="dd_input_icon_Medicine"></span>
-                                        <span class="title"> Authorize </span><span class="selected"></span>
-                                            <span class="selected"></span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li @if($currentPath == 'doctorauthorize') class="active" @endif>
-                                            <a href="doctorauthorize">
-                                                <span class="title"> Doctors </span>
-                                            </a>
-                                        </li>
-                                        
-                                    </ul>
-                                </li>
-                               
-                                <!-- <li @if($currentPath=='userjsonimport') class="active " @endif>
-                                    <a href="javascript:void(0)">
-                                  
-                                        <span class="dd_input_icon_Medicine"></span>
-                                        <span class="title"> Import </span><span class="selected"></span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li  @if($currentPath == 'userjsonimport') class="active open" @endif>
-                                            <a href="userjsonimport">
-                                                <span class="title"> Json Files </span>
-                                            </a>
-                                        </li>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li @if($currentPath == 'patientsearch') class="active" @endif>
+                                                <a href="patientsearch">
+                                                    <span class="title"> Patients </span>
+                                                </a>
+                                            </li>
+                                            <li @if($currentPath == 'doctorsearch') class="active" @endif>
+                                                <a href="doctorsearch">
+                                                    <span class="title"> Doctors </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li @if($currentPath == 'doctorauthorize' ) class="active"  @endif>
                                        
-                                        
-                                    </ul>        
-                                </li> -->
-                               
-                        
-                            </ul>
+                                        <a href="javascript:void(0)">
+                                            <span class="dd_input_icon_authorize"></span>
+                                            <span class="title"> Authorize </span><span class="selected"></span>
+                                                <span class="selected"></span>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li @if($currentPath == 'doctorauthorize') class="active" @endif>
+                                                <a href="doctorauthorize">
+                                                    <span class="title"> Doctors </span>
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                    </li>
+                                   
+                                    <!-- <li @if($currentPath=='userjsonimport') class="active " @endif>
+                                        <a href="javascript:void(0)">
+                                      
+                                            <span class="dd_input_icon_Medicine"></span>
+                                            <span class="title"> Import </span><span class="selected"></span>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li  @if($currentPath == 'userjsonimport') class="active open" @endif>
+                                                <a href="userjsonimport">
+                                                    <span class="title"> Json Files </span>
+                                                </a>
+                                            </li>
+                                           
+                                            
+                                        </ul>        
+                                    </li> -->
+                                    <li>
+                                    <div class="respo" id="respo">
+                                          <div class="dd_resp_menu" id="patient-menu-div">
+                                            <ul class="sub-menu" style="display:block">
+                                                <li>
+                                                    <a href="patientpersonalinformation">
+                                                        <span class="title"> Personal Information </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="patientobstetricshistory">
+                                                        <span class="title"> Obstetrics History </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="patientmedicalhistory">
+                                                        <span class="title"> Medical History </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="patientprevioustreatment">
+                                                        <span class="title"> Prevoious Treatments </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                   </li>
+                            
+                                </ul>
+                            </div>
+                           
                         </div>
+
+                        <!-- <div class="respo">
+                             <a href="patientpersonalinformation" >
+                                <i class="icon pricon icon-pr-patient" ng-show="navOption.key"></i>
+                                <span class="dd_menu_main_L">Patient</span>
+                            </a>
+
+                            <div class="dd_resp_menu" id="patient-menu-div">
+                                <ul class="sub-menu" style="display:block">
+                                    <li>
+                                        <a href="patientpersonalinformation">
+                                            <span class="title"> Personal Information </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="patientobstetricshistory">
+                                            <span class="title"> Obstetrics History </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="patientmedicalhistory">
+                                            <span class="title"> Medical History </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="patientprevioustreatment">
+                                            <span class="title"> Prevoious Treatments </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> -->
                     @endif
 
                 </div>    

@@ -99,7 +99,7 @@ if(!empty($doctorData)){
 					<div class="form-group">
 						{!! Form::label('suspected_disease', 'Suspected Disease', $attributes = array('class'=>"col-sm-2"));  !!}
 							<?php 
-								var_dump($diag->diag_suspected_diseases);
+								
 								$diagDiseases = array_filter(json_decode($diag->diag_suspected_diseases)); ?>
 							<div class="col-sm-10">
 								<span>

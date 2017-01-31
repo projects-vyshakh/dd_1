@@ -89,7 +89,7 @@
 
     ?>
     <body style="background-color:#f9f9f9">
-        <div class="resize-login dd_login_header"><!-- navbar-fixed-top -->
+        <div class="resize-login dd_login_header dd_login_header_2"><!-- navbar-fixed-top -->
             <div class="inner_wrapper_2">
                 <div class="container dd_pd_0">
                     <div class="row dd_mg_0">

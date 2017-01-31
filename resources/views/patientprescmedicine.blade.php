@@ -36,8 +36,10 @@ if(!empty($prescMedicine)){
 	{!!Html::style('assets/plugins/zebra-datepicker/css/default.css')!!}
     {!!Html::style('assets/plugins/zebra-datepicker/css/style.css')!!}
 	
-
-	
+    
+     {!!Html::style('assets/plugins/typeahead_ajax/demo/assets/css/typeahead_custom.css')!!}
+    
+   
 <style type="text/css">
 	
 .input-new
@@ -65,6 +67,9 @@ if(!empty($prescMedicine)){
 .modal-dialog{
 	width : 840px;
 }
+
+
+
 </style>
 @stop
 @extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
@@ -76,6 +81,10 @@ if(!empty($prescMedicine)){
 	<div class="page-header">
 		<h1>Prescription Medicine <small></small></h1>
 	</div>
+
+	
+ 
+
 	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -146,11 +155,7 @@ if(!empty($prescMedicine)){
 										<a data-toggle="modal" class="btn btn-orange pull-right present-drug-btn dd_Present_mg" role="button" href="#myModal2">Load Previous Drugs</a>
 									@endif	
 
-																		
-									<!-- <button class="btn btn-orange pull-right present-drug-btn dd_Present_mg"><i class="fa fa-plus "></i>Load Previous Drugs</button> -->
-									<!-- <a href="#myModel3" data-toggle="modal" class="btn btn-primary dd_print pdfopen">
-													Print
-												</a> -->
+									
 												<a class="btn btn-primary dd_print pdfopen">
 													Print
 												</a>
@@ -246,7 +251,7 @@ if(!empty($prescMedicine)){
 																</td>
 																<td>
 																    <div class="dd_dosage1_text">
-																    	{!! Form::text('dosage'.$index, (!empty($prescMedicineVal->dosage) && ($prescMedicineVal->dosage!=0))?$prescMedicineVal->dosage:Input::old('dosage'.$index), $attributes = array('class'=>'input-mini ng-pristine ng-valid dd_remove_padding'));  !!}
+																    	{!! Form::text('dosage'.$index, (!empty($prescMedicineVal->dosage) && ($prescMedicineVal->dosage!=0))?$prescMedicineVal->dosage:Input::old('dosage'.$index), $attributes = array('class'=>'input-mini ng-pristine ng-valid dd_remove_padding dosage','maxlength'=>'4'));  !!}
 
 																    	{!! Form::select('dosage_unit'.$index, $dosageUnit,(!empty($prescMedicineVal->dosage_unit))?$prescMedicineVal->dosage_unit:Input::old('dosage_unit'.$index), $attributes = array('class'=>''));  !!}
 																	</div>
@@ -408,11 +413,13 @@ if(!empty($prescMedicine)){
 												<tbody>
 													<tr class="drugs_row">
 														<td class="dd_presc_medicin">
-															{!! Form::text('drug_name1',Input::old('drug_name1'), $attributes = array('class'=>'dd_input_mini drug_name','id'=>'drug_name1'));  !!}
+															<!-- <input id="demo1" type="text" class="col-md-12 form-control" placeholder="Search cities..." autocomplete="off" /> -->
+																{!! Form::text('drug_name1',Input::old('drug_name1'), $attributes = array('class'=>'dd_input_mini drug_name','id'=>'drug_name1','autocomplete'=>'off'));  !!}
+															
 														</td>
 														<td>
 														    <div class="dd_dosage1_text">
-														    	{!! Form::text('dosage1', Input::old('dosage1'), $attributes = array('class'=>'input-mini ng-pristine ng-valid dd_remove_padding'));  !!}
+														    	{!! Form::text('dosage1', Input::old('dosage1'), $attributes = array('class'=>'input-mini ng-pristine ng-valid dd_remove_padding dosage','maxlength'=>'4'));  !!}
 
 														    	{!! Form::select('dosage_unit1', $dosageUnit,Input::old('dosage_unit1'), $attributes = array('class'=>''));  !!}
 															</div>
@@ -448,7 +455,7 @@ if(!empty($prescMedicine)){
 															<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date	</div>	
 															<div class="dd_dosage1_text_2 pull-left">
 															  		<span class="dd_instruction"> 
-																		{!! Form::text('start_date1', Input::old('start_date1') , $attributes = array('class' => 'form-control  start_date', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
+																		{!! Form::text('start_date1', Input::old('start_date1') , $attributes = array('class' => 'form-control  start_date', 'id'=>'start_date')); !!}
 																	</span>
 																
 															</div>
@@ -525,6 +532,7 @@ if(!empty($prescMedicine)){
 @section('scripts')
 	@parent
 
+		
 		{!!Html::script('assets/plugins/jquery-inputlimiter/jquery.inputlimiter.1.3.1.min.js')!!}
 		{!!Html::script('assets/plugins/autosize/jquery.autosize.min.js')!!}
 		{!!Html::script('assets/plugins/select2/select2.min.js')!!}
@@ -556,7 +564,13 @@ if(!empty($prescMedicine)){
 
 		{!!Html::script('//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js')!!}
 		
-
+		
+		<!-- Typeahead autocomplete js -->
+		<!-- {!!Html::script('http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')!!} -->
+		<!-- {!!Html::script('https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js')!!} -->
+		{!!Html::script('assets/plugins/typeahead_ajax/demo/assets/js/jquery.mockjax.js')!!}
+		{!!Html::script('assets/plugins/typeahead_ajax/src/bootstrap-typeahead.js')!!}
+		
 	<script>
 		$(document).ready(function() {
 
@@ -573,17 +587,119 @@ if(!empty($prescMedicine)){
 			$('.morning').tooltip({'trigger':'focus', 'title': 'Morning medicine count'});
 			$('.noon').tooltip({'trigger':'focus', 'title': 'Noon medicine count'}); 
 			$('.night').tooltip({'trigger':'focus', 'title': 'Night medicine count'}); 
+
+
 			
-		 });
 
 
+		});
+
+
+function addInstruction(e) {
+    var clickedElement = $(e).closest('.presc-inner');
+    var instructionDiv = clickedElement.find('.instruction-div'); 
+    console.log(clickedElement);
+    var drugNameInputId = clickedElement.find('.drug_name').attr('id');
+    console.log(drugNameInputId);
+    var drugNameInputId = parseInt(drugNameInputId.replace(/[^0-9\.]/g, ''), 10);
+    instructionDiv.append('<textarea name="instruction' + drugNameInputId + '" cols="30" class=" form-control instruction"  id="instruction' + drugNameInputId + '"	></textarea>');
+    clickedElement.find('.add-instruction-btn').hide();
+    clickedElement.find('.remove-instruction-btn').show()
+}
+
+function removeInstruction(e) {
+    var clickedElement = $(e).closest('.presc-inner');
+    var instructionTextArea = clickedElement.find('.instruction');
+    instructionTextArea.remove();
+    clickedElement.find('.add-instruction-btn').show();
+    clickedElement.find('.remove-instruction-btn').hide()
+}
+
+function drugRemove(e) {
+    var divCount = $('.default-div-count').val();
+    var elements = $(e).closest('.presc-inner');
+    var removedPrescTable = elements.find('.drugs_row');
+    var removedId = removedPrescTable.find('.dd_input_mini').attr('id');
+    var removedId = parseInt(removedId.replace(/[^0-9\.]/g, ''), 10);
+    elements.remove();
+    var newDefaultDivCount = parseInt(divCount) - parseInt(1);
+    $('.default-div-count').val(newDefaultDivCount);
+    for (i = 1; i <= newDefaultDivCount; i++) {
+        var nextDivId = parseInt(i) + parseInt(1);
+        if (nextDivId > removedId) {
+            var decrementDivId = nextDivId - 1;
+            var selected1 = $('.presc-table').find('.drugs_row').find('#drug_name' + nextDivId);
+            var selected2 = $('.presc-table').find('.drugs_row').find('#dosage' + nextDivId);
+            var selected3 = $('.presc-table').find('.drugs_row').find('#dosage_unit' + nextDivId);
+            var selected4 = $('.presc-table').find('.drugs_row').find('#duration' + nextDivId);
+            var selected5 = $('.presc-table').find('.drugs_row').find('#duration_unit' + nextDivId);
+            var selected6 = $('.presc-table').find('.drugs_row').find('#morning' + nextDivId);
+            var selected7 = $('.presc-table').find('.drugs_row').find('#noon' + nextDivId);
+            var selected8 = $('.presc-table').find('.drugs_row').find('#night' + nextDivId);
+            var selected9 = $('.presc-inner').find('#instruction' + nextDivId);
+            console.log(selected9);
+            var selected10 = $('.presc-table').find('.drugs_row').find('#start_date' + nextDivId);
+            var selected11 = $('.presc-table').find('.drugs_row').find('#food_status_before' + nextDivId);
+            var selected12 = $('.presc-table').find('.drugs_row').find('#food_status_after' + nextDivId);
+            selected1.attr({
+                'name': 'drug_name' + decrementDivId,
+                'id': 'drug_name' + decrementDivId
+            });
+            selected2.attr({
+                'name': 'dosage' + decrementDivId,
+                'id': 'dosage' + decrementDivId
+            });
+            selected3.attr({
+                'name': 'dosage_unit' + decrementDivId,
+                'id': 'dosage_unit' + decrementDivId
+            });
+            selected4.attr({
+                'name': 'duration' + decrementDivId,
+                'id': 'duration' + decrementDivId
+            });
+            selected5.attr({
+                'name': 'duration_unit' + decrementDivId,
+                'id': 'duration_unit' + decrementDivId
+            });
+            selected6.attr({
+                'name': 'morning' + decrementDivId,
+                'id': 'morning' + decrementDivId
+            });
+            selected7.attr({
+                'name': 'noon' + decrementDivId,
+                'id': 'noon' + decrementDivId
+            });
+            selected8.attr({
+                'name': 'night' + decrementDivId,
+                'id': 'night' + decrementDivId
+            });
+            selected9.attr({
+                'name': 'instruction' + decrementDivId,
+                'id': 'instruction' + decrementDivId
+            });
+            selected10.attr({
+                'name': 'start_date' + decrementDivId,
+                'id': 'start_date' + decrementDivId
+            });
+            selected11.attr({
+                'name': 'food_status' + decrementDivId,
+                'id': 'food_status' + decrementDivId
+            });
+            selected12.attr({
+                'name': 'food_status' + decrementDivId,
+                'id': 'food_status' + decrementDivId
+            })
+        }
+        $('.default-div-count').val(newDefaultDivCount)
+    }
+}
 
 		
 		
-		eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('s 12(e){3 f=$(e).t(\'.6-o\');3 U=f.2(\'.b-m\');3 j=f.2(\'.l\').8(\'5\');3 j=h(j.H(/[^0-9\\.]/g,\'\'),10);U.13(\'<I a="b\'+j+\'" 17="14" 15=" 19-16 b"  5="b\'+j+\'"	></I>\');f.2(\'.O-b-r\').L();f.2(\'.q-b-r\').N()}s 18(e){3 f=$(e).t(\'.6-o\');3 J=f.2(\'.b\');J.q();f.2(\'.O-b-r\').N();f.2(\'.q-b-r\').L()}s 1b(e){3 P=$(\'.y-m-x\').v();3 u=$(e).t(\'.6-o\');3 Q=u.2(\'.c\');3 p=Q.2(\'.1f\').8(\'5\');3 p=h(p.H(/[^0-9\\.]/g,\'\'),10);u.q();3 k=h(P)-h(1);$(\'.y-m-x\').v(k);1c(i=1;i<=k;i++){3 7=h(i)+h(1);1g(7>p){3 4=7-1;3 Z=$(\'.6-d\').2(\'.c\').2(\'#l\'+7);3 X=$(\'.6-d\').2(\'.c\').2(\'#w\'+7);3 Y=$(\'.6-d\').2(\'.c\').2(\'#F\'+7);3 W=$(\'.6-d\').2(\'.c\').2(\'#B\'+7);3 S=$(\'.6-d\').2(\'.c\').2(\'#z\'+7);3 11=$(\'.6-d\').2(\'.c\').2(\'#A\'+7);3 V=$(\'.6-d\').2(\'.c\').2(\'#C\'+7);3 R=$(\'.6-d\').2(\'.c\').2(\'#D\'+7);3 E=$(\'.6-o\').2(\'#b\'+7);1d.1e(E);3 K=$(\'.6-d\').2(\'.c\').2(\'#G\'+7);3 M=$(\'.6-d\').2(\'.c\').2(\'#1a\'+7);3 T=$(\'.6-d\').2(\'.c\').2(\'#1h\'+7);Z.8({\'a\':\'l\'+4,\'5\':\'l\'+4});X.8({\'a\':\'w\'+4,\'5\':\'w\'+4});Y.8({\'a\':\'F\'+4,\'5\':\'F\'+4});W.8({\'a\':\'B\'+4,\'5\':\'B\'+4});S.8({\'a\':\'z\'+4,\'5\':\'z\'+4});11.8({\'a\':\'A\'+4,\'5\':\'A\'+4});V.8({\'a\':\'C\'+4,\'5\':\'C\'+4});R.8({\'a\':\'D\'+4,\'5\':\'D\'+4});E.8({\'a\':\'b\'+4,\'5\':\'b\'+4});K.8({\'a\':\'G\'+4,\'5\':\'G\'+4});M.8({\'a\':\'n\'+4,\'5\':\'n\'+4});T.8({\'a\':\'n\'+4,\'5\':\'n\'+4})}$(\'.y-m-x\').v(k)}}',62,80,'||find|var|decrementDivId|id|presc|nextDivId|attr||name|instruction|drugs_row|table||clickedElement||parseInt||drugNameInputId|newDefaultDivCount|drug_name|div|food_status|inner|removedId|remove|btn|function|closest|elements|val|dosage|count|default|duration_unit|morning|duration|noon|night|selected9|dosage_unit|start_date|replace|textarea|instructionTextArea|selected10|hide|selected11|show|add|divCount|removedPrescTable|selected8|selected5|selected12|instructionDiv|selected7|selected4|selected2|selected3|selected1||selected6|addInstruction|append|30|class|control|cols|removeInstruction|form|food_status_before|drugRemove|for|console|log|dd_input_mini|if|food_status_after'.split('|'),0,{}))
+		/*eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('s 12(e){3 f=$(e).t(\'.6-o\');3 U=f.2(\'.b-m\');3 j=f.2(\'.l\').8(\'5\');3 j=h(j.H(/[^0-9\\.]/g,\'\'),10);U.13(\'<I a="b\'+j+\'" 17="14" 15=" 19-16 b"  5="b\'+j+\'"	></I>\');f.2(\'.O-b-r\').L();f.2(\'.q-b-r\').N()}s 18(e){3 f=$(e).t(\'.6-o\');3 J=f.2(\'.b\');J.q();f.2(\'.O-b-r\').N();f.2(\'.q-b-r\').L()}s 1b(e){3 P=$(\'.y-m-x\').v();3 u=$(e).t(\'.6-o\');3 Q=u.2(\'.c\');3 p=Q.2(\'.1f\').8(\'5\');3 p=h(p.H(/[^0-9\\.]/g,\'\'),10);u.q();3 k=h(P)-h(1);$(\'.y-m-x\').v(k);1c(i=1;i<=k;i++){3 7=h(i)+h(1);1g(7>p){3 4=7-1;3 Z=$(\'.6-d\').2(\'.c\').2(\'#l\'+7);3 X=$(\'.6-d\').2(\'.c\').2(\'#w\'+7);3 Y=$(\'.6-d\').2(\'.c\').2(\'#F\'+7);3 W=$(\'.6-d\').2(\'.c\').2(\'#B\'+7);3 S=$(\'.6-d\').2(\'.c\').2(\'#z\'+7);3 11=$(\'.6-d\').2(\'.c\').2(\'#A\'+7);3 V=$(\'.6-d\').2(\'.c\').2(\'#C\'+7);3 R=$(\'.6-d\').2(\'.c\').2(\'#D\'+7);3 E=$(\'.6-o\').2(\'#b\'+7);1d.1e(E);3 K=$(\'.6-d\').2(\'.c\').2(\'#G\'+7);3 M=$(\'.6-d\').2(\'.c\').2(\'#1a\'+7);3 T=$(\'.6-d\').2(\'.c\').2(\'#1h\'+7);Z.8({\'a\':\'l\'+4,\'5\':\'l\'+4});X.8({\'a\':\'w\'+4,\'5\':\'w\'+4});Y.8({\'a\':\'F\'+4,\'5\':\'F\'+4});W.8({\'a\':\'B\'+4,\'5\':\'B\'+4});S.8({\'a\':\'z\'+4,\'5\':\'z\'+4});11.8({\'a\':\'A\'+4,\'5\':\'A\'+4});V.8({\'a\':\'C\'+4,\'5\':\'C\'+4});R.8({\'a\':\'D\'+4,\'5\':\'D\'+4});E.8({\'a\':\'b\'+4,\'5\':\'b\'+4});K.8({\'a\':\'G\'+4,\'5\':\'G\'+4});M.8({\'a\':\'n\'+4,\'5\':\'n\'+4});T.8({\'a\':\'n\'+4,\'5\':\'n\'+4})}$(\'.y-m-x\').v(k)}}',62,80,'||find|var|decrementDivId|id|presc|nextDivId|attr||name|instruction|drugs_row|table||clickedElement||parseInt||drugNameInputId|newDefaultDivCount|drug_name|div|food_status|inner|removedId|remove|btn|function|closest|elements|val|dosage|count|default|duration_unit|morning|duration|noon|night|selected9|dosage_unit|start_date|replace|textarea|instructionTextArea|selected10|hide|selected11|show|add|divCount|removedPrescTable|selected8|selected5|selected12|instructionDiv|selected7|selected4|selected2|selected3|selected1||selected6|addInstruction|append|30|class|control|cols|removeInstruction|form|food_status_before|drugRemove|for|console|log|dd_input_mini|if|food_status_after'.split('|'),0,{}))*/
 
 
-
+			
         
       
       

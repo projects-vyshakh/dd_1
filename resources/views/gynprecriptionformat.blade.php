@@ -329,52 +329,120 @@ else{
 				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Sex:</div> </div>
 				    </div>
 				@endif
+
+			@elseif($printData->header_settings=="No")
+
+			@else
+				@if(!empty($patientPersonalData))
+			    	<?php
+			    		$patientName = $patientPersonalData->first_name." ".$patientPersonalData->last_name;
+			    		$age = $patientPersonalData->age;
+			    		$gender = $patientPersonalData->gender;
+
+
+			    	?>
+				    <div id="company">
+				        <div><div class="name" style="font-size: 20px; margin-bottom: 5px;">Name:	{{$patientName}} </div> </div>
+				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Age:	{{$age}}</div> </div>
+				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Sex:	{{$gender}}</div> </div>
+				    </div>
+				@else
+					<div id="company">
+				        <div><div class="name" style="font-size: 20px; margin-bottom: 5px;">Name: </div> </div>
+				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Age:</div> </div>
+				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Sex:</div> </div>
+				    </div>
+				@endif
 			@endif
 
     	
 
     		<!-- Doctor personal Data -->
     	
-		
-	    	@if(!empty($doctorPersonalData))
-		      	<?php
-		      	
-		      		$doctorName = $doctorPersonalData->first_name." ".$doctorPersonalData->last_name;
-		      		$qualification 		= json_decode($doctorPersonalData->qualification);
-		      		$qualificationCount = sizeof($qualification);
-		      		$specializationName = $doctorPersonalData->specialization_name;
-		      		$mobile = $doctorPersonalData->phone;
+			@if($printData->header_settings=="Yes")
+		    	@if(!empty($doctorPersonalData))
+			      	<?php
+			      	
+			      		$doctorName = $doctorPersonalData->first_name." ".$doctorPersonalData->last_name;
+			      		$qualification 		= json_decode($doctorPersonalData->qualification);
+			      		$qualificationCount = sizeof($qualification);
+			      		$specializationName = $doctorPersonalData->specialization_name;
+			      		$mobile = $doctorPersonalData->phone;
 
-		      	?>
-			    <div id="details" class="clearfix">
-			        <div id="client">
-			          <div class="to"></div>
-			          <h2 class="name" style="margin-bottom: 5px;">Dr.{{$doctorName}}</h2>
-			          <div class="address" style="margin-bottom: 5px;">
-			          	@foreach($qualification  as $index=>$qualificationVal)
-			          		<!-- if condition for putting comma dynamically -->
-			          		@if($index>=0 && $index<$qualificationCount-1)
-			          			{{$qualificationVal.","}}
-			          		@else
-			          			{{$qualificationVal}}
-			          		@endif
-			          	@endforeach	
-			          </div>
-			          <div class="address" style="margin-bottom: 8px;">{{$specializationName}}</div>
-			          <div class="email" style="margin-bottom: 5px;"><a>{{$mobile}}</a></div>
-			        </div>
-			    </div>
+			      	?>
+				    <div id="details" class="clearfix">
+				        <div id="client">
+				          <div class="to"></div>
+				          <h2 class="name" style="margin-bottom: 5px;">Dr.{{$doctorName}}</h2>
+				          <div class="address" style="margin-bottom: 5px;">
+				          	@foreach($qualification  as $index=>$qualificationVal)
+				          		<!-- if condition for putting comma dynamically -->
+				          		@if($index>=0 && $index<$qualificationCount-1)
+				          			{{$qualificationVal.","}}
+				          		@else
+				          			{{$qualificationVal}}
+				          		@endif
+				          	@endforeach	
+				          </div>
+				          <div class="address" style="margin-bottom: 8px;">{{$specializationName}}</div>
+				          <div class="email" style="margin-bottom: 5px;"><a>{{$mobile}}</a></div>
+				        </div>
+				    </div>
+				@else
+					<div id="details" class="clearfix">
+				        <div id="client">
+				          <div class="to"></div>
+				          <h2 class="name" style="margin-bottom: 5px;"></h2>
+				          <div class="address" style="margin-bottom: 5px;"></div>
+				          <div class="address" style="margin-bottom: 8px;"></div>
+				          <div class="email" style="margin-bottom: 5px;"><a></a></div>
+				        </div>
+				    </div>
+
+				@endif
+			@elseif($printData->header_settings=="No")
+
 			@else
-				<div id="details" class="clearfix">
-			        <div id="client">
-			          <div class="to"></div>
-			          <h2 class="name" style="margin-bottom: 5px;"></h2>
-			          <div class="address" style="margin-bottom: 5px;"></div>
-			          <div class="address" style="margin-bottom: 8px;"></div>
-			          <div class="email" style="margin-bottom: 5px;"><a></a></div>
-			        </div>
-			    </div>
+				@if(!empty($doctorPersonalData))
+			      	<?php
+			      	
+			      		$doctorName = $doctorPersonalData->first_name." ".$doctorPersonalData->last_name;
+			      		$qualification 		= json_decode($doctorPersonalData->qualification);
+			      		$qualificationCount = sizeof($qualification);
+			      		$specializationName = $doctorPersonalData->specialization_name;
+			      		$mobile = $doctorPersonalData->phone;
 
+			      	?>
+				    <div id="details" class="clearfix">
+				        <div id="client">
+				          <div class="to"></div>
+				          <h2 class="name" style="margin-bottom: 5px;">Dr.{{$doctorName}}</h2>
+				          <div class="address" style="margin-bottom: 5px;">
+				          	@foreach($qualification  as $index=>$qualificationVal)
+				          		<!-- if condition for putting comma dynamically -->
+				          		@if($index>=0 && $index<$qualificationCount-1)
+				          			{{$qualificationVal.","}}
+				          		@else
+				          			{{$qualificationVal}}
+				          		@endif
+				          	@endforeach	
+				          </div>
+				          <div class="address" style="margin-bottom: 8px;">{{$specializationName}}</div>
+				          <div class="email" style="margin-bottom: 5px;"><a>{{$mobile}}</a></div>
+				        </div>
+				    </div>
+				@else
+					<div id="details" class="clearfix">
+				        <div id="client">
+				          <div class="to"></div>
+				          <h2 class="name" style="margin-bottom: 5px;"></h2>
+				          <div class="address" style="margin-bottom: 5px;"></div>
+				          <div class="address" style="margin-bottom: 8px;"></div>
+				          <div class="email" style="margin-bottom: 5px;"><a></a></div>
+				        </div>
+				    </div>
+
+				@endif
 			@endif
 	
 		@endif

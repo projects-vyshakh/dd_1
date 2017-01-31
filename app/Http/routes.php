@@ -61,6 +61,7 @@ Route::post('handleDoctorSignUp', array('as' => 'handleDoctorSignUp', 'uses' => 
 
 Route::get('prescriptionshare',  array('uses' => 'UtilityController@showPrescriptionShare'));
 Route::any('error',  array('as' => 'error', 'uses' => 'UtilityController@showErrorPage'));
+Route::any('getMedicineList',  array('as' => 'getMedicineList', 'uses' => 'UtilityController@getMedicineList'));
 
 //PATIENT DETAILS
 Route::post('handlePatientLogin', array('as' => 'handlePatientLogin', 'uses' => 'LoginController@handlePatientLogin')); 

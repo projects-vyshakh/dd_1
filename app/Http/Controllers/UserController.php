@@ -138,17 +138,6 @@ class UserController extends Controller {
     	$userName = Session::get('user_name');
     	$userId   = Session::get('user_id');
 
-    	//$dataArray = array();
-    	/*for($i=80483;$i<100000;$i++){
-    		$data = array('title'=>'vy'.$i);
-    		//array_push($dataArray, $data);s
-    		echo 'vy'.$i;
-    		echo "</br>";
-    		DB::table('testServices')->insert($data);
-    	}*/
-
-    	//$patientsLists = PatientsModel::all();
-    	
     	
     	return view('patientsearch',array('userName'=>$userName,'userId'=>$userId));
     	
@@ -188,17 +177,6 @@ class UserController extends Controller {
     	$userName = Session::get('user_name');
     	$userId   = Session::get('user_id');
 
-    	//$dataArray = array();
-    	/*for($i=80483;$i<100000;$i++){
-    		$data = array('title'=>'vy'.$i);
-    		//array_push($dataArray, $data);s
-    		echo 'vy'.$i;
-    		echo "</br>";
-    		DB::table('testServices')->insert($data);
-    	}*/
-
-    	//$patientsLists = PatientsModel::all();
-    	
     	
     	return view('doctorsearch',array('userName'=>$userName,'userId'=>$userId));
     	
@@ -246,32 +224,37 @@ class UserController extends Controller {
     public function showDoctorAuthorize(){
     	$userName = Session::get('user_name');
     	$userId   = Session::get('user_id');
+
+    	$doctorAuthorizePending = DB::table('doctors as d')
+    											->leftJoin('specialization as s','d.specialization','=','s.id_specialization')
+    	                                        ->where('d.status','=',1)
+    	                                        ->where('d.registration_status','=',0)
+    	                                        ->get();
+
+    	$parametersArray = array('userName'	=>$userName,
+    							 'userId'	=>$userId,
+    							 'doctorAuthorizePending'=>$doctorAuthorizePending);
 	
-    	return view('doctorauthorize',array('userName'=>$userName,'userId'=>$userId));
+    	return view('doctorauthorize',$parametersArray);
     }
     public function handleDoctorAuthorize(){
+    	$input = Request::all();
+    	$doctorId = $input['id_doctor'];
 
-    	//$data = DoctorsModel::where('registration_status','=','0')->get();
-           	$data = DB::table('doctors as d')
-           	            ->where('registration_status','=','0')
-           			    ->leftJoin('specialization As s','s.id_specialization','=','d.specialization')
-            		    ->orderBy('d.first_name', 'ASC')
-            	        ->get();
 
-              
+    	$dataArray = array('registration_status'=>1);
+    	$doctorUpdate = DoctorsModel::where('id_doctor','=',$doctorId)->update($dataArray);
 
-		    $results = array(
-		            "sEcho" => 1,
-		        "iTotalRecords" => count($data),
-		        "iTotalDisplayRecords" => count($data),
-		          "aaData"=>$data);
-		
-
-		echo json_encode($results);
-
-		
+    	//$doctorUpdate = DB::table('doctors')->where('id_doctor','=',$doctorId)->update($dataArray);
+    	if($doctorUpdate){
+    		$doctorData = DoctorsModel::where('registration_status','=',0)->where('status','=',1)->get();
+    		return json_encode($doctorData);
+    	}
+    	else{
+    		return 0;
+    	}
     	
-    	
+    
 
     }
 

@@ -239,7 +239,40 @@ var cardioPersonalInformation = function () {
      
     };
 
+    var runAge = function (){
+        $('#dob').on('input',function() {
+       //$('#dob').change(function(){
+           var pastYear = $('#dob').val();
 
+           if(pastYear.length<1){
+                $('#age').val('');
+           }else{
+                 var now  = new Date();
+               var nowYear = now.getFullYear();
+               var age = nowYear - pastYear; 
+               
+               $('#age').val(age);
+           }
+          
+           //alert(age);
+       }); 
+       $('#age').on('input',function() {
+       //$('#dob').change(function(){
+           var age = $('#age').val(); 
+           if(age.length<1){
+                $('#dob').val('');
+           }else{
+                 var now  = new Date();
+                   var nowYear = now.getFullYear();
+                   var dob = nowYear - age; 
+                   
+                   $('#dob').val(dob);
+           }
+          
+           //alert(dob);
+       }); 
+      
+    };
 
 
 	return {
@@ -247,6 +280,7 @@ var cardioPersonalInformation = function () {
         init: function () {
             runOnPageLoad();
             cardioPersonalInformationValidation();
+            runAge();
            
         }
     };

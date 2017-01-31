@@ -1355,10 +1355,16 @@ ul.main-navigation-menu > li > a:hover .icon-arrow, ul.main-navigation-menu > li
 ul.main-navigation-menu li > ul.sub-menu {
 	clear: both;
 	list-style: none;
-	margin: 8px 0;
+	margin: 0px 0;
 	display: none;
 	padding: 0;
 }
+/*.dd_sub_menu {
+	clear: both;
+	list-style: none;
+	margin: 0px 0 important;
+	padding: 0;
+}*/
 ul.main-navigation-menu li > ul.sub-menu > li {
 	background: none;
 	margin-bottom: 0;
@@ -1368,16 +1374,16 @@ ul.main-navigation-menu li > ul.sub-menu > li {
 	padding: 0;
 }
 ul.main-navigation-menu li > ul.sub-menu > li > a {
-	background: none;
-	display: block;
-	font-size: 14px;
-	font-weight: 300;
-	margin: 0;
-	padding-bottom: 5px;
-	padding-left: 40px !important;
-	padding-right: 0;
-	padding-top: 5px;
-	text-decoration: none;
+	background: #727272;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+/*    margin: -7px 0 0;*/
+    padding-bottom: 5px;
+    padding-left: 60px !important;
+    padding-right: 0;
+    padding-top: 13px;
+    text-decoration: none;
 }
 ul.main-navigation-menu > li > ul.sub-menu li > a .icon-arrow {
 	margin-right: 22px;
@@ -5880,9 +5886,42 @@ svg {
     width: 30px;
 
 }
+.dd_input_icon_dashboard{
+
+	background: rgba(0, 0, 0, 0) url("../images/icons/dashboard.svg") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 30px;
+    left: 13px;
+    position: absolute;
+    top: 9px;
+    width: 30px;
+
+}
 .dd_input_icon_Medicine{
 
 	background: rgba(0, 0, 0, 0) url("../images/icons/prescription.svg") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 30px;
+    left: 13px;
+    position: absolute;
+    top: 9px;
+    width: 30px;
+
+}
+.dd_input_icon_search{
+
+	background: rgba(0, 0, 0, 0) url("../images/icons/search.svg") repeat scroll 0 0 / cover ;
+    display: inline-block;
+    height: 30px;
+    left: 13px;
+    position: absolute;
+    top: 9px;
+    width: 30px;
+
+}
+.dd_input_icon_authorize{
+
+	background: rgba(0, 0, 0, 0) url("../images/icons/authorize.svg") repeat scroll 0 0 / cover ;
     display: inline-block;
     height: 30px;
     left: 13px;
@@ -6614,7 +6653,7 @@ background-color: #fff;
 color: #333;
 font-weight: bold;
 border:1 none;
-width: 110px;
+width: 128px;
 
 
 text-align: center;
@@ -6806,9 +6845,11 @@ height: auto;
 	margin-right: 10px
 }
 .dd_prev_color {
-	/* color: #418bca;*/
-    font-size: 15px;
+	 color: #1bc05f;
+    font-size: 16px;
     margin-top: 0px;
+    font-family: "Montserrat",sans-serif;
+   
 }
 .dd_clear{
 	clear: both;
@@ -6854,6 +6895,7 @@ height: auto;
 .btn.btn-primary.pdfopen {
     margin-left: 15px;
     margin-bottom: 15px;
+   /* margin-top: 20px;*//* --- for previous treatment btn-------*/
 }
 .dd_alert_msg{
 	margin-top: 30px;
@@ -6926,7 +6968,7 @@ table.dataTable thead th, table.dataTable thead td {
 
 }
 .tab-content .col-sm-12{
-	font-size: 25px;
+/*	font-size: 25px; --- for prev treatment-----*/
 	text-align: left;
 	color: #333333;
 
@@ -7507,9 +7549,9 @@ h6{
     bottom: 0;
     width: 100%;
     background : #fff;
-    position: relative;
+ /*   position: relative;*/
     padding-left: 18px;
-    margin-top: 50px;
+/*    margin-top: 50px;*/
 }
 .btn.btn-primary.pdfopen.print_width{
     width: 100px;
@@ -7529,7 +7571,8 @@ h6{
 	border:1px solid #cbcbcb;
 	width : 32.5%;
 	font-size: 18px !important;
-	border-right: 0
+	border-right: 0;
+	float: left;
 }
 .dd_my_from div .dd_form_id_op_2  {
 	height: 45px;
@@ -7538,16 +7581,19 @@ h6{
 	width : 32.5%;
 	font-size: 20px !important;
 	margin-left: -5px;
+	float: left;
 	
 }
 .dd_my_from div .dd_form_id_op_3  {
-	margin-left: -4px !important;
+	margin-left: 0px !important;
 	height: 45px;
 	background: #fff;
 	border:1px solid #cbcbcb;
-	width : 32.5%;
-	font-size: 18px !important;
-	border-left: 0
+	width : 32.6%;
+	font-size: 16px !important;
+	border-left: 0;
+	float: left;
+
 
 }
 .dd_btn_home_2{
@@ -7561,5 +7607,44 @@ h6{
 	text-transform: uppercase;
 	font-weight: 600;
 	margin-bottom: 15px;
+
+}
+.dd_chang_sm1 .col-sm-1{
+	width: 7.333% !important;
+	padding-right: 0px !important;
+}
+.pressure{
+		font-size: 18px;
+		float: left;
+		margin-left: 5px;
+	
+}
+.dd_press_pd{ 
+	padding-left: 5px;
+
+}
+.dd_sub_menu{
+	margin: 0;
+}
+.dd_Search_pd{
+	padding: 0 27px;
+}
+.dd_Search_pd_2{
+	padding: 0 35px;
+}
+
+.btn_243{
+	width: 100%;
+
+}
+.dd_search_panel{
+	padding: 40px;
+}
+.dd_search_table_pd{
+	padding: 20px 0;
+	margin-bottom: 20px !important;
+}
+.dd_search_tr th{
+	padding-bottom: 20px !important;
 
 }

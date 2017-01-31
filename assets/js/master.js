@@ -35,20 +35,24 @@ var masterElements = function () {
         });
 
         $('#prescription-menu').click(function(e){
-            var screenWidth = $( document ).width();
-            if(screenWidth<=800){
-                e.preventDefault();
-                $('#patient-menu-div').hide();
-                $('#diagnosis-menu-div').hide();
-        
-                $('#prescription-menu-div').toggle();
+
+            
+                var screenWidth = $( document ).width();
+                if(screenWidth<=800){
+                    e.preventDefault();
+                    $('#patient-menu-div').hide();
+                    $('#diagnosis-menu-div').hide();
+            
+                    $('#prescription-menu-div').toggle();
 
 
-            }
-            else{
-                $('.sub-menu').css({ display: "none" });
-                window.href="patientprescmanagement";
-            }
+                }
+                else{
+                    $('.sub-menu').css({ display: "none" });
+                    window.href="patientprescmanagement";
+                }
+
+            
 
         });
       
@@ -56,6 +60,18 @@ var masterElements = function () {
 
     };
 
+    var runUserMenuResponse = function(){
+        //$('#user_respo_home_menu').hide();
+        var screenWidth = $( document ).width();
+            
+            if(screenWidth<768){
+                $('#user_respo_menu').show();
+            }
+            else{
+                //$('#user_respo_home_menu').hide();
+            }
+
+    };
     
 
    
@@ -63,7 +79,7 @@ var masterElements = function () {
         //main function to initiate template pages
         init: function () {
            runTopmenuResp();
-           
+           runUserMenuResponse();
         }
     };
 }();

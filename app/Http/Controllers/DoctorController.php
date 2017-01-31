@@ -1268,6 +1268,7 @@ class DoctorController extends Controller {
 		(!empty($input['phone']))?$phone 					= $input['phone']:$phone = "";
 		(!empty($input['email']))?$email 					= $input['email']:$email = "";	
         (!empty($input['refferedby']))?$refferedby 			= $input['refferedby']:$refferedby = "";
+        ($gender=="Male")?$profileImageName = "patient_profile_m.jpg":$profileImageName="patient_profile_L.jpg";
 		
 		if($patientExistCheck>0){
 			//return Redirect::to('patientpersonalinformation')->
@@ -1295,6 +1296,7 @@ class DoctorController extends Controller {
 									'country' 			=> 	$country,
 									'phone' 			=> 	$phone,
 									'email' 			=> 	$email,
+									'profile_image_large'=>$profileImageName,
 									'id_doctor' 		=> 	$doctorId,
 									'edited_date' 		=> $editedDate);
 
@@ -1342,6 +1344,7 @@ class DoctorController extends Controller {
 									'country' => $country,
 									'phone' => $phone,
 									'email' => $email,
+									'profile_image_large'=>$profileImageName,
 									'id_doctor' => $doctorId,
 									'created_date' => $createdDate);
 									
@@ -2407,34 +2410,44 @@ class DoctorController extends Controller {
         $patientExistCheck = DB::table('patients')->where('id_patient','=',$patientId)->count();
 
         if($patientExistCheck>0){
-        		$diagExistCheck = DB::table('diagnosis')->where('id_patient','=',$patientId)->where('diag_reference','=',$referenceId)->first();
+        	$diagExistCheck = DB::table('diagnosis')
+        	                            ->where('id_patient','=',$patientId)
+        	                            ->where('diag_reference','=',$referenceId)
+        	                            ->first();
     											
-		    	(!empty($input['symptoms']))?$symptoms= $input['symptoms']:$symptoms =[""];
-		    	(!empty($input['syndromes']))?$syndromes= $input['syndromes']:$syndromes ="";
-		    	(!empty($input['diseases']))?$diseases= $input['diseases']:$diseases =[""];
-		    	(!empty($input['additional_comment']))?$additionalComment= $input['additional_comment']:$additionalComment ="";
+	    	(!empty($input['symptoms']))?$symptoms= $input['symptoms']:$symptoms =[""];
+	    	(!empty($input['syndromes']))?$syndromes= $input['syndromes']:$syndromes ="";
+	    	(!empty($input['diseases']))?$diseases= $input['diseases']:$diseases =[""];
+	    	(!empty($input['additional_comment']))?$additionalComment= $input['additional_comment']:$additionalComment ="";
 
 	    	
 		
 	    			
 	    	if(!empty($diagExistCheck)){
+	    		$diseases = array_filter($diseases);
+	    		$symptoms = array_filter($symptoms);
 	    		$diagData = array('diag_symptoms'			=>json_encode($symptoms),
 	    						  'diag_syndromes'			=>$syndromes,
 	    						  'diag_suspected_diseases'	=>json_encode($diseases),
 	    						  'diag_comment' 			=> $additionalComment,
 	    						  'id_doctor' 				=>$doctorId,
-	    						  'edited_date'				=>$createdDate);
+	    						  'edited_date'				=>$createdDate
+	    						);
 	    		
-	    		$diseases = array_filter($diseases);
 	    		
-	    		if(!empty($diseases)){
-	    			
+	    		
+	    		
+
+		    	if(empty($symptoms) && empty($syndromes) && empty($diseases) && empty($additionalComment))
+		    	{
+		    		return Redirect::to('patientdiagnosis')->with(array('error'=>"Failed to update data. Please fill the empty fields"));	
+		    	}
+		    	else{
 		    		$diagUpdate = DB::table('diagnosis')
 		    		                            ->where('id_patient','=',$patientId)
 		    		                            ->where('diag_reference','=',$referenceId)
 		    		                            ->update($diagData);
-		    		//var_dump($diagUpdate);
-		    		//return Redirect::to('patientdiagnosis')->with(array('success'=>"Data updated successfully"));
+		    		
 		    		if($diagUpdate){
 		    			
 		    			return Redirect::to('patientdiagnosis')->with(array('success'=>"Data updated successfully",'newSymptoms'=>$symptoms));	
@@ -2443,15 +2456,13 @@ class DoctorController extends Controller {
 		    		//echo "dises nsss ok";
 		    			return Redirect::to('patientdiagnosis')->with(array('error'=>"Failed to update data."));	
 		    		}	
-		    		
 		    	}
-		    	else{
-		    		//echo "dises n ok";
-		    			return Redirect::to('patientdiagnosis')->with(array('error'=>"Failed to update data. Diseases field is empty"));	
-		    		}	
 
 	    	}
 	    	else{
+
+	    		$diseases = array_filter($diseases);
+	    		$symptoms = array_filter($symptoms);
 	    		$diagData = array('diag_symptoms'				=>json_encode($symptoms),
 		    						  'diag_syndromes'			=>$syndromes,
 		    						  'diag_suspected_diseases'	=>json_encode($diseases),
@@ -2461,9 +2472,12 @@ class DoctorController extends Controller {
 		    						  'diag_reference' 			=> $referenceId,
 		    						  'created_date'			=>$createdDate);
 
-	    		$diseases = array_filter($diseases);
-	    		//dd($diseases);
-	    		if(!empty($diseases)){
+
+		    	if(empty($symptoms) && empty($syndromes) && empty($diseases) && empty($additionalComment))
+		    	{
+		    		return Redirect::to('patientdiagnosis')->with(array('error'=>"Failed to save data. Please fill the empty fields"));	
+		    	}
+		    	else{
 		    		$diagSave = DB::table('diagnosis')->insert($diagData);
 		    		if($diagSave){
 		    			return Redirect::to('patientdiagnosis')->with(array('success'=>"Data saved successfully"));	
@@ -2472,11 +2486,9 @@ class DoctorController extends Controller {
 		    		//echo "dises nsss ok";
 		    			return Redirect::to('patientdiagnosis')->with(array('error'=>"Failed to save data."));	
 		    		}
-		    		
-	    		}
-	    		else{
-		    			return Redirect::to('patientdiagnosis')->with(array('error'=>"Failed to save data. Diseases field is empty"));	
-		    		}
+		    	}
+
+
 
 	    	}		
 
@@ -2536,6 +2548,7 @@ class DoctorController extends Controller {
 											->where('presc_gyn_reference','=',$referenceId)
 											->where('created_date','=',$createdDate)
 											->update($prescGynData);
+					return Redirect::to('patientprescmanagement')->with(array('success'=>'Data updated successfully'));
 				}
 				else{
 					return Redirect::to('patientprescmanagement')->with(array('error'=>"No data for update"));
@@ -2559,6 +2572,7 @@ class DoctorController extends Controller {
 									  'created_date'=>$createdDate);
 
 					$prescTreatmentSave = DB::table('prescription_gynaecology')->insert($prescGynData);
+					return Redirect::to('patientprescmanagement')->with(array('success'=>'Data saved successfully'));
 
 				}
 				else{
@@ -2567,7 +2581,7 @@ class DoctorController extends Controller {
 
 			}
 
-			return Redirect::to('patientprescmanagement')->with(array('success'=>'Data saved successfully'));
+			/*return Redirect::to('patientprescmanagement')->with(array('success'=>'Data saved successfully'));*/
 		}
 		else{
 			return Redirect::to('patientpersonalinformation')->with(array('error'=>'Please save patient personal information'));

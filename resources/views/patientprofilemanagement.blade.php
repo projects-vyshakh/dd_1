@@ -288,7 +288,7 @@ else{
 		{!!Html::script('assets/plugins/bootstrap-daterangepicker/moment.min.js')!!}
 		{!!Html::script('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')!!}
 		
-		{!!Html::script('assets/js/patient-personal-information.js')!!}
+		
 		
 		{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 		{!!Html::script('assets/js/patient-personal-information.js')!!}

@@ -562,17 +562,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 				doctorSignup.init();
 				$('#qualification').multiselect({ });
 					
-				
-				
-
-				
-				
-				
-
-
-
-
-				
+			
 			});
 		</script>
 	</body>
