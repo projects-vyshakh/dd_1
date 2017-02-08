@@ -355,7 +355,7 @@ var patientMedicalHistoryElements = function (dosageUnit) {
             $('.reaction-drug-allergy').attr('disabled',false);
 	                
 	       	$('#allergy').append(
-	       		'<div class="form-group">' +
+	       		'<div class="form-group dd_Social_History">' +
 	                '<div class="col-sm-6">'+
 	                    '<div class="dd_top_mt">Medication</div>'+
 				   			'<span class="">' +

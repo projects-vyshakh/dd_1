@@ -255,16 +255,6 @@
 													<p><a href="patientforgetpassword" class="dd_textalign_center dd_16px">Forgot Your Password?</a></p>
 												</div>
 					        				</div>
-					        			<!-- 	<div class="form-group dd_mg_B_10">
-					        					<div class="col-sm-12">
-													<p><a href="patientregistercheckid" class="btn btn-primary btn-block dd_btn_center dd_Active_mg"> Register</a></p>
-												</div>
-					        				</div> -->
-					        				<!-- <hr class="dd_border_CL"> -->
-					        				<!-- <div class="form-group ">
-					        					<div class="col-sm-2 "></div>
-					        					<div class="col-sm-12 dd_textalign_center_mg">New to Doctor's Diary?&nbsp;<a href="doctorsignup">Signup</a></div>
-											</div> -->
 					        			
 										{!! Form::close() !!}
 			        				</div>
@@ -278,22 +268,103 @@
 					</div>
 
 
-					<div class="box_right">
-
-
-			        		<div class="logo">
-			        			<span class="login_HD dd_signfont">New to Doctor's Diary?</span>
-			        		</div>
-							<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
-								<span class="input-icon ">
-									<a href="doctorsignup" class="btn btn-primary btn-block dd_btn_new dd_patient_reg patient-register-btn dd_regi_pd"> Register Now</a>
-														
-								</span>
+					<div class="box_right new_patient_register_div">
+						<div class="logo">
+			        		<span class="login_HD dd_signfont">New to Doctor's Diary?</span>
+			        	</div>
+						<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
+							<span class="input-icon ">
+								<a href="#" class="btn btn-primary btn-block dd_btn_new dd_patient_reg  dd_regi_pd patient_register_btn"> Register Now</a>
+													
+							</span>
 						</div>
-						
-
 					</div>
+					<!-- <div class="box_right new_patient_register_otp_div">
+						<div class="logo">
+			        		<span class="login_HD dd_signfont">Register new patient</span>
+			        	</div>
+						<div class="box-login " style="display: block;">
+		        			<div class="row">
+		        				<div class="col-sm-12">
+									
+		        					{!! Form::open(array('route' => 'handlePatientLogin', 'role'=>'form', 'id'=>'login', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
+				        				<div class="form-group">
+											<div class="col-sm-12 dd_login">
+												<span class="input-icon ">
+													{!! Form::text('id_patient', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Patient ID', 'id'=>'id_patient'));  !!}
+													<span class="dd_input_icon_name"></span> 
+												</span>
+											</div>
+				        				</div>
+				        				<div class="form-group dd_mg_B_10">
+				        					<div class="col-sm-12 dd_login">
+												<span class="input-icon dd_relative">
+													{!! Form::password('otp', array('placeholder'=>'OTP', 'class'=>'form-control dd_input dd_login_main', 'id'=>'otp' ) ) !!}
+													<span class="dd_input_icon"></span>
 
+												</span>
+											</div>
+				        				</div>
+				        				<div class=" dd_relative">
+					                        <div class="heading ">
+					                              <?php $error = Session::get('error');
+					                                $success = Session::get('success');
+					                                Session::forget('error');
+					                                Session::forget('success');
+					                               
+					                              ?>
+					                              @if(!empty($error))
+					                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
+					                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+					                                          {{$error}}
+					                                </div>
+					                              @elseif(!empty($success))
+					                                <div class="dd_alert_2 display-none" style="display: block;">
+					                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+					                                          {{$success}}
+					                                </div>
+					                              @endif
+					                                    
+					                        </div>
+					                    </div> 
+					                    <div class=" dd_relative">
+					                        <div class="heading ">
+					                              <?php $error = Session::get('error');
+					                                $success = Session::get('success');
+					                                Session::forget('error');
+					                                Session::forget('success');
+					                               
+					                              ?>
+					                              @if(!empty($error))
+					                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
+					                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+					                                          {{$error}}
+					                                </div>
+					                              @elseif(!empty($success))
+					                                <div class="dd_alert_2 display-none" style="display: block;">
+					                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+					                                          {{$success}}
+					                                </div>
+					                              @endif
+					                                    
+					                        </div>
+					                    </div> 
+				        				<div class="form-group dd_mg_B_10">
+				        					<div class="col-sm-12 dd_mg_B_T_10">
+												<span class="input-icon ">
+													<button type="submit" class="btn btn-primary btn-block dd_btn_new">Submit</button>
+												</span>
+											</div>
+										
+				        				</div>
+				        			
+									{!! Form::close() !!}
+		        				</div>
+				
+		        			</div>
+		        		</div>
+					</div>
+ -->
 
 
 					<div class="dd_clear"></div>

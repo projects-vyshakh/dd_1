@@ -135,13 +135,12 @@ class PatientController extends Controller {
 	public function showPatientProfilePrevTreatment(){
 		$patientId 	= Session::get('id_patient');
 		$doctorId 	= Session::get('doctorId');
-		
-		
-		
+
+
 
 		if(!empty($patientId)){
 			$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
-			$doctorData 	= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
+			$doctorData 			= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
 
 		
 			return view('patientprofileprevtreatment',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'patientData'=>$patientPersonalData));
@@ -154,9 +153,12 @@ class PatientController extends Controller {
 
 	public function patientProfilePreviousTreatmentExtended(){
 		$year = Input::get('year');
+
 		
 		//$year = $input['year'];
 		$patientId 				= Session::get('id_patient');
+
+		
 		$doctorId 				= Session::get('doctorId');
 		//$patientPersonalData 	= DB::table('patients')->where('id_patient','=',$patientId)->first();
 		//$doctorData 			= DB::table('doctors')->where('id_doctor','=',$doctorId)->first();
@@ -223,15 +225,7 @@ class PatientController extends Controller {
 		                            ->get();
 
 
-		$test =  DB::table('vitals As obs')
-								 ->join('sp_gynaecology_obs_preg As preg','obs.id_patient','=','preg.id_patient')
-								 ->where('obs.id_patient','=',$patientId)
-								 ->get();
-/*
-		$test = array_sort($test);
-
-		var_dump(json_encode($test));
-		die();*/
+		
 		
 		
 		$obsCreatedDateArray = array();
@@ -365,12 +359,12 @@ class PatientController extends Controller {
 											->get();	
 											
 											
-		$lmpData = DB::table('sp_gynaecology_obs_lmp')
+		/*$lmpData = DB::table('sp_gynaecology_obs_lmp')
 											->whereIn('created_date', $originalCreatedDate)
 											->where('created_date','LIKE','%'.$year.'%')
 											->where('id_patient','=',$patientId)
 											//->where('id_doctor','=',$doctorId)
-											->get();	
+											->get();	*/
 
 			/*var_dump(json_encode($lmpData));
 			die();		*/						
@@ -400,8 +394,13 @@ class PatientController extends Controller {
 									//->where('id_doctor','=',$doctorId)
 									->get();
 
-									
-		return array('obsData' => $obsData,'lmpData' => $lmpData,'pregData' => $pregData,'vitalsData'=>$vitalsData,'originalCreatedDate'=>$originalCreatedDate,'bloodGroup'=>$bloodGroup,'diagnosisData'=>$diagnosisData,'diseases'=>$diseases,'prescMedicineData'=>$prescMedicineData,'drugFrequency'=>$drugFrequency,'originalCreatedDateDup'=>$originalCreatedDateDup,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit);
+		
+	
+
+		return json_encode(array('obsData' => $obsData,/*'lmpData' => $lmpData,*/'pregData' => $pregData,'vitalsData'=>$vitalsData,'originalCreatedDate'=>$originalCreatedDate,'bloodGroup'=>$bloodGroup,'diagnosisData'=>$diagnosisData,'diseases'=>$diseases,'prescMedicineData'=>$prescMedicineData,'drugFrequency'=>$drugFrequency,'originalCreatedDateDup'=>$originalCreatedDateDup,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit));
+
+
+		
 	}
 
 
@@ -770,6 +769,83 @@ class PatientController extends Controller {
 		}  
 
 		
+	}
+
+
+	//Registering new patients
+	public function showPatientOtpCheck(){
+		return view('patientregisterotpcheck');
+	}
+
+	public function handlePatientRegisterOtpCheck(){
+		$input = Request::all();
+
+		$patientId = $input['id_patient'];
+		$otpCode   = $input['otp'];
+
+		$patientExist 		= PatientsModel::where('id_patient','=',$patientId)->first();
+		$patientOtpExist 	= PatientsModel::where('otp_generated','=',$otpCode)->first();
+
+		if(!empty($patientExist)){
+			Session::put('id_patient',$patientId);
+
+			if($patientExist->registration_status==0){
+				if(!empty($patientOtpExist)){
+					return Redirect::to('patientregisterpassword')->with(array('success_register'=>'OTP verified successfully.'))->withInput();
+				}
+				else{
+					return Redirect::to('patientregisterotpcheck')->with(array('error_register'=>'Invalid OTP.'))->withInput();
+				}
+			}
+			else{
+				return Redirect::to('patientregisterotpcheck')->with(array('error_register'=>'Patient ID already registered. Please login.'))->withInput();
+			}
+
+			
+
+		}
+		else{
+			return Redirect::to('patientregisterotpcheck')->with(array('error_register'=>'Invalid Patient Id.'))->withInput();
+		}
+
+
+	}
+
+	public function showPatientRegisterPassword(){
+		$patientId 	= Session::get('id_patient');
+
+		if(!empty($patientId)){
+			return view('patientregisterpassword');
+		}
+		else{
+			return Redirect::to('patientlogin');
+		}
+		
+	}
+
+	public function handlePatientRegisterPassword(){
+		$input = Request::all();
+
+		$patientId 	= Session::get('id_patient');
+		$password 	= $input['reg_password'];
+		$cPassword 	= $input['c_password'];
+
+
+
+		$encryptedPassword = DBUtils::passwordEncrypt($password);
+
+		$data = array('password'=>$encryptedPassword,'registration_status'=>1,'otp_generated'=>'');
+
+		$patientPasswordUpdate = PatientsModel::where('id_patient','=',$patientId)->update($data);
+
+		if($patientPasswordUpdate){
+			Session::flush();
+			return Redirect::to('patientlogin')->with(array('success'=>'Successfully Registered. Please login here'));
+		}
+		else{
+			return Redirect::to('patientlogin')->with(array('error'=>'Regsitration Failed. Please contact Administrator.'));
+		}
+
 	}
 
 

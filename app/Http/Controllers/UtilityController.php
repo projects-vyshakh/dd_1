@@ -51,12 +51,12 @@ class UtilityController extends Controller {
 		$countryId = $postData['country_id'];
 		
 		$state = DB::table('states')->where('country_id','=',$countryId)->get();
-		Log::info("states",array($state));
+		//Log::info("states",array($state));
 
 				
 		return $state;
 	}
-	public function generate_random_password($length = 5) {
+	public function generate_random_password($length) {
 	    $alphabets = range('A','Z');
 	    $numbers = range('0','9');
 	    //$additional_characters = array('_','.');
@@ -72,6 +72,7 @@ class UtilityController extends Controller {
 	    return $password;
     }
 
+    
     public function showPrescriptionShare(){
     	/*$patientId = Session::get('patientId');
 		$doctorId  = Session::get('doctorId');
@@ -192,7 +193,9 @@ class UtilityController extends Controller {
 
 
   	}
-  
+
+
+
 	
 	
 

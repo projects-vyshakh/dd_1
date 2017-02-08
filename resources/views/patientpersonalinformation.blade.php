@@ -78,7 +78,7 @@ if(!empty($doctorData)){
         
 	        ?>
           	@if(!empty($error))
-	            <div class="alert alert-danger display-none" style="display: block;">
+	            <div class="alert alert-danger display-none">
 	              <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
 	                {{$error}}
 	            </div>

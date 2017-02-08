@@ -65,8 +65,17 @@ if(!empty($prescMedicine)){
     padding: 10px;
 }
 .modal-dialog{
-	width : 840px;
+	/*width : 840px;*/
+	width: 50% !important;
+	margin: 0 auto !important;
+	/*width : auto;*/
 }
+.modal-dialog2{
+
+	width: 50% !important;
+	margin: 0 auto !important;
+
+	}
 
 
 
@@ -109,7 +118,7 @@ if(!empty($prescMedicine)){
 	</div>
 	<div>
 	<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-hidden="true" >
-		<div class="modal-dialog" >
+		<div class="modal-dialog " >
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -258,7 +267,7 @@ if(!empty($prescMedicine)){
 																</td>
 																<td>
 																	<div class="dd_dosage1_text">
-																		{!! Form::text('duration'.$index, (!empty($prescMedicineVal->duration) && ($prescMedicineVal->duration!=0))?$prescMedicineVal->duration:Input::old('duration'.$index), $attributes = array('class'=>'input-mini ng-pristine ng-valid'));  !!}
+																		{!! Form::text('duration'.$index, (!empty($prescMedicineVal->duration) && ($prescMedicineVal->duration!=0))?$prescMedicineVal->duration:Input::old('duration'.$index), $attributes = array('class'=>'input-mini ng-pristine ng-valid duration'));  !!}
 																			
 																		{!! Form::select('duration_unit'.$index, $drugDurationUnit,(!empty($prescMedicineVal->duration_unit))?$prescMedicineVal->duration_unit:Input::old('duration_unit'.$index), $attributes = array('class'=>''));  !!}
 																	</div>
@@ -330,8 +339,10 @@ if(!empty($prescMedicine)){
 															<div class="instruction-div" >
 																<textarea  class="form-control instruction" name="instruction<?php echo $index; ?>" id="instruction<?php echo $index; ?>"  >{{$prescMedicineVal->instruction}}</textarea>
 															</div>
+															<div class="error_msg"></div>
 													@else
-															<div class="instruction-div" ></div>	
+															<div class="instruction-div" ></div>
+															<div class="error_msg"></div>	
 													@endif
 												</div>
 											@endforeach
@@ -426,7 +437,7 @@ if(!empty($prescMedicine)){
 														</td>
 														<td>
 															<div class="dd_dosage1_text">
-																{!! Form::text('duration1', Input::old('duration1'), $attributes = array('class'=>'input-mini ng-pristine ng-valid'));  !!}
+																{!! Form::text('duration1', Input::old('duration1'), $attributes = array('class'=>'input-mini ng-pristine ng-valid duration'));  !!}
 																	
 																{!! Form::select('duration_unit1', $drugDurationUnit,Input::old('duration_unit1'), $attributes = array('class'=>''));  !!}
 															</div>
@@ -444,6 +455,7 @@ if(!empty($prescMedicine)){
 													</tr>
 													<tr class="drugs_row dd_relative">
 														<!-- <td class="dd_presc_medicin"></td> -->
+														
 														<td colspan="1" >
 															<input type="button" class="btn btn-default dd_instruction  btn-xs add-instruction-btn" id="add-instruction-btn1" value="+ Add Instruction" onclick="return addInstruction(this);" />
 																	
@@ -476,7 +488,10 @@ if(!empty($prescMedicine)){
 													</tr>
 												</tbody>
 											</table>
+
 											<div class="instruction-div"></div>
+											<div class="error_msg"></div>
+
 										</div>
 									</div>
 									<div class="form-group dd_menarche_4">

@@ -500,7 +500,7 @@ class DoctorController extends Controller {
 		                            ->where('id_patient','=',$patientId)
 		                            //->where('id_doctor','=',$doctorId)
 		                            ->where('created_date','LIKE','%'.$year.'%')
-		                            ->orderBy('created_date','desc')
+		                            ->orderBy('id_doctor','desc')
 		                            ->get();
 
 
@@ -678,11 +678,16 @@ class DoctorController extends Controller {
 									->whereIn('created_date', $originalCreatedDate)
 									->where('created_date','LIKE','%'.$year.'%')
 									->where('id_patient','=',$patientId)
+									->orderBy('id_doctor','asc')
 									//->where('id_doctor','=',$doctorId)
 									->get();
+		$doctorIdArray = array();
+		foreach($prescMedicineData as $index=>$val){
+			array_push($doctorIdArray,$val->id_doctor);
+		}
 
 									
-		return json_encode(array('obsData' => $obsData,/*'lmpData' => $lmpData,*/'pregData' => $pregData,'vitalsData'=>$vitalsData,'originalCreatedDate'=>$originalCreatedDate,'bloodGroup'=>$bloodGroup,'diagnosisData'=>$diagnosisData,'diseases'=>$diseases,'prescMedicineData'=>$prescMedicineData,'drugFrequency'=>$drugFrequency,'originalCreatedDateDup'=>$originalCreatedDateDup,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit));
+		return json_encode(array('obsData' => $obsData,/*'lmpData' => $lmpData,*/'pregData' => $pregData,'vitalsData'=>$vitalsData,'originalCreatedDate'=>$originalCreatedDate,'bloodGroup'=>$bloodGroup,'diagnosisData'=>$diagnosisData,'diseases'=>$diseases,'prescMedicineData'=>$prescMedicineData,'drugFrequency'=>$drugFrequency,'originalCreatedDateDup'=>$originalCreatedDateDup,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit,'doctorIdArray'=>$doctorIdArray));
 		//die();
 
 		//return view('patientprevioustreatment',array('obsData' => $obsData,'lmpData' => $lmpData,'pregData' => $pregData,'vitalsData'=>$vitalsData,'originalCreatedDate'=>$originalCreatedDate,'bloodGroup'=>$bloodGroup,'diagnosisData'=>$diagnosisData,'diseases'=>$diseases,'prescMedicineData'=>$prescMedicineData,'drugFrequency'=>$drugFrequency,'originalCreatedDateDup'=>$originalCreatedDateDup,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit));
@@ -1326,6 +1331,14 @@ class DoctorController extends Controller {
 
 			{
 				
+				$otpGenerated 	 	= DBUtils::generate_otp(4);
+
+				$message         	=  "OTP for patient registration is"." ".$otpGenerated." ."."Click here to register"."-".
+				"http://www.doctorsdiary.co/doctorsdiary/patientlogin";
+				
+				
+			
+				
 				$inputValue = array('id_patient' => $input['id_patient'],
 									'first_name'=>$firstName,
 									'middle_name'=> $middleName,
@@ -1345,11 +1358,13 @@ class DoctorController extends Controller {
 									'phone' => $phone,
 									'email' => $email,
 									'profile_image_large'=>$profileImageName,
+									'otp_generated' => $otpGenerated,
 									'id_doctor' => $doctorId,
 									'created_date' => $createdDate);
 									
 				$patientPersonalInfoSave = DB::table('patients')->insert($inputValue);
 				if($patientPersonalInfoSave){
+					$otpSendToMobile 	= DBUtils::otpSendToMobile($phone,$message,$otpGenerated);
 					return Redirect::to('patientpersonalinformation')->with(array('success'=>'Data saved successfully'));
 				}
 			}
@@ -1393,6 +1408,9 @@ class DoctorController extends Controller {
 					case '2':
 						return Redirect::to('cardiopersonalinformation');
 					break;
+					case '3':
+						return Redirect::to('pediapersonalinformation');
+					break;
 					
 					default:
 
@@ -1434,10 +1452,20 @@ class DoctorController extends Controller {
 				Session::put('patientName',$patientExistCheck->first_name." ".$patientExistCheck->last_name);
 				switch ($specialization) {
 					case '1':
+							
 							return Redirect::to('patientpersonalinformation');
 						break;
 					case '2':
 							return Redirect::to('cardiopersonalinformation');
+						break;
+					case '3':
+							if($patientExistCheck->age<=16){
+								return Redirect::to('pediapersonalinformation');
+							}
+							else{
+								return Redirect::to('doctorhome')->with(array('error'=>"Patient you entered is an adult"));
+							}
+							
 						break;
 					
 					default:
@@ -2873,7 +2901,21 @@ class DoctorController extends Controller {
 	}
 
 	
+	public function getPrevPrescDoctorData(){
+		$input = Request::all();
+		$date = $input['date'];
+		$doctorId = $input['doctorId'];
 
+		$prevData = PrescriptionModel::where('id_doctor','=',$doctorId)
+									 ->where('created_date','LIKE','%'.$date.'%')
+									 ->get();
+		if(count($prevData)>0){
+			return 1;
+		}
+		else{
+			return 0;
+		}
+	}
 	
 
 	public function showMigration(){

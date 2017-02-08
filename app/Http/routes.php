@@ -43,6 +43,14 @@ Route::get('patientotpcheck',  array('as' => 'patientotpcheck', 'uses' => 'Login
 Route::post('handlePatientForgetOtpCheck',  array('as' => 'handlePatientForgetOtpCheck', 'uses' => 'LoginController@handlePatientForgetOtpCheck'));
 
 
+Route::get('patientregisterotpcheck',  array('as' => 'patientregisterotpcheck', 'uses' => 'PatientController@showPatientOtpCheck'));
+
+Route::post('handlePatientRegisterOtpCheck',  array('as' => 'handlePatientRegisterOtpCheck', 'uses' => 'PatientController@handlePatientRegisterOtpCheck'));
+
+Route::get('patientregisterpassword',  array('as' => 'patientregisterpassword', 'uses' => 'PatientController@showPatientRegisterPassword'));
+
+Route::post('handlePatientRegisterPassword',  array('as' => 'handlePatientRegisterPassword', 'uses' => 'PatientController@handlePatientRegisterPassword'));
+
 Route::get('doctoraddnewpassword',  array('as' => 'doctoraddnewpassword', 'uses' => 'LoginController@showDoctorAddNewPassword'));
 Route::post('handleDoctorAddNewPassword',  array('as' => 'handleDoctorAddNewPassword', 'uses' => 'LoginController@handleDoctorAddNewPassword'));
 
@@ -103,7 +111,15 @@ Route::any('patientprevioustreatment', array('before'=>'isDoctorLoggedIn','as'=>
 
 Route::any('patientprevioustreatmentextended', array('before'=>'isDoctorLoggedIn','as'=>'patientprevioustreatmentextended','uses'=>'DoctorController@patientPreviousTreatmentExtended'));
 
+Route::any('getPrevPrescDoctorData', array('as'=>'getPrevPrescDoctorData','uses'=>'DoctorController@getPrevPrescDoctorData'));
+
 Route::any('patientprevioustreatmentprint', array('before'=>'isDoctorLoggedIn','as'=>'patientprevioustreatmentprint','uses'=>'SettingsController@patientPreviousTreatmentPrint'));
+
+
+Route::any('patientprofileprevtreatmentprint', array('as'=>'patientprofileprevtreatmentprint','uses'=>'SettingsController@patientProfilePrevTreatmentPrint'));
+
+
+
 
 Route::any('patientprevioustreatmenttest', array('before'=>'isDoctorLoggedIn','as'=>'patientprevioustreatmenttest','uses'=>'DoctorController@showPatientPreviousTreatmentTest'));
 
@@ -170,18 +186,28 @@ Route::any('cardioprevioustreatment', array('before'=>'isDoctorLoggedIn','as' =>
 
 Route::any('cardioprevioustreatmentextended', array('before'=>'isDoctorLoggedIn','as'=>'cardioprevioustreatmentextended','uses'=>'CardiologyController@cardioPreviousTreatmentExtended'));
 
+
 // Pediatrician Controllers
+//-----------------------------------------------------------------------------------------
 Route::any('pediapersonalinformation', array('before'=>'isDoctorLoggedIn','as'=>'pediapersonalinformation','uses'=>'PediatricsController@showPediaPersonalInformation'));
 Route::any('addPediaPersonalInformation', array('before'=>'isDoctorLoggedIn','as'=>'addPediaPersonalInformation','uses'=>'PediatricsController@addPediaPersonalInformation'));
+Route::any('pediaexamination', array('before'=>'isDoctorLoggedIn','as' => 'pediaexamination', 'uses' => 'PediatricsController@showPediaExamination'));
+Route::any('addPediaExamination', array('before'=>'isDoctorLoggedIn','as' => 'addPediaExamination', 'uses' => 'PediatricsController@addPediaExamination')); 
+
 
 //Patient Controlls
 //------------------------------------------------------------
 
 Route::any('patientprofilemanagement', array('as'=>'patientprofilemanagement','uses'=>'PatientController@showPatientProfileManagement'));
+
 Route::any('patientprofileprevtreatment', array('as'=>'patientprofileprevtreatment','uses'=>'PatientController@showPatientProfilePrevTreatment'));
+
 Route::any('patientprofileedit', array('as'=>'patientprofileedit','uses'=>'PatientController@showPatientProfileEdit'));
+
 Route::any('patientProfileEdit', array('as' => 'patientProfileEdit', 'uses' => 'PatientController@patientProfileEdit'));
+
 Route::any('patientprofileprevioustreatmentextended', array('as'=>'patientprofileprevioustreatmentextended','uses'=>'PatientController@patientProfilePreviousTreatmentExtended'));
+
 Route::any('patientchangepassword', array('as'=>'patientchangepassword','uses'=>'PatientController@showPatientChangePassword'));
 Route::any('handlePatientChangePassword', array('as'=>'handlePatientChangePassword','uses'=>'PatientController@handlePatientChangePassword'));
 

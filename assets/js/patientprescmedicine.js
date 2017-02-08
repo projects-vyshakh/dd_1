@@ -97,7 +97,7 @@ var patientPrescMedicine = function () {
                                                     '</td>'+
                                                     '<td>'+
                                                         '<div class="dd_dosage1_text">'+
-                                                             	'<input type="text" name="dosage'+counter+'" class="input-mini ng-pristine ng-valid dosage dd_remove_padding " id="dosage'+counter+'" maxlength="4">'+
+                                                             	'<input type="text" name="dosage'+counter+'" class="input-mini ng-pristine ng-valid dd_remove_padding dosage" id="dosage'+counter+'">'+
                               									'<select class="dosage_unit" name="dosage_unit'+counter+'" id="dosage_unit'+counter+'">'+
 																 '</select>'+
                                                      	 '</div>'+
@@ -123,6 +123,7 @@ var patientPrescMedicine = function () {
 													'</td>'+
 											 	'</tr>'+
 												'<tr class="drugs_row dd_relative">'+
+
 													'<td colspan="1" >'+
 															'<input type="button" onclick="return addInstruction(this);" name="add-instruction-btn" class="btn btn-default  dd_instruction  btn-xs add-instruction-btn" value="+ Add Instruction" >' +
 															'<input type="button" onclick="return removeInstruction(this);" name="remove-instruction-btn" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs remove-instruction-btn" value="- Remove Instruction" style="display:none" >' +
@@ -150,7 +151,9 @@ var patientPrescMedicine = function () {
 												'<tr></tr>'+
 											'</tbody>' +
                                 		'</table>'+
+
                                 		'<div class="instruction-div" ></div>'+
+                                		'<div class="error_msg" ></div>'+
                              		'</div>'
 								);
 												  		
@@ -178,7 +181,6 @@ var patientPrescMedicine = function () {
 				       				
 				       		//Load Previous Drug Click
 		       				$('.present-drug-btn').click(function(e){
-
 		       					$('.success-status').val(''); // Success is keeping null on clicking load prev else clicking on share works twice
 		       					$('.present-drug-btn').attr('disabled',true);
 	       						var prescMedicine = data.prescMedicine;
@@ -261,7 +263,7 @@ var patientPrescMedicine = function () {
 		                                                    '</td>'+
 		                                                    '<td>'+
 		                                                        '<div class="dd_dosage1_text">'+
-		                                                            '<input type="text" name="dosage'+counter+'" maxlength="4" class="input-mini ng-pristine ng-valid dosage dd_remove_padding" id="dosage'+i+'" value='+dosage+'>'+
+		                                                            '<input type="text" name="dosage'+counter+'" class="input-mini ng-pristine dd_remove_padding ng-valid dosage" id="dosage'+i+'" value='+dosage+'>'+
 		                              									'<select class="dosage_unit" name="dosage_unit'+counter+'" id="dosage_unit'+counter+'">'+
 		                              										'<option value='+dosageUnitDefault+'>'+dosageUnitDefault+'</option>'+
 																		'</select>'+
@@ -314,13 +316,10 @@ var patientPrescMedicine = function () {
 														'</tr>'+
 												 	'</tbody>'+
 												'</table>'+
-												'<div class="instruction-div" id="instruction-div'+counter+'">'+
-													
-												'</div>'+
+												'<div class="instruction-div" id="instruction-div'+counter+'"></div>'+
+												'<div class="error_msg"></div>'+
 											'</div>'
 			                            );
-
-										
 										
 										//Appending dosage and duration 
 										for( dosageUnitVal in data.dosageUnit){
@@ -335,19 +334,6 @@ var patientPrescMedicine = function () {
 											}
 											
 										}
-
-
-										if(instruction==null || instruction==''){
-											//alert('no'+instruction)
-											$('#instruction-div'+counter).hide();
-										}
-										else{
-											//alert(counter+instruction)
-											$('#instruction-div'+counter).append('<textarea id="instruction'+counter+'" class=" form-control instruction" name="instruction'+counter+'" cols="30">'+instruction+'</textarea>');
-											$('#remove-instruction-btn'+counter).show();
-											$('#add-instruction-btn'+counter).hide();
-										}
-
 
 									}
 									//Ending forloop
@@ -417,7 +403,7 @@ var patientPrescMedicine = function () {
 				var currentUrl = window.location.href;
 				var shareLink  = currentUrl+"/shared/"+prescSharedId;
 				bootbox.dialog({
-					message		: '<h6 style="margin-top:34px; font-size:16px; color:#333; ">Copy and share link through email.</h6>'+'<input type="text" value="'+ shareLink+'"  id="post-shortlink"  style="margin-top:25px; margin-bottom:20px;" class="form-control post-shorlink"/><button class="button btn btn-info btn-default copy-button" id="copy-button" data-clipboard-target="#post-shortlink" style="margin-top:10px;float:right; background:#335bbd; color:#fff;">Copy link and close</button><button class="button btn btn-info btn-default btn-cancel"  data-clipboard-target="#post-shortlink" style="margin-top:10px;float:left">Cancel</button>',
+					message		: '<h6 style="margin-top:34px; font-size:16px; color:#333; ">Copy and share link through email.</h6>'+'<input type="text" value="'+ shareLink+'"  id="post-shortlink"  style="margin-top:25px; margin-bottom:20px;" class="form-control post-shorlink"/><button class="button btn btn-info btn-default copy-button dd_btn_share" id="copy-button" data-clipboard-target="#post-shortlink" style="margin-top:10px;float:right; background:#335bbd; color:#fff;">Copy link and close</button><button class="button btn btn-info btn-default btn-cancel dd_btn_share"  data-clipboard-target="#post-shortlink" style="margin-top:10px;float:left">Cancel</button>',
 					title 		: '<h4 style="font-weight:bold;">Share Prescription Link</h4>',
 						
 				});
@@ -441,7 +427,7 @@ var patientPrescMedicine = function () {
         var errorHandler2   = $('.errorHandler', form2);
         var successHandler2 = $('.successHandler', form2);
 
-        $.validator.addClassRules("morning", {
+       /* $.validator.addClassRules("morning", {
              number : true 
         });
         $.validator.addClassRules("noon", {
@@ -449,21 +435,59 @@ var patientPrescMedicine = function () {
         });
         $.validator.addClassRules("night", {
              number : true 
-        });
-        $.validator.addClassRules("drug_name", {
+        });*/
+        /*$.validator.addClassRules("drug_name", {
              required : true 
         });
-       
-       	// $.validator.addClassRules("dosage", {
-        //      number : true 
-        // });
-        
+       */
+       	/*$.validator.addClassRules("dosage", {
+             number : true 
+        });*/
+        /*$.validator.addClassRules("duration", {
+             number : true 
+        });
+       */
+        jQuery.validator.addClassRules({
+        	drug_name: {
+		        required : true,
+		        
+		    },
+		    dosage: {
+		        digits : true,
+		        maxlength : 4
+		        
+		    },
+		    duration: {
+		        digits : true,
+		        
+		    },
+		    morning: {
+		        digits : true,
+		        
+		    },
+		    noon: {
+		        digits : true,
+		        
+		    },
+		    night: {
+		        digits : true,
+		        
+		    },
+		   
+		});
+
+
         form2.validate({
             errorElement: "span", // contain the error msg in a small tag
             errorClass: 'help-block',
             errorPlacement: function (error, element) { // render error placement for each input type
-                if (element.attr("type") == "radio" || element.attr("type") == "checkbox") { // for chosen elements, need to insert the error after the chosen container
-                    error.insertAfter($(element).closest('.form-group').children('div').children().last());
+                if (element.attr("type") == "text" || element.attr("type") == "radio" || element.attr("type") == "checkbox") { // for chosen elements, need to insert the error after the chosen container
+                    //error.insertAfter($(element).closest('.form-group').children('div').children().last());
+                	
+                	var clickedElement = $(element).closest('.presc-inner');
+    				var errorDiv = clickedElement.find('.error_msg'); 
+    				error.insertAfter(errorDiv).last();
+                	//console.log(instructionDiv);
                 } else if (element.hasClass("ckeditor")) {
                     error.appendTo($(element).closest('.form-group'));
                 } else {
@@ -501,14 +525,10 @@ var patientPrescMedicine = function () {
                 // add the Bootstrap error class to the control group
             },
             unhighlight: function (element) { // revert the change done by hightlight
-                $(element).closest('.form-group').removeClass('has-error');
+                //$(element).closest('.form-group').removeClass('has-error');
                 // set error class to the control group
             },
-            /*success: function (label, element) {
-                label.addClass('help-block valid');
-                // mark the current input as valid and display OK icon
-                $(element).closest('.form-group').removeClass('has-error').addClass('has-success').find('.symbol').removeClass('required').addClass('ok');
-            },*/
+           
             submitHandler: function (form) {
                 successHandler2.show();
                 errorHandler2.hide();
@@ -546,7 +566,7 @@ var patientPrescMedicine = function () {
 	            		$('#myModal3').modal('show');
 	                		
 	                		$('iframe').remove();
-	                		$('.pdf_print').append('<iframe src="storage/pdf/'+data+'.pdf" style="width:780px;height:500px;" id="iFrame"></iframe>');
+	                		$('.pdf_print').append('<iframe src="storage/pdf/'+data+'.pdf" style="width:100%; height:500px;" id="iFrame"></iframe>');
 	                		//$('.pdf_print').load('storage/pdf/'+data+'.pdf');
 	                		//$("#modal-body embed").attr("storage","x007_20161116.pdf");
 	                		$('.print-data').val('saveTrue');
@@ -565,28 +585,95 @@ var patientPrescMedicine = function () {
 		});
 	};
 
-	var runMedicineListAutoComplete = function(){
-		$('.drug_name').typeahead({
+	var runMedicineListAutoComplete = function(counter){
+
+			/*var options = {
+				url: "getMedicineList",
+
+				getValue: "name",
+
+				minCharNumber: 0,
+
+				list: {
+					match: {
+						enabled: true
+					},
+					maxNumberOfElements: 10,
+
+					hideOnEmptyPhrase: true,
+
+
+				},
+
+				requestDelay: 100,
+
+				theme: "plate-dark",
+
+			};
+
+			$(".drug_name").typeahead(options);*/
 			
-			items : 12,
-	  		scrollBar: false,
-	  		alignWidth: true,
-	  		
-			ajax: {
-
-			    url: 'getMedicineList',
-				timeout: 300,
-				method: 'get',
-				triggerLength: 1,
-				loadingClass: null,
-			    preDispatch: null,
-				preProcess: null
-
-			}
-	       
-	    });
+			
+ 			$('.drug_name').typeahead({
+                    ajax: {
+                        url: 'getMedicineList',
+                        method: 'post',
+                        triggerLength: 1
+                    }
+                    
+            });
+			
+		 	
+ 			$('.typeahead').addClass('test')
 
 		
+		
+
+
+		/*$.ajax({
+                type	: "POST",
+                url 	: "getMedicineList",
+                //data 	: dataString,
+                dataType : "JSON",
+                success : function(medicineName) {
+                	//console.log(medicineName);
+
+                	// constructs the suggestion engine
+					var medicineName = new Bloodhound({
+					  datumTokenizer: Bloodhound.tokenizers.whitespace,
+					  queryTokenizer: Bloodhound.tokenizers.whitespace,
+					  // `states` is an array of state names defined in "The Basics"
+					  local: medicineName
+					});
+
+					$('.typeahead').typeahead({
+					  hint: true,
+					  highlight: true,
+					  minLength: 1
+					},
+					{
+					  name: 'medicineName',
+					  source: medicineName
+					});
+
+
+
+                }
+        });*/
+
+
+		/*var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+				  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+				  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+				  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+				  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+				  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+				  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+				  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+				  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+				];*/
+
+			
 	};
 	return {
 		//main function to initiate template pages
@@ -596,7 +683,7 @@ var patientPrescMedicine = function () {
 		   runPrescriptionDatePickers();
 		   runPatientPrescMedicineValidator();
 		   runPrescPrintManagement();
-		   runMedicineListAutoComplete();
+		   runMedicineListAutoComplete(counter=0);
 		   
 		}
     };

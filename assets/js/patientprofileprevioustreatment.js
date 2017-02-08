@@ -14,6 +14,7 @@ var patientPrevElements = function () {
             dataType :"JSON",
             success: function(data) {
                //console.log(data.vitalsData[0].id_vitals);
+               console.log(data);
                if(data!==""){
                     $("body").mLoading('hide');
                     runPrevTreatmentData(data);
@@ -33,7 +34,8 @@ var patientPrevElements = function () {
         $('#year').change(function(){
             var defaultYearSelected = $('#year option:selected').val();
         // alert(defaultYearSelected);
-            $("body").mLoading('hide');
+            $("body").mLoading({ });
+                
             $.ajax({
                 type: "POST",
                 url: "patientprofileprevioustreatmentextended",
@@ -67,7 +69,7 @@ var patientPrevElements = function () {
         day = String(date.getDate());
 
         if(day<10){ day = '0'+day;  } else { day = day; } //assigning 0 before day
-                if(month<10){ month = '0'+month;  } else { month = month; } //assigning 0 before months
+        if(month<10){ month = '0'+month;  } else { month = month; } //assigning 0 before months
 
         var  createdDate = year+'-'+month+'-'+day; 
         return createdDate
@@ -103,6 +105,8 @@ var patientPrevElements = function () {
                 '</div>'+
             '</div>'               
         );
+
+
 
         if(data.obsData=='' && data.lmpData=='' && data.pregData=='' && data.prescMedicineData=='' &&
            data.vitalsData=='' && data.diagnosisData==''){
@@ -187,21 +191,56 @@ var patientPrevElements = function () {
                                                 '<div class="col-sm-12 presc_title">'+
                                                     '<div class="form-group form-horizontal">'+
                                                         '<div class="form-group dd_presc_dummy dd_panel_body_font">'+
-                                                            '<div class="col-sm-4">DrugName'+
+                                                            '<div class="col-sm-4">Drug Name'+
                                                             '</div>'+
                                                             '<div class="col-sm-2">Dosage'+
                                                             '</div>'+
                                                             '<div class="col-sm-2">Duration'+
                                                             '</div>'+
-                                                            '<div class="col-sm-4">Frequecy'+
+                                                            '<div class="col-sm-2">Frequency'+
+                                                            '</div>'+
+                                                            '<div class="col-sm-2">Start Date'+
                                                             '</div>'+
                                                         '</div>'+
                                                     '</div>'+
                                                 '</div>'+
                                             '</div>'+
                                         '</div>'+
+
+                                        
+
                                         '<div class="tab-pane" id="presc_content'+i+'"></div>'+
-                                        '<div id="presc_print_btn'+i+'" class="dd_prev_print_btn presc_print_btn"></div>'+
+
+                                        '<div class="tab-pane" id="presc_follow'+i+'">'+
+                                            '<div class="followup_date" >'+
+                                                '<div class="form-horizontal">'+
+                                                    '<div class="col-sm-12" style="margin-bottom: 20px">'+
+                                                        '<div class="">'+
+                                                            '<div class="col-sm-4">Followup Date:'+
+                                                            '</div>'+
+                                                            '<div class="col-sm-3" id="followup_date'+i+'">'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                        '</div>'+
+                                        '<div class="tab-pane" id="presc_treatment'+i+'">'+
+                                            '<div class="treatment" >'+
+                                                '<div class="form-horizontal">'+
+                                                    '<div class="col-sm-12 style="margin-bottom: 20px">'+
+                                                        '<div class="">'+
+                                                            '<div class="col-sm-4">Treatment:'+
+                                                            '</div>'+
+                                                            '<div class="col-sm-4" id="treatment_content'+i+'">'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+
+                                        '<div id="presc_print_btn'+i+'" class="dd_prev_print_btn presc_print_btn" style="margin-top: 20px"></div>'+
+
                                     '</div>'+
 
                                 '</div>'+    
@@ -210,15 +249,19 @@ var patientPrevElements = function () {
                     '</div>'+    
                 '</div>'
             );
+            //alert('i='+i)
            
-            
             //This is for hiding dugname,dosage etc if there is no data for prescritpion
             if($.inArray(data.originalCreatedDateDup[i],prescDateArray)!==-1){
+                $('#presc_follow'+i).show();
                 $('#presc_title'+i).show();
-                $('#presc_print_btn'+i).append('<a class="btn btn-primary  pdfopen print_width"> Print </a>');
+                $('#presc_treatment'+i).show();
+                $('#presc_print_btn'+i).append('<a style="margin-top:20px" class="btn btn-primary  pdfopen print_width"> Print </a>');
             }
             else{
                 $('#presc_title'+i).hide();
+                $('#presc_follow'+i).hide();
+                $('#presc_treatment'+i).hide();
             }
 
           
@@ -243,50 +286,50 @@ var patientPrevElements = function () {
                         var lastDeliveryDate        = data.obsData[o].obs_last_delivery_date;
                         var expectedDeliveryDate    = data.obsData[o].obs_expected_delivery_date;
 
-                        //console.log(expectedDeliveryDate);
-                        if(gravida==null){
+                        console.log(marriedLife);
+                        if(gravida==null || gravida==''){
                             
                             gravida = '';
                         }
                         else{
                             gravida = data.obsData[o].gravida;
                         }
-                        if(para==null){
+                        if(para==null || para==''){
                             
                             para = '';
                         }
                         else{
                             para = data.obsData[o].para;
                         }
-                        if(living==null){
+                        if(living==null || living==''){
                             
                             living = '';
                         }
                         else{
                             living = data.obsData[o].living;
                         }
-                        if(marriedLife==null){
+                        if(marriedLife==null || marriedLife==''){
                             
                             marriedLife = '';
                         }
                         else{
-                            marriedLife = data.obsData[o].married_life;
+                            marriedLife = data.obsData[o].married_life+' '+'Years';
                         }
-                        if(bloodGroup==null){
+                        if(bloodGroup==null || bloodGroup==''){
                             
                             bloodGroup = '';
                         }
                         else{
                             bloodGroup = data.obsData[o].husband_blood_group;
                         }
-                        if(gestationalAge==null){
+                        if(gestationalAge==null || gestationalAge==''){
                             
                             gestationalAge = '';
                         }
                         else{
                             gestationalAge = data.obsData[o].obs_gestational_age;
                         }
-                        if(lastDeliveryDate==null || lastDeliveryDate=='0000-00-00'){
+                        if(lastDeliveryDate==null || lastDeliveryDate=='0000-00-00' || lastDeliveryDate==''){
                             
                             lastDeliveryDate = '';
                         }
@@ -298,7 +341,7 @@ var patientPrevElements = function () {
                                 var year    = dateObj.getUTCFullYear();
                                 var lastDeliveryDate = day+"-"+month+"-"+year;
                         }
-                        if(expectedDeliveryDate==null || expectedDeliveryDate=='0000-00-00'){
+                        if(expectedDeliveryDate==null || expectedDeliveryDate=='0000-00-00' || expectedDeliveryDate==''){
                             
                             expectedDeliveryDate = '';
                         }
@@ -321,7 +364,7 @@ var patientPrevElements = function () {
                                         '<div class="form-group form-horizontal" style="margin-top:-10px;">'+
                                             '<div class=" ">'+
                                                 '<div class="col-sm-12 dd_prev_pd_2 dd_prev_mg_main">'+
-                                                '<label class=" pull-left col-sm-3 dd_pd_0 dd_font_left " for="gravida">Gravida</label>'+
+                                                '<label class=" pull-left col-sm-4 dd_pd_0 dd_font_left " for="gravida">Gravida</label>'+
                                                     '<div class="dd_prev_color pull-left col-sm-3 dd_pd_0 dd_font_left" for="gravida">: '+gravida+'</div>'+
                                                     '<div class="dd_clear">'+'</div>'+
                                                     '</div>'+ 
@@ -775,23 +818,99 @@ var patientPrevElements = function () {
         /*Pegnancy Data ends*/
 
 
-
         /*Prescription Data*/
         if(data.prescMedicineData!=null){
            
-            
+            //alert(JSON.stringify(data.prescMedicineData));
+
+            var followUpDateArray = new Array();
             
             for(p=0;p<data.prescMedicineData.length;p++){
-                var createdDate = createdDateConvert(data.prescMedicineData[p].created_date);
+                var createdDate  = createdDateConvert(data.prescMedicineData[p].created_date);
+               
+                var followUpDate = data.prescMedicineData[p].follow_up_date;
+                var treatment    = data.prescMedicineData[p].treatment;
+                //alert(treatment)
+                //alert(createdDate)
+                //alert(JSON.stringify( treatment));
+               
+
+                if(followUpDate=='0000-00-00' || followUpDate==null){
+                    followUpDate = " ";
+                }
+                else{
+                    var dateObj = new Date(followUpDate);
+                    var month   = dateObj.getUTCMonth() + 1; //months from 1-12
+                    var day     = dateObj.getUTCDate();
+                    var year    = dateObj.getUTCFullYear();
+                    
+                    (day<10)?day = '0'+day:day=day;
+                    (month<10)?month = '0'+month:month=month;
+
+                     followUpDate = day+"-"+month+"-"+year;
+                }
+                
+
+
                 
                 for(dup=0;dup<data.originalCreatedDateDup.length;dup++){
-                    
+                     
                     if(createdDate==data.originalCreatedDateDup[dup]){
                         
                         
-                        $('.pdfopen').show();
+                        
+                       
+                        if(data.prescMedicineData[p].dosage=='' || data.prescMedicineData[p].dosage==0){
+                            var dosage = '--';
+                        }
+                        else{
+                            var dosage = data.prescMedicineData[p].dosage+' '+data.prescMedicineData[p].dosage_unit;
+                        }
+
+                        if(data.prescMedicineData[p].duration=='' || data.prescMedicineData[p].duration==0){
+                            var duration = '--';
+                        }
+                        else{
+                            var duration = data.prescMedicineData[p].duration+' '+data.prescMedicineData[p].duration_unit;
+                        }
+
+                        if(data.prescMedicineData[p].morning=='' || data.prescMedicineData[p].morning==0){
+                            var morning = '--';
+                        }
+                        else{
+                            var morning = data.prescMedicineData[p].morning;
+                        }
+                        if(data.prescMedicineData[p].noon=='' || data.prescMedicineData[p].noon==0){
+                            var noon = '--';
+                        }
+                        else{
+                            var noon = data.prescMedicineData[p].noon;
+                        }
+                        if(data.prescMedicineData[p].night=='' || data.prescMedicineData[p].night==0){
+                            var night = '--';
+                        }
+                        else{
+                            var night = data.prescMedicineData[p].night;
+                        }
+
+                        if(data.prescMedicineData[p].start_date=='' || data.prescMedicineData[p].start_date=='0000-00-00'){
+                            var startDate = '--';
+                        }
+                        else{
+                            
+                            var dateObj = new Date(data.prescMedicineData[p].start_date);
+                            var month   = dateObj.getUTCMonth() + 1; //months from 1-12
+                            var day     = dateObj.getUTCDate();
+                            var year    = dateObj.getUTCFullYear();
+
+                            (day<10)?day = '0'+day:day=day;
+                            (month<10)?month = '0'+month:month=month;
+
+                            var startDate = day+"-"+month+"-"+year;
+                        }
 
 
+                         
                         $('#presc_content'+dup).append(
                             '<div class="panel-body dd_panel_body_pd">'+
                                 '<div class="col-sm-12">'+
@@ -801,33 +920,71 @@ var patientPrevElements = function () {
                                                 data.prescMedicineData[p].drug_name+
                                             '</li></div>'+
                                             '<div class="col-sm-2">'+
-                                               data.prescMedicineData[p].dosage+' '+data.prescMedicineData[p].dosage_unit+
+                                                dosage+
                                             '</div>'+
                                             '<div class="col-sm-2">'+
-                                               data.prescMedicineData[p].duration+' '+data.prescMedicineData[p].duration_unit+
+                                               duration+
                                             '</div>'+
-                                            '<div class="col-sm-4">'+
+                                            '<div class="col-sm-2">'+
                                               
-                                               data.prescMedicineData[p].morning+' - '+
+                                                morning+' - '+
+                                                noon+' - '+
+                                                night+
                                                
-                                                
-                                                data.prescMedicineData[p].noon+' - '+
-                                               
-                                                
-                                                data.prescMedicineData[p].night+
-                                               
+                                            '</div>'+
+                                            '<div class="col-sm-2">'+
+                                                startDate+
                                             '</div>'+
                                         '</div>'+
+
                                     '</div>'+
                                 '</div>'+
                             '</div>'
+
+
+
+                            
+          
+
+
+                        );
+
+
+                        //followUpDateArray.push(followUpDate);
+
+
+
+
+                        $('#followup_date'+dup).append(
+                            '<div class="followup_date_data" id="followup_date_data'+dup+'">'+followUpDate+'</div>'
+                        );
+
+                        $('#treatment_content'+dup).append(
+                            '<div class="treatment_data" id="treatment_data'+dup+'">'+treatment+'</div>'
                         );
 
                     }
-                   
                     
                 }
+
+               
+                
             }
+            var divFollowUpDateFind = $('.followup_date').find('.followup_date_data').hide( );
+            var divTreatmentFind    = $('.treatment').find('.treatment_data').hide( );
+            
+            $.each(divFollowUpDateFind,function(index){
+                $('.followup_date').find('#followup_date_data'+index).show();
+               
+                //followUpDateArray.push(index)
+            });
+
+            $.each(divTreatmentFind,function(index){
+                $('.treatment').find('#treatment_data'+index).show();
+               
+                //followUpDateArray.push(index)
+            })
+            
 
         }
 
@@ -838,11 +995,12 @@ var patientPrevElements = function () {
 
             $.ajax({
                 type: "POST",
-                url: "patientprevioustreatmentprint",
+                url: "patientprofileprevtreatmentprint",
                 data: 'created_date='+createdDate,
                 success: function(data) {
-                   console.log(data);
+                  
                    if(data!=""){
+                    
                         $("body").mLoading('hide');
                         $('#myModal3').modal('show');
                         $('iframe').remove();

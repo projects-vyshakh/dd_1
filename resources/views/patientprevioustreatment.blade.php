@@ -14,6 +14,9 @@ else{
 if(!empty($doctorData)){
 	$doctorSpecialization = $doctorData->specialization;
 }
+else{
+	$doctorSpecialization = '';
+}
 
 
 

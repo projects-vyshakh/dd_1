@@ -152,20 +152,13 @@ for($startYear;$startYear>=$endYear;$startYear--){
 
 	<script>
 		$(document).ready(function() {
-			patientPrevElements.init();
 			Main.init();
+			patientPrevElements.init();
+			
 			
 			
    	
-			/*$(window).load(function() {
-				$(".loader").fadeOut("slow");
-				
-			});*/
-
-			//$('.quali').multiselect(); //Used class here instead of id
-			
-			$('.tokenize-sample').tokenize();
-			//$('.tokenize-disease').tokenize();
+		
 			
 	 	});
 	</script>

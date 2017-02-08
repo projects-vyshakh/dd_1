@@ -357,37 +357,80 @@ class SettingsController extends Controller {
 
 		$parametersArray = array('prescriptionData'=>$prescriptionData,'printData'=>$printData);
 
+		if(!empty($doctorId)){
+			switch ($specialization) {
+				case '1':
+					$pdf = App::make('dompdf.wrapper');
+			        //$pdf->loadHTML('<h1>Test</h1>');
+			        $view =  View::make('previoustreatmentprescprint',$parametersArray)->render();
+			         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
 
-		switch ($specialization) {
-			case '1':
-				$pdf = App::make('dompdf.wrapper');
-		        //$pdf->loadHTML('<h1>Test</h1>');
-		        $view =  View::make('previoustreatmentprescprint',$parametersArray)->render();
-		         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+			        return $pdfFileName;
+			        
+			    	//return $pdf->stream($pdfFileName.'.'.'pdf');
+			    	//return $pdf->inline();
+					break;
 
-		        return $pdfFileName;
-		        
-		    	//return $pdf->stream($pdfFileName.'.'.'pdf');
-		    	//return $pdf->inline();
-				break;
+				case '2':
+					$pdf = App::make('dompdf.wrapper');
+			        //$pdf->loadHTML('<h1>Test</h1>');
+			        $view =  View::make('previoustreatmentprescprint',$parametersArray)->render();
+			        $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
 
-			case '2':
-				$pdf = App::make('dompdf.wrapper');
-		        //$pdf->loadHTML('<h1>Test</h1>');
-		        $view =  View::make('previoustreatmentprescprint',$parametersArray)->render();
-		         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
-
-		        return $pdfFileName;
-		        
-		    	//return $pdf->stream($pdfFileName.'.'.'pdf');
-		    	//return $pdf->inline();
-				break;
-			
-			default:
-				# code...
-				break;
+			        return $pdfFileName;
+			        
+			    	//return $pdf->stream($pdfFileName.'.'.'pdf');
+			    	//return $pdf->inline();
+					break;
+				
+				default:
+					
+					break;
+			}
 		}
-	}
+		else{
+			if(!empty($patientId)){
+				$pdf = App::make('dompdf.wrapper');
+			    $pdf->loadHTML('<h1>Test</h1>')->download();
+			}
 
+		}
+		
+	}
+ 	
+ 	public function patientProfilePrevTreatmentPrint(){
+
+ 		$input = Request::all();
+
+		$createdDate 	= $input['created_date'];
+		$specialization = Session::get('doctorSpecialization');;
+		$patientId 		= Session::get('id_patient');
+		$doctorId 		= Session::get('doctorId');
+		
+		$todayDate 		= date('Y-m-d');
+		$splitDate 		= explode('-',$todayDate);
+
+		$pdfFileName = $patientId."_".$splitDate[0].$splitDate[1].$splitDate[2];
+
+		$printData  = "";
+
+		$prescriptionData    = DB::table('prescription')
+									->where('created_date','LIKE','%'.$createdDate.'%')
+		                            ->where('id_patient','=',$patientId)
+		                            
+		                            ->get();
+
+		$parametersArray = array('prescriptionData'=>$prescriptionData,'prescriptionData'=>$prescriptionData);
+
+		$pdf = App::make('dompdf.wrapper');
+			        //$pdf->loadHTML('<h1>Test</h1>');
+			        $view =  View::make('patientprofileprevtreatmentprescprint',$parametersArray)->render();
+			         $pdf->loadHTML($view)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+
+			        return $pdfFileName;
+			        
+
+ 		//return view('patientprofileprevtreatmentprescprint');
+ 	}
 
 }

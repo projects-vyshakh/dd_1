@@ -1,7 +1,5 @@
 <?php
 
-
-
 $currentPath = Route::getCurrentRoute()->getPath();
 //echo $currentPath;
 $patientId = Session::get('patientId');
@@ -12,8 +10,6 @@ if(!empty($specialization )){
 else{
     $specialization ="0";
 }
-
-
 //$patientName = Session::get('patientName');
 
 $todayDate = date('d-M-Y');
@@ -45,6 +41,7 @@ $todayDate = date('d-M-Y');
 
     <!-- Pediatrician -->
     @if($currentPath=="pediapersonalinformation")<title>Patient Personal Information</title> @endif
+    @if($currentPath=="pediaexamination")<title>Patient Examination</title> @endif
 
 
     <!-- Admin -->
@@ -68,9 +65,6 @@ $todayDate = date('d-M-Y');
     {!!Html::style('assets/css/dd-responsive.css')!!}
      
     @yield('head')
-   
-
-   
 
 
  
@@ -167,7 +161,7 @@ $todayDate = date('d-M-Y');
                                     $currentPath == 'patientprevioustreatment' || 
                                     $currentPath == 'cardiopersonalinformation' || $currentPath == 'cardiomedicalhistory' || 
                                     $currentPath == 'cardioprevioustreatment' ||
-                                    $currentPath == 'pediapersonalinformation') 
+                                    $currentPath == 'pediapersonalinformation' ) 
                                     class="active" 
                                 @endif >
 
@@ -242,6 +236,7 @@ $todayDate = date('d-M-Y');
                                                     <span class="title"> Personal Information </span>
                                                 </a>
                                             </li>
+
                                             <!-- <li>
                                                 <a href="patientobstetricshistory">
                                                     <span class="title"> Obstetrics History </span>
@@ -252,11 +247,11 @@ $todayDate = date('d-M-Y');
                                                     <span class="title"> Medical History </span>
                                                 </a>
                                             </li> -->
-                                            <li>
+                                           <!-- <li>
                                                 <a href="pediaprevioustreatment">
                                                     <span class="title"> Previous Treatments </span>
                                                 </a>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                 
@@ -270,7 +265,7 @@ $todayDate = date('d-M-Y');
                                     $currentPath == 'cardioexamination' || 
                                     $currentPath == 'cardiolabdata' || 
                                     $currentPath == 'cardiodiagnosis' || 
-                                    $currentPath == 'pediadiagnosis') 
+                                    $currentPath == 'pediaexamination') 
                                     class="active" 
                                 @endif>
                             @if($specialization==1)
@@ -309,8 +304,6 @@ $todayDate = date('d-M-Y');
                                 <span class="dd_menu_main_L">
                                     Diagnosis
                                </span>
-
-
                                 </a>
                                 <div class="dd_resp_menu" id="diagnosis-menu-div">
                                     <ul class="sub-menu" style="display:block">
@@ -329,6 +322,34 @@ $todayDate = date('d-M-Y');
                                                 <span class="title"> Diagnosis </span>
                                             </a>
                                         </li>
+                                    </ul>
+                                </div>
+                            
+                             @elseif($specialization==3)
+                                 <a href="pediaexamination" id="diagnosis-menu">
+                                <!-- <img src="assets/images/Diagnosis.png"> -->
+                                <i class="icon pricon icon-pr-Diagnosis" ng-show="navOption.key"></i>
+                                <span class="dd_menu_main_L">
+                                    Diagnosis
+                               </span>
+                                </a>
+                               <div class="dd_resp_menu" id="diagnosis-menu-div">
+                                    <ul class="sub-menu" style="display:block">
+                                        <li>
+                                            <a href="pediaexamination">
+                                                <span class="title"> Examination </span>
+                                            </a>
+                                        </li>
+                                        <!-- <li>
+                                            <a href="cardiolabdata">
+                                                <span class="title"> Lab Data </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="cardiodiagnosis">
+                                                <span class="title"> Diagnosis </span>
+                                            </a>
+                                        </li> -->
                                     </ul>
                                 </div>
                             @endif    
@@ -387,11 +408,7 @@ $todayDate = date('d-M-Y');
                                 @endif
                             </li>
                             <li id="settings-top-menu-li" @if($currentPath == 'printsetup') class="active" @endif>
-
-
                             </li>
-
-
                         </ul>
                     </div>
                 </div>
@@ -777,7 +794,7 @@ $todayDate = date('d-M-Y');
                                     <ul class="nav navbar-nav">
                                         <li id="patient-top-menu-li"  @if($currentPath == 'patientpersonalinformation' || $currentPath == 'patientobstetricshistory' || $currentPath == 'patientmedicalhistory' || $currentPath == 'patientprevioustreatment') class="active" @endif >
                                             <a href="#" id="patient-menu" class="dd_padding_left_50">
-                                            <i class="dd_dashboard" aria-hidden="true"></i>
+                                            <i class="dd_dashboard_color" aria-hidden="true"></i>
              
                                            <!--  <img src="assets/images/Patient.png"> -->
                                                 Dashboard
@@ -959,6 +976,7 @@ $todayDate = date('d-M-Y');
                                                 <span class="title"> Personal Information </span><span class="selected"></span>
                                             </a>
                                         </li>
+
                                     @endif    
                                 </ul>
                             </div>
@@ -969,7 +987,7 @@ $todayDate = date('d-M-Y');
                         <!-- Patient side menu ends --> 
                     
                     <!-- Diagnosis side menu starts -->
-                    @if(($currentPath == 'patientexamination') || ($currentPath == 'patientdiagnosis') || ($currentPath == 'patientlabdata' || $currentPath == 'cardioexamination' || $currentPath == 'cardiolabdata' || $currentPath == 'cardiodiagnosis'))
+                    @if(($currentPath == 'patientexamination') || ($currentPath == 'patientdiagnosis') || ($currentPath == 'patientlabdata' || $currentPath == 'cardioexamination' || $currentPath == 'cardiolabdata' || $currentPath == 'cardiodiagnosis' || $currentPath =='pediaexamination'))
 
                     <!-- Diagbreadcrumbmenu"> -->
                         @if($specialization=="1")
@@ -1026,6 +1044,33 @@ $todayDate = date('d-M-Y');
                             
                                 </ul>
                             </div>
+                            @elseif($specialization=="3") 
+                            <div id="diagnosis-side-menu">
+                                <ul class="main-navigation-menu">
+                                    <li @if($currentPath == 'pediaexamination') class="active open" @endif>
+                                        <a href="pediaexamination">
+                                       <!--  <i class="clip-home-3"></i>  -->
+                                        <span class="dd_input_icon_Examination"></span>
+                                            <span class="title"> Examination </span><span class="selected"></span>
+                                        </a>
+                                    </li>
+                                   <!--  <li @if($currentPath == 'cardiolabdata') class="active open" @endif>
+                                        <a href="">
+                                    
+                                        <span class="dd_input_icon_Lab_Data"></span>
+                                            <span class="title"> Lab Data </span><span class="selected"></span>
+                                        </a>
+                                    </li>
+                                     <li @if($currentPath == 'cardiodiagnosis') class="active open" @endif>
+                                        <a href="">
+                                     
+                                         <span class="dd_input_icon_Diagnosis"></span>
+                                            <span class="title"> Diagnosis </span><span class="selected"></span>
+                                        </a>
+                                    </li> -->
+                            
+                                </ul>
+                            </div>
                         @endif  
                     @endif   
                     <!-- Diagnosis side menu ends --> 
@@ -1076,7 +1121,7 @@ $todayDate = date('d-M-Y');
                         @endif
 
                     @endif   
-                    <!-- Diagnosis side menu ends -->     
+                    <!-- Prescription side menu ends -->     
 
 
 
@@ -1341,7 +1386,7 @@ $todayDate = date('d-M-Y');
 
             </div>
 
-    </div>        
+    </div>  
      @section('scripts')
   
     {!!Html::script('assets/plugins/jQuery-lib/2.0.3/jquery.min.js')!!}

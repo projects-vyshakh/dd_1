@@ -45,7 +45,7 @@ else{
 		  /*font-family: SourceSansPro;*/
 		}
 		li{
-			padding: 5px 0;
+			/*padding: 5px 0;*/
 			margin: 5px 0;
 		}
 
@@ -68,6 +68,11 @@ else{
 		  float: right;
 		  text-align: right;
 		}
+	.css/{
+
+	}
+			
+	
 
 
 		#details {
@@ -117,7 +122,7 @@ else{
 
 		table th,
 		table td {
-		  padding: 20px;
+		 /* padding: 20px;*/
 		  /*background: #EEEEEE;*/
 		  text-align: center;
 		  /*border-bottom: 1px solid #FFFFFF;*/
@@ -295,6 +300,7 @@ else{
 			
 			margin-left: 15px;
 		}
+
 		.full_cover{
 			margin-top: 	<?php echo $marginTop."px"; ?> ;
 			margin-bottom: 	<?php echo $marginBottom."px"; ?> ;
@@ -302,6 +308,10 @@ else{
 			margin-right:	<?php echo $marginRight."px"; ?> ;
 
 		}
+		.dd_100_width{
+			width: 100%;
+		}
+
 
     </style>
   </head>
@@ -329,120 +339,52 @@ else{
 				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Sex:</div> </div>
 				    </div>
 				@endif
-
-			@elseif($printData->header_settings=="No")
-
-			@else
-				@if(!empty($patientPersonalData))
-			    	<?php
-			    		$patientName = $patientPersonalData->first_name." ".$patientPersonalData->last_name;
-			    		$age = $patientPersonalData->age;
-			    		$gender = $patientPersonalData->gender;
-
-
-			    	?>
-				    <div id="company">
-				        <div><div class="name" style="font-size: 20px; margin-bottom: 5px;">Name:	{{$patientName}} </div> </div>
-				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Age:	{{$age}}</div> </div>
-				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Sex:	{{$gender}}</div> </div>
-				    </div>
-				@else
-					<div id="company">
-				        <div><div class="name" style="font-size: 20px; margin-bottom: 5px;">Name: </div> </div>
-				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Age:</div> </div>
-				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Sex:</div> </div>
-				    </div>
-				@endif
 			@endif
 
     	
 
     		<!-- Doctor personal Data -->
     	
-			@if($printData->header_settings=="Yes")
-		    	@if(!empty($doctorPersonalData))
-			      	<?php
-			      	
-			      		$doctorName = $doctorPersonalData->first_name." ".$doctorPersonalData->last_name;
-			      		$qualification 		= json_decode($doctorPersonalData->qualification);
-			      		$qualificationCount = sizeof($qualification);
-			      		$specializationName = $doctorPersonalData->specialization_name;
-			      		$mobile = $doctorPersonalData->phone;
+		
+	    	@if(!empty($doctorPersonalData))
+		      	<?php
+		      	
+		      		$doctorName = $doctorPersonalData->first_name." ".$doctorPersonalData->last_name;
+		      		$qualification 		= json_decode($doctorPersonalData->qualification);
+		      		$qualificationCount = sizeof($qualification);
+		      		$specializationName = $doctorPersonalData->specialization_name;
+		      		$mobile = $doctorPersonalData->phone;
 
-			      	?>
-				    <div id="details" class="clearfix">
-				        <div id="client">
-				          <div class="to"></div>
-				          <h2 class="name" style="margin-bottom: 5px;">Dr.{{$doctorName}}</h2>
-				          <div class="address" style="margin-bottom: 5px;">
-				          	@foreach($qualification  as $index=>$qualificationVal)
-				          		<!-- if condition for putting comma dynamically -->
-				          		@if($index>=0 && $index<$qualificationCount-1)
-				          			{{$qualificationVal.","}}
-				          		@else
-				          			{{$qualificationVal}}
-				          		@endif
-				          	@endforeach	
-				          </div>
-				          <div class="address" style="margin-bottom: 8px;">{{$specializationName}}</div>
-				          <div class="email" style="margin-bottom: 5px;"><a>{{$mobile}}</a></div>
-				        </div>
-				    </div>
-				@else
-					<div id="details" class="clearfix">
-				        <div id="client">
-				          <div class="to"></div>
-				          <h2 class="name" style="margin-bottom: 5px;"></h2>
-				          <div class="address" style="margin-bottom: 5px;"></div>
-				          <div class="address" style="margin-bottom: 8px;"></div>
-				          <div class="email" style="margin-bottom: 5px;"><a></a></div>
-				        </div>
-				    </div>
-
-				@endif
-			@elseif($printData->header_settings=="No")
-
+		      	?>
+			    <div id="details" class="clearfix">
+			        <div id="client">
+			          <div class="to"></div>
+			          <h2 class="name" style="margin-bottom: 5px;">Dr.{{$doctorName}}</h2>
+			          <div class="address" style="margin-bottom: 5px;">
+			          	@foreach($qualification  as $index=>$qualificationVal)
+			          		<!-- if condition for putting comma dynamically -->
+			          		@if($index>=0 && $index<$qualificationCount-1)
+			          			{{$qualificationVal.","}}
+			          		@else
+			          			{{$qualificationVal}}
+			          		@endif
+			          	@endforeach	
+			          </div>
+			          <div class="address" style="margin-bottom: 8px;">{{$specializationName}}</div>
+			          <div class="email" style="margin-bottom: 5px;"><a>{{$mobile}}</a></div>
+			        </div>
+			    </div>
 			@else
-				@if(!empty($doctorPersonalData))
-			      	<?php
-			      	
-			      		$doctorName = $doctorPersonalData->first_name." ".$doctorPersonalData->last_name;
-			      		$qualification 		= json_decode($doctorPersonalData->qualification);
-			      		$qualificationCount = sizeof($qualification);
-			      		$specializationName = $doctorPersonalData->specialization_name;
-			      		$mobile = $doctorPersonalData->phone;
+				<div id="details" class="clearfix">
+			        <div id="client">
+			          <div class="to"></div>
+			          <h2  class="name" style="margin-bottom: 5px;"></h2>
+			          <div class="address" style="margin-bottom: 5px;"></div>
+			          <div class="address" style="margin-bottom: 8px;"></div>
+			          <div class="email" style="margin-bottom: 5px;"><a></a></div>
+			        </div>
+			    </div>
 
-			      	?>
-				    <div id="details" class="clearfix">
-				        <div id="client">
-				          <div class="to"></div>
-				          <h2 class="name" style="margin-bottom: 5px;">Dr.{{$doctorName}}</h2>
-				          <div class="address" style="margin-bottom: 5px;">
-				          	@foreach($qualification  as $index=>$qualificationVal)
-				          		<!-- if condition for putting comma dynamically -->
-				          		@if($index>=0 && $index<$qualificationCount-1)
-				          			{{$qualificationVal.","}}
-				          		@else
-				          			{{$qualificationVal}}
-				          		@endif
-				          	@endforeach	
-				          </div>
-				          <div class="address" style="margin-bottom: 8px;">{{$specializationName}}</div>
-				          <div class="email" style="margin-bottom: 5px;"><a>{{$mobile}}</a></div>
-				        </div>
-				    </div>
-				@else
-					<div id="details" class="clearfix">
-				        <div id="client">
-				          <div class="to"></div>
-				          <h2 class="name" style="margin-bottom: 5px;"></h2>
-				          <div class="address" style="margin-bottom: 5px;"></div>
-				          <div class="address" style="margin-bottom: 8px;"></div>
-				          <div class="email" style="margin-bottom: 5px;"><a></a></div>
-				        </div>
-				    </div>
-
-				@endif
 			@endif
 	
 		@endif
@@ -527,9 +469,7 @@ else{
 		    	$spo2 				= "";
 		    	$temperature 		= "";
 	    	}
-	    	
-
-
+	    
 	    ?>
 	    <div class="vitals" >
        		<h2>Vitals</h2>
@@ -571,7 +511,7 @@ else{
 
 		       		
        				<div class="print_dummy">
-       					<div class="diag-column-left">
+       					<div class="dd_100_width">
        						<h4>Symptoms</h4>
 							<div class="symptoms-div print_pd_0">
 								<?php 
@@ -601,7 +541,7 @@ else{
 								?>
 							</div>
        					</div>
-       					<div class="diag-column-right">
+       					<div class="dd_100_width">
        						<h4>Syndrome</h4>
 							<div class="symptoms-div print_pd_0">
 								<?php 
@@ -625,11 +565,13 @@ else{
 								?>
 							</div>
        					</div>
+
+       					<div class="clear"></div>
        				</div>
 
        				<div class="print_dummy"> 
 
-					   <div class="diag-column-left">
+					   <div class="dd_100_width">
 							<h4>Diseases</h4>
 							<div class="symptoms-div print_pd_0">
 								<?php 
@@ -658,7 +600,7 @@ else{
 								?>
 							</div>
 						</div>
-						<div class="diag-column-right">
+						<div class="dd_100_width">
 					    	<h4>Additional Comments</h4>
 							<div class="symptoms-div print_pd_0">
 								<?php 
@@ -681,7 +623,7 @@ else{
 								?>
 							</div>
 					    </div>
-
+					    <div class="clear"></div>
 					</div>
 					 
 				</div>
@@ -741,14 +683,11 @@ else{
        				
        			</tbody>
        		</table>
-
-				
-				
-	    </div>
+		</div>
 		<!-- Prescription Data -->
-		
-
 		<div class="clear"></div> 
+
+
 		<div  class="" >
 			<div class="treatment-inner-div" style="margin-top: 20px;">
 				<h2>Treatment</h2>
@@ -764,17 +703,14 @@ else{
 		       		<textarea class="ta6"></textarea>
 		       	@endif
 			</div>
-	        <div class="followup-inner-div" style="margin-top: 30px;">
+	       	<div class="followup-inner-div" style="margin-top: 30px;">
 	        	<h2>Follow up Date: </h2>
 	        	<div>
 	        		@if(!empty($followUpDate) && $followUpDate!="0000-00-00") 
 	        			{{$followUpDate}}
 	        		@endif
 	        	</div>
-
-	        		
-	        </div>
-	       
+	        </div>	       
 	    </div>
     </div>	
      	

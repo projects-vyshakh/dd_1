@@ -385,8 +385,8 @@ a.bricky:hover {
 	margin-left: 0;
 	 font-family: "Montserrat",sans-serif;
 	font-size: 16px;
-	min-width: 218px;
-font-weight: 500;
+	min-width: 222px;
+    font-weight: 500;
 /*	text-align: center;*/
 	margin-top: 11px;
 }
@@ -6473,7 +6473,7 @@ padding-bottom: 0;
     width: 66px;
 }
 .drugs_row input.dd_input_mini {
-    width: 270px;
+    width: auto;
     margin-right: 40px;
 }
 .dd_presc_medicin{
@@ -6653,7 +6653,7 @@ background-color: #fff;
 color: #333;
 font-weight: bold;
 border:1 none;
-width: 128px;
+width: 125px;
 
 
 text-align: center;
@@ -6845,10 +6845,12 @@ height: auto;
 	margin-right: 10px
 }
 .dd_prev_color {
-	 color: #1bc05f;
+	color: #005a7d;
     font-size: 16px;
     margin-top: 0px;
-    font-family: "Montserrat",sans-serif;
+    font-weight: 600;
+
+  /*  font-family: "Montserrat",sans-serif;*/
    
 }
 .dd_clear{
@@ -6895,7 +6897,7 @@ height: auto;
 .btn.btn-primary.pdfopen {
     margin-left: 15px;
     margin-bottom: 15px;
-   /* margin-top: 20px;*//* --- for previous treatment btn-------*/
+  /* --- for previous treatment btn-------*/
 }
 .dd_alert_msg{
 	margin-top: 30px;
@@ -7647,4 +7649,28 @@ h6{
 .dd_search_tr th{
 	padding-bottom: 20px !important;
 
+}
+.dd_dashboard_color{
+      background: rgba(0, 0, 0, 0) url("../images/icons/dashboard_color.svg") repeat scroll 0 0 / cover ;
+   display: inline-block;
+   height: 27px;
+   left: 13px;
+   position: absolute;
+   top: 13px;
+   width: 27px;
+}
+.dropdown-menu > li > a {
+   white-space: normal !important;
+
+}
+.dd_Plaque_pd_0{
+	padding-left: 0;
+	margin:0;
+}
+.panel_me{
+	margin-bottom: 0px !important;
+	border: 1px solid hsl(0, 0%, 47%) !important; 
+}
+.form-control {
+    border: 1px solid hsl(0, 0%, 47%) !important; 
 }

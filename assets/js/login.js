@@ -1,12 +1,15 @@
 var Login = function () {
 
     var runOnPageLoad = function(){
+
         $('#id_patient').keyup(function(){
             var str = $(this).val();
             var res = str.toUpperCase();
             $(this).val(res); 
 
         });
+
+
 
     };
 
@@ -301,6 +304,12 @@ var Login = function () {
         });
     };
     
+    var patientRegistration = function(){
+        $('.patient_register_btn').click(function(e){
+            e.preventDefault();
+            window.location='patientregisterotpcheck';
+        });
+    }
 
     
     return {
@@ -312,6 +321,7 @@ var Login = function () {
             runLoginValidator();
             //runDoctorSignUpValidator();
             runCountryState();
+            patientRegistration();
             
         }
     };

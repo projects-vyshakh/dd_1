@@ -1,4 +1,13 @@
 var masterElements = function () {
+    var runOnPageLoad = function(){
+        //Hiding the msg success/error div
+
+
+        $('.alert').delay(5000).fadeOut('slow');
+
+
+
+    };
     var runTopmenuResp = function(){
         $('#patient-menu-div').hide();
         $('#diagnosis-menu-div').hide();
@@ -78,6 +87,7 @@ var masterElements = function () {
     return {
         //main function to initiate template pages
         init: function () {
+            runOnPageLoad();
            runTopmenuResp();
            runUserMenuResponse();
         }
