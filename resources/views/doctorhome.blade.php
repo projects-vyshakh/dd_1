@@ -17,7 +17,7 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta content="" name="description" />
         <meta content="" name="author" />
-        <link rel="shortcut icon" href="assets/images/logo-mob.png" type="image/x-icon">
+        <link rel="shortcut icon" href="../assets/images/logo-mob.png" type="image/x-icon">
         <style type="text/css">
 
     body {
@@ -100,15 +100,15 @@
                                     
                             <div class="navbar-tools  pull-right">
                                 <!-- start: TOP NAVIGATION MENU -->
-                                @if($currentPath=="doctorhome")
+                                @if($currentPath=="doctor/home")
                                     <ul class="nav navbar-right dd_profil">
                                         <li class="dropdown current-user">
                                             <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
                                                 @if(!empty($doctorData->gender))
                                                     @if($doctorData->gender=="Male")
-                                                        <img src="assets/images/patient_profile_ms.jpg" class="circle-img" alt="">
+                                                        <img src="../assets/images/patient_profile_ms.jpg" class="circle-img" alt="">
                                                     @else
-                                                        <img src="assets/images/patient_profile_s.jpg" class="circle-img" alt="">
+                                                        <img src="../assets/images/patient_profile_s.jpg" class="circle-img" alt="">
                                                     @endif
                                                 @endif
                                                 
@@ -140,11 +140,11 @@
                 <div class="dd_logo_responsive">
                     <div class="navbar-tools  pull-right">
                         <!-- start: TOP NAVIGATION MENU -->
-                        @if($currentPath=="doctorhome")
+                        @if($currentPath=="doctor/home")
                             <ul class="nav navbar-right dd_profil">
                                 <li class="dropdown current-user">
                                     <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" data-close-others="true" href="#">
-                                        <img src="assets/images/patient_profile_ms.jpg" class="circle-img" alt="">
+                                        <img src="../assets/images/patient_profile_ms.jpg" class="circle-img" alt="">
                                         <span class="username">{{ucfirst($doctorData->first_name)." ".ucfirst($doctorData->last_name)}}</span>
                                         <i class="clip-chevron-down"></i>
                                     </a>

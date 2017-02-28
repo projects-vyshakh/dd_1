@@ -8,7 +8,7 @@
 	<!-- start: HEAD -->
 	<head>
 
-		<title>Doctor's Diary | Patient Register</title>
+		<title>Doctor's Diary | Signup</title>
 		<!-- start: META -->
 		<meta charset="utf-8" />
 		<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
@@ -17,7 +17,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta content="" name="description" />
 		<meta content="" name="author" />
-		<link rel="shortcut icon" href="assets/images/logo-mob.png" type="image/x-icon">
+		<link rel="shortcut icon" href="../assets/images/logo-mob.png" type="image/x-icon">
 		<style type="text/css">
 
 	body {
@@ -102,13 +102,13 @@
 								<div class="doctorlogin_main">
 									<!-- <span class="doctor_login"><img src="assets/images/doctor_icon.png"></span> -->
 
-										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #a9f2ff" @endif>Doctor Login</a>&nbsp;  &nbsp;
+										<a href="../doctor/login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login"  style="color: #a9f2ff" @endif>Doctor Login</a>&nbsp;  &nbsp;
 
 								</div>
 		        		 		<div class="patientlogin_main"> 		
 		        		 		 	<!-- <span class="patient_login"><img src="assets/images/patient_icon.png">
 		        		 		 	</span>	 -->        		 		 	
-		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin" || $currentPath=="patientregisterotpcheck" ) class="topmenu-active"  style="color: #a9f2ff" @endif>
+		        		 		 	<a href="login" @if($currentPath=="patient/login" || $currentPath=="patient/signup" ) class="topmenu-active"  style="color: #a9f2ff" @endif>
 		        		 		 		Patient Login
 		        		 		 	</a>
 		        		 		</div>
@@ -156,12 +156,12 @@
 				        				<div class="login_div2">
 								<div class="doctorlogin_main2">								
 
-										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+										<a href="../doctor/login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
 
 								</div>
 		        		 		<div class="patientlogin_main2"> 		
 		        		 		         		 		 	
-		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
+		        		 		 	<a href="login" @if($currentPath=="patient/login") class="topmenu-active" @endif>
 		        		 		 		Patient Login
 		        		 		 	</a>
 		        		 		</div>
@@ -252,7 +252,7 @@
 													</span>
 												</div>
 												<div class="col-sm-12">
-													<p><a href="patientforgetpassword" class="dd_textalign_center dd_16px">Forgot Your Password?</a></p>
+													<p><a href="forgetpassword" class="dd_textalign_center dd_16px">Forgot Your Password?</a></p>
 												</div>
 					        				</div>
 					        			

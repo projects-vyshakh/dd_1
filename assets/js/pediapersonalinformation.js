@@ -61,9 +61,9 @@ var pediaPatientPersonalInformation = function () {
 				               	stud_class: {
 				                    required : true
 				                },
-				                stud_section: {
+				                /*stud_section: {
 				                    required : true
-				                },
+				                },*/
 				                stud_dob: {
 				                    required : true,
 				                    //number   : true,
@@ -97,9 +97,9 @@ var pediaPatientPersonalInformation = function () {
 				                stud_class: {
 				                    required : "Please type a class"
 				                },
-				                stud_section: {
+				                /*stud_section: {
 				                    required : "Please type a section"
-				                },
+				                },*/
 				                stud_dob: {
 				                    required : "Please type date of birth",
 				                    //number   : "Please type a valid date of birth",

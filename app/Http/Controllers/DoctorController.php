@@ -117,11 +117,6 @@ class DoctorController extends Controller {
 		if(!empty($doctorData)){
 			return view('doctorhome',array('doctorData'=>$doctorData));
 		}
-		else{
-			echo "sds";
-		}
-		
-		//echo 'Doctor ome'; 
 		
 	}
 	public function flushAllSessions(){
@@ -402,11 +397,7 @@ class DoctorController extends Controller {
 		      	                                    ->get();
 		      	                                    
 
-		      	/*$medicalHistory		 = DB::table('medical_history')
-		      	                                    ->where('id_patients','=',$patientId)
-		      	                                    ->where('id_medical_history', DB::raw("(select max(`id_medical_history`) from medical_history where id_patient='$patientId')"))
-		      	                                    ->get();*/
-		      	    //dd($medicalHistory);
+		      	
 
 				$medicalHistoryPresentPastMore  	= MedicalHistoryPresentPastModel::where('id_patient','=',$patientId)
 				                                          ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_present_past_more  where  id_patient='$patientId')"))->get();							
@@ -423,7 +414,7 @@ class DoctorController extends Controller {
 				return view('patientmedicalhistory',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'medicalHistory'=>$medicalHistory,'medicalHistoryPresentPastMore'=>$medicalHistoryPresentPastMore,'surgeryHistory'=>$surgeryHistory,'drugAllergyHistory'=>$drugAllergyHistory));
 			}
 			else{
-				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+				return Redirect::to('doctor/home')->with(array('error'=>'You are not authorised to view the page'));
 			}
 		}
 		else{
@@ -686,7 +677,7 @@ class DoctorController extends Controller {
 			array_push($doctorIdArray,$val->id_doctor);
 		}
 
-									
+		$doctorIdArray = array_unique($doctorIdArray);							
 		return json_encode(array('obsData' => $obsData,/*'lmpData' => $lmpData,*/'pregData' => $pregData,'vitalsData'=>$vitalsData,'originalCreatedDate'=>$originalCreatedDate,'bloodGroup'=>$bloodGroup,'diagnosisData'=>$diagnosisData,'diseases'=>$diseases,'prescMedicineData'=>$prescMedicineData,'drugFrequency'=>$drugFrequency,'originalCreatedDateDup'=>$originalCreatedDateDup,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit,'doctorIdArray'=>$doctorIdArray));
 		//die();
 
@@ -705,7 +696,7 @@ class DoctorController extends Controller {
 		        return view('patientprevioustreatment',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
 			}
 			else{
-				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+				return Redirect::to('doctor/home')->with(array('error'=>'You are not authorised to view the page'));
 			}
 		}
 		
@@ -1108,11 +1099,11 @@ class DoctorController extends Controller {
 				return View('patientdiagnosis',array('diseases'=>$diseases,'diag'=>$diag,'symptoms'=>$symptoms,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
 			}
 			else{
-				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+				return Redirect::to('doctor/home')->with(array('error'=>'You are not authorised to view the page'));
 			}
 		}
 		else{
-			return Redirect::to('logout');
+			return Redirect::to('doctor/logout');
 		}
 
 
@@ -1130,11 +1121,11 @@ class DoctorController extends Controller {
 				return View('patientlabdata',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
 			}
 			else{
-				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+				return Redirect::to('doctor/home')->with(array('error'=>'You are not authorised to view the page'));
 			}
 		}
 		else{
-			return Redirect::to('logout');
+			return Redirect::to('doctor/logout');
 		}
 		
 	}
@@ -1167,6 +1158,8 @@ class DoctorController extends Controller {
 	public function showPatientPrescMedicine(){
 		$patientId = Session::get('patientId');
 		$doctorId  = Session::get('doctorId');
+
+
 		
 		if(!empty($doctorId)){
 			if(!empty($patientId)){
@@ -1181,6 +1174,7 @@ class DoctorController extends Controller {
 
 				$prescMedicine = DB::table('prescription')
 											->where('id_patient','=',$patientId)
+											->where('id_doctor','=',$doctorId)
 											->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
 											->get();
 
@@ -1197,11 +1191,11 @@ class DoctorController extends Controller {
 				return View('patientprescmedicine',array('drugFrequency'=>$drugFrequency,'prescMedicine' => $prescMedicine,'patientPersonalData'=>$patientPersonalData,'dosageUnit'=>$dosageUnit,'drugDurationUnit'=>$drugDurationUnit,'doctorData'=>$doctorData));
 			}
 			else{
-				return Redirect::to('doctorhome')->with(array('error'=>'You are not authorised to view the page'));
+				return Redirect::to('doctor/home')->with(array('error'=>'You are not authorised to view the page'));
 			}
 		}
 		else{
-			return Redirect::to('logout');
+			return Redirect::to('doctor/logout');
 		}
 
 		
@@ -1225,6 +1219,7 @@ class DoctorController extends Controller {
 		
 				$prescMedicine = DB::table('prescription')
 											->where('id_patient','=',$patientId)
+											->where('id_doctor','=',$doctorId)
 											->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
 											->get();
 
@@ -1310,15 +1305,15 @@ class DoctorController extends Controller {
 		 			$patientPersonalInfoUpdate = DB::table('patients')->where('id_patient','=',$patientId)->update($inputValue);
 
 		 			if($patientPersonalInfoUpdate){
-		 				return Redirect::to('patientpersonalinformation')->with(array('success'=>"Data updated successfully"));	
+		 				return Redirect::to('doctor/patientpersonalinformation')->with(array('success'=>"Data updated successfully"));	
 		 			}
 		 			else{
-		 				return Redirect::to('patientpersonalinformation')->with(array('error'=>"No changes to update"));
+		 				return Redirect::to('doctor/patientpersonalinformation')->with(array('error'=>"No changes to update"));
 		 			}
 			}
 			else{
 				
-				return Redirect::to('patientpersonalinformation')->with(array('success'=>'Data saved successfully'));
+				return Redirect::to('doctor/patientpersonalinformation')->with(array('success'=>'Data saved successfully'));
 			}
 
 		}
@@ -1365,11 +1360,11 @@ class DoctorController extends Controller {
 				$patientPersonalInfoSave = DB::table('patients')->insert($inputValue);
 				if($patientPersonalInfoSave){
 					$otpSendToMobile 	= DBUtils::otpSendToMobile($phone,$message,$otpGenerated);
-					return Redirect::to('patientpersonalinformation')->with(array('success'=>'Data saved successfully'));
+					return Redirect::to('doctor/patientpersonalinformation')->with(array('success'=>'Data saved successfully'));
 				}
 			}
 			else{
-				return Redirect::to('patientpersonalinformation')->with(array('success'=>'Data saved successfully'));
+				return Redirect::to('doctor/patientpersonalinformation')->with(array('success'=>'Data saved successfully'));
 			}
 
 		}
@@ -1397,19 +1392,19 @@ class DoctorController extends Controller {
 			
 			if(count($patientExistCheck)>0){
 				
-				return Redirect::to('doctorhome')->with(array('error'=>'Patient ID already existed.'));
+				return Redirect::to('doctor/home')->with(array('error'=>'Patient ID already existed.'));
 			}
 			else{
 				
 				switch ($specialization) {
 					case '1':
-						return Redirect::to('patientpersonalinformation');
+						return Redirect::to('doctor/patientpersonalinformation');
 					break;
 					case '2':
-						return Redirect::to('cardiopersonalinformation');
+						return Redirect::to('doctor/cardiopersonalinformation');
 					break;
 					case '3':
-						return Redirect::to('pediapersonalinformation');
+						return Redirect::to('doctor/pediapersonalinformation');
 					break;
 					
 					default:
@@ -1453,17 +1448,17 @@ class DoctorController extends Controller {
 				switch ($specialization) {
 					case '1':
 							
-							return Redirect::to('patientpersonalinformation');
+							return Redirect::to('doctor/patientpersonalinformation');
 						break;
 					case '2':
-							return Redirect::to('cardiopersonalinformation');
+							return Redirect::to('doctor/cardiopersonalinformation');
 						break;
 					case '3':
 							if($patientExistCheck->age<=16){
-								return Redirect::to('pediapersonalinformation');
+								return Redirect::to('doctor/pediapersonalinformation');
 							}
 							else{
-								return Redirect::to('doctorhome')->with(array('error'=>"Patient you entered is an adult"));
+								return Redirect::to('doctor/home')->with(array('error'=>"Patient you entered is an adult"));
 							}
 							
 						break;
@@ -1476,7 +1471,7 @@ class DoctorController extends Controller {
 			}
 			else{
 				Session::put('patientName','');
-				return Redirect::to('doctorhome')->with(array('error'=>"Invalid PatientID. Please check."));
+				return Redirect::to('doctor/home')->with(array('error'=>"Invalid PatientID. Please check."));
 			}
 		
 		
@@ -1594,10 +1589,10 @@ class DoctorController extends Controller {
 	        	}
 
 	        	if(in_array("1",$flagArray)){
-	        		return Redirect::to('patientobstetricshistory')->with(array('success'=>"Data updated successfully"));	
+	        		return Redirect::to('doctor/patientobstetricshistory')->with(array('success'=>"Data updated successfully"));	
 	        	}
 	        	else{
-	        		return Redirect::to('patientobstetricshistory')->with(array('error'=>"Failed to update data"));	
+	        		return Redirect::to('doctor/patientobstetricshistory')->with(array('error'=>"Failed to update data"));	
 	        	}
 	   	   	 									
         	}
@@ -1651,16 +1646,16 @@ class DoctorController extends Controller {
 
         			if(in_array("1",$flagArray))
         			{
-        				return Redirect::to('patientobstetricshistory')->with(array('success'=>"Data saved successfully"));
+        				return Redirect::to('doctor/patientobstetricshistory')->with(array('success'=>"Data saved successfully"));
         			}
         			else{
-        				return Redirect::to('patientobstetricshistory')->with(array('error'=>"Failed to save data"));
+        				return Redirect::to('doctor/patientobstetricshistory')->with(array('error'=>"Failed to save data"));
         			}
 		  	}
         }
         else
         {
-        	return Redirect::to('patientobstetricshistory')->with(array('error' => "Please add patient personal information"));
+        	return Redirect::to('doctor/patientobstetricshistory')->with(array('error' => "Please add patient personal information"));
         }
 
     }
@@ -1744,7 +1739,7 @@ class DoctorController extends Controller {
    
     public function pregDataInsert($input,$patientId,$doctorId,$referenceId,$createdDate)
     {
-
+    	
     		/*PREG Data
       	----------------------------------------------------------------------------------------*/
 		(!empty($input['preg_kind']))? $pregKind = $input['preg_kind'] : $pregKind="";
@@ -1759,8 +1754,13 @@ class DoctorController extends Controller {
 		
 		/*----------------------------------------------------------------------------------------*/
     		
-    		//Inserting into sp_gynaecology_obs_preg
-			if(	!empty($pregKind)     || 
+    	$pregnancyExist = DB::table('sp_gynaecology_obs_preg')
+    	                                     ->where('obs_preg_reference','=',$referenceId)
+    	                                     ->get();
+    		                                         
+
+    	if(count($pregnancyExist)>0){
+    		if(	!empty($pregKind)     || 
 				!empty($pregType)     ||
 				!empty($pregTerm)     ||
 				!empty($pregAbortion) ||
@@ -1773,51 +1773,81 @@ class DoctorController extends Controller {
 				$pregType!=0    	  || 
 				$pregTerm!=0 		  || 
 				$pregHealth!=0        || 
-				$pregGender!=0)
-			{ 
+				$pregGender!=0		  ||
+				$pregKind!="Nil" 	  || 
+				$pregType!="Nil"      || 
+				$pregTerm!="Nil" 	  || 
+				$pregHealth!="Nil"    || 
+				$pregGender!="Nil")
 
-			  
-				foreach ($pregKind as $index => $value){
-					
-					isset($pregAbortion[$index])?$pregAbortion= $pregAbortion[$index]:$pregAbortion="";
-					isset($pregHealth[$index])?$pregHealth= $pregHealth[$index]:$pregHealth="";
-					isset($pregGender[$index])?$pregGender= $pregGender[$index]:$pregGender="";
-					isset($pregYear[$index])?$pregYear= $pregYear[$index]:$pregYear="";
-					isset($pregWeek[$index])?$pregWeek= $pregWeek[$index]:$pregWeek="";
-					isset($pregMonth[$index])?$pregMonth= $pregMonth[$index]:$pregMonth="";
-					//echo $pregKind[$index].' '.$pregType[$index];
-					$pregData = array('id_patient' 			=> $patientId,
-								      'id_doctor' 			=> $doctorId, 
-								      'obs_preg_kind' 		=> $pregKind[$index],
-								      'obs_preg_type' 		=> $pregType[$index],
-								      'obs_preg_term' 		=> $pregTerm[$index],
-								      'obs_preg_abortion' 	=> $pregAbortion,
-								      'obs_preg_health' 	=> $pregHealth,
-								      'obs_preg_gender' 	=> $pregGender,
-								      'obs_preg_years' 		=> $pregYear,
-								      'obs_preg_weeks' 		=> $pregWeek,
-								      'obs_preg_months' 	=> $pregMonth,
-								      'obs_preg_reference' 	=> $referenceId,
-								      'created_date' 		=> $createdDate);
-					
-					if(!empty($pregKind[$index])	||
-					   !empty($pregType[$index])	||
-					   !empty($pregTerm[$index]) 	||
-					   !empty($pregHealth[$index])	||
-					   !empty($pregGender[$index])  ||
-					   $pregKind[$index]!=0		||
-					   $pregType[$index]!=0			||
-					   $pregHealth[$index]!=0		||
-					   $pregGender[$index]!=0	
-					  )	
-					
-					{ 
-						$gynObsPregData = DB::table('sp_gynaecology_obs_preg')->insert($pregData);
-					}
-				}
-				
-				
+						
+			{ 
+				$pregData = array('id_doctor' 			=> $doctorId, 
+							      'obs_preg_kind' 		=> $pregKind,
+							      'obs_preg_type' 		=> $pregType,
+							      'obs_preg_term' 		=> $pregTerm,
+							      'obs_preg_abortion' 	=> $pregAbortion,
+							      'obs_preg_health' 	=> $pregHealth,
+							      'obs_preg_gender' 	=> $pregGender,
+							      'obs_preg_years' 		=> $pregYear,
+							      'obs_preg_weeks' 		=> $pregWeek,
+							      'obs_preg_months' 	=> $pregMonth,
+							      'obs_preg_reference' 	=> $referenceId,
+							      'edited_date' 		=> $createdDate);
+				DB::table('sp_gynaecology_obs_preg')
+				                       ->where('id_patient','=',$patientId)
+				                       ->where('obs_preg_reference','=',$referenceId)
+				                       ->update($pregData);	
+
 			}
+    	}
+    	else{
+    		if(	!empty($pregKind)     || 
+				!empty($pregType)     ||
+				!empty($pregTerm)     ||
+				!empty($pregAbortion) ||
+				!empty($pregHealth)   ||
+				!empty($pregWeek)     ||
+				!empty($pregMonth)    ||
+				!empty($pregYear)     ||
+				!empty($pregGender)   ||
+				$pregKind!=0 		  || 
+				$pregType!=0    	  || 
+				$pregTerm!=0 		  || 
+				$pregHealth!=0        || 
+				$pregGender!=0		  ||
+				$pregKind!="Nil" 	  || 
+				$pregType!="Nil"      || 
+				$pregTerm!="Nil" 	  || 
+				$pregHealth!="Nil"    || 
+				$pregGender!="Nil")
+
+						
+			{ 
+				$pregData = array('id_patient' 			=> $patientId,
+							      'id_doctor' 			=> $doctorId, 
+							      'obs_preg_kind' 		=> $pregKind,
+							      'obs_preg_type' 		=> $pregType,
+							      'obs_preg_term' 		=> $pregTerm,
+							      'obs_preg_abortion' 	=> $pregAbortion,
+							      'obs_preg_health' 	=> $pregHealth,
+							      'obs_preg_gender' 	=> $pregGender,
+							      'obs_preg_years' 		=> $pregYear,
+							      'obs_preg_weeks' 		=> $pregWeek,
+							      'obs_preg_months' 	=> $pregMonth,
+							      'obs_preg_reference' 	=> $referenceId,
+							      'created_date' 		=> $createdDate);
+				DB::table('sp_gynaecology_obs_preg')->insert($pregData);
+				                       
+			}
+    	}
+
+
+
+
+
+
+    		
 			
     }
 
@@ -1929,7 +1959,7 @@ class DoctorController extends Controller {
 					
 	    			
 
-    			return Redirect::to('patientmedicalhistory')->with(array('success'=>"Data updated successfully"));
+    			return Redirect::to('doctor/patientmedicalhistory')->with(array('success'=>"Data updated successfully"));
 
 	    	}
 	    	else{
@@ -1986,12 +2016,12 @@ class DoctorController extends Controller {
 				//Drug allergy managent
 				$this->drugDataManagement($input,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate);
 				
-				return Redirect::to('patientmedicalhistory')->with(array('success'=>"Data saved successfully"));
+				return Redirect::to('doctor/patientmedicalhistory')->with(array('success'=>"Data saved successfully"));
 	
 		    }
 		}
 	    else{
-	    	return Redirect::to('patientmedicalhistory')->with(array('error'=>"Please save patient personal information"));
+	    	return Redirect::to('doctor/patientmedicalhistory')->with(array('error'=>"Please save patient personal information"));
 	    }	
     }
 
@@ -2391,20 +2421,20 @@ class DoctorController extends Controller {
 		    }	
 	    	
 	    	if(in_array(1, $responseFlag)){
-	    		return Redirect::to('patientexamination')->with(array('success'=>"Data updated successfully"));
+	    		return Redirect::to('doctor/patientexamination')->with(array('success'=>"Data updated successfully"));
 	    	}
 	    	elseif (in_array(2, $responseFlag)) {
-	    		return Redirect::to('patientexamination')->with(array('success'=>"Data saved successfully"));
+	    		return Redirect::to('doctor/patientexamination')->with(array('success'=>"Data saved successfully"));
 	    	}
 	    	else
 	    	{
-	    		return Redirect::to('patientexamination')->with(array('success'=>"Data saved successfully"));
+	    		return Redirect::to('doctor/patientexamination')->with(array('success'=>"Data saved successfully"));
 	    	}
 		    
 	    	
         }
         else{
-        	return Redirect::to('patientexamination')->with(array('error'=>"Please save patient personal information"));
+        	return Redirect::to('doctor/patientexamination')->with(array('error'=>"Please save patient personal information"));
         }
 
     	
@@ -2478,11 +2508,11 @@ class DoctorController extends Controller {
 		    		
 		    		if($diagUpdate){
 		    			
-		    			return Redirect::to('patientdiagnosis')->with(array('success'=>"Data updated successfully",'newSymptoms'=>$symptoms));	
+		    			return Redirect::to('doctor/patientdiagnosis')->with(array('success'=>"Data updated successfully",'newSymptoms'=>$symptoms));	
 		    		}
 		    		else{
 		    		//echo "dises nsss ok";
-		    			return Redirect::to('patientdiagnosis')->with(array('error'=>"Failed to update data."));	
+		    			return Redirect::to('doctor/patientdiagnosis')->with(array('error'=>"Failed to update data."));	
 		    		}	
 		    	}
 
@@ -2503,16 +2533,16 @@ class DoctorController extends Controller {
 
 		    	if(empty($symptoms) && empty($syndromes) && empty($diseases) && empty($additionalComment))
 		    	{
-		    		return Redirect::to('patientdiagnosis')->with(array('error'=>"Failed to save data. Please fill the empty fields"));	
+		    		return Redirect::to('doctor/patientdiagnosis')->with(array('error'=>"Failed to save data. Please fill the empty fields"));	
 		    	}
 		    	else{
 		    		$diagSave = DB::table('diagnosis')->insert($diagData);
 		    		if($diagSave){
-		    			return Redirect::to('patientdiagnosis')->with(array('success'=>"Data saved successfully"));	
+		    			return Redirect::to('doctor/patientdiagnosis')->with(array('success'=>"Data saved successfully"));	
 		    		}
 		    		else{
 		    		//echo "dises nsss ok";
-		    			return Redirect::to('patientdiagnosis')->with(array('error'=>"Failed to save data."));	
+		    			return Redirect::to('doctor/patientdiagnosis')->with(array('error'=>"Failed to save data."));	
 		    		}
 		    	}
 
@@ -2522,7 +2552,7 @@ class DoctorController extends Controller {
 
         }
         else{
-        	return Redirect::to('patientdiagnosis')->with(array('error'=>"Please save patient personal data "));	
+        	return Redirect::to('doctor/patientdiagnosis')->with(array('error'=>"Please save patient personal data "));	
         }	
 
     								
@@ -2576,10 +2606,10 @@ class DoctorController extends Controller {
 											->where('presc_gyn_reference','=',$referenceId)
 											->where('created_date','=',$createdDate)
 											->update($prescGynData);
-					return Redirect::to('patientprescmanagement')->with(array('success'=>'Data updated successfully'));
+					return Redirect::to('doctor/patientprescmanagement')->with(array('success'=>'Data updated successfully'));
 				}
 				else{
-					return Redirect::to('patientprescmanagement')->with(array('error'=>"No data for update"));
+					return Redirect::to('doctor/patientprescmanagement')->with(array('error'=>"No data for update"));
 				}							
 
 			}
@@ -2600,11 +2630,11 @@ class DoctorController extends Controller {
 									  'created_date'=>$createdDate);
 
 					$prescTreatmentSave = DB::table('prescription_gynaecology')->insert($prescGynData);
-					return Redirect::to('patientprescmanagement')->with(array('success'=>'Data saved successfully'));
+					return Redirect::to('doctor/patientprescmanagement')->with(array('success'=>'Data saved successfully'));
 
 				}
 				else{
-					return Redirect::to('patientprescmanagement')->with(array('error'=>"Failed to save data"));
+					return Redirect::to('doctor/patientprescmanagement')->with(array('error'=>"Failed to save data"));
 				}
 
 			}
@@ -2612,7 +2642,7 @@ class DoctorController extends Controller {
 			/*return Redirect::to('patientprescmanagement')->with(array('success'=>'Data saved successfully'));*/
 		}
 		else{
-			return Redirect::to('patientpersonalinformation')->with(array('error'=>'Please save patient personal information'));
+			return Redirect::to('doctor/patientpersonalinformation')->with(array('error'=>'Please save patient personal information'));
 		}
 	}
 
@@ -2713,7 +2743,7 @@ class DoctorController extends Controller {
 			    		if($prescExistDataDelete){
 			    			if(in_array(1, $flagArray)){
 			    				 PrescriptionModel::insert($multi);
-			    				return Redirect::to('patientprescmedicine')->with(array('success'=>'Data updated successfully'));
+			    				return Redirect::to('doctor/patientprescmedicine')->with(array('success'=>'Data updated successfully'));
 			    			}
 			    		}
 			    	}
@@ -2721,7 +2751,7 @@ class DoctorController extends Controller {
 			    		if(in_array(1, $flagArray)){
 			    				$prescSave = PrescriptionModel::insert($multi);
 			    				if($prescSave){
-			    					return Redirect::to('patientprescmedicine')->with(array('success'=>'Data saved successfully'));
+			    					return Redirect::to('doctor/patientprescmedicine')->with(array('success'=>'Data saved successfully'));
 			    				}
 			    		}
 			    	}
@@ -2784,7 +2814,7 @@ class DoctorController extends Controller {
 		    	else{
 		    		//$status = array('status'=>"Error",'message'=>'Invalid patient ID');
 			    	//$result = $status;
-			    	return Redirect::to('patientpersonalinformation')->with(array('error'=>'Please save patient personal information'));
+			    	return Redirect::to('doctor/patientpersonalinformation')->with(array('error'=>'Please save patient personal information'));
 			    	//return response()->json($result);	
 		    	}
 		    	
@@ -2833,15 +2863,19 @@ class DoctorController extends Controller {
 		                            ->get();
 
 		$medicalHistoryData =  DB::table('medical_history_present_past_more')
+									 ->where('created_date', DB::raw("(select max(`created_date`) from medical_history_present_past_more where id_patient='$patientId')"))
 									->where('id_patient','=',$patientId)
+									->where('id_doctor','=',$doctorId)
 		                            ->get();
 
-		$mHistory = DB::table('medical_history_present_past_more')
-									
-		                            ->get();
-		/*$medicalHistoryData =  MedicalHistoryModel::
-									where('id_patient','=',$patientId)
-		                            ->get();*/
+		$prescTreatmentFollowupData    = DB::table('prescription')
+											     ->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
+			                            ->where('id_patient','=',$patientId)
+			                            ->where('id_doctor','=',$doctorId)
+			                            ->get();
+
+		$mHistory = DB::table('medical_history_present_past_more')->get();
+
 
 		$printData = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
 
@@ -2849,6 +2883,8 @@ class DoctorController extends Controller {
 
 		$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,
 								 'patientPersonalData'=>$patientPersonalData,
+
+								 'prescTreatmentFollowupData'=>$prescTreatmentFollowupData,
 								 'vitalsData'=>$vitalsData,
 								 'diagnosisData'=>$diagnosisData,
 								 'prescriptionData'=>$prescriptionData,
@@ -2856,7 +2892,7 @@ class DoctorController extends Controller {
 								 'printData'=>$printData,
 								 'mHistory'=>$mHistory);
 
-		//var_dump($printData);
+
 
 		switch ($specialization) {
 			case '1':

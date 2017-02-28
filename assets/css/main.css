@@ -375,6 +375,7 @@ a.bricky:hover {
 	border-top: none;
 	background: #fff;
 	z-index: 1001;	
+
 }
 .header-default .navbar {
 	position: relative !important;
@@ -5004,7 +5005,7 @@ td.column-right {
 }
 .box_2_main {
 	width: 100%;
-    padding-right: 80px;;
+    padding-right: 65px;;
     border-right: 1px solid #c5c5c5;  
 }
 .box_forget {
@@ -5503,7 +5504,7 @@ h5, .h5 {
     float: left;
     font-size: 18px;
     line-height 20px;
-    padding: 10px 0;
+    padding: 10px 181px 10px 10px;
 }
 .dd_login input-icon i{
 	border-right: 1px solid #ccc;
@@ -5597,6 +5598,7 @@ a:hover, a:focus{
     width: 144px;
     margin-top: 10px;
     background-size: cover;
+    padding: 0;
 }
 .dd_profil{
 	margin-right: 20px;
@@ -6684,7 +6686,7 @@ height: auto;
 .btn-danger {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 center;
     border: 1px solid #cacaca;
-    border-radius: 0 0 0 19px;
+    border-radius: 0;
     color: #fd0014;
     font-weight: bold;
 
@@ -7142,6 +7144,7 @@ table.dataTable thead th, table.dataTable thead td {
 .inner_wrapper_3 {
     margin: 0 auto;
     width: 800px;
+    overflow: hidden;
 }
 .dd_mg_B_15 .dd_agree p{
 	font-size: 16px;
@@ -7673,4 +7676,14 @@ h6{
 }
 .form-control {
     border: 1px solid hsl(0, 0%, 47%) !important; 
+}
+.dd_dr_serch_btn{
+	border-radius: 0 !important;
+	margin-left: 10px !important;
+}
+input[type="text"][readonly] {
+   cursor: pointer;
+}
+input[type="text"][disabled] {
+   cursor: pointer;
 }

@@ -17,7 +17,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta content="" name="description" />
 		<meta content="" name="author" />
-		<link rel="shortcut icon" href="assets/images/logo-mob.png" type="image/x-icon">
+		<link rel="shortcut icon" href="../assets/images/logo-mob.png" type="image/x-icon">
 		<style type="text/css">
 
 	body {
@@ -100,12 +100,12 @@
 							<div class="login_div">
 								<div class="doctorlogin_main">
 									<!-- <span class="doctor_login"><img src="assets/images/doctor_icon.png"></span> -->
-									<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #a9f2ff" @endif>Doctor Login</a>&nbsp;  &nbsp;
+									<a href="login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login"  style="color: #a9f2ff" @endif>Doctor Login</a>&nbsp;  &nbsp;
 								</div>
 		        		 		<div class="patientlogin_main"> 		
 		        		 		 	<!-- <span class="patient_login"><img src="assets/images/patient_icon.png">
 		        		 		 	</span>	   -->      		 		 	
-		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #a9f2ff" @endif>
+		        		 		 	<a href="../patient/login" @if($currentPath=="patient/login") class="topmenu-active"  style="color: #a9f2ff" @endif>
 		        		 		 		Patient Login
 		        		 		 	</a>
 		        		 		</div>
@@ -149,10 +149,10 @@
 		        	<div class="dd_drlogin_responsive">
 			        	<div class="login_div2">
 							<div class="doctorlogin_main2">								
-								<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+								<a href="login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
 							</div>
 	        		 		<div class="patientlogin_main2"> 							        		 		       	
-	        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
+	        		 		 	<a href="../patient/login" @if($currentPath=="patient/login") class="topmenu-active" @endif>
 	        		 		 		Patient Login
 	        		 		 	</a>
 	        		 		</div>
@@ -213,7 +213,7 @@
 											</span>
 										</div>
 										<div class="col-sm-12 dd">
-											<a href="doctorforgetpassword" class="dd_textalign_center dd_16px ">Forgot Your Password?</a>
+											<a href="forgetpassword" class="dd_textalign_center dd_16px ">Forgot Your Password?</a>
 										</div>
 									
 			        				</div>
@@ -234,7 +234,7 @@
 						<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
 							<span class="input-icon ">
 								
-								<a href="doctorlogin" class="btn btn-primary btn-block dd_btn_new doctor-register-btn dd_regi_pd"> Register Now</a>
+								<a href="signup" class="btn btn-primary btn-block dd_btn_new doctor-register-btn dd_regi_pd"> Register Now</a>
 								
 							</span>
 						</div>
@@ -333,7 +333,7 @@
 				doctorLogin.init();
 			  	$('.doctor-register-btn').click(function(e){
 			  		e.preventDefault();
-			  		window.location.href = "doctorsignup";
+			  		window.location.href = "signup";
 			  	})
 				
 			});

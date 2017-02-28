@@ -79,14 +79,37 @@ class SettingsController extends Controller {
 		                           //var_dump($vitalsData); die();
 		$diagnosisData = DB::table('diagnosis')
 		                            ->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis where id_patient='$patientId')"))
+		                            ->where('id_doctor','=',$doctorId)
 		                            ->where('id_patient','=',$patientId)
 		                            ->first();
 
 		                            
 		$prescriptionData    = DB::table('prescription')
 									->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
+									->where('id_doctor','=',$doctorId)
 		                            ->where('id_patient','=',$patientId)
 		                            ->get();
+
+		$prescTreatmentFollowupData    = DB::table('prescription')
+											     ->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
+										->where('id_prescription', DB::raw("(select max(`id_prescription`) from prescription where id_patient='$patientId')"))
+			                            ->where('id_patient','=',$patientId)
+			                            ->where('id_doctor','=',$doctorId)
+			                            ->first();
+
+		$obsHistory = DB::table('sp_gynaecology_obs')
+									->where('created_date', DB::raw("(select max(`created_date`) from sp_gynaecology_obs where id_patient='$patientId')"))
+									->where('id_gyn', DB::raw("(select max(`id_gyn`) from sp_gynaecology_obs where id_patient='$patientId')"))
+									->where('id_patient','=',$patientId)
+			                        ->where('id_doctor','=',$doctorId)
+			                        ->first();
+
+		$pregHistory = DB::table('sp_gynaecology_obs_preg')
+									->where('created_date', DB::raw("(select max(`created_date`) from sp_gynaecology_obs_preg where id_patient='$patientId')"))
+									->where('id_gyn_preg', DB::raw("(select max(`id_gyn_preg`) from sp_gynaecology_obs_preg where id_patient='$patientId')"))
+									->where('id_patient','=',$patientId)
+			                        ->where('id_doctor','=',$doctorId)
+			                        ->first();
 		
 		
 
@@ -102,10 +125,11 @@ class SettingsController extends Controller {
 			case '1':
 				$medicalHistoryData =  DB::table('medical_history_present_past_more')
 									->where('created_date', DB::raw("(select max(`created_date`) from medical_history_present_past_more where id_patient='$patientId')"))
+									->where('id_doctor','=',$doctorId)
 									->where('id_patient','=',$patientId)
 		                            ->get();
 
-				$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData);
+				$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData,'prescTreatmentFollowupData'=>$prescTreatmentFollowupData,'obsHistory'=>$obsHistory,'pregHistory'=>$pregHistory);
 
 				try
 			    {
@@ -138,10 +162,11 @@ class SettingsController extends Controller {
 			case '2':
 				$medicalHistoryData =  DB::table('cardiac_medical_history_present_past_more')
 									->where('created_date', DB::raw("(select max(`created_date`) from cardiac_medical_history_present_past_more where id_patient='$patientId')"))
+									->where('id_doctor','=',$doctorId)
 									->where('id_patient','=',$patientId)
 		                            ->get();
 
-		         $parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData);
+		         $parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData,'prescTreatmentFollowupData'=>$prescTreatmentFollowupData,'obsHistory'=>$obsHistory,'pregHistory'=>$pregHistory);
 
 				try
 			    {
@@ -194,11 +219,11 @@ class SettingsController extends Controller {
 				return view('printsetup',array('patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'printData'=>$printData,'printUnits'=>$printUnits,'diagYesNo'=>$diagYesNo));
 			}
 			else{
-				return Redirect::to('doctorhome')->with(array('error'=>"You are not authorised to view the page"));
+				return Redirect::to('doctor/home')->with(array('error'=>"You are not authorised to view the page"));
 			}
 		}
 		else{
-			return Redirect::to('logout');
+			return Redirect::to('doctor/logout');
 		}
 		
 			
@@ -236,10 +261,10 @@ class SettingsController extends Controller {
 						$status 		= $this->saveUpdatePrintSetup($specialization, $doctorId, $referenceId, $createdDate, $printHeader, $unit, $marginTop, $marginBottom, $marginLeft, $marginRight);
 
 						if($status=="update"){
-							return Redirect::to('printsetup')->with(array('success'=>'Data updated successfully'));
+							return Redirect::to('doctor/printsetup')->with(array('success'=>'Data updated successfully'));
 						}
 						if($status=="save"){
-							return Redirect::to('printsetup')->with(array('success'=>'Data saved successfully'));
+							return Redirect::to('doctor/printsetup')->with(array('success'=>'Data saved successfully'));
 						}
 					break;
 
@@ -252,10 +277,10 @@ class SettingsController extends Controller {
 						$status 		= $this->saveUpdatePrintSetup($specialization, $doctorId, $referenceId, $createdDate, $printHeader, $unit, $marginTop, $marginBottom, $marginLeft, $marginRight);
 
 						if($status=="update"){
-							return Redirect::to('printsetup')->with(array('success'=>'Data updated successfully'));
+							return Redirect::to('doctor/printsetup')->with(array('success'=>'Data updated successfully'));
 						}
 						if($status=="save"){
-							return Redirect::to('printsetup')->with(array('success'=>'Data saved successfully'));
+							return Redirect::to('doctor/printsetup')->with(array('success'=>'Data saved successfully'));
 						}
 					break;
 					case 'mm':
@@ -267,10 +292,10 @@ class SettingsController extends Controller {
 						$status 		= $this->saveUpdatePrintSetup($specialization, $doctorId, $referenceId, $createdDate, $printHeader, $unit, $marginTop, $marginBottom, $marginLeft, $marginRight);
 
 						if($status=="update"){
-							return Redirect::to('printsetup')->with(array('success'=>'Data updated successfully'));
+							return Redirect::to('doctor/printsetup')->with(array('success'=>'Data updated successfully'));
 						}
 						if($status=="save"){
-							return Redirect::to('printsetup')->with(array('success'=>'Data saved successfully'));
+							return Redirect::to('doctor/printsetup')->with(array('success'=>'Data saved successfully'));
 						}
 					break;
 
@@ -279,12 +304,12 @@ class SettingsController extends Controller {
 
 			}
 			else{
-				return Redirect::to('printsetup')->with(array('error'=>'Please enter correct unit'));
+				return Redirect::to('doctor/printsetup')->with(array('error'=>'Please enter correct unit'));
 			}
 			
 		}
 		else{
-			return Redirect::to('printsetup')->with(array('error'=>'Invalid doctor'));
+			return Redirect::to('doctor/printsetup')->with(array('error'=>'Invalid doctor'));
 		}
 	}
 

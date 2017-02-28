@@ -202,191 +202,34 @@ var obstetricsElements = function () {
 					});
 
         
-   };
-
-    var runAddMorePregnancy = function(){
-
-   		$.ajax({
-            type: "POST",
-            url: "patientObstetricsDataAjax",
-           
-            dataType: "JSON",
-            success: function(data) {
-            	//console.log(data);
-
-            	var lmpFlow 		= data.lmpFlow;
-            	var lmpDysmenohrrea = data.lmpDysmenohrrea;
-            	var lmpMensusType 	= data.lmpMensusType;
-            	var pregKind 		= data.pregKind;
-            	var pregType 		= data.pregType;
-            	var pregTerm 		= data.pregTerm;
-            	var pregHealth 		= data.pregChildHealth;
-            	var pregGender 		= data.gender;
-
-            	//console.log(pregGender);
-
-            	//add more pregnancies
-            	var counter = 1;
-
-            	$('.btn-addmore-preg').click(function(e){
-					e.preventDefault();
-					counter ++;
-	            	$('#pregnancy').append(
-	            		'<div id="dynamic-preg" class="dynamic-preg">' +
-			         		'<div class="form-group">' +
-			                    '<div class="col-sm-4"></div>' +
-			                '</div>' +
-			                '<div class="form-group">' +
-			                    '<label class="col-sm-2 ">Pregnancy Kind</label>' +
-			                        '<div class="col-sm-4">' +
-	                                    '<span class="">' +
-	                                        '<select name="preg_kind[]" class="form-control preg_kind" id="preg_kind'+counter+'">' +
-	                                            
-	                                        '</select>' +
-	                                    '</span>' +
-	                                '</div>' +
-			                    '<label class="col-sm-2 ">Pregnancy Type</label>' +
-			                        '<div class="col-sm-4">' +
-			                            '<span class="">' +
-	                                        '<select name="preg_type[]" class="form-control preg_type" id="preg_type'+counter+'">' +
-	                                            
-	                                        '</select>' +
-			                            '</span>' +
-			                        '</div>' +
-			             	'</div>' +          
-	                     	'<div class="form-group">' +
-	                            '<label class="col-sm-2 ">Pregnancy Term</label>' +
-	                            	'<div class="col-sm-4">' +
-		                                '<span class="">' +
-		                                    '<select name="preg_term[]" class="form-control preg_term" id="preg_term'+counter+'">' +
-		                                        
-		                                    '</select>' +
-		                                '</span>' +
-	                            	'</div>' +
-	                            '<label class="col-sm-2 ">Type of abortion</label>' +
-	                            	'<div class="col-sm-4">' +
-		                                '<span class="">' +
-		                                    '<input type="text" name="type_of_abortion[]" id="type_of_abortion'+counter+'" class="form-control type_of_abortion" />' +
-		                                '</span>' +
-	                            	'</div>' +
-	                     	'</div>' +
-	                     	'<div class="form-group">' +
-	                            '<label  class="col-sm-2 ">Health</label>' +
-	                               '<div class="col-sm-4">' +
-		                                '<span class="">' +
-		                                    '<select name="preg_health[]" class="form-control preg_health" id="preg_health'+counter+'">' +
-		                                        
-		                                    '</select>' +
-		                                '</span>' +
-		                            '</div>' +
-	                            '<label  class="col-sm-2 ">Gender</label>' +
-	                               '<div class="col-sm-4">' +
-			                            '<span class="">' +
-			                                '<select name="gender[]" class="form-control gender" id="gender'+counter+'">' +
-			                                    
-			                                '</select>' +
-			                            '</span>' +
-			                        '</div>' +
-	                        '</div>' +
-			                '<div class="form-group">' +
-			                    '<label  class="col-sm-2 ">Baby-Age</label>' +
-			                       	'<div class="col-sm-4 dd_babyage_col">' +
-										'<div class="col-sm-4">' +
-	                                        '<span class="">' +
-	                                            '<input type="text" name="weeks[]" id="weeks'+counter+'" class="form-control weeks" placeholder="Weeks"/>' +
-	                                        '</span>' +
-			                            '</div>' +
-	                                    '<div class="col-sm-4">' +
-	                                        '<span class="">' +
-	                                            '<input type="text" name="months[]" id="months'+counter+'" class="form-control months" placeholder="Months"/>' +
-	                                        '</span>' +
-	                                    '</div>' +
-		                                '<div class="col-sm-4">' +
-		                                    '<span class="">' +
-		                                        '<input type="text" name="years[]" id="years'+counter+'" class="form-control years" placeholder="Years"/>' +
-		                                    '</span>' +
-		                            	'</div>' +
-		                            '</div>'+
-			                '</div>' +           
-
-			                '<div class="form-group">' +
-			                    '<div class="col-sm-10"></div>' +
-			                        '<div class="col-sm-12">' +
-			                            '<input type="button" name="btn-preg-delete" id="btn-preg-delete'+counter+'" class="btn btn-danger  btn-preg-delete pull-right" value="x" />' +
-			                        '</div>' +
-			                    '</div>' + 
-			                '</div>' 	
-			                            
-			        );
-					
-
-					//Disabling abortion on loading
-					//$('#type_of_abortion'+counter).attr('disabled',true);
-
-					// Enabling abortion on selecting abrotion preg term
-					$('#preg_term'+counter).change(function(){
-						var pregTermSelected = $('#preg_term'+counter).val();
-						if(pregTermSelected=="Abortion"){
-							//$('#type_of_abortion'+counter).attr('disabled',false);
-							$('#preg_health'+counter).attr('disabled',true);
-							$('#gender'+counter).attr('disabled',true);
-							$('#weeks'+counter).attr('disabled',true);
-							$('#months'+counter).attr('disabled',true);
-							$('#years'+counter).attr('disabled',true);
-						}
-					})
-
-					$('#preg_kind'+counter).empty();
-		            for (var key in pregKind) {
-					  if (pregKind.hasOwnProperty(key)) {
-					    //alert(key + " -> " + lmpFlow[key]);
-					   $('#preg_kind'+counter).append($("<option></option>").val(key).html(pregKind[key]));
-					  }
-					}
-					$('#preg_type'+counter).empty();
-		            for (var key in pregType) {
-					  if (pregType.hasOwnProperty(key)) {
-					    //alert(key + " -> " + lmpFlow[key]);
-					   $('#preg_type'+counter).append($("<option></option>").val(key).html(pregType[key]));
-					  }
-					}
-					$('#preg_term'+counter).empty();
-		            for (var key in pregTerm) {
-					  if (pregTerm.hasOwnProperty(key)) {
-					    //alert(key + " -> " + lmpFlow[key]);
-					   $('#preg_term'+counter).append($("<option></option>").val(key).html(pregTerm[key]));
-					  }
-					}
-					$('#preg_health'+counter).empty();
-		            for (var key in pregHealth) {
-					  if (pregHealth.hasOwnProperty(key)) {
-					    //alert(key + " -> " + lmpFlow[key]);
-					   $('#preg_health'+counter).append($("<option></option>").val(key).html(pregHealth[key]));
-					  }
-					}
-					$('#gender'+counter).empty();
-		            for (var key in pregGender) {
-					  if (pregGender.hasOwnProperty(key)) {
-					    //alert(key + " -> " + lmpFlow[key]);
-					   $('#gender'+counter).append($("<option></option>").val(key).html(pregGender[key]));
-					  }
-					}
-
-					//Removing dynamically added preg 
-					$('.btn-preg-delete').click(function(){
-				
-						var row = $(this).closest('.dynamic-preg');
-						//console.log(row);
-						row.remove();
-					});
-
-				}); //Addmore button clicks ends
-
-            } //Ajax success ends
-        }); //ajax ends here
     };
 
+    var babyAgeDisableEnable = function(){
+    	var pregTerm = $('.preg_term').val();
+    	if(pregTerm=="Abortion"){
+    		$('.preg_gender').prop('disabled',true);
+    	}
+    	$('.preg_term').change(function(){
+    		var pregTerm = $('.preg_term').val();
+    		//alert(pregTerm);
+    		if(pregTerm=="Abortion"){
+    			$('.preg_health').prop('disabled',true);
+    			$('.preg_gender').prop('disabled',true);
+    			$('.preg_weeks').prop('disabled',true);
+    			$('.preg_months').prop('disabled',true);
+    			$('.preg_years').prop('disabled',true);
+    		}
+    		else{
+    			$('.preg_health').prop('disabled',false);
+    			$('.preg_gender').prop('disabled',false);
+    			$('.preg_weeks').prop('disabled',false);
+    			$('.preg_months').prop('disabled',false);
+    			$('.preg_years').prop('disabled',false);
+    		}
+    	})
+    }
 
+   
 
 	return {
         //main function to initiate template pages
@@ -395,7 +238,7 @@ var obstetricsElements = function () {
             runDeliveryDateAutoGenerate();
             runGynObstetricsValidation();
             runDeliveryDateAutoGenerateExtended();
-            runAddMorePregnancy();
+            babyAgeDisableEnable();
         }
     };
 }();

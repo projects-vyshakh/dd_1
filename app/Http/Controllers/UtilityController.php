@@ -87,13 +87,16 @@ class UtilityController extends Controller {
     }
   	
   	public function handleSharedPrescription($sharedId){
+
   		$prescriptionData = DB::table('prescription')->where('id_share_prescription',$sharedId)->get();
-  		
+
+
 
   		if(empty($prescriptionData)){
   			return Redirect::to('error');
   		}
-  		else{
+  		else
+  		{
 
 				foreach($prescriptionData as $prescriptionDataVal){
 					//var_dump(json_encode($prescriptionDataVal));
@@ -110,6 +113,8 @@ class UtilityController extends Controller {
 		                                            ->leftJoin('specialization As s','d.specialization','=','s.id_specialization')
 				                                     ->where('d.id_doctor','=',$doctorId)->first();
 
+
+
 				$patientPersonalData = DB::table('patients')
 				                                   ->where('patients.id_patient','=',$patientId)->first();
 
@@ -120,53 +125,83 @@ class UtilityController extends Controller {
 				$vitalsData = DB::table('vitals')
 				                            ->where('id_vitals', DB::raw("(select max(`id_vitals`) from vitals where id_patient='$patientId')"))
 				                            ->where('id_patient','=',$patientId)
+				                            
 				                            ->first();
 
 				$diagnosisData = DB::table('diagnosis')
 				                            ->where('id_diagnosis', DB::raw("(select max(`id_diagnosis`) from diagnosis where id_patient='$patientId')"))
 				                            ->where('id_patient','=',$patientId)
+				                            ->where('id_doctor','=',$doctorId)
 				                            ->first();
 
-				/*$prescriptionData    = DB::table('prescription')
-													->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
-				                            ->where('id_patient','=',$patientId)
-				                            ->get();*/
+				$prescTreatmentFollowupData    = DB::table('prescription')
+											     ->where('created_date', DB::raw("(select max(`created_date`) from prescription where id_patient='$patientId')"))
+										->where('id_prescription', DB::raw("(select max(`id_prescription`) from prescription where id_patient='$patientId')"))
+			                            ->where('id_patient','=',$patientId)
+			                            ->where('id_doctor','=',$doctorId)
+			                            ->first();
 
-				$medicalHistoryData =  DB::table('medical_history_present_past_more')
+				$obsHistory = DB::table('sp_gynaecology_obs')
+											->where('created_date', DB::raw("(select max(`created_date`) from sp_gynaecology_obs where id_patient='$patientId')"))
+											->where('id_gyn', DB::raw("(select max(`id_gyn`) from sp_gynaecology_obs where id_patient='$patientId')"))
 											->where('id_patient','=',$patientId)
-				                            ->get();
+					                        ->where('id_doctor','=',$doctorId)
+					                        ->first();
 
+				$pregHistory = DB::table('sp_gynaecology_obs_preg')
+											->where('created_date', DB::raw("(select max(`created_date`) from sp_gynaecology_obs_preg where id_patient='$patientId')"))
+											->where('id_gyn_preg', DB::raw("(select max(`id_gyn_preg`) from sp_gynaecology_obs_preg where id_patient='$patientId')"))
+											->where('id_patient','=',$patientId)
+					                        ->where('id_doctor','=',$doctorId)
+					                        ->first();
+
+				
+				$specialization = $doctorPersonalData->specialization;
+				switch ($specialization) {
+					case '1':
+						$medicalHistoryData =  DB::table('medical_history_present_past_more')
+											               	->where('id_patient','=',$patientId)
+											               	->where('id_doctor','=',$doctorId)
+				                            				->get();
+
+					break;
+					case '2':
+						$medicalHistoryData =  DB::table('cardiac_medical_history_present_past_more')
+											               	->where('id_patient','=',$patientId)
+											               	->where('id_doctor','=',$doctorId)
+				                            				->get();
+
+					break;
+					
+					default:
+						$medicalHistoryData = "";
+					break;
+				}
+				
 				$printData = DB::table('print_settings')->where('id_doctor','=',$doctorId)->first();
 
 				   
-				$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData);
+				$parametersArray = array('doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData,'vitalsData'=>$vitalsData,'diagnosisData'=>$diagnosisData,'prescriptionData'=>$prescriptionData,'medicalHistoryData'=>$medicalHistoryData,'printData'=>$printData,'prescTreatmentFollowupData'=>$prescTreatmentFollowupData,'obsHistory'=>$obsHistory,'pregHistory'=>$pregHistory);
 
+				//dd($parametersArray);
 
-				/*$parametersArray = array('printData'=>$printData,'prescriptionData'=>$prescriptionData,'doctorPersonalData'=>$doctorPersonalData,'patientPersonalData'=>$patientPersonalData);*/
-				
+				try{
+					$pdf = App::make('dompdf.wrapper');
+					//$pdf->loadHTML('<h1>Test</h1>');
 
-
-					try{
-						$pdf = App::make('dompdf.wrapper');
-		        		//$pdf->loadHTML('<h1>Test</h1>');
-		        		$view =  View::make('gynprecriptionformat',$parametersArray)->render();
-
-		       
-		        
-		        		$pdf->loadHTML($view)->setWarnings(false)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
-		        		// return Redirect::to('prescriptionshare')->with(array('pdfFileName'=>$pdfFileName,'parametersArray'=>$parametersArray));
-					 	return Redirect::to('prescriptionshare')->with(array('pdfFileName'=>$pdfFileName));
-					}
-					catch (\Exception $e)
-				    {
-				        session(['message' => [ 'danger' => 'Error: ' . $e->getMessage() ]]);
-				        return back();
-			    	}
-
+					$view =  View::make('cardioprescriptionformat',$parametersArray)->render();
+					$pdf->loadHTML($view)->setWarnings(false)->save('storage/pdf/'.$pdfFileName.'.'.'pdf');
+					return Redirect::to('prescriptionshare')->with(array('pdfFileName'=>$pdfFileName));
+				}
+				catch (\Exception $e)
+			    {
+			        session(['message' => [ 'danger' => 'Error: ' . $e->getMessage() ]]);
+			        return back();
+		    	}
 					
 
-				
-	  }
+  		
+		}
 
   	}
 
@@ -183,7 +218,7 @@ class UtilityController extends Controller {
   		$medicineListArray = 	[];
   		foreach($medicineList as $index=>$val){
   			//array_push($medicineListArray,$val->medicine_name);
-  			$medicine['name'] =  $val->medicine_name;
+  			$medicine['name'] =  strtoupper($val->medicine_name);
   			//var_dump($val->medicine_name);
   			//$medicineListArray['name'] = $val->medicine_name;
   			array_push($medicineListArray,$medicine);

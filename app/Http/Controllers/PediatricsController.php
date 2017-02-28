@@ -138,7 +138,7 @@ class PediatricsController extends Controller {
 			    						 
 			//Log::info("Patientdata",array($patientData));
 
-			return view('pediapatientpersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country,  'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'doctorsList'=>$doctorsList));
+			return view('pediapersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country,  'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'doctorsList'=>$doctorsList));
 		}
 		
 	}
@@ -156,7 +156,7 @@ class PediatricsController extends Controller {
 		if(!empty($doctorId)){
 
 			if(count($patientExist)>0){
-				echo "PatientExist";
+				//echo "PatientExist";
 				if(!empty($input['school_name']) ||
 				   !empty($input['school_address']) ||
 				   !empty($input['first_name']) ||
@@ -169,6 +169,8 @@ class PediatricsController extends Controller {
 				   !empty($input['stud_occupation'])||
 				   !empty($input['stud_mobile']))
 				{
+
+					//echo "inside empty check";
 					$pediaPersonalData = array('id_doctor'			    =>$doctorId,
 											   'school_name'		    =>$input['school_name'],
 											   'school_address'		    =>$input['school_address'],
@@ -185,10 +187,15 @@ class PediatricsController extends Controller {
 											   );
 					$pediaPersonalInformation = PatientsModel::where('id_patient','=',$patientId)
 						->update($pediaPersonalData);
+					return Redirect::to('doctor/pediapersonalinformation')->with(array('success'=>'Data updated successfully'));
 
-					if($pediaPersonalInformation){
-						return Redirect::to('pediapersonalinformation')->with(array('success'=>'Data updated successfully'));
+					/*if($pediaPersonalInformation){
+						//echo "Saved pedia";
+						
 					}
+					else{
+						return Redirect::to('pediapersonalinformation')->with(array('error'=>''));
+					}*/
 				}
 			}
 			else{
@@ -213,13 +220,13 @@ class PediatricsController extends Controller {
 					
 					if($pediaPersonalInformation){
 
-						return Redirect::to('pediapersonalinformation')->with(array('success'=>'Data saved successfully'));
+						return Redirect::to('doctor/pediapersonalinformation')->with(array('success'=>'Data saved successfully'));
 					}
 					
 			}
 		}
 		else{
-			return Redirect::to('doctorlogin');
+			return Redirect::to('doctor/login');
 		}
 	}
 	 public function showPediaExamination(){
@@ -251,14 +258,14 @@ class PediatricsController extends Controller {
 				return view('pediaexamination',array('bloodGroup'=>$bloodGroup,'vitalExist'=>$vitalExist,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'pediatricExamData'=>$pediatricExamData));
 			}
 			else{
-				return Redirect::to('doctorhome')->with(array('error'=>"You are not authorised to view the page"));
+				return Redirect::to('doctor/home')->with(array('error'=>"You are not authorised to view the page"));
 			}
 		}
 		else{
-			return Redirect::to('logout');
+			return Redirect::to('doctor/logout');
 		}
     }
-    public function addPediaExamination(){
+     public function addPediaExamination(){
     	$input = Request::all();
     	//var_dump($input);
 
@@ -345,11 +352,11 @@ class PediatricsController extends Controller {
 
 	    	//Pedia examination
 
-	    	(!empty($input['skin_lice']))?$skin_lice = $input['skin_lice']:$skin_lice="";
+	    	/*(!empty($input['skin_lice']))?$skin_lice = $input['skin_lice']:$skin_lice="";
 	    	(!empty($input['skin_scabies']))?$skin_scabies = $input['skin_scabies']:$skin_scabies="";
 	    	(!empty($input['skin_spots']))?$skin_spots = $input['skin_spots']:$skin_spots="";
 	    	(!empty($input['skin_eczema']))?$skin_eczema = $input['skin_eczema']:$skin_eczema="";
-	    	(!empty($input['skin_allergy']))?$skin_allergy = $input['skin_allergy']:$skin_allergy="";
+	    	(!empty($input['skin_allergy']))?$skin_allergy = $input['skin_allergy']:$skin_allergy="";*/
 	    	(!empty($input['skin_remarks']))?$skin_remarks = $input['skin_remarks']:$skin_remarks="";
 	    	(!empty($input['ent_remarks']))?$ent_remarks = $input['ent_remarks']:$ent_remarks="";
 	    	(!empty($input['eye_remarks']))?$eye_remarks = $input['eye_remarks']:$eye_remarks="";
@@ -379,11 +386,11 @@ class PediatricsController extends Controller {
 	    	$lowerright = array_filter($lowerright);
 
 	    if(!empty($pediatricExamData)){
-	    		$pediatricExam = array('skin_lice'=>$skin_lice,
+	    		$pediatricExam = array(/*'skin_lice'=>$skin_lice,
 	    			'skin_scabies'=>$skin_scabies,
 	    			'skin_spots_and_molluscum'=>$skin_spots,
 	    			'skin_eczema'=>$skin_eczema,
-	    			'skin_allergy'=>$skin_allergy,
+	    			'skin_allergy'=>$skin_allergy,*/
 	    			'skin_remarks'=>$skin_remarks,
 	    			'ent_remarks'=>$ent_remarks,
 	    			'eye_remarks'=>$eye_remarks,
@@ -419,11 +426,11 @@ class PediatricsController extends Controller {
 	    			}
 	    		}
 	    	else{
-	    		$pediatricExam = array('skin_lice'=>$skin_lice,
+	    		$pediatricExam = array(/*'skin_lice'=>$skin_lice,
 	    								'skin_scabies'=>$skin_scabies,
 	    								'skin_spots_and_molluscum'=>$skin_spots,
 	    								'skin_eczema'=>$skin_eczema,
-	    								'skin_allergy'=>$skin_allergy,
+	    								'skin_allergy'=>$skin_allergy,*/
 	    								'skin_remarks'=>$skin_remarks,
 	    								'ent_remarks'=>$ent_remarks,
 	    								'eye_remarks'=>$eye_remarks,
@@ -459,10 +466,10 @@ class PediatricsController extends Controller {
 	    	//-----------------------------------------------------------------------------------------------
 
 	    	if(in_array(1, $responseFlag)){
-	    		return Redirect::to('pediaexamination')->with(array('success'=>"Data updated successfully"));
+	    		return Redirect::to('doctor/pediaexamination')->with(array('success'=>"Data updated successfully"));
 	    	}
 	    	elseif (in_array(2, $responseFlag)) {
-	    		return Redirect::to('pediaexamination')->with(array('success'=>"Data saved successfully"));
+	    		return Redirect::to('doctor/pediaexamination')->with(array('success'=>"Data saved successfully"));
 	    	}
 	    	else
 	    	{
@@ -470,9 +477,9 @@ class PediatricsController extends Controller {
 	    	}
 	    }
 	    else{	
-			return Redirect::to('pediapersonalinformation')->with(array('error'=>'Please save patient personal information'));
+			return Redirect::to('doctor/pediapersonalinformation')->with(array('error'=>'Please save patient personal information'));
 			    	
 		}
-    }
+	}
 
 }

@@ -85,7 +85,7 @@
 		$currentPath = Route::getCurrentRoute()->getPath();
 		$filename = Session::get('pdfFileName');
 		$parametersArray = Session::get('parametersArray');
-		/*var_dump($parametersArray);*/
+		
 
 
 		//echo $currentPath;

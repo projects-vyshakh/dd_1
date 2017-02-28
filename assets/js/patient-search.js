@@ -15,7 +15,7 @@ var patientSearch = function () {
 	        	"bFilter": true,
 	        	"bInfo": true,
 	        	"bProcessing": true,
-	            "sAjaxSource":"handleSearchPatient",
+	            "sAjaxSource":"../handleSearchPatient",
 	            "bDestroy": true,
 	            /*"iDisplayLength": 10,*/
 	            "bLengthChange": true,

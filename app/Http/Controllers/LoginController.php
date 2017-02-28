@@ -51,14 +51,6 @@ class LoginController extends Controller {
 	{
 		return view('doctorlogin');
 	}
-	public function showPatientLogin(){
-		//Session::flush();
-		return view('patientlogin');
-	}
-	public function showLogout(){
-		Session::flush();
-		return Redirect::to('doctorlogin');
-	}
 	public function handleDoctorLogin()
 	{
 		//return view('login');
@@ -96,10 +88,10 @@ class LoginController extends Controller {
 			if($password==$decrypted){
 				Session::put('doctorId',$checkLoginCredentials->id_doctor);
 				Session::put('doctorSpecialization',$checkLoginCredentials->specialization);
-				return Redirect::to('doctorhome');
+				return Redirect::to('doctor/home');
 			}
 			else{
-				return Redirect::to('doctorlogin')->withInput()->with(array('error'=>"Login failed! Incorrect email or password."));
+				return Redirect::to('doctor/login')->withInput()->with(array('error'=>"Login failed! Incorrect email or password."));
 			}
 		}
 		else{
@@ -107,11 +99,11 @@ class LoginController extends Controller {
 			!empty($status)?$checkLoginCredentials->status:$status=1;
 			if($status==0){
 				//echo "enter into else 0";
-				return Redirect::to('doctorlogin')->with(array('error'=>"Your account is not verified. Please contact administrator"));
+				return Redirect::to('doctor/login')->with(array('error'=>"Your account is not verified. Please contact administrator"));
 			}
 			else{
 				//echo "enter into 0 else ";
-				return Redirect::to('doctorlogin')->with(array('error'=>"Login failed! Incorrect email or password."));
+				return Redirect::to('doctor/login')->with(array('error'=>"Login failed! Incorrect email or password."));
 			}
 
 			
@@ -120,6 +112,19 @@ class LoginController extends Controller {
 
 		
 	}
+
+
+
+	public function showPatientLogin(){
+		//Session::flush();
+		return view('patientlogin');
+	}
+	public function showLogout(){
+		Session::flush();
+		return Redirect::to('doctor/login');
+	}
+
+	
 	public function handlePatientLogin(){
 		$input = Request::all();
 		$patientId = $input['id_patient'];
@@ -166,28 +171,28 @@ class LoginController extends Controller {
 						$patientName = $checkLoginCredentials->first_name." ".$checkLoginCredentials->last_name;
 						Session::put('patientName',$patientName);
 						
-						return Redirect::to('patientprofilemanagement');
+						return Redirect::to('patient/dashboard');
 					}
 					else{
-						return Redirect::to('patientlogin')->with(array('error'=>"Please activate your account before login"));
+						return Redirect::to('patient/login')->with(array('error'=>"Please activate your account before login"));
 					}
 					
 				}
 				else{
-					return Redirect::to('patientlogin')->with(array('error'=>"Login failed!!! Incorrect id or password"));
+					return Redirect::to('patient/login')->with(array('error'=>"Login failed!!! Incorrect id or password"));
 				}
 				
 
 			}
 			else{
-				return Redirect::to('patientlogin')->with(array('error'=>"Your password is not set. Please activate your account"));
+				return Redirect::to('patient/login')->with(array('error'=>"Your password is not set. Please activate your account"));
 			}
 			
 		}
 		else{
 
 			
-				return Redirect::to('patientlogin')->with(array('error'=>"Login failed!!! Incorrect id or password"));
+				return Redirect::to('patient/login')->with(array('error'=>"Login failed!!! Incorrect id or password"));
 			
 
 			
@@ -198,7 +203,7 @@ class LoginController extends Controller {
 
 	public function handlePatientLogout(){
 		Session::flush();
-		return Redirect::to('patientlogin');
+		return Redirect::to('patient/login');
 	}
 
 
@@ -235,11 +240,11 @@ class LoginController extends Controller {
 
 			}
 			else{
-				return Redirect::to('doctorforgetpassword')->with(array('error'=>'Failed to send OTP'));
+				return Redirect::to('doctor/forgetpassword')->with(array('error'=>'Failed to send OTP'));
 			}	
 		}
 		else{
-			return Redirect::to('doctorforgetpassword')->with(array('error'=>'Either invalid doctor or doctor not registered'));
+			return Redirect::to('doctor/forgetpassword')->with(array('error'=>'Either invalid doctor or doctor not registered'));
 		}
 
 

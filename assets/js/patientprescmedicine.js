@@ -28,13 +28,13 @@ var patientPrescMedicine = function () {
 		var dataString = "No";
 				$.ajax({
 				    	type: "POST",
-				   		 url: 'showPatientPrescMedicineAjax',
+				   		 url: '../showPatientPrescMedicineAjax',
 				   		 data: dataString,
 				    	success: function(data)
 				    	{
 				    		
 
-
+				    		//console.log(data.prescMedicine[0].food_status)
 
 				    		// Enabling/Disabling print,share button on success after save
 				    		var success = $('.success-status').val();
@@ -64,116 +64,13 @@ var patientPrescMedicine = function () {
 
 				    	 	
 		       				$('.presc-add-more').click(function(e){
-   								$('.pdfopen').attr('disabled','disabled');							//disabling print button on add more click
-								$('.share-prescription').attr('disabled','disabled');	//disabling share  button on add more click
-								$('.present-drug-btn').attr('disabled',false); 				//enabling the load prev button
-								$('.success-status').val('');
-								var extraPrescCounter = $('.extra-presc-count').val();
-								extraPrescCounter = parseInt(extraPrescCounter) + 1;
-								$('.extra-presc-count').val(extraPrescCounter);
-		       					var counter	=	$('.default-div-count').val();
-		       							console.log('counter'+counter++);
-       							e.preventDefault();
-       							$('.presc-medicine').append(
-	           						'<div class="presc-inner contaner dd_border_table">'+
-										'<table class="table table-bordered  presc-table" id="sample-table-1">'+
-               								'<thead>'+
-	                                            '<tr class="drugs_row_hd" >'+
-		                                                '<th width="16%">Drug Name</th>'+
-		                                                '<th width="30%">Strength</th>'+
-		                                                '<th width="18%">Duration</th>'+
-		                                                '<th width="1%">Morning</th>'+
-		                                                '<th width="1%">Noon </th>'+
-		                                                '<th width="29%">Night</th>'+
-		                                                '<th width="9%"></th>'+
-												 '</tr>'+
-               								'</thead>'+
-                                       		'<tbody>'+
-                								'<tr class="drugs_row">'+
-                                                    '<td class="dd_presc_medicin">'+
-                                                    		
-                                                        	'<input type="text" name="drug_name'+counter+'" class="dd_input_mini drug_name " id="drug_name'+counter+'">'+
-                                                    		
-                                                    '</td>'+
-                                                    '<td>'+
-                                                        '<div class="dd_dosage1_text">'+
-                                                             	'<input type="text" name="dosage'+counter+'" class="input-mini ng-pristine ng-valid dd_remove_padding dosage" id="dosage'+counter+'">'+
-                              									'<select class="dosage_unit" name="dosage_unit'+counter+'" id="dosage_unit'+counter+'">'+
-																 '</select>'+
-                                                     	 '</div>'+
-                                                    '</td>'+
-                                                    '<td >'+
-														'<div class="dd_dosage1_text">'+
-															'<input type="text" name="duration'+counter+'" class="input-mini ng-pristine ng-valid duration" id="duration'+counter+'" >'+
-															'<select class="duration_unit" name="duration_unit'+counter+'" id="duration_unit'+counter+'">'+
-															 '</select>'+
-														'</div>'+
-													'</td>'+
-													'<td>'+
-															'<input type="text" name="morning'+counter+'" class="col-sm-8 morning" id="morning'+counter+'"  >'+
-													'</td>'+
-													'<td>'+
-															'<input type="text" name="noon'+counter+'" class="col-sm-8 noon" id="noon'+counter+'"  >'+
-													'</td>'+
-													'<td>'+
-															'<input type="text" name="night'+counter+'" class="col-sm-8 night" id="night'+counter+'" >'+
-													'</td>'+
-													'<td>'+
-														'<input type="button" id="drugmore-remove'+counter+'" onclick="return drugRemove(this);" name="drugmore-remove" class=" dd_X_btn btn btn-bricky pull-right drugmore-remove" value="X" ' +
-													'</td>'+
-											 	'</tr>'+
-												'<tr class="drugs_row dd_relative">'+
-
-													'<td colspan="1" >'+
-															'<input type="button" onclick="return addInstruction(this);" name="add-instruction-btn" class="btn btn-default  dd_instruction  btn-xs add-instruction-btn" value="+ Add Instruction" >' +
-															'<input type="button" onclick="return removeInstruction(this);" name="remove-instruction-btn" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs remove-instruction-btn" value="- Remove Instruction" style="display:none" >' +
-													'</td>'+
-													'<td colspan="2" style="vertical-align: top;" >'+
-														'<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date</div>'+		
-															'<div class="dd_dosage1_text_2 pull-left">'+
-				  												'<span class="dd_instruction"> '+
-																	'<input type="text" name="start_date'+counter+'" class="form-control  start_date" id="start_date'+counter+'" data-date-format="dd-mm-yyyy">'+
-																'</span>'+
-															'</div>'+
-														'</div>'+
-													'</td>'+
-													'<td colspan="2" class="dd_relative" style="vertical-align: top;">'+
-						   									 '<div class="dd_beforfood ">'+
-																	'<label class="dd_beforfood_pd" >'+
-																			'<input type="radio" class="before_food food_status" id="food_status_before'+counter+'" name="food_status'+counter+'" value="Before Food">Before Food'+
-																	'</label>'+
-																	'<label class="dd_beforfood_pd">'+
-																		'	<input type="radio" class="after_food food_status" id="food_status_after'+counter+'" name="food_status'+counter+'" value="After Food">After Food'+
-																	'</label>'+
-															'</div>'+
-													'</td>'+
-												'</tr>'+
-												'<tr></tr>'+
-											'</tbody>' +
-                                		'</table>'+
-
-                                		'<div class="instruction-div" ></div>'+
-                                		'<div class="error_msg" ></div>'+
-                             		'</div>'
-								);
-												  		
-											 
-				 	  			for( dosageUnitVal in data.dosageUnit){
-									$('#dosage_unit'+counter).append('<option value='+dosageUnitVal+'>'+data.dosageUnit[dosageUnitVal]+'</option>');
-								}
-								for(durationUnitVal in data.drugDurationUnit){
-									$('#duration_unit'+counter).append('<option value='+durationUnitVal+'>'+data.drugDurationUnit[durationUnitVal]+'</option>');
-								}
-									 
-							 	$('.morning').tooltip({'trigger':'focus', 'title': 'Morning medicine count'});
-								$('.noon').tooltip({'trigger':'focus', 'title': 'Noon medicine count'}); 
-								$('.night').tooltip({'trigger':'focus', 'title': 'Night medicine count'}); 
-							 	$('.default-div-count').val(counter++);
-
-							 	//Calling medicine autocomplete
+		       					runDrugAddMore(e,data);
+   								//Calling medicine autocomplete
 								runMedicineListAutoComplete();	
 								//Initiating start date after add more
 								runPrescriptionDatePickers();
+
+								runDrugRemove(data);
 				   				
 
 							});
@@ -181,14 +78,15 @@ var patientPrescMedicine = function () {
 				       				
 				       		//Load Previous Drug Click
 		       				$('.present-drug-btn').click(function(e){
+
 		       					$('.success-status').val(''); // Success is keeping null on clicking load prev else clicking on share works twice
 		       					$('.present-drug-btn').attr('disabled',true);
 	       						var prescMedicine = data.prescMedicine;
 	       						var defaultDivCountRemove =$('.default-div-count').val();
 		       					$('.prev-drug-load-status').val(1);
 								var clickStatus = "loadDrug";
-											 
-										
+								//alert(JSON.stringify(prescMedicine));	 
+											
 								if(prescMedicine!="")
 								{
 									
@@ -228,6 +126,7 @@ var patientPrescMedicine = function () {
 										var followUpDate 		 = prescMedicine[i].follow_up_date;
 										var prescSharedId        = prescMedicine[i].id_share_prescription;
 										var foodStatus 			 = prescMedicine[i].food_status;
+										var treatment			 = prescMedicine[i].treatment;
 
 										(dosage==0)?dosage='':dosage = dosage;
 										(duration==0)?duration='':duration = duration;
@@ -236,8 +135,21 @@ var patientPrescMedicine = function () {
 										(night==0)?night='':night = night;
 
 										//Checking  start date and follow up dates
-										(startDate=='0000-00-00')?startDate = '':startDate=startDate;
-										(followUpDate=='0000-00-00')?followUpDate = '':followUpDate=followUpDate;
+										if(startDate!=null){
+											(startDate=='0000-00-00')?startDate = '':startDate=startDate;
+										}
+										else{
+											startDate = '';
+										}
+
+										if(followUpDate!=null){
+											(followUpDate=='0000-00-00')?followUpDate = '':followUpDate=followUpDate;
+										}
+										else{
+											followUpDate = '';
+										}
+										
+										
 									
 
 										$('.presc-medicine').append(
@@ -263,7 +175,7 @@ var patientPrescMedicine = function () {
 		                                                    '</td>'+
 		                                                    '<td>'+
 		                                                        '<div class="dd_dosage1_text">'+
-		                                                            '<input type="text" name="dosage'+counter+'" class="input-mini ng-pristine dd_remove_padding ng-valid dosage" id="dosage'+i+'" value='+dosage+'>'+
+		                                                            '<input type="text" name="dosage'+counter+'" maxlength="4" class="input-mini ng-pristine dd_remove_padding ng-valid dosage" id="dosage'+i+'" value='+dosage+' >'+
 		                              									'<select class="dosage_unit" name="dosage_unit'+counter+'" id="dosage_unit'+counter+'">'+
 		                              										'<option value='+dosageUnitDefault+'>'+dosageUnitDefault+'</option>'+
 																		'</select>'+
@@ -287,7 +199,7 @@ var patientPrescMedicine = function () {
 																'<input type="text" name="night'+counter+'" class="col-sm-8 night" id="night'+counter+'" value='+night+'>'+
 															'</td>'+
 															'<td>'+
-																'<input type="button" id="drugmore-remove'+counter+'" onclick="return drugRemove(this);" name="drugmore-remove" class="dd_X_btn btn btn-bricky pull-right drugmore-remove" value="X" ' +
+																'<input type="button" id="drugmore-remove'+counter+'"  name="drugmore-remove" class="dd_X_btn btn btn-bricky pull-right drugmore-remove" value="X" ' +
 															'</td>'+
 													  	'</tr>'+
 													  	'<tr class="drugs_row dd_relative">'+
@@ -321,6 +233,18 @@ var patientPrescMedicine = function () {
 											'</div>'
 			                            );
 										
+										
+
+										if(foodStatus=="Before Food"){
+											$("#food_status_before"+counter).prop("checked","checked")
+										}
+										else{
+											$("#food_status_after"+counter).prop("checked","checked")
+										}
+										
+										$('#treatment').text(treatment);
+										$('#follow_up_date').val(followUpDate);
+
 										//Appending dosage and duration 
 										for( dosageUnitVal in data.dosageUnit){
 											if(dosageUnitDefault!=dosageUnitVal){
@@ -333,6 +257,12 @@ var patientPrescMedicine = function () {
 												$('#duration_unit'+counter).append('<option value='+durationUnitVal+'>'+data.drugDurationUnit[durationUnitVal]+'</option>');
 											}
 											
+										}
+
+										if(instruction!=''){
+											$('#instruction-div'+counter).append('<textarea name="instruction'+counter+'" cols="30" class=" form-control instruction" id="instruction'+counter+'">'+instruction+'</textarea>')
+											$('#add-instruction-btn'+counter).hide();
+											$('#remove-instruction-btn'+counter).show();
 										}
 
 									}
@@ -356,15 +286,12 @@ var patientPrescMedicine = function () {
 								runMedicineListAutoComplete();
 								//Initiating start date after add more
 								runPrescriptionDatePickers();
-				   				/*$('.start_date').Zebra_DatePicker({
-									direction: true,
-					   				icon_position : 'left',
-					   				inside : true,
-					   				show_icon : false,
-					   				minDate: 0
-								});*/
+				   				
+								runDrugRemove(data);
+								
 
 				       		});		
+
 
 							for(var i=0;i<data.prescMedicine.length;i++)
 							{
@@ -381,16 +308,321 @@ var patientPrescMedicine = function () {
 
 						}
 				           //Ajax ends
-
-
-
-				        
-				        
+       
 				  });
 
 
 			
 	};
+
+	var runDrugAddMore = function(e,data){
+		$('.pdfopen').attr('disabled','disabled');							//disabling print button on add more click
+		$('.share-prescription').attr('disabled','disabled');	//disabling share  button on add more click
+		$('.present-drug-btn').attr('disabled',false); 				//enabling the load prev button
+		$('.success-status').val('');
+		var extraPrescCounter = $('.extra-presc-count').val();
+		extraPrescCounter = parseInt(extraPrescCounter) + 1;
+		$('.extra-presc-count').val(extraPrescCounter);
+			var counter	=	$('.default-div-count').val();
+			console.log('counter'+counter++);
+			e.preventDefault();
+			$('.presc-medicine').append(
+				'<div class="presc-inner contaner dd_border_table">'+
+				'<table class="table table-bordered  presc-table" id="sample-table-1">'+
+						'<thead>'+
+                        '<tr class="drugs_row_hd" >'+
+                                '<th width="16%">Drug Name</th>'+
+                                '<th width="30%">Strength</th>'+
+                                '<th width="18%">Duration</th>'+
+                                '<th width="1%">Morning</th>'+
+                                '<th width="1%">Noon </th>'+
+                                '<th width="29%">Night</th>'+
+                                '<th width="9%"></th>'+
+						 '</tr>'+
+						'</thead>'+
+               		'<tbody>'+
+						'<tr class="drugs_row">'+
+                            '<td class="dd_presc_medicin">'+
+                            		
+                                	'<input type="text" name="drug_name'+counter+'" class="dd_input_mini drug_name " id="drug_name'+counter+'">'+
+                            		
+                            '</td>'+
+                            '<td>'+
+                                '<div class="dd_dosage1_text">'+
+                                     	'<input type="text" name="dosage'+counter+'" maxlength="4" class="input-mini ng-pristine ng-valid dd_remove_padding dosage" id="dosage'+counter+'">'+
+      									'<select class="dosage_unit" name="dosage_unit'+counter+'" id="dosage_unit'+counter+'">'+
+										 '</select>'+
+                             	 '</div>'+
+                            '</td>'+
+                            '<td >'+
+								'<div class="dd_dosage1_text">'+
+									'<input type="text" name="duration'+counter+'" class="input-mini ng-pristine ng-valid duration" id="duration'+counter+'" >'+
+									'<select class="duration_unit" name="duration_unit'+counter+'" id="duration_unit'+counter+'">'+
+									 '</select>'+
+								'</div>'+
+							'</td>'+
+							'<td>'+
+									'<input type="text" name="morning'+counter+'" class="col-sm-8 morning" id="morning'+counter+'"  >'+
+							'</td>'+
+							'<td>'+
+									'<input type="text" name="noon'+counter+'" class="col-sm-8 noon" id="noon'+counter+'"  >'+
+							'</td>'+
+							'<td>'+
+									'<input type="text" name="night'+counter+'" class="col-sm-8 night" id="night'+counter+'" >'+
+							'</td>'+
+							'<td>'+
+								'<input type="button" id="drugmore-remove'+counter+'"  name="drugmore-remove" class=" dd_X_btn btn btn-bricky pull-right drugmore-remove" value="X" ' +
+							'</td>'+
+					 	'</tr>'+
+						'<tr class="drugs_row dd_relative">'+
+
+							'<td colspan="1" >'+
+									'<input type="button" onclick="return addInstruction(this);" name="add-instruction-btn" class="btn btn-default  dd_instruction  btn-xs add-instruction-btn" value="+ Add Instruction" >' +
+									'<input type="button" onclick="return removeInstruction(this);" name="remove-instruction-btn" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs remove-instruction-btn" value="- Remove Instruction" style="display:none" >' +
+							'</td>'+
+							'<td colspan="2" style="vertical-align: top;" >'+
+								'<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date</div>'+		
+									'<div class="dd_dosage1_text_2 pull-left">'+
+											'<span class="dd_instruction"> '+
+											'<input type="text" name="start_date'+counter+'" class="form-control  start_date" id="start_date'+counter+'" data-date-format="dd-mm-yyyy">'+
+										'</span>'+
+									'</div>'+
+								'</div>'+
+							'</td>'+
+							'<td colspan="2" class="dd_relative" style="vertical-align: top;">'+
+									'<div class="dd_beforfood ">'+
+									'<label class="dd_beforfood_pd" >'+
+										'<input type="radio"  class="before_food food_status" id="food_status_before'+counter+'" name="food_status'+counter+'" value="Before Food" >Before Food'+
+									'</label>'+
+									'<label class="dd_beforfood_pd">'+
+										'<input type="radio" class="after_food food_status" id="food_status_after'+counter+'" name="food_status'+counter+'" value="After Food">After Food'+
+									'</label>'+
+								'</div>'+
+							'</td>'+
+						'</tr>'+
+						'<tr></tr>'+
+					'</tbody>' +
+        		'</table>'+
+
+        		'<div class="instruction-div" ></div>'+
+        		'<div class="error_msg" ></div>'+
+     		'</div>'
+		);
+		
+		
+		
+
+		for( dosageUnitVal in data.dosageUnit){
+			$('#dosage_unit'+counter).append('<option value='+dosageUnitVal+'>'+data.dosageUnit[dosageUnitVal]+'</option>');
+		}
+		for(durationUnitVal in data.drugDurationUnit){
+			$('#duration_unit'+counter).append('<option value='+durationUnitVal+'>'+data.drugDurationUnit[durationUnitVal]+'</option>');
+		}
+			 
+	 	$('.morning').tooltip({'trigger':'focus', 'title': 'Morning medicine count'});
+		$('.noon').tooltip({'trigger':'focus', 'title': 'Noon medicine count'}); 
+		$('.night').tooltip({'trigger':'focus', 'title': 'Night medicine count'}); 
+	 	$('.default-div-count').val(counter++);
+
+							 	
+	}
+
+	var runDrugRemove = function(data){
+		//e.preventDefault();
+		$('.drugmore-remove').unbind().click(function(){
+			//$(this).closest('.presc-inner').remove();
+			$('.share-prescription').attr('disabled','disabled');
+			$('.pdfopen').attr('disabled','disabled');
+
+			var divCount = $('.default-div-count').val(); 
+
+
+			var elements = $(this).closest('.presc-inner');
+		    var removedPrescTable = elements.find('.drugs_row');
+		    var removedId = removedPrescTable.find('.dd_input_mini').attr('id');
+		    var removedId = parseInt(removedId.replace(/[^0-9\.]/g, ''), 10);
+		   	elements.remove();
+
+		    var newDefaultDivCount = parseInt(divCount) - parseInt(1);
+		    
+
+		    $('.default-div-count').val(newDefaultDivCount);
+		    for (i = 1; i <= newDefaultDivCount; i++) {
+		        var nextDivId = parseInt(i) + parseInt(1);
+		        if (nextDivId > removedId) {
+		            var decrementDivId = nextDivId - 1;
+		            var selected1 = $('.presc-table').find('.drugs_row').find('#drug_name' + nextDivId);
+		            var selected2 = $('.presc-table').find('.drugs_row').find('#dosage' + nextDivId);
+		            var selected3 = $('.presc-table').find('.drugs_row').find('#dosage_unit' + nextDivId);
+		            var selected4 = $('.presc-table').find('.drugs_row').find('#duration' + nextDivId);
+		            var selected5 = $('.presc-table').find('.drugs_row').find('#duration_unit' + nextDivId);
+		            var selected6 = $('.presc-table').find('.drugs_row').find('#morning' + nextDivId);
+		            var selected7 = $('.presc-table').find('.drugs_row').find('#noon' + nextDivId);
+		            var selected8 = $('.presc-table').find('.drugs_row').find('#night' + nextDivId);
+		            var selected9 = $('.presc-inner').find('#instruction' + nextDivId);
+		            console.log(selected9);
+		            var selected10 = $('.presc-table').find('.drugs_row').find('#start_date' + nextDivId);
+		            var selected11 = $('.presc-table').find('.drugs_row').find('#food_status_before' + nextDivId);
+		            var selected12 = $('.presc-table').find('.drugs_row').find('#food_status_after' + nextDivId);
+		            selected1.attr({
+		                'name': 'drug_name' + decrementDivId,
+		                'id': 'drug_name' + decrementDivId
+		            });
+		            selected2.attr({
+		                'name': 'dosage' + decrementDivId,
+		                'id': 'dosage' + decrementDivId
+		            });
+		            selected3.attr({
+		                'name': 'dosage_unit' + decrementDivId,
+		                'id': 'dosage_unit' + decrementDivId
+		            });
+		            selected4.attr({
+		                'name': 'duration' + decrementDivId,
+		                'id': 'duration' + decrementDivId
+		            });
+		            selected5.attr({
+		                'name': 'duration_unit' + decrementDivId,
+		                'id': 'duration_unit' + decrementDivId
+		            });
+		            selected6.attr({
+		                'name': 'morning' + decrementDivId,
+		                'id': 'morning' + decrementDivId
+		            });
+		            selected7.attr({
+		                'name': 'noon' + decrementDivId,
+		                'id': 'noon' + decrementDivId
+		            });
+		            selected8.attr({
+		                'name': 'night' + decrementDivId,
+		                'id': 'night' + decrementDivId
+		            });
+		            selected9.attr({
+		                'name': 'instruction' + decrementDivId,
+		                'id': 'instruction' + decrementDivId
+		            });
+		            selected10.attr({
+		                'name': 'start_date' + decrementDivId,
+		                'id': 'start_date' + decrementDivId
+		            });
+		            selected11.attr({
+		                'name': 'food_status' + decrementDivId,
+		                'id': 'food_status' + decrementDivId
+		            });
+		            selected12.attr({
+		                'name': 'food_status' + decrementDivId,
+		                'id': 'food_status' + decrementDivId
+		            })
+		        }
+		        $('.default-div-count').val(newDefaultDivCount)
+		    }
+
+
+		    //if removes all drug details and clicking on last drug removes and appends a fresh presc-medicine
+		    if(divCount==1){
+				var counter = divCount;
+				$('.presc-medicine').append(
+					'<div class="presc-inner contaner dd_border_table">'+
+					'<table class="table table-bordered  presc-table" id="sample-table-1">'+
+							'<thead>'+
+	                        '<tr class="drugs_row_hd" >'+
+	                                '<th width="16%">Drug Name</th>'+
+	                                '<th width="30%">Strength</th>'+
+	                                '<th width="18%">Duration</th>'+
+	                                '<th width="1%">Morning</th>'+
+	                                '<th width="1%">Noon </th>'+
+	                                '<th width="29%">Night</th>'+
+	                                '<th width="9%"></th>'+
+							 '</tr>'+
+							'</thead>'+
+	               		'<tbody>'+
+							'<tr class="drugs_row">'+
+	                            '<td class="dd_presc_medicin">'+
+	                            		
+	                                	'<input type="text" name="drug_name'+counter+'" class="dd_input_mini drug_name " id="drug_name'+counter+'">'+
+	                            		
+	                            '</td>'+
+	                            '<td>'+
+	                                '<div class="dd_dosage1_text">'+
+	                                     	'<input type="text" name="dosage'+counter+'" maxlength="4" class="input-mini ng-pristine ng-valid dd_remove_padding dosage" id="dosage'+counter+'">'+
+	      									'<select class="dosage_unit" name="dosage_unit'+counter+'" id="dosage_unit'+counter+'">'+
+											 '</select>'+
+	                             	 '</div>'+
+	                            '</td>'+
+	                            '<td >'+
+									'<div class="dd_dosage1_text">'+
+										'<input type="text" name="duration'+counter+'" class="input-mini ng-pristine ng-valid duration" id="duration'+counter+'" >'+
+										'<select class="duration_unit" name="duration_unit'+counter+'" id="duration_unit'+counter+'">'+
+										 '</select>'+
+									'</div>'+
+								'</td>'+
+								'<td>'+
+										'<input type="text" name="morning'+counter+'" class="col-sm-8 morning" id="morning'+counter+'"  >'+
+								'</td>'+
+								'<td>'+
+										'<input type="text" name="noon'+counter+'" class="col-sm-8 noon" id="noon'+counter+'"  >'+
+								'</td>'+
+								'<td>'+
+										'<input type="text" name="night'+counter+'" class="col-sm-8 night" id="night'+counter+'" >'+
+								'</td>'+
+						 	'</tr>'+
+							'<tr class="drugs_row dd_relative">'+
+
+								'<td colspan="1" >'+
+										'<input type="button" onclick="return addInstruction(this);" name="add-instruction-btn" class="btn btn-default  dd_instruction  btn-xs add-instruction-btn" value="+ Add Instruction" >' +
+										'<input type="button" onclick="return removeInstruction(this);" name="remove-instruction-btn" class="btn btn-default dd_dosage1_text dd_instruction  btn-xs remove-instruction-btn" value="- Remove Instruction" style="display:none" >' +
+								'</td>'+
+								'<td colspan="2" style="vertical-align: top;" >'+
+									'<div class="dd_dosage1_text_3 dd_Date pull-left">Start Date</div>'+		
+										'<div class="dd_dosage1_text_2 pull-left">'+
+												'<span class="dd_instruction"> '+
+												'<input type="text" name="start_date'+counter+'" class="form-control  start_date" id="start_date'+counter+'" data-date-format="dd-mm-yyyy">'+
+											'</span>'+
+										'</div>'+
+									'</div>'+
+								'</td>'+
+								'<td colspan="2" class="dd_relative" style="vertical-align: top;">'+
+										'<div class="dd_beforfood ">'+
+										'<label class="dd_beforfood_pd" >'+
+											'<input type="radio"  class="before_food food_status" id="food_status_before'+counter+'" name="food_status'+counter+'" value="Before Food" >Before Food'+
+										'</label>'+
+										'<label class="dd_beforfood_pd">'+
+											'<input type="radio" class="after_food food_status" id="food_status_after'+counter+'" name="food_status'+counter+'" value="After Food">After Food'+
+										'</label>'+
+									'</div>'+
+								'</td>'+
+							'</tr>'+
+							'<tr></tr>'+
+						'</tbody>' +
+	        		'</table>'+
+
+	        		'<div class="instruction-div" ></div>'+
+	        		'<div class="error_msg" ></div>'+
+	     		'</div>'
+			);
+			
+			for( dosageUnitVal in data.dosageUnit){
+				$('#dosage_unit'+counter).append('<option value='+dosageUnitVal+'>'+data.dosageUnit[dosageUnitVal]+'</option>');
+			}
+			for(durationUnitVal in data.drugDurationUnit){
+				$('#duration_unit'+counter).append('<option value='+durationUnitVal+'>'+data.drugDurationUnit[durationUnitVal]+'</option>');
+			}
+				 
+		 	$('.morning').tooltip({'trigger':'focus', 'title': 'Morning medicine count'});
+			$('.noon').tooltip({'trigger':'focus', 'title': 'Noon medicine count'}); 
+			$('.night').tooltip({'trigger':'focus', 'title': 'Night medicine count'}); 
+		 	$('.default-div-count').val(counter++);
+
+			}
+
+
+			runMedicineListAutoComplete();
+			//Initiating start date after add more
+			runPrescriptionDatePickers();
+
+
+		});
+		
+	}
 	
 	var runSharePrescriprion = function(prescSharedId){
 		
@@ -550,7 +782,7 @@ var patientPrescMedicine = function () {
 			$("body").mLoading({ });
 			$.ajax({
                 type	: "POST",
-                url 	: "patientPrescPrint",
+                url 	: "../patientPrescPrint",
                 //data 	: dataString,
                 success : function(data) {
                 	console.log("Data"+data);
@@ -566,12 +798,12 @@ var patientPrescMedicine = function () {
 	            		$('#myModal3').modal('show');
 	                		
 	                		$('iframe').remove();
-	                		$('.pdf_print').append('<iframe src="storage/pdf/'+data+'.pdf" style="width:100%; height:500px;" id="iFrame"></iframe>');
+	                		$('.pdf_print').append('<iframe src="../storage/pdf/'+data+'.pdf" style="width:100%; height:500px;" id="iFrame"></iframe>');
 	                		//$('.pdf_print').load('storage/pdf/'+data+'.pdf');
 	                		//$("#modal-body embed").attr("storage","x007_20161116.pdf");
 	                		$('.print-data').val('saveTrue');
-	                		var src = "storage/pdf/'+data.pdfFileName+'.pdf";
-	                		console.log(src);
+	                		var src = "../storage/pdf/'+data.pdfFileName+'.pdf";
+	                		//console.log(src);
 
 	                	//Refreshing the iframe and showing latest data
 	            		/*var currSrc = $("#iFrame").attr("src");
@@ -616,7 +848,7 @@ var patientPrescMedicine = function () {
 			
  			$('.drug_name').typeahead({
                     ajax: {
-                        url: 'getMedicineList',
+                        url: '../getMedicineList',
                         method: 'post',
                         triggerLength: 1
                     }
@@ -624,7 +856,7 @@ var patientPrescMedicine = function () {
             });
 			
 		 	
- 			$('.typeahead').addClass('test')
+ 			//$('.typeahead').addClass('test')
 
 		
 		

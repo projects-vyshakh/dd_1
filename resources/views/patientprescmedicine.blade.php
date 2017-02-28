@@ -352,7 +352,25 @@ if(!empty($prescMedicine)){
 									<div class="form-group dd_menarche_4">
 										<div class="col-sm-4  dd_praji_followup dd_folloup_mg">
 											{!! Form::label('follow_up_date', 'Follow up date', $attributes = array('class'=>"col-sm-4 dd_padding_follw "));  !!}
-											{!! Form::text('follow_up_date', null , $attributes = array('class' => 'form-control  follow_up_date dd_praji_followup ', 'data-date-viewmode'=>'years','data-date-format'=>'dd-mm-yyyy')); !!}
+
+											<?php 
+												if(!empty($prescMedicineVal->follow_up_date)){
+													if($prescMedicineVal->follow_up_date!="0000-00-00"){
+														$followUpDate = date('Y-m-d',strtotime($prescMedicineVal->follow_up_date));
+													}
+													else{
+														$followUpDate = "";
+													}
+
+												}
+												else{
+													$followUpDate = "";
+												}
+
+
+											?>
+
+											{!! Form::text('follow_up_date', $followUpDate , $attributes = array('class' => 'form-control  follow_up_date dd_praji_followup ')); !!}
 										</div>
 										<div class="col-sm-8" >
 											<input type="button" class="btn btn-default presc-add-more  pull-right dd_addmore_0 "  value="+ Add More Drug">
@@ -610,28 +628,31 @@ if(!empty($prescMedicine)){
 		});
 
 
-function addInstruction(e) {
-    var clickedElement = $(e).closest('.presc-inner');
-    var instructionDiv = clickedElement.find('.instruction-div'); 
-    console.log(clickedElement);
-    var drugNameInputId = clickedElement.find('.drug_name').attr('id');
-    console.log(drugNameInputId);
-    var drugNameInputId = parseInt(drugNameInputId.replace(/[^0-9\.]/g, ''), 10);
-    instructionDiv.append('<textarea name="instruction' + drugNameInputId + '" cols="30" class=" form-control instruction"  id="instruction' + drugNameInputId + '"	></textarea>');
-    clickedElement.find('.add-instruction-btn').hide();
-    clickedElement.find('.remove-instruction-btn').show()
-}
+		function addInstruction(e) {
+		    var clickedElement = $(e).closest('.presc-inner');
+		    var instructionDiv = clickedElement.find('.instruction-div'); 
+		    //console.log(clickedElement);
+		    var drugNameInputId = clickedElement.find('.drug_name').attr('id');
+		    //console.log(drugNameInputId);
+		    var drugNameInputId = parseInt(drugNameInputId.replace(/[^0-9\.]/g, ''), 10);
+		    instructionDiv.append('<textarea name="instruction' + drugNameInputId + '" cols="30" class=" form-control instruction"  id="instruction' + drugNameInputId + '"	></textarea>');
+		    clickedElement.find('.add-instruction-btn').hide();
+		    clickedElement.find('.remove-instruction-btn').show()
+		}
 
-function removeInstruction(e) {
-    var clickedElement = $(e).closest('.presc-inner');
-    var instructionTextArea = clickedElement.find('.instruction');
-    instructionTextArea.remove();
-    clickedElement.find('.add-instruction-btn').show();
-    clickedElement.find('.remove-instruction-btn').hide()
-}
+		function removeInstruction(e) {
+		    var clickedElement = $(e).closest('.presc-inner');
+		    var instructionTextArea = clickedElement.find('.instruction');
+		    instructionTextArea.remove();
+		    clickedElement.find('.add-instruction-btn').show();
+		    clickedElement.find('.remove-instruction-btn').hide()
+		}
 
-function drugRemove(e) {
-    var divCount = $('.default-div-count').val();
+/*function drugRemove(e) {
+
+    var divCount = $('.default-div-count').val(); 
+
+
     var elements = $(e).closest('.presc-inner');
     var removedPrescTable = elements.find('.drugs_row');
     var removedId = removedPrescTable.find('.dd_input_mini').attr('id');
@@ -707,7 +728,7 @@ function drugRemove(e) {
         }
         $('.default-div-count').val(newDefaultDivCount)
     }
-}
+}*/
 
 		
 		

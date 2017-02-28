@@ -200,6 +200,24 @@ class DBUtils {
 		return $encrypted;
 				
   	}
+  	public static function passwordDecrypt($password){
+  		$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
+			
+			$data = base64_decode($password);
+			$iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
+
+			$decrypted = rtrim(
+			    mcrypt_decrypt(
+			        MCRYPT_RIJNDAEL_128,
+			        hash('sha256', $key, true),
+			        substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)),
+			        MCRYPT_MODE_CBC,
+			        $iv
+			    ),
+			    "\0"
+			);
+		return $decrypted;
+  	}
 
 }
 

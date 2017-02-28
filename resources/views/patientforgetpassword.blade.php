@@ -8,7 +8,7 @@
 <!-- start: HEAD -->
 <head>
 
-	<title>Doctor's Diary | Login</title>
+	<title>Doctor's Diary | Forget Password</title>
 	<!-- start: META -->
 	<meta charset="utf-8" />
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
@@ -102,13 +102,13 @@ $currentPath = Route::getCurrentRoute()->getPath();
 							<div class="doctorlogin_main">
 								<!-- 	<span class="doctor_login"><img src="assets/images/doctor_icon.png"></span> -->
 
-								<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #428bca" @endif>Doctor Login</a>&nbsp;  &nbsp;
+								<a href="../doctor/login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login"  style="color: #428bca" @endif>Doctor Login</a>&nbsp;  &nbsp;
 
 							</div>
 							<div class="patientlogin_main"> 		
 		        		 		 	<!-- <span class="patient_login"><img src="assets/images/patient_icon.png">
 		        		 		 </span>	 -->        		 		 	
-		        		 		 <a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #428bca" @endif>
+		        		 		 <a href="login" @if($currentPath=="patient/login") class="topmenu-active"  style="color: #428bca" @endif>
 		        		 		 	Patient Login
 		        		 		 </a>
 		        		 		</div>
@@ -149,10 +149,10 @@ $currentPath = Route::getCurrentRoute()->getPath();
 	  						<div class="login_div2">
 	  							<div class="doctorlogin_main2">								
 
-	  								<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+	  								<a href="../doctor/login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
 	  							</div>
 	  							<div class="patientlogin_main2"> 				        		 		         		 		 	
-	  								<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
+	  								<a href="login" @if($currentPath=="patient/login") class="topmenu-active" @endif>
 	  									Patient Login
 	  								</a>
 	  							</div>
@@ -231,8 +231,8 @@ $currentPath = Route::getCurrentRoute()->getPath();
 	  			<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
 	  				<!-- <span class="dd_color_light_bl">New User ?</span> -->
 	  				<span class="input-icon ">
-	  					<button type="submit" class="btn btn-primary btn-block dd_btn_new">
-	  						<a href="doctorsignup" class=""> Login Now</a></button>
+	  					<button type="submit" class="btn btn-primary btn-block dd_btn_new patient_login_btn">
+	  						<a href="login" class=""> Login Now</a></button>
 	  					</span>
 	  				</div>
 
@@ -327,7 +327,10 @@ $currentPath = Route::getCurrentRoute()->getPath();
 			jQuery(document).ready(function() {
 				//Main.init();
 				forgetPassword.init();
-				
+				$('.patient_login_btn').click(function(e){
+		            e.preventDefault();
+		            window.location='login';
+		        });	
 				
 			});
 		</script>

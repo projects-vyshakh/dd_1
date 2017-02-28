@@ -12,7 +12,7 @@ var cardioPersonalInformation = function () {
             //alert(country);
             $.ajax({
                 type: "POST",
-                url: "getState",
+                url: "../getState",
                 data: "country_id="+ countryId ,
                 success: function(data){
                     $('#state').empty();
@@ -31,7 +31,7 @@ var cardioPersonalInformation = function () {
 	            //alert(country);
 	            $.ajax({
 	                type: "POST",
-	                url: "getState",
+	                url: "../getState",
 	                data: "country_id="+ countryId ,
 	                success: function(data){
 	                    $('#state').empty();
@@ -201,6 +201,7 @@ var cardioPersonalInformation = function () {
                 phone       : {
                     minlength : "Please enter a valid mobile",
                     number : "Please type valid phone number",
+                    required : "Please type a phone number"
                 },
                 email   : {
                     email: "Please type a valid email address"

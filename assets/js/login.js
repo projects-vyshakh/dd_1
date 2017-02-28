@@ -164,7 +164,7 @@ var Login = function () {
             
             $.ajax({
                 type: "POST",
-                url: "getState",
+                url: "../getState",
                 data: "country_id="+ countryId ,
                 success: function(data){
                     $('#state').empty();
@@ -182,7 +182,7 @@ var Login = function () {
                 var countryId  = $( "#country option:selected" ).val();
                 $.ajax({
                 type: "POST",
-                url: "getState",
+                url: "../getState",
                 data: "country_id="+ countryId ,
                 success: function(data){
                     $('#state').empty();
@@ -304,12 +304,7 @@ var Login = function () {
         });
     };
     
-    var patientRegistration = function(){
-        $('.patient_register_btn').click(function(e){
-            e.preventDefault();
-            window.location='patientregisterotpcheck';
-        });
-    }
+   
 
     
     return {
@@ -321,7 +316,7 @@ var Login = function () {
             runLoginValidator();
             //runDoctorSignUpValidator();
             runCountryState();
-            patientRegistration();
+            
             
         }
     };

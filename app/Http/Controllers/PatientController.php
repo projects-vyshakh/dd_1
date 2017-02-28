@@ -47,8 +47,7 @@ class PatientController extends Controller {
 	 *
 	 * @return Response
 	 */
-
-	public function showPatientProfileManagement(){
+	public function showPatientDashboard(){
 		$patientId = Session::get('id_patient');
 
 
@@ -124,11 +123,54 @@ class PatientController extends Controller {
 											//die();
 											
 
-			return view('patientprofilemanagement',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctors'=>$doctors,'treatmentHistory'=>$treatmentHistory,'doctorDetails'=>$doctorDetails));
+			return view('patientdashboard',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctors'=>$doctors,'treatmentHistory'=>$treatmentHistory,'doctorDetails'=>$doctorDetails));
 		}
 		else{
-			return Redirect::to('patientlogin');
+			return Redirect::to('patient/login');
 		}
+	}
+	public function showPatientProfile(){
+		$patientId = Session::get('id_patient');
+
+		if(!empty($patientId)){
+			$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->lists('business_value', 'business_value');
+			
+			$maritialStatus = DB::table('business_key_details')->where('business_key', '=', 'MARITIAL_STATUS')->lists('business_value', 'business_value');
+			
+			$country =  DB::table('countries')->select('country_name','sortname','id')->orderBy('country_name', 'asc')->lists('country_name', 'id'); 	
+			
+			$state =  DB::table('states')->select('id','state_name','country_id')->orderBy('state_name', 'asc')->lists('state_name', 'state_name'); 	
+			
+			$city =  DB::table('cities')->select('city_name','state_id')->orderBy('city_name', 'asc')->lists('city_name', 'city_name'); 	
+			    	
+
+			    if(!in_array('', $gender)){
+			     	 array_unshift($gender, '');
+			    }	
+			    if(!in_array('', $maritialStatus)){
+			     	 array_unshift($maritialStatus, '');
+			    } 
+			    if(!in_array('', $country)){
+			     	 array_unshift($country, '');
+			    } 
+			    if(!in_array('', $state)){
+			     	 array_unshift($state, '');
+			    } 
+			    if(!in_array('', $city)){
+			     	 array_unshift($city, '');
+			    }	
+
+
+			    $patientId = Session::get('id_patient');  		
+			    $patientData = DB::table('patients')
+			    						 ->where('id_patient','=',$patientId)->first();
+			//Log::info("Patientdata",array($patientData));
+
+			return view('patientprofile',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData));
+		}
+		else{
+			return Redirect::to('patient/login');
+		}	
 		
 	}
 
@@ -146,7 +188,7 @@ class PatientController extends Controller {
 			return view('patientprofileprevtreatment',array('patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData,'patientData'=>$patientPersonalData));
 		}
 		else{
-			return Redirect::to('patientlogin');
+			return Redirect::to('patient/login');
 		}	
 	}
 		
@@ -444,11 +486,11 @@ class PatientController extends Controller {
 			return view('patientprofileedit',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country, 'state' => $state, 'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData));
 		}
 		else{
-			return Redirect::to('patientlogin');
+			return Redirect::to('patient/login');
 		}	
 	}
 
-	public function patientProfileEdit(){
+	public function handlePatientProfile(){
 		$input 		= Request::all();
 		$patientId 	= Session::get('id_patient');
 		
@@ -495,7 +537,7 @@ class PatientController extends Controller {
 				$img = $this->photoUpload($patientId);
 
 				if($img=="error"){
-					return Redirect::to('patientprofileedit')->with(array('error'=>"Invalid file uploads"));
+					return Redirect::to('patient/profile')->with(array('error'=>"Invalid file uploads"));
 				}
 				else{
 
@@ -551,16 +593,16 @@ class PatientController extends Controller {
 		 			$patientPersonalInfoUpdate = DB::table('patients')->where('id_patient','=',$patientId)->update($inputValue);
 
 		 			if($patientPersonalInfoUpdate){
-		 				return Redirect::to('patientprofileedit')->with(array('success'=>"Data updated successfully"));	
+		 				return Redirect::to('patient/profile')->with(array('success'=>"Data updated successfully"));	
 		 			}
 		 			else{
-		 				return Redirect::to('patientprofileedit')->with(array('error'=>"No changes to update"));
+		 				return Redirect::to('patient/profile')->with(array('error'=>"No changes to update"));
 		 			}
 		 		}	
 			}
 			else{
 				
-				return Redirect::to('patientprofileedit')->with(array('error'=>'Failed to update'));
+				return Redirect::to('patient/profile')->with(array('error'=>'Failed to update'));
 			}
 
 		}
@@ -698,7 +740,7 @@ class PatientController extends Controller {
 			return view('patientchangepassword',array('patientData'=>$patientPersonalData));
 		}
 		else{
-			return Redirect::to('patientlogin');
+			return Redirect::to('patient/login');
 		}
 	}
 	public function handlePatientChangePassword(){
@@ -751,21 +793,21 @@ class PatientController extends Controller {
 				$passwordUpdated = DB::table('patients')->where('id_patient','=',$patientId)->update(array('password'=>$encrypted));
 
 				if($passwordUpdated){
-					return Redirect::to('patientchangepassword')->with(array('success'=>"Password changed successfully"));
+					return Redirect::to('patient/changepassword')->with(array('success'=>"Password changed successfully"));
 					
 				}
 				else{
-					return Redirect::to('patientchangepassword')->with(array('error'=>"Failed to change password"));
+					return Redirect::to('patient/changepassword')->with(array('error'=>"Failed to change password"));
 					
 				}
 			
 			}
 			else{
-				return Redirect::to('patientchangepassword')->with(array('error'=>"Wrong old password"));
+				return Redirect::to('patient/changepassword')->with(array('error'=>"Wrong old password"));
 			}
 		}
 		else{
-			return Redirect::to('patientlogin');
+			return Redirect::to('patient/sigin');
 		}  
 
 		
@@ -791,21 +833,21 @@ class PatientController extends Controller {
 
 			if($patientExist->registration_status==0){
 				if(!empty($patientOtpExist)){
-					return Redirect::to('patientregisterpassword')->with(array('success_register'=>'OTP verified successfully.'))->withInput();
+					return Redirect::to('patient/registerpassword')->with(array('success_register'=>'OTP verified successfully.'))->withInput();
 				}
 				else{
-					return Redirect::to('patientregisterotpcheck')->with(array('error_register'=>'Invalid OTP.'))->withInput();
+					return Redirect::to('patient/signup')->with(array('error_register'=>'Invalid OTP.'))->withInput();
 				}
 			}
 			else{
-				return Redirect::to('patientregisterotpcheck')->with(array('error_register'=>'Patient ID already registered. Please login.'))->withInput();
+				return Redirect::to('patient/signup')->with(array('error_register'=>'Patient ID already registered. Please login.'))->withInput();
 			}
 
 			
 
 		}
 		else{
-			return Redirect::to('patientregisterotpcheck')->with(array('error_register'=>'Invalid Patient Id.'))->withInput();
+			return Redirect::to('patient/signup')->with(array('error_register'=>'Invalid Patient Id.'))->withInput();
 		}
 
 
@@ -818,7 +860,7 @@ class PatientController extends Controller {
 			return view('patientregisterpassword');
 		}
 		else{
-			return Redirect::to('patientlogin');
+			return Redirect::to('patient/login');
 		}
 		
 	}
@@ -840,10 +882,10 @@ class PatientController extends Controller {
 
 		if($patientPasswordUpdate){
 			Session::flush();
-			return Redirect::to('patientlogin')->with(array('success'=>'Successfully Registered. Please login here'));
+			return Redirect::to('patient/login')->with(array('success'=>'Successfully Registered. Please login here'));
 		}
 		else{
-			return Redirect::to('patientlogin')->with(array('error'=>'Regsitration Failed. Please contact Administrator.'));
+			return Redirect::to('patient/login')->with(array('error'=>'Regsitration Failed. Please contact Administrator.'));
 		}
 
 	}

@@ -15,12 +15,20 @@ else{
 }
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <title>Prescritpion Copy</title>
+
+
     <style>
+    *{
+    	 font-family: verdana, 'Open Sans', sans-serif;
+
+    }
     	
 
 		.clearfix:after {
@@ -29,10 +37,6 @@ else{
 		  clear: both;
 		}
 
-		a {
-		  color: #0087C3;
-		  text-decoration: none;
-		}
 
 		body {
 		  
@@ -40,84 +44,55 @@ else{
 		  margin: 0 auto; 
 		  color: #555555;
 		  background: #FFFFFF; 
-		  font-family: Arial, sans-serif; 
-		  font-size: 14px; 
+		  font-family: verdana, 'Open Sans', sans-serif;
+		  font-size: 12px; 
 		  /*font-family: SourceSansPro;*/
 		}
-		li{
-			/*padding: 5px 0;*/
-			margin: 5px 0;
-		}
-
-		header {
-		  padding: 10px 0;
-		  margin-bottom: 20px;
-		  border-bottom: 1px solid #AAAAAA;
-		}
-
-		#logo {
-		  float: left;
-		  margin-top: 8px;
-		}
-
-		#logo img {
-		  height: 70px;
-		}
-
-		#company {
-		  float: right;
-		  text-align: right;
-		}
-	.css/{
-
-	}
-			
-	
-
-
-		#details {
-		  margin-bottom: 50px;
-		}
-
-		#client {
-		  padding-left: 6px;
-		  border-left: 6px solid #0087C3;
-		  float: left;
-		}
-
-		#client .to {
-		  color: #777777;
-		}
-
+		
 		h2.name {
 		  font-size: 1.4em;
 		  font-weight: normal;
 		  margin: 0;
 		}
+		h5{
+			color: red;
+		  font-size: 16px;
+		  font-weight: bold;
+		  margin: 0 0 0 0;
+		  font-family: verdana, 'Open Sans', sans-serif;
+		
 
-		#invoice {
-		  float: right;
-		  text-align: right;
 		}
 
-		#invoice h1 {
-		  color: #0087C3;
-		  font-size: 2.4em;
-		  line-height: 1em;
-		  font-weight: normal;
-		  margin: 0  0 10px 0;
+		h4{
+
+		  font-size: 13px;
+		  font-weight: bold;
+		  margin: 0 0 0.1em 0;
+		  font-family: verdana, 'Open Sans', sans-serif;
+		  color: #555555
+
+		}
+		h6{
+
+		  font-size: 15px;
+		  font-weight: bold;
+		  margin: 0 0 0.2em 0;
+		  font-family: verdana, 'Open Sans', sans-serif;
+
+		}
+		hr{
+			margin: 12px 0;
+			border-bottom: 0.5px solid #888
 		}
 
-		#invoice .date {
-		  font-size: 1.1em;
-		  color: #777777;
-		}
+		
 
 		table {
 		  width: 100%;
 		  border-collapse: collapse;
 		  border-spacing: 0;
-		  margin-bottom: 20px;
+		  margin-bottom: 10px;
 		}
 
 		table th,
@@ -139,10 +114,11 @@ else{
 		}
 
 		table td h3{
-		  color: #57B223;
-		  font-size: 1.2em;
-		  font-weight: normal;
+		  color: #0070c0;
+		  font-size: 16px;
+		  font-weight: bold;
 		  margin: 0 0 0.2em 0;
+		  font-family: verdana, 'Open Sans', sans-serif;
 		}
 
 		table .no {
@@ -201,106 +177,6 @@ else{
 		  border: none;
 		}
 
-		#thanks{
-		  font-size: 2em;
-		  margin-bottom: 50px;
-		}
-
-		#notices{
-		  padding-left: 6px;
-		  border-left: 6px solid #0087C3;  
-		}
-
-		#notices .notice {
-		  font-size: 1.2em;
-		}
-
-		footer {
-		  color: #777777;
-		  width: 100%;
-		  height: 30px;
-		  position: absolute;
-		  bottom: 0;
-		  border-top: 1px solid #AAAAAA;
-		  padding: 8px 0;
-		  text-align: center;
-		}
-
-		.clear{ clear: both; }
-		.medical-history{
-			padding-top: 100px;
-		}
-		.vitals { padding-top: 50px; margin-bottom: 100px}
-		.column-left{ float: left; width: 33%;  }
-		.column-right{ float: right; width: 33%; }
-		.column-center{ float: left;display: inline-block; width: 33%; }
-		.medical-hisotry-inner{ font-size: 16px }
-		.space{ margin-bottom: 50px }
-		.vitals-content{ float:left; width: 16.6%;}
-
-		.diag-column-left
-		{ 
-			/*float: left; */
-			display: inline-block;
-			width: 50%;
-			
-		}
-		.diag-column-right
-		{ 
-			/*float: right; */
-			display: inline-block;
-			width: 50%;
-			
-		}
-		.symptoms-div{
-			/*margin-left: 20px;*/
-		}
-		.diseases-column-left{
-			float:left;
-			width : 50%;
-		}
-		.presc-margin{
-			
-			padding-top: 80px;
-		}
-		.set-width{
-			width: 100%;
-			height: auto;
-		}
-		.presc-drugs{
-			float : left;
-			width: 30%;
-		}
-		.presc-duration{
-			float : left;
-			width: 20%
-		}
-		.presc-dosage{
-			float : left;
-			width: 20%
-		}
-		.presc-frequency{
-			float : left;
-			width: 30%
-		}
-
-		.ta6 {
-			border: 1px solid #CCCCCC;
-			width : auto;
-			height: 60px;
-			padding: 10px;
-		}
-		.treatment-inner-div{
-			width: 50%;
-		}
-		.followup-inner-div{
-			width: 50%;
-		}
-		.print_pd_0{
-			
-			margin-left: 15px;
-		}
-
 		.full_cover{
 			margin-top: 	<?php echo $marginTop."px"; ?> ;
 			margin-bottom: 	<?php echo $marginBottom."px"; ?> ;
@@ -308,411 +184,911 @@ else{
 			margin-right:	<?php echo $marginRight."px"; ?> ;
 
 		}
-		.dd_100_width{
-			width: 100%;
+		.dd_not_bold{
+			font-weight: normal;
 		}
 
 
     </style>
   </head>
   <body>
+
+  	<?php
+  		//Doctor Personal Information
+  		if(!empty($doctorPersonalData)){
+  			$doctorName = "Dr"." ".$doctorPersonalData->first_name." ".ucfirst($doctorPersonalData->last_name);
+  			$qualification 		= json_decode($doctorPersonalData->qualification);	
+  			$qualificationCount = sizeof($qualification);
+      		$specializationName = $doctorPersonalData->specialization_name;
+      		$mobile 			= $doctorPersonalData->phone;
+      		$imaRegNum 			= $doctorPersonalData->doctor_registration_no;
+      		
+  		}
+  		else{
+  			$doctorName 		= "";
+  			$qualification 		= "";
+  			$qualificationCount = "";
+  			$specializationName = "";
+  			$mobile 			= "";
+  			$imaRegNum 			= "";
+  		}
+
+  		//Patient Personal Information
+  		if(!empty($patientPersonalData)){
+  			$patientName 	= $patientPersonalData->first_name." ".$patientPersonalData->last_name;
+    		$age 			= $patientPersonalData->age." "."years";
+    		$gender 		= $patientPersonalData->gender;
+    		$pMobile 		= $patientPersonalData->phone;
+    		$patientId      = $patientPersonalData->id_patient;
+    		
+  		}
+  		else{
+  			$patientName = "";
+  			$age 		 = "";
+  			$gender 	 = "";
+  			$pMobile 	 = "";
+  			$patientId   = "";
+  		}
+
+  		//Vitals history
+  		if(!empty($vitalsData)){
+			$weight 			= $vitalsData->weight;
+	    	$pressure 			= $vitalsData->systolic_pressure."/".$vitalsData->diastolic_pressure;
+	    	$pulse 				= $vitalsData->pulse;
+	    	$respiratoryrate 	= $vitalsData->respiratoryrate;
+	    	$spo2 				= $vitalsData->sp;
+	    	$temperature 		= $vitalsData->temperature;
+		}
+		else{
+			$weight 			= "";
+	    	$pressure 			= "";
+	    	$pulse 				= "";
+	    	$respiratoryrate 	= "";
+	    	$spo2 				= "";
+	    	$temperature 		= "";
+		}
+
+		if(!empty($prescTreatmentFollowupData)){
+			$followUpDate = $prescTreatmentFollowupData->follow_up_date;
+			$treatment    = $prescTreatmentFollowupData->treatment;
+		}
+		else{
+			$followUpDate = "";
+			$treatment    = "";
+		}
+
+		
+
+
+  	?>
+
   	<div class="full_cover">
   		@if(!empty($printData))
-  			@if($printData->header_settings=="Yes")
-		    	@if(!empty($patientPersonalData))
-			    	<?php
-			    		$patientName = $patientPersonalData->first_name." ".$patientPersonalData->last_name;
-			    		$age = $patientPersonalData->age;
-			    		$gender = $patientPersonalData->gender;
+  			<table>
+				<tr>
+					@if($printData->header_settings=="Yes")
+						<td width="60%" valign="top">
+							@if(!empty($doctorPersonalData))
+								<table>
+									<tr>
+										<td>
+											<h6>{{$doctorName}}</h6>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											@foreach($qualification  as $index=>$qualificationVal)
+								          		
+								          		@if($index>=0 && $index<$qualificationCount-1)
+								          			{{$qualificationVal.","." "}}
+								          		@else
+								          			{{$qualificationVal.","." "}}
+								          		@endif
+								          	@endforeach
+								          	{{$specializationName}}	
+										</td>
+									</tr>
+									<tr>
+										<td>
+											IMA Registration Number: {{$imaRegNum}}
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Phone No: {{$mobile}}
+										</td>
+									</tr>
+								</table>
+							@else
+
+							@endif
+								
+						</td>
+					@else
+						<td></td>
+					@endif
+
+					@if(!empty($patientPersonalData))
+						<td width="40%" valign="top">
+							<table>
+								<tr>
+									<td><b style="font-size: 14px;">Patient Name:</b> {{$patientName}}</td>
+								</tr>
+								<tr>
+									<td>
+										Age: {{$age}}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Gender: {{$gender}}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b style="font-size: 14px;">Patient ID:</b> {{$patientId}}
+									</td>
+								</tr>
+							</table>
+						</td>
+					@else
+					@endif
+
+					
+				</tr>
+			</table>
+  		@else
+  			<table>
+				<tr>
+					<td width="60%">
+						@if(!empty($doctorPersonalData))
+							<table>
+								<tr>
+									<td>
+										<h6>{{$doctorName}}</h6>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										@foreach($qualification  as $index=>$qualificationVal)
+								          		
+							          		@if($index>=0 && $index<$qualificationCount-1)
+							          			{{$qualificationVal.","." "}}
+							          		@else
+							          			{{$qualificationVal.","." "}}
+							          		@endif
+							          	@endforeach
+							          	{{$specializationName}}	
+									</td>
+								</tr>
+								<tr>
+									<td>
+										IMA Registration Number: {{$imaRegNum}}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Phone No: {{$mobile}}
+									</td>
+								</tr>
+							</table>
+						@else
+
+						@endif
+								
+					</td>
 
 
-			    	?>
-				    <div id="company">
-				        <div><div class="name" style="font-size: 20px; margin-bottom: 5px;">Name:	{{$patientName}} </div> </div>
-				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Age:	{{$age}}</div> </div>
-				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Sex:	{{$gender}}</div> </div>
-				    </div>
-				@else
-					<div id="company">
-				        <div><div class="name" style="font-size: 20px; margin-bottom: 5px;">Name: </div> </div>
-				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Age:</div> </div>
-				        <div><div class="name" style="font-size: 16px; margin-bottom: 5px;">Sex:</div> </div>
-				    </div>
-				@endif
-			@endif
+					@if(!empty($patientPersonalData))
+						<td width="40%">
+							<table>
+								<tr>
+									<td><b style="font-size: 14px;">Patient Name:</b> {{$patientName}}</td>
+								</tr>
+								<tr>
+									<td>
+										Age: {{$age}}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Gender: {{$gender}}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b style="font-size: 14px;">Patient ID:</b> {{$patientId}}
+									</td>
+								</tr>
+							</table>
+						</td>
+					@else
+					@endif
+				</tr>
+			</table>
+  		@endif
+			    
 
-    	
 
-    		<!-- Doctor personal Data -->
-    	
 		
-	    	@if(!empty($doctorPersonalData))
-		      	<?php
-		      	
-		      		$doctorName = $doctorPersonalData->first_name." ".$doctorPersonalData->last_name;
-		      		$qualification 		= json_decode($doctorPersonalData->qualification);
-		      		$qualificationCount = sizeof($qualification);
-		      		$specializationName = $doctorPersonalData->specialization_name;
-		      		$mobile = $doctorPersonalData->phone;
 
-		      	?>
-			    <div id="details" class="clearfix">
-			        <div id="client">
-			          <div class="to"></div>
-			          <h2 class="name" style="margin-bottom: 5px;">Dr.{{$doctorName}}</h2>
-			          <div class="address" style="margin-bottom: 5px;">
-			          	@foreach($qualification  as $index=>$qualificationVal)
-			          		<!-- if condition for putting comma dynamically -->
-			          		@if($index>=0 && $index<$qualificationCount-1)
-			          			{{$qualificationVal.","}}
-			          		@else
-			          			{{$qualificationVal}}
-			          		@endif
-			          	@endforeach	
-			          </div>
-			          <div class="address" style="margin-bottom: 8px;">{{$specializationName}}</div>
-			          <div class="email" style="margin-bottom: 5px;"><a>{{$mobile}}</a></div>
-			        </div>
-			    </div>
-			@else
-				<div id="details" class="clearfix">
-			        <div id="client">
-			          <div class="to"></div>
-			          <h2  class="name" style="margin-bottom: 5px;"></h2>
-			          <div class="address" style="margin-bottom: 5px;"></div>
-			          <div class="address" style="margin-bottom: 8px;"></div>
-			          <div class="email" style="margin-bottom: 5px;"><a></a></div>
-			        </div>
-			    </div>
+		<hr style="border-bottom: 1px solid #4f81bd">
 
-			@endif
-	
+
+		<!-- //---------------------Vitasls table started--------------------------------// -->
+
+		<table>
+
+			<tr>
+				<td><h3>VITALS:</h3></td>
+			</tr>
+
+			<tr>
+				<td style="text-align: center;">
+					
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top"><img width="40px" height="40px" src="assets/images/weight.png"></td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top">{{$weight}} @if(!empty($weight)) {{"Kg"}} @else {{""}} @endif</td>
+						</tr>
+					</table>
+					<!-- <div style="margin-top: 7px;">
+						
+					</div> -->
+				</td>
+				<td style="text-align: center;">
+
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top"><img width="40px" height="40px" src="assets/images/bloodpressure.png"></td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top">{{$pressure}} @if(!empty($pressure)) {{"mmHg"}} @else {{""}} @endif</td>
+
+						</tr>
+					</table>
+					
+					
+				</td>
+
+				<td style="text-align: center;">
+
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top"><img width="40px" height="40px" src="assets/images/pulse.png"></td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top">{{$pulse}} @if(!empty($pulse)) {{"bpm"}} @else {{""}} @endif</td>
+
+						</tr>
+					</table>
+					
+					
+				</td>
+				<td style="text-align: center;">
+
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top"><img width="40px" height="40px" src="assets/images/respiratoryrate.png"></td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top" >{{$respiratoryrate}} @if(!empty($respiratoryrate)) {{"breaths/min"}} @else {{""}} @endif</td>
+						</tr>
+					</table>
+
+					
+					
+				</td>
+				<td style="text-align: center;">
+
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top"><img width="40px" height="40px" src="assets/images/spo2.png"></td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top">{{$spo2}} @if(!empty($spo2)) {{"%"}} @else {{" "}} @endif</td>
+						</tr>
+					</table>
+					
+					
+				</td>
+				<td style="text-align: center;">
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top"><img width="40px" height="40px" src="assets/images/temperature.png"></td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td style="text-align: center;" valign="top" >{{$temperature}} @if(!empty($temperature)) &deg;F @else {{""}} @endif</td>
+						</tr>
+					</table>
+
+				</td>
+			</tr>
+			
+
+		</table>
+
+		<hr>
+
+		@if($specializationName=="Gynaecology")
+			<table>
+			
+				<tr>
+					<td><h3>OBSTETRICS HISTORY:</h3></td>
+				</tr>
+
+				@if(!empty($obsHistory))
+					<tr>
+						<td width="50%">Married Life:
+							@if(!empty($obsHistory->married_life) && $obsHistory->married_life!="0")
+								{{$obsHistory->married_life}}
+							@else
+								{{" "}}
+							@endif
+						</td>
+						<td width="50%">Husband Blood Group:
+							@if(!empty($obsHistory->husband_blood_group) && $obsHistory->husband_blood_group!="0")
+								{{$obsHistory->husband_blood_group}}
+							@else
+								{{" "}}
+							@endif
+
+						</td>			
+					</tr>
+
+					<tr>
+						<table>
+							<tr>
+								<td width="25%">Gravida:
+									@if(!empty($obsHistory->gravida) && $obsHistory->gravida!="0")
+										{{$obsHistory->gravida}}
+									@else
+										{{" "}}
+									@endif
+								</td>
+								<td width="25%">Para:
+									@if(!empty($obsHistory->para) && $obsHistory->para!="0")
+										{{$obsHistory->para}}
+									@else
+										{{" "}}
+									@endif
+								</td>
+								<td width="25%">Living:
+									@if(!empty($obsHistory->living) && $obsHistory->living!="0")
+										{{$obsHistory->living}}
+									@else
+										{{" "}}
+									@endif
+								</td>
+								<td width="25%">Abortion:
+									@if(!empty($obsHistory->abortion) && $obsHistory->abortion!="0")
+										{{$obsHistory->abortion}}
+									@else
+										{{" "}}
+									@endif
+								</td>	
+							</tr>
+						</table>		
+					</tr>
+
+					<tr>
+						<table>
+							<tr>
+								<td width="33.33%">LMP:
+									@if(!empty($obsHistory->obs_lmp_date) && $obsHistory->obs_lmp_date!="0000-00-00")
+										{{date('d-M-Y',strtotime($obsHistory->obs_lmp_date))}}
+									@else
+										{{" "}}
+									@endif
+								</td>
+								<td width="33.33%">Flow:
+									@if(!empty($obsHistory->obs_lmp_flow))
+										{{$obsHistory->obs_lmp_flow}}
+									@else
+										{{" "}}
+									@endif
+								</td>
+								<td width="33.33%">Dysmenorrhea:
+									@if(!empty($obsHistory->obs_lmp_dysmenorrhea))
+										{{$obsHistory->obs_lmp_dysmenorrhea}}
+									@else
+										{{" "}}
+									@endif
+								</td>				
+							</tr>
+						</table>		
+					</tr>
+
+					<tr>
+						<table>
+							<tr>
+								<td width="33.33%">Days:
+									@if(!empty($obsHistory->obs_lmp_days) && $obsHistory->obs_lmp_days!="0")
+										{{$obsHistory->obs_lmp_days}}
+									@else
+										{{" "}}
+									@endif
+								</td>
+								<td width="33.33%">Cycle:
+									@if(!empty($obsHistory->obs_lmp_cycle) && $obsHistory->obs_lmp_cycle!="0")
+										{{$obsHistory->obs_lmp_cycle}}
+									@else
+										{{" "}}
+									@endif
+								</td>
+								<td width="33.33%">Menstrual Type:
+									@if(!empty($obsHistory->obs_menstrual_type))
+										{{$obsHistory->obs_menstrual_type}}
+									@else
+										{{" "}}
+									@endif
+								</td>				
+							</tr>
+						</table>		
+					</tr>
+				@else
+
+				@endif
+					
+				@if(!empty($pregHistory))
+					<tr>
+						<table>
+							<tr>
+								<td width="33.33%">Pregnancy Kind:
+									@if(!empty($pregHistory->obs_preg_kind))
+										{{$pregHistory->obs_preg_kind}}
+									@else
+										{{" "}}
+									@endif
+								</td>
+								<td width="33.33%">Pregnancy Type:
+									@if(!empty($pregHistory->obs_preg_type))
+										{{$pregHistory->obs_preg_type}}
+									@else
+										{{" "}}
+									@endif
+								</td>
+								<td width="33.33%">Term:
+									@if(!empty($pregHistory->obs_preg_term))
+										{{$pregHistory->obs_preg_term}}
+									@else
+										{{" "}}
+									@endif
+								</td>				
+							</tr>
+						</table>		
+					</tr>
+				@else
+
+				@endif
+				
+				
+
+			</table>
+		<hr>
 		@endif
-	
+
+		
+
+		<table>
+			<tr>
+				<td><h3>MEDICAL HISTORY:</h3></td>
+			</tr>
+
+			<table>
+			<tr>
+				
+				<td width="25%">Hypertension:
+					@if(!empty($medicalHistoryData))
+      					@foreach($medicalHistoryData as $index=>$medicalHistoryDataVal)
+      						@if($medicalHistoryDataVal->illness_name=="Hypertension")
+      							
+      							@if($medicalHistoryDataVal->illness_status==" " ||   
+      							    $medicalHistoryDataVal->illness_status==null)
+      								{{"-"}}
+      							@else
+      								{{$medicalHistoryDataVal->illness_status}}
+      							@endif
+      							
+      						@endif
+      							
+      					@endforeach
+      				@endif
+				</td>
+				<td width="25%">Diabetes:
+					@if(!empty($medicalHistoryData))
+      					@foreach($medicalHistoryData as $index=>$medicalHistoryDataVal)
+      						@if($medicalHistoryDataVal->illness_name=="Diabetes")
+      							
+      							@if($medicalHistoryDataVal->illness_status==null)
+      								{{"-"}}
+      							@else
+      								{{$medicalHistoryDataVal->illness_status}}
+      							@endif
+      							
+      						@endif
+      							
+      					@endforeach
+      				@endif
+
+				</td>
+				<td width="25%">Hyperthyroidism:
+					@if(!empty($medicalHistoryData))
+      					@foreach($medicalHistoryData as $index=>$medicalHistoryDataVal)
+      						@if($medicalHistoryDataVal->illness_name=="Hyperthyroidism")
+      							
+      							@if($medicalHistoryDataVal->illness_status==null)
+      								{{"-"}}
+      							@else
+      								{{$medicalHistoryDataVal->illness_status}}
+      							@endif
+      							
+      						@endif
+      							
+      					@endforeach
+      				@endif
+				</td>
+				<td width="25%">Hypothyroidism:
+					@if(!empty($medicalHistoryData))
+      					@foreach($medicalHistoryData as $index=>$medicalHistoryDataVal)
+      						@if($medicalHistoryDataVal->illness_name=="Hypothyroidism")
+      							
+      							@if($medicalHistoryDataVal->illness_status==" " )
+      								{{"-"}}
+      							@else
+      								{{$medicalHistoryDataVal->illness_status}}
+      							@endif
+      							
+      						@endif
+      							
+      					@endforeach
+      				@endif
+				</td>
+			</tr>
+			</table>
+
+			<table>
+			<tr>
+				<td width="25%">Cancer:
+					@if(!empty($medicalHistoryData))
+      					@foreach($medicalHistoryData as $index=>$medicalHistoryDataVal)
+      						@if($medicalHistoryDataVal->illness_name=="Cancer")
+      							
+      							@if($medicalHistoryDataVal->illness_status==" " || $medicalHistoryDataVal->illness_status==null)
+      								{{"-"}}
+      							@else
+      								{{$medicalHistoryDataVal->illness_status}}
+      							@endif
+      							
+      						@endif
+      							
+      					@endforeach
+      				@endif
+				</td>
+				<td width="25%">UTI:
+					@if(!empty($medicalHistoryData))
+      					@foreach($medicalHistoryData as $index=>$medicalHistoryDataVal)
+      						@if($medicalHistoryDataVal->illness_name=="UTI")
+      							
+      							@if($medicalHistoryDataVal->illness_status==" ")
+      								{{"-"}}
+      							@else
+      								{{$medicalHistoryDataVal->illness_status}}
+      							@endif
+      							
+      						@endif
+      							
+      					@endforeach
+      				@endif
+				</td>
+				<td width="25%"></td>
+				<td width="25%"></td>
+			
+			</tr>
+			</table>
+
+		</table>
+
+		<hr>
+
+		<!-- Symptoms & Diseases -->
+		<table>
+			<tr>
+				<td><h3>DIAGNOSIS:</h3></td>
+			</tr>
+
+			<tr>
+
+				<td width="50%" valign="top">
+					<table>
+						
+							<tr><td><h4>SYMPTOMS</h4></td></tr>
+							<?php
+								if(!empty($diagnosisData)){
+									$symptoms = array_filter(json_decode($diagnosisData->diag_symptoms));
+
+									if(!empty($symptoms)){
+										for($i=0;$i<count($symptoms);$i++){
+
+											echo "<tr><td>".$symptoms[$i]."</td></tr>";
+											
+										}
+									}
+									else{
+										echo "<tr><td>"."None"."</td></tr>";
+									}
+								}
+								else{
+
+									$symptoms = "";
+									echo "<tr><td>"."None"."</td></tr>";
+								}
+
+
+
+							?>
+							<!-- <tr><td>Headaches </td></tr>
+							<tr><td>Vomiting </td></tr>
+							<tr><td>Vomiting </td></tr> -->
+						
+					
+					</table>
+					
+				</td>
+				<td width="50%" valign="top">					
+					<table>
+						<?php
+						if(!empty($diagnosisData)){
+						?>
+							<tr><td><h4>SYNDROMES</h4></td></tr>
+							<tr>
+								<td>
+									<?php 
+										
+									$syndrome = $diagnosisData->diag_syndromes;
+									if(!empty($syndrome)){
+										echo $syndrome;
+										
+									}
+									
+									?>
+								</td>
+							</tr>
+						<?php
+						}
+						else{
+							$syndrome = "";
+							
+							
+						}
+						?>		
+							
+
+						
+					
+					</table>
+				</td>
+					
+			</tr>
+			<tr>
+				<td width="50%" valign="top">
+					<table>						
+						<tr><td><h4>DISEASE</h4></td></tr>
+						<?php
+							if(!empty($diagnosisData)){
+								$diseases = array_filter(json_decode($diagnosisData->diag_suspected_diseases));
+
+								if(!empty($diseases)){
+									for($i=0;$i<count($diseases);$i++){
+
+										echo "<tr><td>".$diseases[$i]."</td></tr>";
+										
+									}
+								}
+								else{
+									echo "<tr><td>"."None"."</td></tr>";
+								}
+							}
+							else{
+								$diseases = "";
+								echo "<tr><td>"."None"."</td></tr>";
+							}
+
+
+
+						?>
+														
+					</table>					
+				</td>
+				<td width="50%" valign="top">					
+					<table>
+						@if(!empty($diagnosisData))
+							<tr><td><h4>ADDITIONAL COMMENTS</h4></td></tr>
+							<tr>
+								<td>
+									<?php 
+										$comments = $diagnosisData->diag_comment;
+										if(!empty($comments)){
+											echo $comments;
+											
+										}
+									?>
+								</td>
+							</tr>
+						@else
+
+						@endif
+							
+					</table>
+				</td>					
+			</tr>
+		</table>
+
+		<hr>
+
+		<!-- PrescriptionDetails -->
+		<table>
+			<tr>
+				<td><h3>PRESCRIPTION:</h3></td>
+			</tr>
+   			<thead>
+       			<td><h4 style="text-transform: uppercase;">Drugs</h4></td>
+       			<td><h4 style="text-transform: uppercase;">Dosage</h4></td>
+       			<td><h4 style="text-transform: uppercase;">Duration</h4></td>
+       			<td><h4 style="text-transform: uppercase;">Frequency</h4></td>
+   			</thead>
+
+   			<tbody>
+   				@if(!empty($prescriptionData))
+       				@foreach($prescriptionData as $index=>$prescriptionDataVal)
+
+	       				<tr @if($index%2==0) style="background-color: #d9d9d9" @endif>
+		       				<td>
+		       					{{$prescriptionDataVal->drug_name}}
+		       				</td>
+		       				<td>
+		       					@if(!empty($prescriptionDataVal->dosage))
+									{{$prescriptionDataVal->dosage." ".$prescriptionDataVal->dosage_unit}}
+								@else
+									{{"-"}}
+								@endif
+		       				</td>
+							<td>
+								@if(!empty($prescriptionDataVal->duration))
+									{{$prescriptionDataVal->duration." ".$prescriptionDataVal->duration_unit}}
+								@else
+									{{"-"}}
+								@endif															
+							</td>
+							<td>
+								@if(($prescriptionDataVal->morning=="0") && 
+									($prescriptionDataVal->noon=="0")	&&
+									($prescriptionDataVal->night=="0"))
+									
+
+									{{"-"}}
+
+								@else
+									{{$prescriptionDataVal->morning}}
+									- {{$prescriptionDataVal->noon}}
+									- {{$prescriptionDataVal->night}}
+
+								@endif
+		       					
+		       				</td>
+		       			</tr>
+	       				
+       				@endforeach
+       			@else
+       				<tr>
+       					<td>No Prescription Data entered.</td>
+       				</tr>
+
+       			@endif
+				
+   			
+   				
+   			</tbody>
+       	</table>
+
+		<hr>
+
+		<!-- Followup & Treatment -->
+   		<table>
+   			<tr>
+   				<td width="80%" valign="top">
+   					<table>
+						<tr>
+							<td>
+								<h3>TREATMENT:</h3>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								@if(!empty($treatment)) 
+									<table>
+										<?php 
+											$treatment = explode(',',$treatment);
+										?>
+										@foreach($treatment as $index=>$treatmentVal)
+											<tr>
+												<td>{{$treatment[$index]}}</td>
+											</tr>
+										@endforeach
+										
+										
+									</table>
+								@else
+
+								@endif
+								
+							</td>
+
+						</tr>
+					</table>
+   				</td>
+   				<td width="20%" valign="top">
+   					<table>							
+						<tr>
+							<td>
+								<h5>FOLLOW-UP:</h5>
+							</td>
+						</tr>
+						<tr>
+							<td  valign="top"><h4 style="margin:0px; padding:0px;">
+								<?php
+									//echo $followUpDate;
+									if(!empty($followUpDate)){
+										if($followUpDate!="0000-00-00"){
+											$followUpDate = date('d-M-Y',strtotime($followUpDate));
+											echo $followUpDate;
+										}
+									}
+									else{
+										$followUpDate = "";
+										echo "-";
+									}
+									
+
+								?>
+								</h4>
+							</td>
+						</tr>
+																	
+					</table>
+   				</td>
+   			</tr>
+   		</table>
+       			
+       			
+				
+
+		
+    </div>
+
+
+
+
+			
 
 	    <!-- Doctor personal Data -->
 
-
-      	<!-- Medical History -->
-      	<?php 
-      		$hyperValue = "";
-      		$diabValue = "";
-      		$cancerValue = "";
-      		if(!empty($medicalHistoryData)){
-      			foreach($medicalHistoryData as $index=>$medicalHistoryDataVal){
-	      			if($medicalHistoryDataVal->illness_name=="Hypertension"){
-	      				$hyperIllnessStatus = $medicalHistoryDataVal->illness_status;
-	      				
-	      				if($hyperIllnessStatus=="Current" || $hyperIllnessStatus=="Past"){
-	      					$hyperValue = "Yes/".$hyperIllnessStatus;
-	      				}
-	      				else{
-	      					$hyperValue = "No";
-	      				}
-
-	      			} 
-	      			if($medicalHistoryDataVal->illness_name=="Diabetes"){
-	      				$diabIllnessStatus = $medicalHistoryDataVal->illness_status;
-	      				
-	      				if($diabIllnessStatus=="Current" || $diabIllnessStatus=="Past"){
-	      					$diabValue = "Yes/".$diabIllnessStatus;
-	      				}
-	      				else{
-	      					$diabValue  = "No";
-	      				}
-	      			} 
-	      			if($medicalHistoryDataVal->illness_name=="Cancer"){
-	      				$cancerIllnessStatus = $medicalHistoryDataVal->illness_status;
-	      				
-	      				if($cancerIllnessStatus=="Current" || $cancerIllnessStatus=="Past"){
-	      					$cancerValue = "Yes/".$cancerIllnessStatus;
-	      				}
-	      				else{
-	      					$cancerValue = "No";
-	      				}
-	      			} 
-	      		}
-      		}
-      		
-      		
-      	?>
-       	<div  class="medical-history" >
-       		@if(!empty($printData) && $printData->header_settings=="Yes")
-       			<hr class="space">
-       		@endif
-       		<h2>Medical History</h2>
-       		<div class="medical-hisotry-inner">
-				<div class="column-left">Hypertension: {{$hyperValue}}</div>
-			   	<div class="column-center">Diabetes: {{$diabValue}}</div>
-			    <div class="column-right">Cancer: {{$cancerValue}}</div>
-			</div>
-	    </div>
-	    <!-- Medical History -->
-
-
-	    <!-- Vitals History -->
-	    <?php
-
-	    	if(!empty($vitalsData)){
-	    		$weight 			= $vitalsData->weight;
-		    	$pressure 			= $vitalsData->systolic_pressure."/".$vitalsData->diastolic_pressure;
-		    	$pulse 				= $vitalsData->pulse;
-		    	$respiratoryrate 	= $vitalsData->respiratoryrate;
-		    	$spo2 				= $vitalsData->sp;
-		    	$temperature 		= $vitalsData->temperature;
-	    	}
-	    	else{
-	    		$weight 			= "";
-		    	$pressure 			= "";
-		    	$pulse 				= "";
-		    	$respiratoryrate 	= "";
-		    	$spo2 				= "";
-		    	$temperature 		= "";
-	    	}
+	     <!-- Vitals History -->
 	    
-	    ?>
-	    <div class="vitals" >
-       		<h2>Vitals</h2>
-       		<div class="medical-hisotry-inner">
-				<div class="vitals-content">
-					<img width="40px" height="40px" src="assets/images/weight.png">
-					<div style="margin-top: 7px;">{{$weight}} @if(!empty($weight)) {{"Kg"}} @else {{""}} @endif</div>
-				</div>
-			   	<div class="vitals-content">
-			   		<img width="40px" height="40px" src="assets/images/bloodpressure.png">
-			   		<div  style="margin-top: 7px;">{{$pressure}} @if(!empty($pressure)) {{"mmHg"}} @else {{""}} @endif</div>
-			   	</div>
-			    <div class="vitals-content">
-			    	<img width="40px" height="40px" src="assets/images/pulse.png">
-			    	<div  style="margin-top: 7px;">{{$pulse}} @if(!empty($pulse)) {{"bpm"}} @else {{""}} @endif</div>
-			    </div>
-			    <div class="vitals-content">
-			    	<img width="40px" height="40px" src="assets/images/respiratoryrate.png">
-			    	<div  style="margin-top: 7px;">
-			    		{{$respiratoryrate}} @if(!empty($respiratoryrate)) {{"breathes/min"}} @else {{""}} @endif
-			    	</div>
-			    </div>
-			    <div class="vitals-content">
-			    	<img width="40px" height="40px" src="assets/images/spo2.png">
-			    	<div  style="margin-top: 7px;">{{$spo2}} @if(!empty($spo2)) {{"%"}} @else {{" "}} @endif</div>
-			    </div>
-			    <div class="vitals-content">
-			    	<img width="40px" height="40px" src="assets/images/temperature.png">
-			    	<div  style="margin-top: 7px;">{{$temperature}} @if(!empty($temperature)) &deg;F @else {{""}} @endif</div>
-			    </div>
-			   
-			</div>
-	    </div>
-
-	   
-	    <div  class="" >
-       		<h2>Diagnosis</h2>
-	       		<div class="medical-hisotry-inner ">
-
-		       		
-       				<div class="print_dummy">
-       					<div class="dd_100_width">
-       						<h4>Symptoms</h4>
-							<div class="symptoms-div print_pd_0">
-								<?php 
-								//var_dump($diagnosisData);
-									if(!empty($diagnosisData)){
-
-										$symptoms = array_filter(json_decode($diagnosisData->diag_symptoms));
-										
-										if(!empty($symptoms)){
-											for($i=0;$i<count($symptoms);$i++){
-												echo "<li>".$symptoms[$i]."</li>";
-												echo "</br>";
-											}
-										}
-										else{
-											echo "<li>No Symptoms entered</li>";
-											echo "</br>";
-										}
-										
-									}
-									else{
-										$symptoms = "";
-										echo "<li>No Symptoms entered</li>";
-										echo "</br>";
-									}
-									
-								?>
-							</div>
-       					</div>
-       					<div class="dd_100_width">
-       						<h4>Syndrome</h4>
-							<div class="symptoms-div print_pd_0">
-								<?php 
-									if(!empty($diagnosisData)){
-										$syndrome = $diagnosisData->diag_syndromes;
-										if(!empty($syndrome)){
-											echo "<li>".$syndrome."</li>";
-											
-										}
-										else{
-											echo "<li>No Syndromes entered</li>";
-											echo "</br>";
-										}
-									}
-									else{
-										$syndrome = "";
-										echo "<li>No Syndromes entered</li>";
-										
-									}	
-									
-								?>
-							</div>
-       					</div>
-
-       					<div class="clear"></div>
-       				</div>
-
-       				<div class="print_dummy"> 
-
-					   <div class="dd_100_width">
-							<h4>Diseases</h4>
-							<div class="symptoms-div print_pd_0">
-								<?php 
-
-									if(!empty($diagnosisData)){
-										
-										$diseases = array_filter(json_decode($diagnosisData->diag_suspected_diseases));
-										
-										if(!empty($diseases)){
-											for($i=0;$i<count($diseases);$i++){
-												echo "<li>".$diseases[$i]."</li>";
-												echo "</br>";
-											}
-										}
-										else{
-											echo "<li>No Diseases entered</li>";
-											echo "</br>";
-										}
-										
-									}
-									else{
-										$diseases = "";
-										echo "<li>No Diseases entered</li>";
-									}
-									
-								?>
-							</div>
-						</div>
-						<div class="dd_100_width">
-					    	<h4>Additional Comments</h4>
-							<div class="symptoms-div print_pd_0">
-								<?php 
-
-									if(!empty($diagnosisData)){
-										$comments = $diagnosisData->diag_comment;
-										if(!empty($comments)){
-											echo "<li>".$comments."</li>";
-											echo "</br>";
-										}
-										else{
-											echo "<li>No Comments entered</li>";
-										}
-										
-									}
-									else{
-										echo "<li>No Comments entered</li>";
-									}
-									
-								?>
-							</div>
-					    </div>
-					    <div class="clear"></div>
-					</div>
-					 
-				</div>
-			<div class="clear"></div>
-		</div>
-
-
-		<!-- Prescription Data -->
-		<div  class=""  style="margin-top: 10px;">
-	       	<h2>Prescription</h2>
-       		<table>
-       			<thead>
-	       			<td><h4 style="text-transform: uppercase;">Drugs</h4></td>
-	       			<td><h4 style="text-transform: uppercase;">Dosage</h4></td>
-	       			<td><h4 style="text-transform: uppercase;">Duration</h4></td>
-	       			<td><h4 style="text-transform: uppercase;">Frequency</h4></td>
-       			</thead>
-
-       			<tbody>
-       				@if(!empty($prescriptionData))
-	       				@foreach($prescriptionData as $index=>$prescriptionDataVal)
-		       				<tr>
-			       				<td>
-			       					{{$prescriptionDataVal->drug_name}}
-			       				</td>
-			       				<td>
-			       					@if(!empty($prescriptionDataVal->dosage))
-										{{$prescriptionDataVal->dosage." ".$prescriptionDataVal->dosage_unit}}
-									@else
-										{{"-"}}
-									@endif
-			       				</td>
-								<td>
-									@if(!empty($prescriptionDataVal->duration))
-										{{$prescriptionDataVal->duration." ".$prescriptionDataVal->duration_unit}}
-									@else
-										{{"-"}}
-									@endif															
-								</td>
-								<td>
-
-			       					{{$prescriptionDataVal->morning}}
-									- {{$prescriptionDataVal->noon}}
-									- {{$prescriptionDataVal->night}}
-			       				</td>
-			       			</tr>
-		       				
-	       				@endforeach
-	       			@else
-	       				<tr>
-	       					<td>No Prescription Data entered.</td>
-	       				</tr>
-
-	       			@endif
-					
-       			
-       				
-       			</tbody>
-       		</table>
-		</div>
-		<!-- Prescription Data -->
-		<div class="clear"></div> 
-
-
-		<div  class="" >
-			<div class="treatment-inner-div" style="margin-top: 20px;">
-				<h2>Treatment</h2>
-				@if(!empty($prescriptionData))
-					@foreach($prescriptionData as $index=>$prescriptionDataVal)
-						<?php 
-							$treatment = $prescriptionDataVal->treatment; 
-							$followUpDate = $prescriptionDataVal->follow_up_date; 
-						?>
-					@endforeach
-		       		<textarea class="ta6">{{$treatment}}</textarea>
-		       	@else
-		       		<textarea class="ta6"></textarea>
-		       	@endif
-			</div>
-	       	<div class="followup-inner-div" style="margin-top: 30px;">
-	        	<h2>Follow up Date: </h2>
-	        	<div>
-	        		@if(!empty($followUpDate) && $followUpDate!="0000-00-00") 
-	        			{{$followUpDate}}
-	        		@endif
-	        	</div>
-	        </div>	       
-	    </div>
-    </div>	
      	
        	
    

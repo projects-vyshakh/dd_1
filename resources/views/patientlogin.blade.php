@@ -17,7 +17,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<meta content="" name="description" />
 		<meta content="" name="author" />
-		<link rel="shortcut icon" href="assets/images/logo-mob.png" type="image/x-icon">
+		<link rel="shortcut icon" href="../assets/images/logo-mob.png" type="image/x-icon">
 		<style type="text/css">
 
 	body {
@@ -102,13 +102,13 @@
 								<div class="doctorlogin_main">
 									<!-- <span class="doctor_login"><img src="assets/images/doctor_icon.png"></span> -->
 
-										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #a9f2ff" @endif>Doctor Login</a>&nbsp;  &nbsp;
+										<a href="../doctor/login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login"  style="color: #a9f2ff" @endif>Doctor Login</a>&nbsp;  &nbsp;
 
 								</div>
 		        		 		<div class="patientlogin_main"> 		
 		        		 		 	<!-- <span class="patient_login"><img src="assets/images/patient_icon.png">
 		        		 		 	</span>	 -->        		 		 	
-		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #a9f2ff" @endif>
+		        		 		 	<a href="login" @if($currentPath=="patient/login") class="topmenu-active"  style="color: #a9f2ff" @endif>
 		        		 		 		Patient Login
 		        		 		 	</a>
 		        		 		</div>
@@ -124,147 +124,116 @@
         </div>
        <!-- Swiper -->
 	    <div class="swiper-container dd_bg_black">
-
-	       
-	           
-	        
-	        <!-- Add Pagination -->
-	       <!--  <div class="swiper-pagination swiper-pagination-white"></div> -->
-	        <!-- Add Arrows -->
-	  <!--       <div class="swiper-button-next swiper-button-white"></div>
-	        <div class="swiper-button-prev swiper-button-white"></div> -->
-	        <div class="inner_wrapper_3">
-
-	        <div class="dd_doctor_login_main_hd">
-
-	        <span>Sign in or create an account</span></div>
-
-	        <div class="doctor_login_main">
-	       
-
+			<div class="inner_wrapper_3">
+ 				<div class="dd_doctor_login_main_hd">
+					<span>Sign in or create an account</span>
+				</div>
+		        <div class="doctor_login_main">
 					<div class="box_2">
-					 <div class="box_2_main">
-			        	<!-- <div class="main-login"> -->
-			        	<div>
-
-			        	<div class="dd_logo_responsive">
-
-				        		<img src="assets/images/logo-mob.png" alt="">			        		
-				        	</div>
-				        	<div class="dd_drlogin_responsive">
-
-				        				<div class="login_div2">
-								<div class="doctorlogin_main2">								
-
-										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
-
+						<div class="box_2_main">
+				            <div>
+								<div class="dd_logo_responsive">
+					        		<img src="assets/images/logo-mob.png" alt="">			        		
+					        	</div>
+					        	<div class="dd_drlogin_responsive">
+			        				<div class="login_div2">
+										<div class="doctorlogin_main2">								
+											<a href="../doctor/login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+										</div>
+				        		 		<div class="patientlogin_main2"> 		
+				        		 		 	<a href="login" @if($currentPath=="patient/login") class="topmenu-active" @endif>
+				        		 		 		Patient Login
+				        		 		 	</a>
+				        		 		</div>
+		        		 			</div>
 								</div>
-		        		 		<div class="patientlogin_main2"> 		
-		        		 		         		 		 	
-		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
-		        		 		 		Patient Login
-		        		 		 	</a>
-		        		 		</div>
-	        		 		</div>
-				        	
-				        			        		
-				        	</div>
+				        		<div class="logo">
+				        			<span class="login_HD dd_signfont">Sign into your account</span>
+				        		</div>
+				        		<div class="box-login " style="display: block;">
+				        			<div class="row">
+				        				<div class="col-sm-12">
+											{!! Form::open(array('route' => 'handlePatientLogin', 'role'=>'form', 'id'=>'login', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
+						        				<div class="form-group">
+													<div class="col-sm-12 dd_login">
+														<span class="input-icon ">
+															{!! Form::text('id_patient', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Patient ID', 'id'=>'id_patient'));  !!}
+															<span class="dd_input_icon_name"></span> 
+														</span>
+													</div>
+						        				</div>
+						        				<div class="form-group dd_mg_B_10">
+						        					<div class="col-sm-12 dd_login">
+														<span class="input-icon dd_relative">
+															{!! Form::password('password', array('placeholder'=>'Password', 'class'=>'form-control dd_input dd_login_main', 'id'=>'password' ) ) !!}
+															<span class="dd_input_icon"></span>
 
-
-			   
-
-
-			        		<div class="logo">
-			        			<span class="login_HD dd_signfont">Sign into your account</span>
-			        		</div>
-
-			        		
-			        		<div class="box-login " style="display: block;">
-			        			<div class="row">
-			        				<div class="col-sm-12">
-										
-			        					{!! Form::open(array('route' => 'handlePatientLogin', 'role'=>'form', 'id'=>'login', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
-					        				<div class="form-group">
-												<div class="col-sm-12 dd_login">
-													<span class="input-icon ">
-														{!! Form::text('id_patient', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Patient ID', 'id'=>'id_patient'));  !!}
-														<span class="dd_input_icon_name"></span> 
-													</span>
-												</div>
-					        				</div>
-					        				<div class="form-group dd_mg_B_10">
-					        					<div class="col-sm-12 dd_login">
-													<span class="input-icon dd_relative">
-														{!! Form::password('password', array('placeholder'=>'Password', 'class'=>'form-control dd_input dd_login_main', 'id'=>'password' ) ) !!}
-														<span class="dd_input_icon"></span>
-
-													</span>
-												</div>
-					        				</div>
-					        				<div class=" dd_relative">
-						                        <div class="heading ">
-						                              <?php $error = Session::get('error');
-						                                $success = Session::get('success');
-						                                Session::forget('error');
-						                                Session::forget('success');
-						                               
-						                              ?>
-						                              @if(!empty($error))
-						                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
-						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-						                                          {{$error}}
-						                                </div>
-						                              @elseif(!empty($success))
-						                                <div class="dd_alert_2 display-none" style="display: block;">
-						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-						                                          {{$success}}
-						                                </div>
-						                              @endif
-						                                    
-						                        </div>
-						                    </div> 
-						                    <div class=" dd_relative">
-						                        <div class="heading ">
-						                              <?php $error = Session::get('error');
-						                                $success = Session::get('success');
-						                                Session::forget('error');
-						                                Session::forget('success');
-						                               
-						                              ?>
-						                              @if(!empty($error))
-						                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
-						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-						                                          {{$error}}
-						                                </div>
-						                              @elseif(!empty($success))
-						                                <div class="dd_alert_2 display-none" style="display: block;">
-						                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-						                                          {{$success}}
-						                                </div>
-						                              @endif
-						                                    
-						                        </div>
-						                    </div> 
-					        				<div class="form-group dd_mg_B_10">
-					        					<div class="col-sm-12 dd_mg_B_T_10">
-													<span class="input-icon ">
-														<button type="submit" class="btn btn-primary btn-block dd_btn_new">Login</button>
-													</span>
-												</div>
-												<div class="col-sm-12">
-													<p><a href="patientforgetpassword" class="dd_textalign_center dd_16px">Forgot Your Password?</a></p>
-												</div>
-					        				</div>
-					        			
-										{!! Form::close() !!}
-			        				</div>
-					
-			        			</div>
-			        		</div>
-			        			
-						</div>
-
+														</span>
+													</div>
+						        				</div>
+						        				<div class=" dd_relative">
+							                        <div class="heading ">
+							                              <?php $error = Session::get('error');
+							                                $success = Session::get('success');
+							                                Session::forget('error');
+							                                Session::forget('success');
+							                               
+							                              ?>
+							                              @if(!empty($error))
+							                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
+							                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+							                                          {{$error}}
+							                                </div>
+							                              @elseif(!empty($success))
+							                                <div class="dd_alert_2 display-none" style="display: block;">
+							                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+							                                          {{$success}}
+							                                </div>
+							                              @endif
+							                                    
+							                        </div>
+							                    </div> 
+							                    <div class=" dd_relative">
+							                        <div class="heading ">
+							                              <?php $error = Session::get('error');
+							                                $success = Session::get('success');
+							                                Session::forget('error');
+							                                Session::forget('success');
+							                               
+							                              ?>
+							                              @if(!empty($error))
+							                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
+							                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+							                                          {{$error}}
+							                                </div>
+							                              @elseif(!empty($success))
+							                                <div class="dd_alert_2 display-none" style="display: block;">
+							                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+							                                          {{$success}}
+							                                </div>
+							                              @endif
+							                                    
+							                        </div>
+							                    </div> 
+						        				<div class="form-group dd_mg_B_10">
+						        					<div class="col-sm-12 dd_mg_B_T_10">
+														<span class="input-icon ">
+															<button type="submit" class="btn btn-primary btn-block dd_btn_new">Login</button>
+														</span>
+													</div>
+													<div class="col-sm-12">
+														<p><a href="forgetpassword" class="dd_textalign_center dd_16px">Forgot Your Password?</a></p>
+													</div>
+						        				</div>
+						        			
+											{!! Form::close() !!}
+				        				</div>
+						
+				        			</div>
+				        		</div>
+				        			
 							</div>
+						</div>
 					</div>
 
 
@@ -274,106 +243,16 @@
 			        	</div>
 						<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
 							<span class="input-icon ">
-								<a href="#" class="btn btn-primary btn-block dd_btn_new dd_patient_reg  dd_regi_pd patient_register_btn"> Register Now</a>
+								<a href="signup" class="btn btn-primary btn-block dd_btn_new dd_patient_reg  dd_regi_pd patient_register_btn"> Register Now</a>
 													
 							</span>
 						</div>
 					</div>
-					<!-- <div class="box_right new_patient_register_otp_div">
-						<div class="logo">
-			        		<span class="login_HD dd_signfont">Register new patient</span>
-			        	</div>
-						<div class="box-login " style="display: block;">
-		        			<div class="row">
-		        				<div class="col-sm-12">
-									
-		        					{!! Form::open(array('route' => 'handlePatientLogin', 'role'=>'form', 'id'=>'login', 'class'=>'form-horizontal form-login','name' =>'form-login')) !!}
-				        				<div class="form-group">
-											<div class="col-sm-12 dd_login">
-												<span class="input-icon ">
-													{!! Form::text('id_patient', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Patient ID', 'id'=>'id_patient'));  !!}
-													<span class="dd_input_icon_name"></span> 
-												</span>
-											</div>
-				        				</div>
-				        				<div class="form-group dd_mg_B_10">
-				        					<div class="col-sm-12 dd_login">
-												<span class="input-icon dd_relative">
-													{!! Form::password('otp', array('placeholder'=>'OTP', 'class'=>'form-control dd_input dd_login_main', 'id'=>'otp' ) ) !!}
-													<span class="dd_input_icon"></span>
-
-												</span>
-											</div>
-				        				</div>
-				        				<div class=" dd_relative">
-					                        <div class="heading ">
-					                              <?php $error = Session::get('error');
-					                                $success = Session::get('success');
-					                                Session::forget('error');
-					                                Session::forget('success');
-					                               
-					                              ?>
-					                              @if(!empty($error))
-					                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
-					                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-					                                          {{$error}}
-					                                </div>
-					                              @elseif(!empty($success))
-					                                <div class="dd_alert_2 display-none" style="display: block;">
-					                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-					                                          {{$success}}
-					                                </div>
-					                              @endif
-					                                    
-					                        </div>
-					                    </div> 
-					                    <div class=" dd_relative">
-					                        <div class="heading ">
-					                              <?php $error = Session::get('error');
-					                                $success = Session::get('success');
-					                                Session::forget('error');
-					                                Session::forget('success');
-					                               
-					                              ?>
-					                              @if(!empty($error))
-					                                <div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
-					                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-					                                          {{$error}}
-					                                </div>
-					                              @elseif(!empty($success))
-					                                <div class="dd_alert_2 display-none" style="display: block;">
-					                                  <a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-					                                          {{$success}}
-					                                </div>
-					                              @endif
-					                                    
-					                        </div>
-					                    </div> 
-				        				<div class="form-group dd_mg_B_10">
-				        					<div class="col-sm-12 dd_mg_B_T_10">
-												<span class="input-icon ">
-													<button type="submit" class="btn btn-primary btn-block dd_btn_new">Submit</button>
-												</span>
-											</div>
-										
-				        				</div>
-				        			
-									{!! Form::close() !!}
-		        				</div>
-				
-		        			</div>
-		        		</div>
-					</div>
- -->
-
-
-					<div class="dd_clear"></div>
-			</div>
-
-
-
+						
 					<div class="dd_clear"></div>
 				</div>
+				<div class="dd_clear"></div>
+			</div>
 
 
 		<footer>
@@ -455,7 +334,10 @@
 			jQuery(document).ready(function() {
 				//Main.init();
 				Login.init();
-				
+				$('.patient_register_btn').click(function(e){
+		            e.preventDefault();
+		            window.location='signup';
+		        });	
 			  	
 				
 			});

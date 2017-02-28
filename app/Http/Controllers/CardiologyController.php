@@ -156,11 +156,11 @@ class CardiologyController extends Controller {
 				return view('cardiopersonalinformation',array('gender' => $gender,'maritialStatus'=>$maritialStatus,'country' => $country,  'city' => $city,'patientId'=>$patientId, 'patientData'=>$patientData,'doctorData'=>$doctorData,'doctorsList'=>$doctorsList));
 			}
 			else{
-				return Redirect::to('doctorhome')->with(array('error'=>"You are not authorised to view the page"));
+				return Redirect::to('doctor/home')->with(array('error'=>"You are not authorised to view the page"));
 			}
 		}
 		else{
-			return Redirect::to('logout');
+			return Redirect::to('doctor/logout');
 		}
 		
 			
@@ -231,15 +231,15 @@ class CardiologyController extends Controller {
 		 			$patientPersonalInfoUpdate = DB::table('patients')->where('id_patient','=',$patientId)->update($inputValue);
 
 		 			if($patientPersonalInfoUpdate){
-		 				return Redirect::to('cardiopersonalinformation')->with(array('success'=>"Data updated successfully"));	
+		 				return Redirect::to('doctor/cardiopersonalinformation')->with(array('success'=>"Data updated successfully"));	
 		 			}
 		 			else{
-		 				return Redirect::to('cardiopersonalinformation')->with(array('error'=>"No changes to update"));
+		 				return Redirect::to('doctor/cardiopersonalinformation')->with(array('error'=>"No changes to update"));
 		 			}
 			}
 			else{
 				
-				return Redirect::to('cardiopersonalinformation')->with(array('success'=>'Data saved successfully'));
+				return Redirect::to('doctor/cardiopersonalinformation')->with(array('success'=>'Data saved successfully'));
 			}
 
 		}
@@ -276,11 +276,11 @@ class CardiologyController extends Controller {
 									
 				$patientPersonalInfoSave = DB::table('patients')->insert($inputValue);
 				if($patientPersonalInfoSave){
-					return Redirect::to('cardiopersonalinformation')->with(array('success'=>'Data saved successfully'));
+					return Redirect::to('doctor/cardiopersonalinformation')->with(array('success'=>'Data saved successfully'));
 				}
 			}
 			else{
-				return Redirect::to('cardiopersonalinformation')->with(array('success'=>'Data saved successfully'));
+				return Redirect::to('doctor/cardiopersonalinformation')->with(array('success'=>'Data saved successfully'));
 			}
 
 		}
@@ -320,11 +320,11 @@ class CardiologyController extends Controller {
 				return view('cardiomedicalhistory',array('medicalHistory'=>$medicalHistory,'medicalHistoryPresentPastMore'=>$medicalHistoryPresentPastMore,'surgeryHistory'=>$surgeryHistory,'drugAllergyHistory'=>$drugAllergyHistory,'patientPersonalData'=>$patientPersonalData,'doctorData'=>$doctorData));
 			}
 			else{
-				return Redirect::to('doctorhome')->with(array('error'=>"You are not authorised to view the page"));
+				return Redirect::to('doctor/home')->with(array('error'=>"You are not authorised to view the page"));
 			}
 		}
 		else{
-			return Redirect::to('logout');
+			return Redirect::to('doctor/logout');
 		}
 		
 			
@@ -461,7 +461,7 @@ class CardiologyController extends Controller {
 
     			
 
-    			return Redirect::to('cardiomedicalhistory')->with(array('success'=>"Data updated successfully"));
+    			return Redirect::to('doctor/cardiomedicalhistory')->with(array('success'=>"Data updated successfully"));
 
 	    	}
 	    	else{
@@ -525,14 +525,14 @@ class CardiologyController extends Controller {
 				//Drug allergy managent
 				$this->drugDataManagement($input,$allergyMedication,$allergyReaction,$patientId,$doctorId,$referenceId,$createdDate);
 
-	    		return Redirect::to('cardiomedicalhistory')->with(array('success'=>"Data saved successfully"));
+	    		return Redirect::to('doctor/cardiomedicalhistory')->with(array('success'=>"Data saved successfully"));
 
 	    	}
 
       	
 	    }
 	    else{
-	    	return Redirect::to('cardiomedicalhistory')->with(array('error'=>"Please save patient personal information"));
+	    	return Redirect::to('doctor/cardiomedicalhistory')->with(array('error'=>"Please save patient personal information"));
 	    }	
 
 
@@ -1177,18 +1177,18 @@ class CardiologyController extends Controller {
 	    	//-----------------------------------------------------------------------------------------------
 
 	    	if(in_array(1, $responseFlag)){
-	    		return Redirect::to('cardioexamination')->with(array('success'=>"Data updated successfully"));
+	    		return Redirect::to('doctor/cardioexamination')->with(array('success'=>"Data updated successfully"));
 	    	}
 	    	elseif (in_array(2, $responseFlag)) {
-	    		return Redirect::to('cardioexamination')->with(array('success'=>"Data saved successfully"));
+	    		return Redirect::to('doctor/cardioexamination')->with(array('success'=>"Data saved successfully"));
 	    	}
 	    	else
 	    	{
-	    		return Redirect::to('cardioexamination')->with(array('success'=>"Data saved successfully"));
+	    		return Redirect::to('doctor/cardioexamination')->with(array('success'=>"Data saved successfully"));
 	    	}
 	    }
 	    else{	
-			return Redirect::to('cardiopersonalinformation')->with(array('error'=>'Please save patient personal information'));
+			return Redirect::to('doctor/cardiopersonalinformation')->with(array('error'=>'Please save patient personal information'));
 			    	
 		}	
 
@@ -1315,7 +1315,7 @@ class CardiologyController extends Controller {
 
 		    	if(empty($symptoms) && empty($syndromes) && empty($diseases) && empty($additionalComment))
 		    	{
-		    		return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to update data. Please fill the empty fields"));	
+		    		return Redirect::to('doctor/cardiodiagnosis')->with(array('error'=>"Failed to update data. Please fill the empty fields"));	
 		    	}
 		    	else{
 		    		$diagUpdate = DB::table('diagnosis')
@@ -1325,11 +1325,11 @@ class CardiologyController extends Controller {
 		    		
 		    		if($diagUpdate){
 		    			
-		    			return Redirect::to('cardiodiagnosis')->with(array('success'=>"Data updated successfully",'newSymptoms'=>$symptoms));	
+		    			return Redirect::to('doctor/cardiodiagnosis')->with(array('success'=>"Data updated successfully",'newSymptoms'=>$symptoms));	
 		    		}
 		    		else{
 		    		//echo "dises nsss ok";
-		    			return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to update data."));	
+		    			return Redirect::to('doctor/cardiodiagnosis')->with(array('error'=>"Failed to update data."));	
 		    		}	
 		    	}
 
@@ -1350,16 +1350,16 @@ class CardiologyController extends Controller {
 
 		    	if(empty($symptoms) && empty($syndromes) && empty($diseases) && empty($additionalComment))
 		    	{
-		    		return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to save data. Please fill the empty fields"));	
+		    		return Redirect::to('doctor/cardiodiagnosis')->with(array('error'=>"Failed to save data. Please fill the empty fields"));	
 		    	}
 		    	else{
 		    		$diagSave = DB::table('diagnosis')->insert($diagData);
 		    		if($diagSave){
-		    			return Redirect::to('cardiodiagnosis')->with(array('success'=>"Data saved successfully"));	
+		    			return Redirect::to('doctor/cardiodiagnosis')->with(array('success'=>"Data saved successfully"));	
 		    		}
 		    		else{
 		    		//echo "dises nsss ok";
-		    			return Redirect::to('cardiodiagnosis')->with(array('error'=>"Failed to save data."));	
+		    			return Redirect::to('doctor/cardiodiagnosis')->with(array('error'=>"Failed to save data."));	
 		    		}
 		    	}
 
@@ -1369,7 +1369,7 @@ class CardiologyController extends Controller {
 
         }
         else{
-        	return Redirect::to('cardiodiagnosis')->with(array('error'=>"Please save patient personal data "));	
+        	return Redirect::to('doctor/cardiodiagnosis')->with(array('error'=>"Please save patient personal data "));	
         }	
 
     	

@@ -331,12 +331,13 @@ if(!empty($doctorData)){
 													<!-- {!! Form::select('preg_kind[]', $pregKind, null, $attributes = array('class' => 'form-control')); !!} -->
 													@if($pregDataValue->obs_preg_kind!="0")
 														@if($pregDataValue->obs_preg_kind!="Nil")
-															{!! Form::text('preg_kind[]',$pregDataValue->obs_preg_kind, $attributes = array('class'=>'form-control', 'disabled' => 'disabled'));  !!}
+															{!! Form::select('preg_kind', $pregKind, $pregDataValue->obs_preg_kind, $attributes = array('class' => 'form-control')); !!}
+															<!-- {!! Form::text('preg_kind[]',$pregDataValue->obs_preg_kind, $attributes = array('class'=>'form-control'));  !!} -->
 														@else
-															{!! Form::select('preg_type[]', $pregType, null, $attributes = array('class' => 'form-control')); !!}
+															{!! Form::select('preg_kind', $pregKind, null, $attributes = array('class' => 'form-control')); !!}
 														@endif
 													@else
-														{!! Form::text('preg_kind[]',null, $attributes = array('class'=>'form-control', 'disabled' => 'disabled'));  !!}
+														{!! Form::select('preg_kind', $pregKind, null, $attributes = array('class' => 'form-control')); !!}
 													@endif
 													
 												</span>
@@ -348,12 +349,13 @@ if(!empty($doctorData)){
 													<!-- {!! Form::select('preg_type[]', $pregType, null, $attributes = array('class' => 'form-control')); !!} -->
 													@if($pregDataValue->obs_preg_type!="0")
 														@if($pregDataValue->obs_preg_type!="Nil")
-															{!! Form::text('preg_type[]',$pregDataValue->obs_preg_type , $attributes = array('class'=>'form-control', 'disabled' => 'disabled'));  !!}
+															{!! Form::select('preg_type', $pregType, $pregDataValue->obs_preg_type, $attributes = array('class' => 'form-control')); !!}
+															
 														@else
-															{!! Form::select('preg_type[]', $pregType, null, $attributes = array('class' => 'form-control')); !!}
+															{!! Form::select('preg_type', $pregType, null, $attributes = array('class' => 'form-control')); !!}
 														@endif
 													@else
-														{!! Form::text('preg_type[]',null , $attributes = array('class'=>'form-control', 'disabled' => 'disabled'));  !!}
+														{!! Form::select('preg_type', $pregType, null, $attributes = array('class' => 'form-control')); !!}
 													@endif
 													
 													
@@ -368,12 +370,14 @@ if(!empty($doctorData)){
 													<!-- {!! Form::select('preg_term[]', $pregTerm, null, $attributes = array('class' => 'form-control')); !!} -->
 													@if($pregDataValue->obs_preg_term!="0")
 														@if($pregDataValue->obs_preg_term!=="Nil")
-															{!! Form::text('preg_term[]',$pregDataValue->obs_preg_term, $attributes = array('class'=>'form-control', 'disabled' => 'disabled'));  !!}
+															{!! Form::select('preg_term', $pregTerm, $pregDataValue->obs_preg_term, $attributes = array('class' => 'form-control preg_term')); !!}
+
+															
 														@else
-															{!! Form::select('preg_term[]', $pregTerm, null, $attributes = array('class' => 'form-control')); !!}
+															{!! Form::select('preg_term', $pregTerm, null, $attributes = array('class' => 'form-control preg_term')); !!}
 														@endif
 													@else
-														{!! Form::text('preg_term[]',null, $attributes = array('class'=>'form-control', 'disabled' => 'disabled'));  !!}
+														{!! Form::select('preg_term', $pregTerm, null, $attributes = array('class' => 'form-control preg_term')); !!}
 													@endif
 													
 													
@@ -383,9 +387,9 @@ if(!empty($doctorData)){
 											<div class="col-sm-4">
 												<span class="">
 													@if($pregDataValue->obs_preg_abortion!="Nil")
-														{!! Form::text('type_of_abortion[]',$pregDataValue->obs_preg_abortion , $attributes = array('class'=>'form-control', 'disabled' => 'disabled'));  !!}
+														{!! Form::text('type_of_abortion',$pregDataValue->obs_preg_abortion , $attributes = array('class'=>'form-control'));  !!}
 													@else
-														{!! Form::text('type_of_abortion[]',Input::old('type_of_abortion') , $attributes = array('class'=>'form-control'));  !!}
+														{!! Form::text('type_of_abortion',Input::old('type_of_abortion') , $attributes = array('class'=>'form-control'));  !!}
 													@endif
 													
 													<!-- <i class="fa fa-quote-left"></i> -->
@@ -399,12 +403,14 @@ if(!empty($doctorData)){
 													<!-- {!! Form::select('preg_health[]', $pregChildHealth, null, $attributes = array('class' => 'form-control')); !!} -->
 													@if($pregDataValue->obs_preg_health!="0")
 														@if($pregDataValue->obs_preg_health!="Nil")
-															{!! Form::text('preg_health[]',$pregDataValue->obs_preg_health , $attributes = array('class'=>'form-control', 'disabled' => 'disabled'));  !!}
+															{!! Form::select('preg_health', $pregChildHealth, $pregDataValue->obs_preg_health, $attributes = array('class' => 'form-control preg_health')); !!}
+
+															
 														@else
-															{!! Form::select('preg_health[]', $pregChildHealth, null, $attributes = array('class' => 'form-control')); !!}
+															{!! Form::select('preg_health', $pregChildHealth, null, $attributes = array('class' => 'form-control preg_health')); !!}
 														@endif
 													@else
-														{!! Form::text('preg_health[]',null , $attributes = array('class'=>'form-control', 'disabled' => 'disabled'));  !!}
+														{!! Form::select('preg_health', $pregChildHealth, null, $attributes = array('class' => 'form-control preg_health')); !!}
 													@endif
 													
 												</span>
@@ -416,12 +422,13 @@ if(!empty($doctorData)){
 													<!-- {!! Form::select('gender[]', $gender, null, $attributes = array('class' => 'form-control')); !!} -->
 													@if($pregDataValue->obs_preg_gender!="0")
 														@if($pregDataValue->obs_preg_gender!="Nil")
-															{!! Form::text('gender[]',$pregDataValue->obs_preg_gender , $attributes = array('class'=>'form-control','disabled' => 'disabled'));  !!}
+															{!! Form::select('gender', $gender, $pregDataValue->obs_preg_gender, $attributes = array('class' => 'form-control preg_gender')); !!} 
+
 														@else
-															{!! Form::select('gender[]', $gender, null, $attributes = array('class' => 'form-control')); !!} 
+															{!! Form::select('gender', $gender, null, $attributes = array('class' => 'form-control preg_gender')); !!} 
 														@endif
 													@else
-														{!! Form::text('gender[]',null , $attributes = array('class'=>'form-control','disabled' => 'disabled'));  !!}
+														{!! Form::select('gender', $gender, null, $attributes = array('class' => 'form-control preg_gender')); !!} 
 													@endif
 													
 													
@@ -439,9 +446,9 @@ if(!empty($doctorData)){
 															@if($pregDataValue->obs_preg_weeks!=0)
 																<?php $babyWeeks = $pregDataValue->obs_preg_weeks." "."Weeks"; ?>
 			
-																{!! Form::text('weeks[]', $babyWeeks, $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Weeks'));  !!}
+																{!! Form::text('weeks', $babyWeeks, $attributes = array('class'=>'form-control preg_weeks','placeholder'=>'Weeks'));  !!}
 															@else
-																{!! Form::text('weeks[]', '', $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Weeks'));  !!}
+																{!! Form::text('weeks', '', $attributes = array('class'=>'form-control preg_weeks','placeholder'=>'Weeks'));  !!}
 															@endif
 															<!-- <i class="fa fa-quote-left"></i> -->
 														</span>
@@ -451,9 +458,9 @@ if(!empty($doctorData)){
 																@if($pregDataValue->obs_preg_months!=0)
 																	<?php $babyMonths = $pregDataValue->obs_preg_months." "."Months"; ?>
 			
-																	{!! Form::text('months[]', $babyMonths , $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Months'));  !!}
+																	{!! Form::text('months', $babyMonths , $attributes = array('class'=>'form-control preg_months','placeholder'=>'Months'));  !!}
 																@else
-																	{!! Form::text('months[]', '' , $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Months'));  !!}
+																	{!! Form::text('months', '' , $attributes = array('class'=>'form-control preg_months','placeholder'=>'Months'));  !!}
 																@endif
 																
 																<!-- <i class="fa fa-quote-left"></i> -->
@@ -464,9 +471,9 @@ if(!empty($doctorData)){
 																@if($pregDataValue->obs_preg_years!=0)
 																	<?php $babyYears = $pregDataValue->obs_preg_years." "."Years"; ?>
 			
-																	{!! Form::text('years[]',$babyYears, $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Years'));  !!}
+																	{!! Form::text('years',$babyYears, $attributes = array('class'=>'form-control preg_years','placeholder'=>'Years'));  !!}
 																@else
-																	{!! Form::text('years[]','', $attributes = array('class'=>'form-control','disabled' => 'disabled','placeholder'=>'Years'));  !!}
+																	{!! Form::text('years','', $attributes = array('class'=>'form-control preg_years','placeholder'=>'Years'));  !!}
 																@endif
 																
 																<!-- <i class="fa fa-quote-left"></i> -->
@@ -487,14 +494,14 @@ if(!empty($doctorData)){
 											<div class="col-sm-4">
 												
 												<span class="">
-													{!! Form::select('preg_kind[]', $pregKind, null, $attributes = array('class' => 'form-control')); !!}
+													{!! Form::select('preg_kind', $pregKind, null, $attributes = array('class' => 'form-control preg_kind')); !!}
 												</span>
 											</div>
 											{!! Form::label('pregnancy_type', 'Pregnancy Type', $attributes = array('class'=>'col-sm-2 '));  !!}
 											<div class="col-sm-4">
 												
 												<span class="">
-													{!! Form::select('preg_type[]', $pregType, null, $attributes = array('class' => 'form-control')); !!}
+													{!! Form::select('preg_type', $pregType, null, $attributes = array('class' => 'form-control preg_type')); !!}
 												</span>
 											</div>
 											
@@ -503,13 +510,13 @@ if(!empty($doctorData)){
 											{!! Form::label('term', 'Term', $attributes = array('class'=>'col-sm-2 '));  !!}
 											<div class="col-sm-4">
 												<span class="">
-													{!! Form::select('preg_term[]', $pregTerm, null, $attributes = array('class' => 'form-control')); !!}
+													{!! Form::select('preg_term', $pregTerm, null, $attributes = array('class' => 'form-control preg_term')); !!}
 												</span>
 											</div>
 											{!! Form::label('type_of_abortion', 'Type of abortion', $attributes = array('class'=>'col-sm-2'));  !!}
 											<div class="col-sm-4">
 												<span class="">
-													{!! Form::text('type_of_abortion[]', Input::old('type_of_abortion'), $attributes = array('class'=>'form-control'));  !!}
+													{!! Form::text('type_of_abortion', Input::old('type_of_abortion'), $attributes = array('class'=>'form-control'));  !!}
 													<!-- <i class="fa fa-quote-left"></i>  -->
 													</span>
 											</div>
@@ -518,13 +525,13 @@ if(!empty($doctorData)){
 											{!! Form::label('preg_health', 'Health', $attributes = array('class'=>'col-sm-2'));  !!}
 											<div class="col-sm-4">
 												<span class="">
-													{!! Form::select('preg_health[]', $pregChildHealth, null, $attributes = array('class' => 'form-control')); !!}
+													{!! Form::select('preg_health', $pregChildHealth, null, $attributes = array('class' => 'form-control preg_health')); !!}
 												</span>
 											</div>
 											{!! Form::label('gender', 'Gender', $attributes = array('class'=>'col-sm-2 '));  !!}
 											<div class="col-sm-4">
 												<span class="">
-													{!! Form::select('gender[]', $gender, null, $attributes = array('class' => 'form-control')); !!}
+													{!! Form::select('gender', $gender, null, $attributes = array('class' => 'form-control preg_gender')); !!}
 												</span>
 											</div>
 										</div>
@@ -534,28 +541,28 @@ if(!empty($doctorData)){
 													<div class="col-sm-4 dd_babyage_col">
 																<div class="col-sm-4">
 																		<span class="">
-																			{!! Form::text('weeks[]', Input::old('weeks'), $attributes = array('class'=>'form-control','placeholder'=>'Weeks'));  !!}
+																			{!! Form::text('weeks', Input::old('weeks'), $attributes = array('class'=>'form-control preg_weeks','placeholder'=>'Weeks'));  !!}
 																		</span>
 																</div>
 																<div class="col-sm-4">
 																	<span class="">
-																		{!! Form::text('months[]',Input::old('months'), $attributes = array('class'=>'form-control','placeholder'=>'Months'));  !!}
+																		{!! Form::text('months',Input::old('months'), $attributes = array('class'=>'form-control preg_months','placeholder'=>'Months'));  !!}
 																		<!-- <i class="fa fa-quote-left"></i> -->
 																	</span>
 																</div>
 																<div class="col-sm-4">
 																	<span class="">
-																		{!! Form::text('years[]', Input::old('years'), $attributes = array('class'=>'form-control','placeholder'=>'Years'));  !!}
+																		{!! Form::text('years', Input::old('years preg_years'), $attributes = array('class'=>'form-control','placeholder'=>'Years'));  !!}
 																</div>
 													</div>
 											</div>
 									</div>
 								@endif
-								<div class="form-group">
+								<!-- <div class="form-group">
 									<div class="col-sm-12">
 										<button type="submit" class="btn btn-default dd_right btn-addmore-preg"><i class="fa fa-plus-circle " style="border:none"></i> Add More Pregnancy</button>
 									</div>
-								</div>
+								</div> -->
 								<hr>
 								<div class="form-group dd_none_mg_form">
 									<?php

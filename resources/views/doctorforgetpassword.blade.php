@@ -105,13 +105,13 @@
 								<div class="doctorlogin_main">
 								<!-- 	<span class="doctor_login"><img src="assets/images/doctor_icon.png"></span> -->
 
-										<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #428bca" @endif>Doctor Login</a>&nbsp;  &nbsp;
+										<a href="login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login"  style="color: #428bca" @endif>Doctor Login</a>&nbsp;  &nbsp;
 
 								</div>
 		        		 		<div class="patientlogin_main"> 		
 		        		 		 	<!-- <span class="patient_login"><img src="assets/images/patient_icon.png">
 		        		 		 	</span>	 -->        		 		 	
-		        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #428bca" @endif>
+		        		 		 	<a href="../patient/login" @if($currentPath=="patient/login") class="topmenu-active"  style="color: #428bca" @endif>
 		        		 		 		Patient Login
 		        		 		 	</a>
 		        		 		</div>
@@ -152,10 +152,10 @@
 				        		<div class="login_div2">
 									<div class="doctorlogin_main2">								
 
-											<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+											<a href="login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
 									</div>
 			        		 		<div class="patientlogin_main2"> 				        		 		         		 		 	
-			        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
+			        		 		 	<a href="../patient/login" @if($currentPath=="patient/login") class="topmenu-active" @endif>
 			        		 		 		Patient Login
 			        		 		 	</a>
 			        		 		</div>
@@ -232,11 +232,9 @@
 
 
 						<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
-												<!-- <span class="dd_color_light_bl">New User ?</span> -->
-													<span class="input-icon ">
-														
-														<a href="doctorsignup" class="btn btn-primary btn-block dd_btn_new doctor-login-btn dd_regi_pd"> Login Now</a>
-													</span>
+							<span class="input-icon ">
+								<a href="login" class="btn btn-primary btn-block dd_btn_new doctor-login-btn dd_regi_pd"> Login Now</a>
+							</span>
 						</div>
 						
 
@@ -336,7 +334,7 @@
 				
 			  	$('.doctor-login-btn').click(function(e){
 			  		e.preventDefault();
-			  		window.location.href = "doctorlogin";
+			  		window.location.href = "login";
 			  	})
 				
 			});

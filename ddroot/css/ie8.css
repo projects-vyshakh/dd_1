@@ -1,0 +1,40 @@
+/* IE8 styles */
+
+/*******Icons*******/
+.panel-toggle-button {
+	display: block;
+}
+.heart-fallback {
+	display: block;
+}
+.star-fallback {
+	display: block;
+}
+.cloud-fallback {
+	display: block;
+}
+.location-fallback {
+	display: block;
+}
+.phone-fallback {
+	display: block;
+}
+.mail-fallback {
+	display: block;
+}
+.video-small-fallback {
+	display: block;
+}
+/*****************/
+
+#options-panel {
+	display: none;
+}
+
+/*Media Queries*/
+@media (max-width: 767px) {
+  body {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+}
