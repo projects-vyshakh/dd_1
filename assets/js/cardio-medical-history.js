@@ -179,6 +179,7 @@ var cardioMedicalHistoryElements = function (dosageUnit) {
         {
         	$('#family-check-value').val('NA');
         	$('.family-hypertension').prop('disabled',true);
+            $('.family-cad').prop('disabled',true);
             $('.family-diabetes').prop('disabled',true);
             $('.family-cancer').prop('disabled',true);
             $('.family-other').prop('disabled',true);
@@ -189,6 +190,7 @@ var cardioMedicalHistoryElements = function (dosageUnit) {
         {
     		$('#family-check-value').val('');
         	$('.family-hypertension').prop('disabled',false); 
+            $('.family-cad').prop('disabled',false); 
             $('.family-diabetes').prop('disabled',false);
             $('.family-cancer').prop('disabled',false);
             $('.family-other').prop('disabled',false);
@@ -221,7 +223,9 @@ var cardioMedicalHistoryElements = function (dosageUnit) {
                
                 //closestElements.find('.family-hypertension').prop('checked', false);
                 closestElements.find('.family-hypertension').prop('disabled', true);
-
+                //closestElements.find('.family-cad').prop('checked', false);
+                closestElements.find('.family-cad').prop('disabled', true);
+                
                 //closestElements.find('.family-diabetes').prop('checked', false);
                 closestElements.find('.family-diabetes').prop('disabled', true);
                 //closestElements.find('.family-cancer').prop('checked', false);
@@ -234,6 +238,7 @@ var cardioMedicalHistoryElements = function (dosageUnit) {
                 //alert("not checked");
                 
                 closestElements.find('.family-hypertension').prop('disabled', false);
+                closestElements.find('.family-cad').prop('disabled', false);
                 closestElements.find('.family-diabetes').prop('disabled', false);
                 closestElements.find('.family-cancer').prop('disabled', false);
                 closestElements.find('.family-other').prop('disabled', false);

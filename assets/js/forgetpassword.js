@@ -11,14 +11,14 @@ var forgetPassword = function () {
                 
                 email_mobile: {
                     required: true,
-                    email : true,
+                    number : true,
                     
                 },
                 
             },
             messages: {
                 
-                email_mobile : "Please type a valid email",
+                email_mobile : "Please type a valid mobile number",
                
             },    
             submitHandler: function (form) {
@@ -40,6 +40,9 @@ var forgetPassword = function () {
             rules: {
                 doctor_otp: {
                     required: true,
+                    number : true,
+                    maxlength : 4,
+                    minlength : 4
                     
                 },
               

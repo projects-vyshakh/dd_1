@@ -133,7 +133,7 @@
 						<div class="box_2_main">
 				            <div>
 								<div class="dd_logo_responsive">
-					        		<img src="assets/images/logo-mob.png" alt="">			        		
+					        		<img src="../assets/images/logo-mob.png" alt="">			        		
 					        	</div>
 					        	<div class="dd_drlogin_responsive">
 			        				<div class="login_div2">

@@ -4,49 +4,7 @@ var cardioPersonalInformation = function () {
 				$(".loader").fadeOut("slow");
 		});
 
-		$( "#country option:selected" ).val('101').text('India');
-
-			/*Dynamically adding state responding to country and also keeping selected value of state*/
-			var stateHidden = $('#state-hidden').val();
-          	var countryId  = $( "#country option:selected" ).val();
-            //alert(country);
-            $.ajax({
-                type: "POST",
-                url: "../getState",
-                data: "country_id="+ countryId ,
-                success: function(data){
-                    $('#state').empty();
-                    for(var s=0;s<data.length;s++){
-
-                        $('#state').append('<option>'+data[s].state_name+'</option>');
-                        $('#state').val(stateHidden).attr("selected", "selected");
-
-                    }
-                }
-            });
-
-
-            $('#country').change(function(){
-	            var countryId  = $( "#country option:selected" ).val();
-	            //alert(country);
-	            $.ajax({
-	                type: "POST",
-	                url: "../getState",
-	                data: "country_id="+ countryId ,
-	                success: function(data){
-	                    $('#state').empty();
-	                    for(var s=0;s<data.length;s++){
-
-	                         //console.log(data[s].state_name);
-
-
-	                        $('#state').append('<option>'+data[s].state_name+'</option>');
-
-
-	                    }
-	                }
-	            });
-	        });
+		
 	};
 	
 	 var cardioPersonalInformationValidation = function () {

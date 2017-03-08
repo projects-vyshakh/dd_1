@@ -8,7 +8,7 @@
 	<!-- start: HEAD -->
 	<head>
 
-		<title>Doctor's Diary | Login</title>
+		<title>Doctor's Diary | Admin Login</title>
 		<!-- start: META -->
 		<meta charset="utf-8" />
 		<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
@@ -110,10 +110,7 @@
 		        		 		 	</a>
 		        		 		</div>
 	        		 		</div>
-							<!-- <div class="login_div">
-	        		 			<a href="patientlogin" @if($currentPath=="login") class="topmenu-active" @endif>Login</a>&nbsp; | &nbsp;
-	        		 		 	<a href="doctorsignup" @if($currentPath=="register") class="topmenu-active" @endif>Register</a>
-	        		 		</div> -->
+						
 	        		 	</div>
 	        		</div>
 	        	</div>
@@ -140,24 +137,11 @@
 					<!-- <div class="main-login"> -->
 				<div>
 				<div class="dd_logo_responsive">
-					<img src="assets/images/logo-mob.png" alt="">
+					<img src="/assets/images/logo-mob.png" alt="">
 				</div>
-				<!-- <div class="dd_drlogin_responsive"><div class="login_div2">
-							<div class="doctorlogin_main2">								
-								<a href="doctorlogin" class="topmenu-active dd_doctor_login" >Doctor Login</a>&nbsp; / &nbsp;
-							</div>
-	        		 		<div class="patientlogin_main2">
-	        		 		 	<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
-	        		 		 		Patient Login
-	        		 		 	</a>
-	        		 		</div>
-        		 		</div> 	
-		        	</div>-->
 	        		<div class="logo">
 	        			<span class="login_HD dd_signfont">Sign into your account</span>
-	        		</div> 
-
-		        		
+	        		</div>
 	        		<div class="box-login " style="display: block;">
 	        			<div class="row">
 							<div class="col-sm-12">

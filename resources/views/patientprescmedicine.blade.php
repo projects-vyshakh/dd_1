@@ -378,7 +378,7 @@ if(!empty($prescMedicine)){
 									</div>
 									<hr style="margin-top:30px; margin-bottom:20px;">
 										<div class="form-group">
-											{!! Form::label('treatment', 'Treatment', $attributes = array('class'=>"col-sm-12  "));  !!}
+											{!! Form::label('treatment', 'ADVICE', $attributes = array('class'=>"col-sm-12  "));  !!}
 											<div class="col-sm-12">
 												{!! Form::textarea('treatment',(!empty($prescMedicineVal->treatment))?$prescMedicineVal->treatment:Input::old('treatment'),['class'=>'form-control treament ', 'rows' => 4, 'cols' =>40 ]) !!}
 											</div>
@@ -523,7 +523,7 @@ if(!empty($prescMedicine)){
 									</div>
 									<hr style="margin-top:30px; margin-bottom:20px;">
 										<div class="form-group">
-											{!! Form::label('treatment', 'Treatment', $attributes = array('class'=>"col-sm-12  "));  !!}
+											{!! Form::label('treatment', 'ADVICE', $attributes = array('class'=>"col-sm-12  "));  !!}
 											<div class="col-sm-12">
 												{!! Form::textarea('treatment',null,['class'=>'form-control treament ', 'rows' => 4, 'cols' =>40 ]) !!}
 											</div>

@@ -12,6 +12,14 @@ use App\classes\DBUtils;
 use App\Http\Controllers\Controller;
 use App\Http\Manager\SubscriptionManager;
 
+//Models
+use App\Models\PatientsModel;
+use App\Models\DoctorsModel;
+use App\Models\MedicalHistoryModel;
+use App\Models\MedicalHistoryPresentPastModel;
+use App\Models\SurgeryHistoryModel;
+use App\Models\DrugAllergyHistoryModel;
+use App\Models\PrescriptionModel;
 
 class LoginController extends Controller {
 
@@ -59,55 +67,35 @@ class LoginController extends Controller {
 
 		
 
-		$checkLoginCredentials = DB::table('doctors')->where('email','=',$email)->where('status','=','1')->first();
+		$checkLoginCredentials = DB::table('doctors')
+		                            ->where('email','=',$email)
+		                            ->first();
+		$activeStatus		=	$checkLoginCredentials->status;
+		$registerStatus		=	$checkLoginCredentials->registration_status;
+		$passwordEncrypted 	= 	$checkLoginCredentials->password;
 		
-		
-		
-		if(!empty($checkLoginCredentials))
-		{
-			$passwordEncrypted = $checkLoginCredentials->password;
-			//$passwordEncrypted = "ns8nqYKWONCYH2B4qU60HP9ntcSzYCeiCvV1b++32CQ=";
-			//Decrypt
-			$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
-			
-			$data = base64_decode($passwordEncrypted);
-			$iv = substr($data, 0, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC));
+		if(count($checkLoginCredentials)>0){
+			if($registerStatus==1 && $activeStatus==1){
+				$decrypted	=	DBUtils::passwordDecrypt($passwordEncrypted);
 
-			$decrypted = rtrim(
-			    mcrypt_decrypt(
-			        MCRYPT_RIJNDAEL_128,
-			        hash('sha256', $key, true),
-			        substr($data, mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC)),
-			        MCRYPT_MODE_CBC,
-			        $iv
-			    ),
-			    "\0"
-			);
-			
-			
-			if($password==$decrypted){
-				Session::put('doctorId',$checkLoginCredentials->id_doctor);
-				Session::put('doctorSpecialization',$checkLoginCredentials->specialization);
-				return Redirect::to('doctor/home');
+				if($password==$decrypted){
+					Session::put('doctorId',$checkLoginCredentials->id_doctor);
+					Session::put('doctorSpecialization',$checkLoginCredentials->specialization);
+					return Redirect::to('doctor/home');
+				}
+				else{
+					return Redirect::to('doctor/login')->with(array('error'=>'Login failed! Incorrect email or password.'))->withInput();
+				}
 			}
 			else{
-				return Redirect::to('doctor/login')->withInput()->with(array('error'=>"Login failed! Incorrect email or password."));
+				return Redirect::to('doctor/login')->with(array('error'=>'Your account is not verified. Please contact administrator'))->withInput();
 			}
 		}
 		else{
-
-			!empty($status)?$checkLoginCredentials->status:$status=1;
-			if($status==0){
-				//echo "enter into else 0";
-				return Redirect::to('doctor/login')->with(array('error'=>"Your account is not verified. Please contact administrator"));
-			}
-			else{
-				//echo "enter into 0 else ";
-				return Redirect::to('doctor/login')->with(array('error'=>"Login failed! Incorrect email or password."));
-			}
-
-			
-		}	
+			return Redirect::to('doctor/login')->with(array('error'=>'Login failed! Incorrect email or password.'))->withInput();
+		}
+		
+		
 	
 
 		
@@ -212,40 +200,44 @@ class LoginController extends Controller {
 	}
 
 	public function handleDoctorForgetPassword(){
-		$input 		= Input::get('email_mobile');
-		
-		$otpCode 	= DBUtils::generate_otp_forgetpassword();
-		$doctorData = DB::table('doctors')
-									->where('email','=',$input)
+		$input 		= Request::all();
+		$mobile 	= $input['email_mobile'];
+		$otpCode 	= DBUtils::generate_otp(4);
+
+		$doctorData = DoctorsModel::where('phone','=',$mobile)
 									->where('registration_status','=',"1")
 									->where('status','=',"1")
 									->first();
 
-									
+		$message    =  "Welcome to Doctor's Diary!\nTo reset your password: Click http://doctorsdiary.co/doctor/verify\n
+					    OTP for password reset: Use ".$otpCode;
+						
 
-		if(!empty($doctorData)){
+		
+
+		if(count($doctorData)>0){
 			Session::put('otpCheckTrue','true');
-			$to      = $input;
-			$subject = 'OTP for password change';
-			$message = 'OTP :'.$otpCode;
-			$headers = 'From: cipher.infos@gmail.com' . "\r\n" .
-			'Reply-To: vyshakhps1988@gmail.com' . "\r\n" .
-			    'X-Mailer: PHP/' . phpversion();
+			$otpSend = DBUtils::otpSendToMobile($mobile,$message,$otpCode);
 
-			if(mail($to, $subject, $message, $headers))
-			{
-				DB::table('doctors')->where('email','=',$input)->update(array('otp'=>$otpCode));
+
+			//$otpSend = 1;
+
+			if($otpSend=="1"){
+				DB::table('doctors')->where('phone','=',$mobile)->update(array('otp'=>$otpCode));
 				
-				return Redirect::to('doctorotpcheck')->with(array('success'=>'An OTP has sent to your mobile number. Please check your messages'));
-
+				return Redirect::to('doctor/verify')->with(array('success'=>'An OTP has sent to your mobile number. Please check your inbox'));
 			}
 			else{
 				return Redirect::to('doctor/forgetpassword')->with(array('error'=>'Failed to send OTP'));
-			}	
+			}
+			
 		}
 		else{
 			return Redirect::to('doctor/forgetpassword')->with(array('error'=>'Either invalid doctor or doctor not registered'));
 		}
+
+		
+		
 
 
 	}
@@ -258,89 +250,45 @@ class LoginController extends Controller {
 	}
 
 	public function handlePatientForgetPassword(){
-		$input = Input::get('email_mobile');
-		//$currentPath = "doctorlogin";
-		$otpCode = DBUtils::generate_otp_forgetpassword();
+		$input 		= Request::all();
+		$mobile 	= $input['email_mobile'];
+		$otpCode 	= DBUtils::generate_otp(4);
 		
-		$patientData 	= DB::table('patients')->where('phone','=',$input)->first();
+		$patientData 	= DB::table('patients')->where('phone','=',$mobile)->first();
 		
+		$message    =  "Welcome to Doctor's Diary!\nTo reset your password: Click http://doctorsdiary.co/doctor/verify\n
+					    OTP for password reset: Use ".$otpCode;
 										
-								
+		Session::put('patientOtpCheckTrue','true');							
 
 
 
-		if(!empty($patientData)){
+		if(count($patientData)>0){
 			$registrationStatus = $patientData->registration_status;
 			if($registrationStatus>0){
-				$authKey = "117220A1EZexOee4576b74bc";
+				//$otpSend = DBUtils::otpSendToMobile($mobile,$message,$otpCode);
 
-				//Multiple mobiles numbers separated by comma
-				$mobileNumber = $input;
-
-				//Sender ID,While using route4 sender id should be 6 characters long.
-				$senderId = "DDIARY";
-
-				//Your message to send, Add URL encoding here.
-				$message = urlencode("Doctors Diary - Your OTP is"." ".$otpCode);
+				$otpSend = 1;
+				if($otpSend=="1"){
+					
 				
+					DB::table('patients')->where('phone','=',$mobile)->update(array('otp_generated'=>$otpCode));
 				
-				//Define route 
-				$route = "route4"; //if route1 is used then msg will send as promotional
-				//Prepare you post parameters
-				$postData = array(
-				    'authkey' 	=> $authKey,
-				    'mobiles' 	=> $mobileNumber,
-				    'message' 	=> $message,
-				    'sender' 	=> $senderId,
-				    'route' 	=> $route
-				);
+					return Redirect::to('patient/verify')->with(array('success'=>'An OTP has sent to your mobile number. Please check your inbox'));	
 
-				//API URL
-				$url="https://control.msg91.com/api/sendhttp.php";
-
-				// init the resource
-				$ch = curl_init();
-				curl_setopt_array($ch, array(
-				    CURLOPT_URL => $url,
-				    CURLOPT_RETURNTRANSFER => true,
-				    CURLOPT_POST => true,
-				    CURLOPT_POSTFIELDS => $postData
-				    //,CURLOPT_FOLLOWLOCATION => true
-				));
-
-
-				//Ignore SSL certificate verification
-				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-
-				//get response
-				$output = curl_exec($ch);
-
-				//Print error if any
-				if(curl_errno($ch))
-				{
-				    echo 'error:' . curl_error($ch);
 				}
 
-				curl_close($ch);
-
-				Session::put('patientOtpCheckTrue','true');
 				
-				DB::table('patients')->where('phone','=',$input)->update(array('otp_generated'=>$otpCode));
-				
-				return Redirect::to('patientotpcheck')->with(array('success'=>'An OTP has sent to your mobile number. Please check your messages'));	
-
 			}
 			else{
-				return Redirect::to('patientforgetpassword')->with(array('error'=>'Invalid patient or patient not activated'));
+				return Redirect::to('patient/forgetpassword')->with(array('error'=>'Invalid patient or patient not activated'));
 			}
 				
 				
 			
 		}
 		else{
-			return Redirect::to('patientforgetpassword')->with(array('error'=>'Mobile number not registered'));
+			return Redirect::to('patient/forgetpassword')->with(array('error'=>'Mobile number not registered'));
 		}
 
 	
@@ -355,7 +303,7 @@ class LoginController extends Controller {
 			return view('doctorotpcheck');
 		}
 		else{
-			return Redirect::to('doctorlogin');
+			return Redirect::to('doctor/login');
 		}
 		
 	}
@@ -372,58 +320,65 @@ class LoginController extends Controller {
 		
 		//echo $otpCode;
 		$doctorOtpExistCheck = DB::table('doctors')->where('otp','=',$otpCode)->first();
-		//var_dump($doctorOtpExistCheck);
+		var_dump($doctorOtpExistCheck);
 		//die();
 
 		if(!empty($doctorOtpExistCheck)){
 			//return view('addnewpassword',array('doctorData'=>$doctorOtpExistCheck));
 			$patientData = "";
-			return Redirect::to('doctoraddnewpassword')->with(array('doctorData'=>$doctorOtpExistCheck,'patientData'=>$patientData));
+			return Redirect::to('doctor/newpassword')->with(array('doctorData'=>$doctorOtpExistCheck,'patientData'=>$patientData));
 
 		}
 		else{
 			
-			return Redirect::to('doctorotpcheck')->with(array('error'=>"Invalid OTP"));
+			return Redirect::to('doctor/verify')->with(array('error'=>"Invalid OTP"))->withInput();
 		}
 	}
 
 	public function showPatientOtpCheck()
 	{
-		$patentOtpCheckTrue = Session::get('patientOtpCheckTrue');
+		$patientOtpCheckTrue = Session::get('patientOtpCheckTrue');
 
-		if(!empty($patientOtpCheckTrue)){
+
+
+		if($patientOtpCheckTrue){
 			return view('patientotpcheck');
 		}
 		else{
-			return Redirect::to('patientlogin');
+			return Redirect::to('patient/login');
 		}
 		
 	}
 
 	public function handlePatientForgetOtpCheck(){
-		$otpCode = Input::get('patient_otp');
+		$input 		= Request::all();
+		$otpCode 	= $input['patient_otp'];
 		
-		Session::put('patientAddnewPasswordTrue','true');
+		Session::put('patientPasswordTrue','true');
+		//Session::put('patientAddNewPasswordTrue','true');
+		
+		
 
 		if(!empty($otpCode)){
 			//OTP exist check
 			$patientOtpExistCheck = DB::table('patients')->where('otp_generated','=',$otpCode)->first();
 
-			//var_dump($otpExistCheck);
+			
 			if(!empty($patientOtpExistCheck)){
-				Session::flush('patientOtpCheckTrue');
+				var_dump($patientOtpExistCheck);
+				//Session::flush('patientOtpCheckTrue');
 				$doctorData = "";
-				return Redirect::to('patientaddnewpassword')->with(array('doctorData'=>$doctorData,'patientData'=>$patientOtpExistCheck));
+				return Redirect::to('patient/setnewpassword')->with(array('doctorData'=>$doctorData,'patientData'=>$patientOtpExistCheck));
 			}
 			else{
-				return Redirect::to('patientotpcheck')->with(array('error'=>"Invalid OTP"));
+				return Redirect::to('patient/verify')->with(array('error'=>"Invalid OTP"))->withInput();
 			}
 
 			
 			
 		}
 		else{
-			return Redirect::to('patientotpcheck')->with(array('error'=>"Invalid OTP"));
+			return Redirect::to('patient/verify')->with(array('error'=>"Invalid OTP"));
 		}
 	}
 
@@ -432,12 +387,13 @@ class LoginController extends Controller {
 	public function showDoctorAddNewPassword(){
 		$doctorForgetNewPasswordStatus = Session::get('addnewPasswordTrue');
 
-		if(!empty($doctorForgetPasswordStatus)){
-
+		if($doctorForgetNewPasswordStatus){
+			//echo $doctorForgetNewPasswordStatus;
 			return view('doctoraddnewpassword');
 		}
 		else{
-			return Redirect::to('doctorlogin');
+			//echo "login";
+			return Redirect::to('doctor/login');
 		}
 	}
 	public function handleDoctorAddNewPassword(){
@@ -445,8 +401,9 @@ class LoginController extends Controller {
 			$password 			= Input::get('password');
 			$cPassword 			= Input::get('cpassword');
 			$doctorPatientId 	= Input::get('doctor_patient_id');
+			$createdDate 		= date('Y-m-d');
+			
 
-			//echo $doctorPatientId;
 
 			//$doctorEmail = Session::get('doctorEmail');
 
@@ -456,7 +413,7 @@ class LoginController extends Controller {
 										->where('status','=',"1")
 										->first();
 
-										
+									
 
 			
 			if(!empty($doctorData)){
@@ -464,33 +421,19 @@ class LoginController extends Controller {
 				
 
 				if($password==$cPassword){
-					$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
-							$iv = mcrypt_create_iv(
-							    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
-							    MCRYPT_DEV_URANDOM
-							);
 
-							$encrypted = base64_encode(
-							    $iv .
-							    mcrypt_encrypt(
-							        MCRYPT_RIJNDAEL_128,
-							        hash('sha256', $key, true),
-							       	$password,
-							        MCRYPT_MODE_CBC,
-							        $iv
-							    )
-							);
+					$encrypted = DBUtils::passwordEncrypt($password);
+				
+					$passwordUpdate = DB::table('doctors')->where('id_doctor','=',$doctorPatientId)->update(array('password'=>$encrypted,'edited_date'=>$createdDate));
 
-
-					$passwordUpdate = DB::table('doctors')->where('id_doctor','=',$doctorPatientId)->update(array('password'=>$encrypted));
 					if($passwordUpdate){
 						Session::flush('addnewPasswordTrue');
 						DB::table('doctors')->where('id_doctor','=',$doctorPatientId)->update(array('otp'=>''));
 						
-						return Redirect::to('doctorlogin')->with(array('success'=>"Successfully changed the password. Please login here"));
+						return Redirect::to('doctor/login')->with(array('success'=>"Successfully changed the password. Please login here"));
 					}
 					else{
-						return Redirect::to('doctorforgetpassword')->with(array('error'=>"Failed to update the password"));
+						return Redirect::to('doctor/forgetpassword')->with(array('error'=>"Failed to update the password"));
 						
 					}
 				}
@@ -504,13 +447,18 @@ class LoginController extends Controller {
 	}
 
 	public function showPatientAddNewPassword(){
-		$patientAddNewPasswordStatus = Session::get('pateintAddnewPasswordTrue');
 
-		if(!empty($patientAddNewPasswordStatus)){
+		$patientPasswordTrue = Session::get('patientPasswordTrue');
+		
+		
+		//echo $test;
+
+
+		if($patientPasswordTrue){
 			return view('patientaddnewpassword');
 		}
 		else{
-			return Redirect::to('patientlogin');
+			return Redirect::to('patient/login');
 		}
 		
 	}
@@ -535,23 +483,9 @@ class LoginController extends Controller {
 				
 
 				if($password==$cPassword){
-					$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
-							$iv = mcrypt_create_iv(
-							    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
-							    MCRYPT_DEV_URANDOM
-							);
 
-							$encrypted = base64_encode(
-							    $iv .
-							    mcrypt_encrypt(
-							        MCRYPT_RIJNDAEL_128,
-							        hash('sha256', $key, true),
-							       	$password,
-							        MCRYPT_MODE_CBC,
-							        $iv
-							    )
-							);
-
+					$encrypted = DBUtils::passwordEncrypt($password);
+					
 
 					$passwordUpdate = DB::table('patients')->where('id_patient','=',$doctorPatientId)->update(array('password'=>$encrypted));
 					
@@ -637,55 +571,35 @@ class LoginController extends Controller {
 			$emailExistCheck = DB::table('doctors')->where('email','=',$email)->first();
 			
 			if(!empty($emailExistCheck)){
-				return Redirect::to('doctorsignup')->with(array('error'=>"Email already registered."));
+				return Redirect::to('doctor/signup')->with(array('error'=>"Email already registered."));
 			}
 			else{
-				$firstName 	= $input['first_name'];
-				$middleName = $input['middle_name'];
-				$lastName 	= $input['last_name'];
-				$email 		= $input['email'];
-				$password 	= $input['password'];
-				$phone 		= $input['phone'];
-				$gender 	= $input['gender'];
+				$firstName 		 = $input['first_name'];
+				$middleName 	 = $input['middle_name'];
+				$lastName 		 = $input['last_name'];
+				$email 			 = $input['email'];
+				$password 		 = $input['password'];
+				$phone 			 = $input['phone'];
+				$gender 		 = $input['gender'];
 				$marritialStatus = $input['maritial_status'];
-				$street 	= $input['street'];
-				$country 	= $input['country'];
+				$street 		 = $input['street'];
+				$country 		 = $input['country'];
 				!empty($input['state'])?$state = $input['state']:$state="";
-				$city 		= $input['city'];
-				$pincode 	= $input['pincode'];
+				$city 			 = $input['city'];
+				$pincode 		 = $input['pincode'];
 				!empty($input['qualification'])?$qualification = $input['qualification']:$qualification="";
-				$specialization = $input['specialization'];
+				$specialization  = $input['specialization'];
 				!empty($input['super_specialization'])?$superSpecialization = $input['super_specialization']:$superSpecialization="";
-				$accredition = $input['accredition'];
-				$imaRegisterNo = $input['register_no'];
-				$createdDate = date('Y-m-d H:i:m');
+				$accredition 	 = $input['accredition'];
+				$imaRegisterNo 	 = $input['register_no'];
+				$createdDate 	 = date('Y-m-d H:i:m');
 				
 				
 				
 				
-				
+				$encrypted = DBUtils::passwordEncrypt($password);
 				
 
-				$key = 'n1C5DE6oc63KDV4A4kZ0gc51QK24ke6o';
-						$iv = mcrypt_create_iv(
-						    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC),
-						    MCRYPT_DEV_URANDOM
-						);
-
-						$encrypted = base64_encode(
-						    $iv .
-						    mcrypt_encrypt(
-						        MCRYPT_RIJNDAEL_128,
-						        hash('sha256', $key, true),
-						       	$password,
-						        MCRYPT_MODE_CBC,
-						        $iv
-						    )
-						);
-				
-				
-				
-				
 
 				$regsiterValues = array('first_name' => $firstName,
 									'middle_name' => $middleName,
@@ -716,10 +630,10 @@ class LoginController extends Controller {
 				
 
 				if($doctorRegistration){
-					return Redirect::to('doctorlogin')->with(array('success'=>"Doctor registered successfully. Please wait for administrator authorization"));
+					return Redirect::to('doctor/login')->with(array('success'=>"Doctor registered successfully. Please wait for administrator authorization"));
 				}
 				else{
-					return Redirect::to('doctorsignup')->with(array('error'=>"Failed to register doctor"));
+					return Redirect::to('doctor/signup')->with(array('error'=>"Failed to register doctor"));
 				}
 
 

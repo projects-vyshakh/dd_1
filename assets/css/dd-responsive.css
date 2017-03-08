@@ -992,6 +992,27 @@ li.dropdown.current-user .dropdown-menu li a {
 }
 
 
+/* Disease atlas  */
+@media only screen and (max-width: 767px){
+.disease-dd_drlogin_responsive
+{
+        display: inline;
+}
+.disease_dd_login_header_2
+{
+      display: none;
+}
+.disease-login_div2 {
+    display: table;
+    float: none;
+    font-size: 14px;
+    margin: 10px auto;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+
 
 }
 

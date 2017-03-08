@@ -29,6 +29,18 @@ if(!empty($doctorData)){
 
 @stop
 @extends('layouts.master', ['specialization'=>$doctorSpecialization,'patientName'=>$patientName])
+<style>
+	.loader 
+	{
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('../assets/images/page_loading.gif') 50% 50% no-repeat rgb(249,249,249);
+    }
+</style>
 @section('main')
 <div class="loader"></div>
 
@@ -207,8 +219,8 @@ if(!empty($doctorData)){
 				patientElements.init();
 			    
 			$(window).load(function() {
-				$(".loader").fadeOut("slow");
-				
+				//$(".loader").fadeOut("slow");
+				$('.loader').fadeOut('slow').delay(1000);
 			});
 
 			$('#symptoms').magicSuggest({

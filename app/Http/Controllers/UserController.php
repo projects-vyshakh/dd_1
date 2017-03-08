@@ -177,7 +177,7 @@ class UserController extends Controller {
     	$userName = Session::get('user_name');
     	$userId   = Session::get('user_id');
 
-    	$specializationKey = DB::table('specialization')->orderBy('id_specialization')->lists('specialization_name', 'id_specialization');
+    	$specializationKey = DB::table('specialization')->orderBy('specialization_name')->lists('specialization_name', 'id_specialization');
 
     	if(!in_array('Gynaecology', $specializationKey)){
 	     	 array_unshift($specializationKey, '');

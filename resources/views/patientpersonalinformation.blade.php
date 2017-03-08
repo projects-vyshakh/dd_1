@@ -4,37 +4,54 @@ $nowDate = date('d-M-Y');
 
 if(!empty($patientData)){
 	//echo "ss";
+	$patientId 	     			= $patientData->id_patient;
+	$firstName 	     			= $patientData->first_name;
+	$middleName      			= $patientData->middle_name;
+	$lastName        			= $patientData->last_name;
+	$aadharNo        			= $patientData->id_aadhar;
+	$patientGender   			= $patientData->gender;
+	$patientDob      			= $patientData->dob;
+	$age             			= $patientData->age;
+	$patientMaritialStatus  	= $patientData->maritial_status;
+	$house           			= $patientData->house_name;
+	$patientStreet          	= $patientData->street;
+	$patientCity            	= $patientData->city;
+	$patientState           	= $patientData->state;
+	$patientCountry         	= $patientData->country;
+	$pincode         			= $patientData->pincode;
+	$phone           			= $patientData->phone;
+	$email           			= $patientData->email;
+	$refferedBy 				= $patientData->reffered_by;
 
-	foreach ($patientData as $key => $value) {
-		$patientId 	     			= $value->id_patient;
-		$firstName 	     			= $value->first_name;
-		$middleName      			= $value->middle_name;
-		$lastName        			= $value->last_name;
-		$aadharNo        			= $value->id_aadhar;
-		$patientGender   			= $value->gender;
-		$patientDob      			= $value->dob;
-		$age             			= $value->age;
-		$patientMaritialStatus  	= $value->maritial_status;
-		$house           			= $value->house_name;
-		$patientStreet          	= $value->street;
-		$patientCity            	= $value->city;
-		$patientState           	= $value->state;
-		$patientCountry         	= $value->country;
-		$pincode         			= $value->pincode;
-		$phone           			= $value->phone;
-		$email           			= $value->email;
-		$refferedBy 				= $value->reffered_by;
-		//echo $patientDob;
-	}
 	$patientName = $firstName." ".$lastName;
 }
 else{
 	$newPatientId = Session::get('patientId'); 
 	$patientName = "";
+	$firstName 	     			= "";
+	$middleName      			= "";
+	$lastName        			= "";
+	$aadharNo        			= "";
+	$patientGender   			= "";
+	$patientDob      			= "";
+	$age             			= "";
+	$patientMaritialStatus  	= "";
+	$house           			= "";
+	$patientStreet          	= "";
+	$patientCity            	= "";
+	$patientState           	= "";
+	$patientCountry         	= "101";
+	$pincode         			= "";
+	$phone           			= "";
+	$email           			= "";
+	$refferedBy 				= "";
 }
 
 if(!empty($doctorData)){
 	$doctorSpecialization = $doctorData->specialization;
+}
+else{
+	$doctorSpecialization = "";
 }
 
 
@@ -56,7 +73,7 @@ if(!empty($doctorData)){
         width: 100%;
         height: 100%;
         z-index: 9999;
-        background: url('assets/images/page_loading.gif') 50% 50% no-repeat rgb(249,249,249);
+        background: url('../assets/images/page_loading.gif') 50% 50% no-repeat rgb(249,249,249);
     }
 </style>
 @section('main')
@@ -68,6 +85,7 @@ if(!empty($doctorData)){
 	<div class="page-header">
 		<h1>Patient Personal Information <small></small></h1>
 	</div>
+
 	<div class="row">
 		<div class="col-sm-12">
 			<?php 
@@ -232,7 +250,7 @@ if(!empty($doctorData)){
 							 	</div>		
 									<div class="col-sm-8">
 										<span class="">
-										{!! Form::select('country', $country, null , $attributes = array('class' => 'form-control country','id'=>'country')); !!}
+										{!! Form::select('country', $country, $patientCountry , $attributes = array('class' => 'form-control country','id'=>'country')); !!}
 										</span>
 									</div>
 								</div>
@@ -333,6 +351,7 @@ if(!empty($doctorData)){
 		{!!Html::script('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')!!}
 		
 		{!!Html::script('assets/js/patient-personal-information.js')!!}
+		{!!Html::script('assets/js/utility-common.js')!!}
 		
 		{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
 		{!!Html::script('assets/js/patient-personal-information.js')!!}
@@ -343,6 +362,7 @@ if(!empty($doctorData)){
 	<script>
 		$(document).ready(function() {
 			Main.init();
+			utilityCommonElements.init();
 			patientElements.init();
 
 			

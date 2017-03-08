@@ -89,7 +89,7 @@ class PediatricsController extends Controller {
 		
 		if(empty($doctorId)){
 			//header('location:doctorlogin');
-			return Redirect::to('logout');
+			return Redirect::to('doctor/logout');
 		}
 		else{
 			$gender = DB::table('business_key_details')->where('business_key', '=', 'GENDER')->orderBy('business_value')->lists('business_value', 'business_value');
@@ -122,19 +122,9 @@ class PediatricsController extends Controller {
 			     	 array_unshift($city, '');
 			    }
 
-			    $patientId = Session::get('patientId');
-			    $patientExist = PatientsModel::where('id_patient','=',$patientId)->count();
-			    if($patientExist>0)
-			    {
-			    	$patientData = PatientsModel::where('id_patient','=',$patientId)->get();
-			    }
-			    else
-			    {
-			    	$patientData = PatientsModel::where('id_patient','=',$patientId)->first();
-			    }
 			    
-
-			    $doctorData = DoctorsModel::where('id_doctor','=',$doctorId)->first();
+			    $patientData 	= PatientsModel::where('id_patient','=',$patientId)->first();
+			 	$doctorData 	= DoctorsModel::where('id_doctor','=',$doctorId)->first();
 			    						 
 			//Log::info("Patientdata",array($patientData));
 
@@ -146,11 +136,12 @@ class PediatricsController extends Controller {
 	function addPediaPersonalInformation(){
 		$input = Request::all();
 		
-		$patientId = Session::get('patientId');
-		$doctorId  = Session::get('doctorId');
-		$referenceId = Session::get('referenceId');
-		$patientExist = PatientsModel::where('id_patient','=',$patientId)->first();
-		$createdDate = date('Y-m-d H:i:s');							  
+		$patientId 		= Session::get('patientId');
+		$doctorId  		= Session::get('doctorId');
+		$referenceId 	= Session::get('referenceId');
+		$mobile 		=	$input['stud_mobile'];
+		$patientExist 	= PatientsModel::where('id_patient','=',$patientId)->first();
+		$createdDate 	= date('Y-m-d H:i:s');							  
 		
 		//echo $referenceId;
 		if(!empty($doctorId)){
@@ -182,7 +173,7 @@ class PediatricsController extends Controller {
 											   'stud_dob'               =>$input['stud_dob'],
 											   'age' 			        =>$input['stud_age'],
 											   'stud_parent_occupation' =>$input['stud_occupation'],
-											   'phone'                  =>$input['stud_mobile'],
+											   'phone'                  =>$mobile,
 											   'edited_date'            =>$createdDate
 											   );
 					$pediaPersonalInformation = PatientsModel::where('id_patient','=',$patientId)
@@ -199,6 +190,12 @@ class PediatricsController extends Controller {
 				}
 			}
 			else{
+
+				$otpGenerated 	 	= DBUtils::generate_otp(4);
+
+				$message    =  "Welcome to Doctor's Diary!\nClick here "."-".
+				"http://www.doctorsdiary.co/patient/signup.\nOTP for registration: Use ".$otpGenerated;
+
 				$pediaPersonalData = array('id_patient' => $patientId,
 											   'id_doctor'=>$doctorId,
 											   'school_name'=>$input['school_name'],
@@ -211,7 +208,8 @@ class PediatricsController extends Controller {
 											   'stud_dob' => $input['stud_dob'],
 											   'age' => $input['stud_age'],
 											   'stud_parent_occupation' => $input['stud_occupation'],
-											   'phone'=>$input['stud_mobile'],
+											   'otp_generated' => $otpGenerated,
+											   'phone'=>$mobile,
 											   'created_date'=>$createdDate
 
 											   );
@@ -219,7 +217,7 @@ class PediatricsController extends Controller {
 					$pediaPersonalInformation = PatientsModel::insert($pediaPersonalData);
 					
 					if($pediaPersonalInformation){
-
+						$otpSendToMobile 	= DBUtils::otpSendToMobile($mobile,$message,$otpGenerated);
 						return Redirect::to('doctor/pediapersonalinformation')->with(array('success'=>'Data saved successfully'));
 					}
 					
@@ -229,7 +227,7 @@ class PediatricsController extends Controller {
 			return Redirect::to('doctor/login');
 		}
 	}
-	 public function showPediaExamination(){
+	public function showPediaExamination(){
     	$patientId = Session::get('patientId');
     	$doctorId = Session::get('doctorId');
 

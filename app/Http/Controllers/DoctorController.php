@@ -170,12 +170,10 @@ class DoctorController extends Controller {
 				    }
 				   
 
-				    $patientId = Session::get('patientId');  		
-				    $patientData = DB::table('patients')
-				    						 ->where('id_patient','=',$patientId)->get();
+				    		
+				    $patientData = PatientsModel::where('id_patient','=',$patientId)->first();
 
-				    $doctorData = DB::table('doctors')
-				    						 ->where('id_doctor','=',$doctorId)->first();
+				    $doctorData = DoctorsModel::where('id_doctor','=',$doctorId)->first();
 				    						 
 				//Log::info("Patientdata",array($patientData));
 
@@ -1328,8 +1326,11 @@ class DoctorController extends Controller {
 				
 				$otpGenerated 	 	= DBUtils::generate_otp(4);
 
-				$message         	=  "OTP for patient registration is"." ".$otpGenerated." ."."Click here to register"."-".
-				"http://www.doctorsdiary.co/doctorsdiary/patientlogin";
+				$message    =  "Welcome to Doctor's Diary!\nClick here to register"."-".
+				"http://www.doctorsdiary.co/patient/signup.\nOTP for registration: Use ".$otpGenerated;
+					    
+
+				
 				
 				
 			
@@ -1406,6 +1407,12 @@ class DoctorController extends Controller {
 					case '3':
 						return Redirect::to('doctor/pediapersonalinformation');
 					break;
+					case '4':
+						return Redirect::to('doctor/pulmopersonalinformation');
+					break;
+					case '5':
+						return Redirect::to('doctor/pathologypersonalinformation');
+					break;
 					
 					default:
 
@@ -1461,6 +1468,12 @@ class DoctorController extends Controller {
 								return Redirect::to('doctor/home')->with(array('error'=>"Patient you entered is an adult"));
 							}
 							
+						break;
+					case '4':
+						return Redirect::to('doctor/pulmopersonalinformation');
+					break;
+					case '5':
+							return Redirect::to('doctor/pathologypersonalinformation');
 						break;
 					
 					default:

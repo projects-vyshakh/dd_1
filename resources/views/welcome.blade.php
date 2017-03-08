@@ -291,7 +291,7 @@
 	
 	   
 	   <script type="text/javascript" src="ddroot/assets/plugins/jQuery-lib/2.0.3/jquery.min.js"></script>
-	   <script type="text/javascript" src="'ddroot/assets/plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js"></script>
+	   <script type="text/javascript" src="ddroot/assets/plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js"></script>
 	   <script type="text/javascript" src="ddroot/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 	   <script type="text/javascript" src="ddroot/assets/plugins/jquery-inputlimiter/jquery.inputlimiter.1.3.1.min.js"></script>
 	   <script type="text/javascript" src="ddroot/assets/plugins/autosize/jquery.autosize.min.js"></script>
@@ -306,7 +306,7 @@
 	   <script type="text/javascript" src="ddroot/assets/js/main.js"></script>
 	   <script type="text/javascript" src="ddroot/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
 	   <script type="text/javascript" src="ddroot/assets/js/login.js"></script>
-	  	<script type="text/javascript" src="ddroot/assets/plugins/Swiper-master/dist/js/swiper.min.js"></script>
+	   <script type="text/javascript" src="ddroot/assets/plugins/Swiper-master/dist/js/swiper.min.js"></script>
 	
 	<script>
 	jQuery(document).ready(function() {

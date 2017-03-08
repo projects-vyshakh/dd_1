@@ -143,7 +143,7 @@
 		        	<div>
 
 		        	<div class="dd_logo_responsive">
-			        	<img src="assets/images/logo-mob.png" alt="">			        		
+			        	<img src="../assets/images/logo-mob.png" alt="">			        		
 			        </div>
 
 		        	<div class="dd_drlogin_responsive">

@@ -175,6 +175,9 @@ class DBUtils {
 		{
 		    echo 'error:' . curl_error($ch);
 		}
+		else{
+			return 1;
+		}
 
 		curl_close($ch);
   	}

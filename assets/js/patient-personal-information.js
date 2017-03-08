@@ -1,4 +1,4 @@
-var patientElements = function (dosageUnit) {
+var patientElements = function () {
 
     var runOnPageLoad = function(){
         $(window).load(function() {
@@ -97,40 +97,7 @@ var patientElements = function (dosageUnit) {
         CKEDITOR.disableAutoInline = true;
         $('textarea.ckeditor').ckeditor();
     };
-    var runAge = function (){
-        $('#dob').on('input',function() {
-       //$('#dob').change(function(){
-           var pastYear = $('#dob').val();
-
-           if(pastYear.length<1){
-                $('#age').val('');
-           }else{
-                 var now  = new Date();
-               var nowYear = now.getFullYear();
-               var age = nowYear - pastYear; 
-               
-               $('#age').val(age);
-           }
-          
-           //alert(age);
-       }); 
-       $('#age').on('input',function() {
-       //$('#dob').change(function(){
-           var age = $('#age').val(); 
-           if(age.length<1){
-                $('#dob').val('');
-           }else{
-                 var now  = new Date();
-                   var nowYear = now.getFullYear();
-                   var dob = nowYear - age; 
-                   
-                   $('#dob').val(dob);
-           }
-          
-           //alert(dob);
-       }); 
-      
-    };
+    
     var runTrimmedPatientPersonalInformation = function(){
         $('#first_name,#middle_name,#last_name,#aadhar_no,#dob,#age,#city').on('input',function() {
             var firstName = $('#first_name').val();
@@ -349,93 +316,7 @@ var patientElements = function (dosageUnit) {
         $('textarea.ckeditor').ckeditor();*/
     };
 
-    var runMedicalHistoryValidator = function () {
-        var form2           = $('#addPatientMedicalHistory');
-        var errorHandler2   = $('.errorHandler', form2);
-        var successHandler2 = $('.successHandler', form2);
-
-        $.validator.addClassRules('illness_name', {
-            required: true ,
-           
-        });
-        /*$.validator.addClassRules('surgicalhistory', {
-            required: true ,
-           
-        });
-
-        $.validator.addClassRules('medication-drug-allergy', {
-            required: true ,
-            
-        });
-        $.validator.addClassRules('reaction-drug-allergy', {
-            required: true ,
-            
-        });
-*/
-       
-        form2.validate({
-            errorElement: "span", // contain the error msg in a small tag
-            errorClass: 'help-block',
-            errorPlacement: function (error, element) { // render error placement for each input type
-                if (element.attr("type") == "radio" || element.attr("type") == "checkbox") { // for chosen elements, need to insert the error after the chosen container
-                    error.insertAfter($(element).closest('.form-group').children('div').children().last());
-                } else if (element.hasClass("ckeditor")) {
-                    error.appendTo($(element).closest('.form-group'));
-                } else {
-                    error.insertAfter(element);
-                    // for other inputs, just perform default behavior
-                }
-            },
-            ignore: "",
-            rules: {
-                menarche: {
-                    number : true
-                },
-                menopause: {
-                    number : true,
-                },
-                
-                
-               
-                
-            },
-            messages: {
-                menarche    : "Please type a valid number",
-                menopause   : "Please type a valid number",
-                
-                
-            },
-            invalidHandler: function (event, validator) { //display error alert on form submit
-                successHandler2.hide();
-                errorHandler2.show();
-            },
-            highlight: function (element) {
-                $(element).closest('.help-block').removeClass('valid');
-                // display OK icon
-                $(element).closest('.form-group').removeClass('has-success').addClass('has-error').find('.symbol').removeClass('ok').addClass('required');
-                // add the Bootstrap error class to the control group
-            },
-            unhighlight: function (element) { // revert the change done by hightlight
-                $(element).closest('.form-group').removeClass('has-error');
-                // set error class to the control group
-            },
-            success: function (label, element) {
-                label.addClass('help-block valid');
-                // mark the current input as valid and display OK icon
-                $(element).closest('.form-group').removeClass('has-error').addClass('has-success').find('.symbol').removeClass('required').addClass('ok');
-            },
-            submitHandler: function (form) {
-                successHandler2.show();
-                errorHandler2.hide();
-                // submit form
-                  
-                ("#form2" ).submit(function( event ) {
-                      //alert( "Handler for .submit() called." );
-                      //event.preventDefault();
-                });
-            }
-        });
-    };
+   
    
     var runPatientDiagnosisValidator = function () {
         var form2           = $('#addPatientDiagnosis');
@@ -688,54 +569,7 @@ var patientElements = function (dosageUnit) {
 
   
 
-    var runCountryCityState = function(){
-        $( "#country option:selected" ).val('101').text('India');
-
-            /*Dynamically adding state responding to country and also keeping selected value of state*/
-            var stateHidden = $('#state-hidden').val(); 
-            var countryId  = $( "#country option:selected" ).val();
-            //alert(country);
-            $.ajax({
-                type: "POST",
-                url: "../getState",
-                data: "country_id="+ countryId ,
-                success: function(data){
-                    $('#state').empty();
-                    
-                    for(var s=0;s<data.length;s++){
-
-                        $('#state').append('<option>'+data[s].state_name+'</option>');
-                        $('#state').val(stateHidden).attr("selected", "selected");
-
-                    }
-                }
-            });
-
-            
-        $('#country').change(function(){
-            var countryId  = $( "#country option:selected" ).val();
-            //alert(country);
-            $.ajax({
-                type: "POST",
-                url: "../getState",
-                data: "country_id="+ countryId ,
-                success: function(data){
-                    $('#state').empty();
-                    for(var s=0;s<data.length;s++){
-
-                         //console.log(data[s].state_name);
-
-
-                        $('#state').append('<option>'+data[s].state_name+'</option>');
-
-
-                    }
-                }
-            });
-        });
-        
-
-    };
+   
 
 
 
@@ -947,14 +781,12 @@ var patientElements = function (dosageUnit) {
             //runTagsInput();
             //runSummerNote();
            // runCKEditor();
-            runAge();
+           
             runTrimmedPatientPersonalInformation();
             runValidator2();
             runPatientObstetricsHistoryValidation();
-            runMedicalHistoryValidator();
-           
             
-            runCountryCityState();
+           
                 
             runPatientDiagnosisValidator();
             runPatientDiagnosisValidator2();

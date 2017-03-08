@@ -1,3 +1,4 @@
+
 body {
 	background: #ffffff;
 	overflow-x: hidden;
@@ -164,15 +165,16 @@ font-size:11px;
 	border-top-left-radius: 8px;
 }
 #iw-container .iw-content {
-	font-size: 13px;
-	line-height: 18px;
-	font-weight: 400;
-	margin-right: 1px;
-	padding: 15px 5px 20px 15px;
-	height: 100px;
-	width: 190px;
-	background-color: #d7e8e2;
-	border-radius: 12px;
+   background-color: hsl(159, 27%, 88%);
+   border-radius: 12px;
+   font-size: 13px;
+   font-weight: 400;
+   height: auto;
+   line-height: 18px;
+   margin-right: 1px;
+   padding: 2px 5px 5px 15px;
+   width: 190px;
+}
 }
 
 .iw-subTitle {
@@ -330,19 +332,16 @@ body {
 	}
 	.disease_heading
 	{
-		float: left;
+		float: right;
 		color: #fff;
 		font-weight: bold;
-		margin: 29px 292px; 
+		
 		font-size: 16px;
+		width: 150px;
+		text-align: right;
+		margin: 28px 23px;
 	}
-	.disease_heading2 {
-    float: left;
-    /*color: #fff;*/
-    font-weight: bold;
-    margin: 26px 117px;
-    font-size: 20px;
-}
+	
 .map_inner_wrapper_2{
 	padding: 0 50px;
 }
@@ -352,30 +351,123 @@ body {
     width: 800px;
     overflow: hidden;
 }
-@media only screen and (max-width: 767px){
+
+@media only screen and (max-width: 768px){
 .map_inner_wrapper_2 {
     padding: 0 20px;
 }
 
-@media only screen and (max-width: 767px){
 .map_inner_wrapper_3 {
     margin: 0 auto;
     width: 100%;
+    background-color: #266383;
+}
+}
+.map_logo_div
+{
+	display: table;
+	/*margin: 23px auto 10px;*/
+	text-align: center;
+	width: 100%;
+}
+.disease_heading2 {
+    
+    font-weight: bold;
+    font-size: 18px;
+
+}
+.dd_map_responsive{
+    display: inline;
 }
 
-	/*.leaflet-popup
-	{
-		border-radius: 12px !important;
-	}*/
-	/*.leaflet-popup-close-button
-	{
+.disease_dd_logo_responsive{
 
-        background-color: white !important;
-        position: absolute !important;
-		border-radius: 16px !important;
-		margin-top: 7px !important;
-	}
-	.leaflet-container a.leaflet-popup-close-button
-	{
-		padding: 0 !important;
-	}*/
+    display: table;
+    margin: 13px auto;
+    text-align: center;
+}
+.navbar-brand-disease.disease_logo_img_2 {
+   	background-image: url("../../assets/images/Disease/logo-mob-bl.png");
+	background-repeat: no-repeat;
+	height: 62px;
+	width: 62px;
+	background-size: cover;
+}
+.navbar-brand-disease
+{
+	float: left;
+	margin-top: 0px;
+	padding: 0px 0px 0 2px;
+	line-height: 0;
+}
+@media only screen and (max-width: 768px){
+.filters_box {
+top: 169px;
+}
+}
+
+
+
+.logo_div_a	
+{
+	float: left;
+	height: 72px;
+	width: 15%;
+}
+.login_div_b
+{
+	float: right;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: 343px;
+    margin: 30px auto;
+    color: #fff;
+}
+.login_div_b a {	
+    border: 1px solid hsla(0, 0%, 100%, 0.7);
+    color: hsl(0, 0%, 100%);
+    font-weight: 500;
+    padding: 9px 18px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+.login_div_b a:hover, .login_div_b a:focus {
+    background: #428bca;
+    color: #fff;
+    text-decoration: none;
+}
+.disease_heading img {
+    width: 159px;
+    height: 23px;
+}
+.disease-doctorlogin_main2 {
+    margin-right: 0;
+    float: left;
+    color: #fff;
+}
+.disease-doctorlogin_main2 a {
+    color: #fff;
+}
+.disease-patientlogin_main2 {
+    float: left;
+}
+.disease-patientlogin_main2 a {
+    color: #fff;
+}
+.disease_heading2 img
+{
+	width: 159px;
+	height: 21px;
+}
+.disease-dd_drlogin_responsive {
+     display: none;
+}
+.disease-login_div2{
+	float: right;
+	margin: 0 10px 15px 0;
+	font-size: 14px;
+	text-transform: uppercase;
+}

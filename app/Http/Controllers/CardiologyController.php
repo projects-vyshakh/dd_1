@@ -144,12 +144,10 @@ class CardiologyController extends Controller {
 				    }
 				   
 
-				    $patientId = Session::get('patientId');  		
-				    $patientData = DB::table('patients')
-				    						 ->where('id_patient','=',$patientId)->get();
+				    		
+				    $patientData = PatientsModel::where('id_patient','=',$patientId)->first();
 
-				    $doctorData = DB::table('doctors')
-				    						 ->where('id_doctor','=',$doctorId)->first();
+				    $doctorData = DoctorsModel::where('id_doctor','=',$doctorId)->first();
 				    						 
 				//Log::info("Patientdata",array($patientData));
 
@@ -251,6 +249,10 @@ class CardiologyController extends Controller {
 
 
 			{
+				$otpGenerated 	 	= DBUtils::generate_otp(4);
+
+				$message    =  "Welcome to Doctor's Diary!\nClick here to register"."-".
+				"http://www.doctorsdiary.co/patient/signup.\nOTP for regstration: Use ".$otpGenerated;
 				
 				$inputValue = array('id_patient' => $input['id_patient'],
 									'first_name'=>$firstName,
@@ -271,11 +273,13 @@ class CardiologyController extends Controller {
 									'phone' => $phone,
 									'email' => $email,
 									'profile_image_large'=>$profileImageName,
+									'otp_generated' => $otpGenerated,
 									'id_doctor' => $doctorId,
 									'created_date' => $createdDate);
 									
 				$patientPersonalInfoSave = DB::table('patients')->insert($inputValue);
 				if($patientPersonalInfoSave){
+					$otpSendToMobile 	= DBUtils::otpSendToMobile($phone,$message,$otpGenerated);
 					return Redirect::to('doctor/cardiopersonalinformation')->with(array('success'=>'Data saved successfully'));
 				}
 			}
@@ -387,7 +391,7 @@ class CardiologyController extends Controller {
     		(!empty($input['tobaco-chew']))?$tobacoChew = $input['tobaco-chew']:$tobacoChew = "";
     		(!empty($input['other-social-history']))?$OtherSocialHistory = $input['other-social-history']:$OtherSocialHistory = "";
     		(!empty($input['other_medical_history']))?$otherMedicalHistory = $input['other_medical_history']:$otherMedicalHistory = "";
-    		(!empty($input['anaesthesia']))?$anaesthesiaHistory = $input['anaesthesia']:$anaesthesiaHistory = "";
+    		/*(!empty($input['anaesthesia']))?$anaesthesiaHistory = $input['anaesthesia']:$anaesthesiaHistory = "";*/
     		//Addmore illness
     		
     		//Surgery History
@@ -434,8 +438,8 @@ class CardiologyController extends Controller {
 			    					   	'history_social_alcohol' => $alcohol,
 			    					   	'history_social_tobacco_smoke' => $tobacoSmoke,
 			    					   	'history_social_tobacco_chew' => $tobacoChew,
-			    					   	'history_social_other' => $OtherSocialHistory,
-			    					   	'history_prev_intervention_anaesthesia' => $anaesthesiaHistory,
+			    					   	'history_social_other' => $OtherSocialHistory,/*
+			    					   	'history_prev_intervention_anaesthesia' => $anaesthesiaHistory,*/
 			    					   	'history_other'=>$otherMedicalHistory,
 			    					   	'history_presentpast_no'=>$presentPastNotKnown,
 										'history_family_no'=>$familyNotKnown,
@@ -502,8 +506,8 @@ class CardiologyController extends Controller {
 			    					   'history_social_alcohol' => $alcohol,
 			    					   'history_social_tobacco_smoke' => $tobacoSmoke,
 			    					   'history_social_tobacco_chew' => $tobacoChew,
-			    					   'history_social_other' => $OtherSocialHistory,
-			    					   'history_prev_intervention_anaesthesia' => $anaesthesiaHistory,
+			    					   'history_social_other' => $OtherSocialHistory,/*
+			    					   'history_prev_intervention_anaesthesia' => $anaesthesiaHistory,*/
 			    					   'history_other'=>$otherMedicalHistory,
 			    					   'history_presentpast_no'=>$presentPastNotKnown,
 										'history_family_no'=>$familyNotKnown,
@@ -528,7 +532,7 @@ class CardiologyController extends Controller {
 	    		return Redirect::to('doctor/cardiomedicalhistory')->with(array('success'=>"Data saved successfully"));
 
 	    	}
-
+	    	
       	
 	    }
 	    else{

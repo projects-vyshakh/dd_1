@@ -5,6 +5,7 @@ var patientSearch = function () {
 	var searchPatient = function(){
 			
 		$('#search').click(function(e){
+			
 			e.preventDefault();
 			$('#patient_list_div').show();
 

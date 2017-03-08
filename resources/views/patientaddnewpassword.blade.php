@@ -8,7 +8,7 @@
 <!-- start: HEAD -->
 <head>
 
-	<title>Doctor's Diary | Login</title>
+	<title>Doctor's Diary | Password</title>
 	<!-- start: META -->
 	<meta charset="utf-8" />
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
@@ -17,7 +17,7 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta content="" name="description" />
 	<meta content="" name="author" />
-	<link rel="shortcut icon" href="assets/images/logo-mob.png" type="image/x-icon">
+	<link rel="shortcut icon" href="../assets/images/logo-mob.png" type="image/x-icon">
 	<style type="text/css">
 
 		body {
@@ -101,15 +101,15 @@ $currentPath = Route::getCurrentRoute()->getPath();
 						</div>
 						<div class="login_div">
 							<div class="doctorlogin_main">
-								<span class="doctor_login"><img src="assets/images/doctor_icon.png"></span>
+								<span class="doctor_login"></span>
 
-								<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login"  style="color: #428bca" @endif>Doctor Login</a>&nbsp;  &nbsp;
+								<a href="../doctor/login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login"  style="color: #428bca" @endif>Doctor Login</a>&nbsp;  &nbsp;
 
 							</div>
 							<div class="patientlogin_main"> 		
-								<span class="patient_login"><img src="assets/images/patient_icon.png">
+								<span class="patient_login">
 								</span>	        		 		 	
-								<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active"  style="color: #428bca" @endif>
+								<a href="patient/login" @if($currentPath=="patient/login") class="topmenu-active"  style="color: #428bca" @endif>
 									Patient Login
 								</a>
 							</div>
@@ -150,19 +150,19 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
 	  						<div class="dd_logo_responsive">
 
-	  							<img src="assets/images/logo-mob.png" alt="">			        		
+	  							<img src="../assets/images/logo-mob.png" alt="">			        		
 	  						</div>
 	  						<div class="dd_drlogin_responsive">
 
 	  							<div class="login_div2">
 	  								<div class="doctorlogin_main2">								
 
-	  									<a href="doctorlogin" @if($currentPath=="doctorlogin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+	  									<a href="../doctor/login" @if($currentPath=="doctor/login") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
 
 	  								</div>
 	  								<div class="patientlogin_main2"> 		
 	  									
-	  									<a href="patientlogin" @if($currentPath=="patientlogin") class="topmenu-active" @endif>
+	  									<a href="patient/login" @if($currentPath=="patient/login") class="topmenu-active" @endif>
 	  										Patient Login
 	  									</a>
 	  								</div>
@@ -257,28 +257,18 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
                         </div>
                     </div>
-
-
                     <div class="box_right">
-
-
-                    	<div class="logo">
-                    		<span class="login_HD dd_signfont">New to Doctors Diary?</span>
-                    	</div>
-
-
-                    	<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
-                    		<!-- <span class="dd_color_light_bl">New User ?</span> -->
-                    		<span class="input-icon ">
-                    			<button type="submit" class="btn btn-primary btn-block dd_btn_new">
-                    				<a href="doctorlogin" class=""> Register Now</a>
-                    			</button>
-                    		</span>
-                    	</div>
-                    	
-
-                    </div>
-
+						<div class="logo">
+			  				<span class="login_HD dd_signfont">Already have an account on Doctor's Diary?</span>
+			  			</div>
+						<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
+			  				<!-- <span class="dd_color_light_bl">New User ?</span> -->
+			  				<span class="input-icon ">
+			  					<button type="submit" class="btn btn-primary btn-block dd_btn_new patient_login_btn">
+			  						<a href="login" class=""> Login Now</a></button>
+			  				</span>
+			  			</div>
+					</div>
 
 
                     <div class="dd_clear"></div>
@@ -368,8 +358,12 @@ $currentPath = Route::getCurrentRoute()->getPath();
 		<script>
 			jQuery(document).ready(function() {
 				//Main.init();
-				forgetPassword.init();
 				
+				forgetPassword.init();
+				$('.patient_login_btn').click(function(e){
+		            e.preventDefault();
+		            window.location='login';
+		        });	
 				
 				
 			});

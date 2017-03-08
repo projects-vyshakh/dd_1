@@ -87,6 +87,28 @@ $todayDate = date('d-M-Y');
     @endif
 
 
+    <!-- Pathology -->
+    @if($currentPath=="doctor/pathologypersonalinformation")
+        <title>Patient Personal Information</title> 
+    @endif
+
+    @if($currentPath=="doctor/pathologyreportupload")
+        <title>Upload Patient Report</title> 
+    @endif
+
+    @if($currentPath=="doctor/pathlabhistory")
+        <title>Lab History</title> 
+    @endif
+
+    <!-- Pulmo -->
+    @if($currentPath=="doctor/pulmopersonalinformation")
+         <title>Patient Personal Information</title> 
+    @endif
+    @if($currentPath=="doctor/pulmomedicalhistory" )
+        <title>Patient Medical History</title> 
+    @endif
+
+
     <!-- Admin -->
     @if($currentPath=="admin/home")<title>Home</title> @endif
 
@@ -154,6 +176,13 @@ $todayDate = date('d-M-Y');
                     $currentPath    ==  'doctor/pediapersonalinformation'   ||
                     $currentPath    ==  'doctor/pediaexamination'           ||
 
+                    $currentPath    ==  'doctor/pathologypersonalinformation'   ||
+                    $currentPath    ==  'doctor/pathologyreportupload'      ||
+
+                    $currentPath    ==  'doctor/pulmopersonalinformation'  ||
+                    $currentPath    ==  'doctor/pulmomedicalhistory'       ||
+                    $currentPath    ==  'doctor/pathlabhistory'            ||
+
                     $currentPath    ==  'doctor/printsetup')
 
                    
@@ -179,10 +208,20 @@ $todayDate = date('d-M-Y');
                                     $currentPath == 'doctor/patientobstetricshistory'   || 
                                     $currentPath == 'doctor/patientmedicalhistory'      || 
                                     $currentPath == 'doctor/patientprevioustreatment'   || 
+
                                     $currentPath == 'doctor/cardiopersonalinformation'  || 
                                     $currentPath == 'doctor/cardiomedicalhistory'       || 
                                     $currentPath == 'doctor/cardioprevioustreatment'    ||
-                                    $currentPath == 'doctor/pediapersonalinformation' ) 
+
+                                    $currentPath == 'doctor/pediapersonalinformation'   ||
+
+                                    $currentPath == 'doctor/pathologypersonalinformation' ||
+                                    $currentPath == 'doctor/pathologyreportupload' ||
+                                    $currentPath ==  'doctor/pathlabhistory'            ||
+
+                                    $currentPath == 'doctor/pulmopersonalinformation'   ||
+                                    $currentPath == 'doctor/pulmomedicalhistory' )   
+                                    
                                     class="active" 
                                 @endif >
 
@@ -253,8 +292,55 @@ $todayDate = date('d-M-Y');
                                                 </a>
                                             </li>
 
+
                                         </ul>
                                     </div>
+                                 @elseif($specialization==4)
+                                    <a href="pulmopersonalinformation" id="patient-menu">
+                                        <i class="icon pricon icon-pr-patient" ng-show="navOption.key"></i>
+                                        <span class="dd_menu_main_L">Patient</span>
+                                    </a>
+                                    <div class="dd_resp_menu" id="patient-menu-div">
+                                        <ul class="sub-menu" style="display:block">
+                                            <li>
+                                                <a href="pulmopersonalinformation">
+                                                    <span class="title"> Personal Information </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="pulmomedicalhistory">
+                                                    <span class="title"> Medical History </span>
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                @elseif($specialization==5) 
+                                    <a href="pathologypersonalinformation" id="pathology-patient-menu">
+                                        <i class="icon pricon icon-pr-patient" ng-show="navOption.key"></i>
+                                        <span class="dd_menu_main_L">Patient</span>
+                                    </a>
+                                    <div class="dd_resp_menu" id="pathology-patient-menu-div">
+                                        <ul class="sub-menu" style="display:block">
+                                            <li>
+                                                <a href="pathologypersonalinformation">
+                                                    <span class="title"> Personal Information </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="pathlabhistory">
+                                                    <span class="title"> Path Lab History </span>
+                                                </a>
+                                            </li>
+                                             <li>
+                                                <a href="pathologyreportupload">
+                                                    <span class="title"> Upload Report </span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                
                                 
                                 @endif
                             </li>
@@ -456,7 +542,29 @@ $todayDate = date('d-M-Y');
                             </ul>
                         </div>
                     </div>
-                @elseif($currentPath == 'diseaseatlas/admin/home' || $currentPath == 'diseaseatlas/admin/adddisease') 
+                @elseif($currentPath == 'diseaseatlas/admin/home' || $currentPath == 'diseaseatlas/admin/adddisease')
+                    <div class="nav navbar-left">
+                        <div class="horizontal-menu navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <div class="dd_resp_menu" id="user_respo_menu" >
+                                    <li id="user_respo_home_menu" @if($currentPath=="diseaseatlas/admin/home") class="active" @endif>
+                                        <a href="home">
+                                            <span class="dd_input_icon_dashboard"></span>
+                                            <span class="title"> Dashboard </span>
+                                        </a>
+                                       
+                                    </li>
+                                    <li id="user_respo_home_menu"  @if($currentPath=="diseaseatlas/admin/adddisease") class="active" @endif>
+                                        <a href="adddisease">
+                                             <span class="dd_input_icon_dashboard"></span>
+                                            <span class="title"> Add Disease </span>
+                                        </a>
+                                       
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
                 @else
                 
 
@@ -487,6 +595,13 @@ $todayDate = date('d-M-Y');
 
                 $currentPath    ==  'doctor/pediapersonalinformation'   ||
                 $currentPath    ==  'doctor/pediaexamination'           ||
+
+                $currentPath    ==  'doctor/pathologypersonalinformation'   ||
+                $currentPath    ==  'doctor/pathologyreportupload'      ||
+                $currentPath ==  'doctor/pathlabhistory'                ||
+
+                 $currentPath   ==  'doctor/pulmopersonalinformation'  ||
+                $currentPath    ==  'doctor/pulmomedicalhistory' ||
                 
                 $currentPath    ==  'doctor/printsetup')
 
@@ -529,7 +644,7 @@ $todayDate = date('d-M-Y');
                             
                              <li>
                                 <a href="logout" class="dd_settings">
-                                    <i class="clip-dd-settings"></i>
+                                    <i class="dd_logout"></i>
                                     <span>&nbsp;Log Out</span>
                                 </a>
                             </li>
@@ -556,7 +671,7 @@ $todayDate = date('d-M-Y');
                             
                              <li>
                                 <a href="logout" class="dd_settings">
-                                    <i class="clip-dd-settings"></i>
+                                    <i class="dd_logout"></i>
                                     <span>&nbsp;Log Out</span>
                                 </a>
                             </li>
@@ -585,7 +700,9 @@ $todayDate = date('d-M-Y');
                     $currentPath!="doctor/cardiomedicalhistory" &&  
                     $currentPath!="doctor/cardioexamination" &&  
                     $currentPath!="doctor/cardiolabdata" &&  
-                    $currentPath!="doctor/cardiodiagnosis")
+                    $currentPath!="doctor/cardiodiagnosis" &&
+                    $currentPath!="doctor/pathologypersonalinformation" &&
+                    $currentPath!="doctor/pathologyreportupload")
                     <ul class="nav navbar-right">
 
                        
@@ -645,6 +762,8 @@ $todayDate = date('d-M-Y');
 
 
                     <!-- PATIENT SIDE MENU STARTS-->
+               
+
                     @if($currentPath == 'doctor/patientpersonalinformation' || 
                         $currentPath == 'doctor/patientobstetricshistory' || 
                         $currentPath == 'doctor/patientmedicalhistory' || 
@@ -653,10 +772,16 @@ $todayDate = date('d-M-Y');
                         $currentPath == 'doctor/cardiomedicalhistory' || 
                         $currentPath == 'doctor/cardioprevioustreatment' || 
                         $currentPath == 'doctor/pediapersonalinformation' ||
+                        $currentPath == 'doctor/pathologypersonalinformation' ||
+                        $currentPath == 'doctor/pathologyreportupload' ||
+                        $currentPath ==  'doctor/pathlabhistory'     ||
+                        $currentPath == 'doctor/pulmopersonalinformation' ||
+                        $currentPath == 'doctor/pulmomedicalhistory' ||
                         $currentPath == 'doctor/printsetup')
 
 
                         @if($currentPath == 'doctor/printsetup')
+                           
                             <div id="patient-side-menu">
                                 <ul class="main-navigation-menu">
                                     <li  @if($currentPath == 'doctor/printsetup') class="active open" @endif>
@@ -705,7 +830,7 @@ $todayDate = date('d-M-Y');
                                         </li>
                                     
                                     <!-- Cardio Specialization    -->
-                                    @elseif($specialization == 2)
+                                    @elseif($specialization == 2) 
                                          <li  @if($currentPath == 'doctor/cardiopersonalinformation') class="active open" @endif>
                                             <a href="cardiopersonalinformation">
                                           <!--    <i class="clip-home-3"></i> --> 
@@ -728,7 +853,7 @@ $todayDate = date('d-M-Y');
                                         </li> 
 
                                     <!-- Pedia Specialization -->
-                                    @elseif($specialization == 3)
+                                    @elseif($specialization == 3) 
                                         <li  @if($currentPath == 'doctor/pediapersonalinformation') class="active open" @endif>
                                             <a href="pediapersonalinformation">
                                           <!--    <i class="clip-home-3"></i> --> 
@@ -736,6 +861,47 @@ $todayDate = date('d-M-Y');
                                                 <span class="title"> Personal Information </span><span class="selected"></span>
                                             </a>
                                         </li>
+
+                                     <!-- Pulmo Specialization    -->
+                                    @elseif($specialization == 4)
+                                         <li  @if($currentPath == 'doctor/pulmopersonalinformation') class="active open" @endif>
+                                            <a href="pulmopersonalinformation">
+                                          <!--    <i class="clip-home-3"></i> --> 
+                                             <span class="dd_input_icon_patientpersonalinformation"></span>
+                                                <span class="title"> Personal Information </span><span class="selected"></span>
+                                            </a>
+                                        </li>
+                                         <li  @if($currentPath == 'doctor/pulmomedicalhistory') class="active open" @endif>
+                                            <a href="pulmomedicalhistory">
+                                                <span class="dd_input_icon_Medical_History"></span>
+                                                <span class="title"> Medical History </span><span class="selected"></span>
+                                            </a>
+                                        </li> 
+
+                                    @elseif($specialization == 5) 
+
+                                        <li  @if($currentPath == 'doctor/pathologypersonalinformation') class="active open" @endif>
+                                            <a href="pathologypersonalinformation">
+                                          <!--    <i class="clip-home-3"></i> --> 
+                                             <span class="dd_input_icon_patientpersonalinformation"></span>
+                                                <span class="title"> Personal Information </span><span class="selected"></span>
+                                            </a>
+                                        </li>
+                                        <li  @if($currentPath == 'doctor/pathlabhistory') class="active open" @endif>
+                                            <a href="pathlabhistory">
+                                          <!--    <i class="clip-home-3"></i> --> 
+                                             <span class="dd_input_icon_patientpersonalinformation"></span>
+                                                <span class="title"> Path Lab History </span><span class="selected"></span>
+                                            </a>
+                                        </li>
+                                        <li  @if($currentPath == 'doctor/pathologyreportupload') class="active open" @endif>
+                                            <a href="pathologyreportupload">
+                                          <!--    <i class="clip-home-3"></i> --> 
+                                             <span class="dd_input_icon_patientpersonalinformation"></span>
+                                                <span class="title"> Upload Report </span><span class="selected"></span>
+                                            </a>
+                                        </li>
+                                    
 
                                     @endif    
                                 </ul>
@@ -1064,7 +1230,13 @@ $todayDate = date('d-M-Y');
                                         $currentPath    ==  'doctor/cardioprescmanagement'      ||
 
                                         $currentPath    ==  'doctor/pediapersonalinformation'   ||
-                                        $currentPath    ==  'doctor/pediaexamination')
+                                        $currentPath    ==  'doctor/pediaexamination'           ||
+
+                                        $currentPath    ==  'doctor/pathologypersonalinformation' ||
+                                        $currentPath    ==  'doctor/pathologyreportupload'      ||
+
+                                        $currentPath    ==  'doctor/pulmopersonalinformation' ||
+                                        $currentPath    ==  'doctor/pulmomedicalhistory' )
                                         
                                         
                                         <a style="font-size: 14px;text-decoration: none;float: left">
@@ -1127,6 +1299,12 @@ $todayDate = date('d-M-Y');
 
                                         $currentPath    ==  'doctor/pediapersonalinformation'   ||
                                         $currentPath    ==  'doctor/pediaexamination'           ||
+
+                                        $currentPath    ==  'doctor/pathologypersonalinformation' ||
+                                        $currentPath    ==  'doctor/pathologyreportupload'      ||
+
+                                        $currentPath    ==  'doctor/pulmopersonalinformation'   ||
+                                        $currentPath    ==  'doctor/pulmomedicalhistory'        ||
 
                                         $currentPath    ==  'patient/dashboard'                 ||
                                         $currentPath    ==  'patient/profile'                   ||

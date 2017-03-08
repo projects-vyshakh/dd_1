@@ -4,37 +4,54 @@ $nowDate = date('d-M-Y');
 
 if(!empty($patientData)){
 	//echo "ss";
+	$patientId 	     			= $patientData->id_patient;
+	$firstName 	     			= $patientData->first_name;
+	$middleName      			= $patientData->middle_name;
+	$lastName        			= $patientData->last_name;
+	$aadharNo        			= $patientData->id_aadhar;
+	$patientGender   			= $patientData->gender;
+	$patientDob      			= $patientData->dob;
+	$age             			= $patientData->age;
+	$patientMaritialStatus  	= $patientData->maritial_status;
+	$house           			= $patientData->house_name;
+	$patientStreet          	= $patientData->street;
+	$patientCity            	= $patientData->city;
+	$patientState           	= $patientData->state;
+	$patientCountry         	= $patientData->country;
+	$pincode         			= $patientData->pincode;
+	$phone           			= $patientData->phone;
+	$email           			= $patientData->email;
+	$refferedBy 				= $patientData->reffered_by;
 
-	foreach ($patientData as $key => $value) {
-		$patientId 	     			= $value->id_patient;
-		$firstName 	     			= $value->first_name;
-		$middleName      			= $value->middle_name;
-		$lastName        			= $value->last_name;
-		$aadharNo        			= $value->id_aadhar;
-		$patientGender   			= $value->gender;
-		$patientDob      			= $value->dob;
-		$age             			= $value->age;
-		$patientMaritialStatus  	= $value->maritial_status;
-		$house           			= $value->house_name;
-		$patientStreet          	= $value->street;
-		$patientCity            	= $value->city;
-		$patientState           	= $value->state;
-		$patientCountry         	= $value->country;
-		$pincode         			= $value->pincode;
-		$phone           			= $value->phone;
-		$email           			= $value->email;
-		$refferedBy 				= $value->reffered_by;
-		//echo $patientDob;
-	}
 	$patientName = $firstName." ".$lastName;
 }
 else{
 	$newPatientId = Session::get('patientId'); 
 	$patientName = "";
+	$firstName 	     			= "";
+	$middleName      			= "";
+	$lastName        			= "";
+	$aadharNo        			= "";
+	$patientGender   			= "";
+	$patientDob      			= "";
+	$age             			= "";
+	$patientMaritialStatus  	= "";
+	$house           			= "";
+	$patientStreet          	= "";
+	$patientCity            	= "";
+	$patientState           	= "";
+	$patientCountry         	= "101";
+	$pincode         			= "";
+	$phone           			= "";
+	$email           			= "";
+	$refferedBy 				= "";
 }
 
 if(!empty($doctorData)){
 	$doctorSpecialization = $doctorData->specialization;
+}
+else{
+	$doctorSpecialization = "";
 }
 
 
@@ -59,7 +76,7 @@ if(!empty($doctorData)){
         width: 100%;
         height: 100%;
         z-index: 9999;
-        background: url('assets/images/page_loading.gif') 50% 50% no-repeat rgb(249,249,249);
+        background: url('../assets/images/page_loading.gif') 50% 50% no-repeat rgb(249,249,249);
     }
     textarea{
     	resize: none;
@@ -109,7 +126,7 @@ if(!empty($doctorData)){
 								<span class="symbol required"></span>
 							</div>
 							<div class="col-sm-6">
-								{!! Form::text('school_name', !empty($patientData[0]->school_name)?$patientData[0]->school_name:Input::old('school_name'), $attributes = array('class'=>'form-control school_name','placeholder' => 'School/Kindergarten','id'=>'school_name'));  !!}
+								{!! Form::text('school_name', !empty($patientData->school_name)?$patientData->school_name:Input::old('school_name'), $attributes = array('class'=>'form-control school_name','placeholder' => 'School/Kindergarten','id'=>'school_name'));  !!}
 							</div>
 						</div>
 						<div class="form-group">
@@ -118,7 +135,7 @@ if(!empty($doctorData)){
 								<span class="symbol required"></span>
 							</div>
 							<div class="col-sm-6">
-								{!! Form::textarea('school_address', !empty($patientData[0]->school_address)?$patientData[0]->school_address:Input::old('school_address'),array('class'=>'form-control school_address','size'=>'49x5')) !!}
+								{!! Form::textarea('school_address', !empty($patientData->school_address)?$patientData->school_address:Input::old('school_address'),array('class'=>'form-control school_address','size'=>'49x5')) !!}
 								<!-- {!! Form::textarea('school_address', Input::old('school_address'), $attributes = array('class'=>'form-control school_address','placeholder' => 'Address','id'=>'school_address','cols'=>'2'));  !!} -->
 							</div>
 						</div>
@@ -162,31 +179,31 @@ if(!empty($doctorData)){
 								<span class="input-icon">
 							  	{!! Form::label('first_name', 'First Name', $attributes = array('class'=>"dd_kids_Name"));  !!}
 							  	<span class="symbol required"></span>
-							  	{!! Form::text('first_name', !empty($patientData[0]->first_name)?$patientData[0]->first_name:Input::old('first_name'), $attributes = array('class'=>'form-control first_name','placeholder' => 'First Name','id'=>'first_name'));  !!}
+							  	{!! Form::text('first_name', !empty($patientData->first_name)?$patientData->first_name:Input::old('first_name'), $attributes = array('class'=>'form-control first_name','placeholder' => 'First Name','id'=>'first_name'));  !!}
 							  	</span>
 							</div>
 							<div class="col-xs-12 col-sm-3">
 								<span class="input-icon">
 							  	{!! Form::label('last_name', 'Last Name', $attributes = array('class'=>"dd_kids_Name"));  !!}
 							  	<span class="symbol required"></span>
-							  	{!! Form::text('last_name', !empty($patientData[0]->last_name)?$patientData[0]->last_name:Input::old('last_name'), $attributes = array('class'=>'form-control last_name','placeholder' => 'Last Name','id'=>'last_name'));  !!}
+							  	{!! Form::text('last_name', !empty($patientData->last_name)?$patientData->last_name:Input::old('last_name'), $attributes = array('class'=>'form-control last_name','placeholder' => 'Last Name','id'=>'last_name'));  !!}
 							  	</span>
 							</div>
 						  	<div class="col-xs-12 col-sm-2">
 						  		{!! Form::label('stud_class', 'Class', $attributes = array('class'=>"dd_kids_Name"));  !!}
 						  		<span class="symbol required"></span>
-							  	{!! Form::text('stud_class', !empty($patientData[0]->stud_class)?$patientData[0]->stud_class:Input::old('stud_class'), $attributes = array('class'=>'form-control stud_class','placeholder' => 'Class','id'=>'stud_class'));  !!}
+							  	{!! Form::text('stud_class', !empty($patientData->stud_class)?$patientData->stud_class:Input::old('stud_class'), $attributes = array('class'=>'form-control stud_class','placeholder' => 'Class','id'=>'stud_class'));  !!}
 						  	</div>
 						  	<div class="col-xs-12 col-sm-2">
 						  		{!! Form::label('stud_section', 'Section', $attributes = array('class'=>"dd_kids_Name"));  !!}
 						  		<!-- <span class="symbol required"></span> -->
-							  	{!! Form::text('stud_section', !empty($patientData[0]->stud_section)?$patientData[0]->stud_section:Input::old('stud_section'), $attributes = array('class'=>'form-control stud_section','placeholder' => 'Section','id'=>'stud_section'));  !!}
+							  	{!! Form::text('stud_section', !empty($patientData->stud_section)?$patientData->stud_section:Input::old('stud_section'), $attributes = array('class'=>'form-control stud_section','placeholder' => 'Section','id'=>'stud_section'));  !!}
 						  	</div>
 						  	<div class="col-xs-12 col-sm-2">
 						  		{!! Form::label('stud_gender', 'Gender', $attributes = array('class'=>"dd_kids_Name"));  !!}
 						  		<span class="symbol required"></span>
 							  	<span class="input-icon">
-									{!! Form::select('stud_gender', $gender, !empty($patientData[0]->gender)?$patientData[0]->gender:Input::old('stud_gender'), $attributes = array('class' => 'form-control stud_gender','id'=>'stud_gender')); !!}
+									{!! Form::select('stud_gender', $gender, !empty($patientData->gender)?$patientData->gender:Input::old('stud_gender'), $attributes = array('class' => 'form-control stud_gender','id'=>'stud_gender')); !!}
 								</span>
 						  	</div>
 
@@ -197,22 +214,22 @@ if(!empty($doctorData)){
 							<div class="col-xs-12 col-sm-6">
 							  	{!! Form::label('stud_occupation', 'Occupation(Parent)', $attributes = array('class'=>"dd_kids_Name"));  !!}
 							  	
-							  	{!! Form::text('stud_occupation', !empty($patientData[0]->stud_parent_occupation)?$patientData[0]->stud_parent_occupation:Input::old('stud_occupation'), $attributes = array('class'=>'form-control stud_occupation','placeholder' => 'Occupation','id'=>'stud_occupation'));  !!} 
+							  	{!! Form::text('stud_occupation', !empty($patientData->stud_parent_occupation)?$patientData->stud_parent_occupation:Input::old('stud_occupation'), $attributes = array('class'=>'form-control stud_occupation','placeholder' => 'Occupation','id'=>'stud_occupation'));  !!} 
 							</div>
 							<div class="col-xs-12 col-sm-2">
 						  		{!! Form::label('stud_dob', 'Date of birth', $attributes = array('class'=>"dd_kids_Name"));  !!}
 						  		<span class="symbol required"></span>
-							  	{!! Form::text('stud_dob', !empty($patientData[0]->stud_dob)?$patientData[0]->stud_dob:Input::old('stud_dob'), $attributes = array('class'=>'form-control stud_dob','placeholder' => 'Date of birth','id'=>'stud_dob'));  !!}
+							  	{!! Form::text('stud_dob', !empty($patientData->stud_dob)?$patientData->stud_dob:Input::old('stud_dob'), $attributes = array('class'=>'form-control stud_dob','placeholder' => 'Date of birth','id'=>'stud_dob'));  !!}
 						  	</div>
 						  	<div class="col-xs-12 col-sm-2">
 						  		{!! Form::label('stud_age', 'Age', $attributes = array('class'=>"dd_kids_Name"));  !!}
 						  		<span class="symbol required"></span>
-							  	{!! Form::text('stud_age', !empty($patientData[0]->age)?$patientData[0]->age:Input::old('stud_age'), $attributes = array('class'=>'form-control stud_age','placeholder' => 'Age','id'=>'stud_age','readonly'=>'readonly'));  !!}
+							  	{!! Form::text('stud_age', !empty($patientData->age)?$patientData->age:Input::old('stud_age'), $attributes = array('class'=>'form-control stud_age','placeholder' => 'Age','id'=>'stud_age','readonly'=>'readonly'));  !!}
 						  	</div>
 						  	<div class="col-xs-12 col-sm-2">
 						  		{!! Form::label('stud_mobile', 'Phone', $attributes = array('class'=>"dd_kids_Name"));  !!}
 						  		<span class="symbol required"></span>
-							  	{!! Form::text('stud_mobile', !empty($patientData[0]->phone)?$patientData[0]->phone:Input::old('stud_mobile'), $attributes = array('class'=>'form-control stud_mobile','placeholder' => 'Phone','id'=>'stud_mobile'));  !!}
+							  	{!! Form::text('stud_mobile', !empty($patientData->phone)?$patientData->phone:Input::old('stud_mobile'), $attributes = array('class'=>'form-control stud_mobile','placeholder' => 'Phone','id'=>'stud_mobile'));  !!}
 						  	</div>
 						</div>
 					</div>

@@ -7687,3 +7687,71 @@ input[type="text"][readonly] {
 input[type="text"][disabled] {
    cursor: pointer;
 }
+
+
+/* disease atlas 
+-------------------------------------------------------- */
+
+.logo_div_a	
+{
+	float: left;
+	height: 72px;
+	width: 15%;
+}
+.login_div_b
+{
+	float: right;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: 343px;
+    margin: 30px auto;
+    color: #fff;
+}
+.login_div_b a {	
+    border: 1px solid hsla(0, 0%, 100%, 0.7);
+    color: hsl(0, 0%, 100%);
+    font-weight: 500;
+    padding: 9px 18px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+.login_div_b a:hover, .login_div_b a:focus {
+    background: #428bca;
+    color: #fff;
+    text-decoration: none;
+}
+.disease_heading img {
+    width: 159px;
+    height: 23px;
+}
+.disease-doctorlogin_main2 {
+    margin-right: 0;
+    float: left;
+    color: #fff;
+}
+.disease-doctorlogin_main2 a {
+    color: #fff;
+}
+.disease-patientlogin_main2 {
+    float: left;
+}
+.disease-patientlogin_main2 a {
+    color: #fff;
+}
+.disease_heading2 img
+{
+	width: 159px;
+	height: 21px;
+}
+.disease-dd_drlogin_responsive {
+     display: none;
+}
+.disease-login_div2{
+	float: right;
+	margin: 0 10px 15px 0;
+	font-size: 14px;
+	text-transform: uppercase;
+}

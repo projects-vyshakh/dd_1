@@ -17,7 +17,7 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta content="" name="description" />
 	<meta content="" name="author" />
-	<link rel="shortcut icon" href="assets/images/logo-mob.png" type="image/x-icon">
+	<link rel="shortcut icon" href="../assets/images/logo-mob.png" type="image/x-icon">
 	<style type="text/css">
 
 		body {
@@ -143,7 +143,7 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
 	  					<div class="dd_logo_responsive">
 
-	  						<img src="assets/images/logo-mob.png" alt="">			        		
+	  						<img src="../assets/images/logo-mob.png" alt="">			        		
 	  					</div>
 	  					<div class="dd_drlogin_responsive">
 	  						<div class="login_div2">
@@ -160,31 +160,10 @@ $currentPath = Route::getCurrentRoute()->getPath();
 	  					</div>
 
 	  					<div class="logo">
-	  						<span class="login_HD dd_signfont">We'll email or sms you a link to make a brand new password. </span>
+	  						<span class="login_HD dd_signfont">We'll sms you a link to make a brand new password. </span>
 	  					</div>
 
-	  					<div class=" dd_relative">
-	  						<div class="heading ">
-	  							<?php $error = Session::get('error');
-	  							$success = Session::get('success');
-	  							Session::forget('error');
-	  							Session::forget('success');
-
-	  							?>
-	  							@if(!empty($error))
-	  							<div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
-	  								<a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-	  								{{$error}}
-	  							</div>
-	  							@elseif(!empty($success))
-	  							<div class="dd_alert_2 display-none" style="display: block;">
-	  								<a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
-	  								{{$success}}
-	  							</div>
-	  							@endif
-
-	  						</div>
-	  					</div> 
+	  					
 
 	  					<div class="box-login " style="display: block;">
 	  						<div class="row">
@@ -193,8 +172,8 @@ $currentPath = Route::getCurrentRoute()->getPath();
 	  								<div class="form-group">
 	  									<div class="col-sm-12 dd_login">
 	  										<span class="input-icon ">
-	  										{!! Form::text('email_mobile', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Mobile', 'id'=>'email'));  !!}
-	  											<span class="dd_input_email"></span> 
+	  										{!! Form::text('email_mobile', null, $attributes = array('class'=>'form-control dd_input dd_login_main','placeholder' => 'Mobile', 'id'=>'mobile'));  !!}
+	  											<span class="dd_input_phone"></span> 
 	  										</span>
 	  									</div>
 	  								</div>
@@ -210,6 +189,29 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
 
 	  								{!! Form::close() !!}
+
+	  								<div class=" dd_relative">
+				  						<div class="heading ">
+				  							<?php $error = Session::get('error');
+				  							$success = Session::get('success');
+				  							Session::forget('error');
+				  							Session::forget('success');
+
+				  							?>
+				  							@if(!empty($error))
+				  							<div class="dd_alert  dd_margin_b_10 col-sm-12 display-none" style="display: block;">
+				  								<a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+				  								{{$error}}
+				  							</div>
+				  							@elseif(!empty($success))
+				  							<div class="dd_alert_2 display-none" style="display: block;">
+				  								<a class="close" aria-hidden="true" href="#" data-dismiss="alert">×</a>
+				  								{{$success}}
+				  							</div>
+				  							@endif
+
+				  						</div>
+				  					</div> 
 	  							</div>
 	  						</div>
 	  					</div>
@@ -221,23 +223,17 @@ $currentPath = Route::getCurrentRoute()->getPath();
 
 
 	  		<div class="box_right">
-
-
-	  			<div class="logo">
+				<div class="logo">
 	  				<span class="login_HD dd_signfont">Already have an account on Doctor's Diary?</span>
 	  			</div>
-
-
-	  			<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
+				<div class="col-sm-12 dd_textalign_center dd_pd_0 dd_dummy dd_font_size_14px">
 	  				<!-- <span class="dd_color_light_bl">New User ?</span> -->
 	  				<span class="input-icon ">
 	  					<button type="submit" class="btn btn-primary btn-block dd_btn_new patient_login_btn">
 	  						<a href="login" class=""> Login Now</a></button>
-	  					</span>
-	  				</div>
-
-
+	  				</span>
 	  			</div>
+			</div>
 
 
 

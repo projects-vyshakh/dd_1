@@ -27,6 +27,7 @@
 	    {!!Html::style('assets/fonts/style.css')!!}
 	    
 	    {!!Html::style('assets/css/main.css')!!}
+	    {!!Html::style('assets/css/disease_main.css')!!}
 	    {!!Html::style('assets/css/main-responsive.css')!!}
 	    {!!Html::style('assets/plugins/iCheck/skins/all.css')!!}
 	    {!!Html::style('assets/plugins/bootstrap-colorpalette/css/bootstrap-colorpalette.css')!!}
@@ -39,11 +40,13 @@
 
 	     {!!Html::style('assets/plugins/Swiper-master/dist/css/swiper.min.css')!!}
 
-		{!!Html::style('assets/css/disease_main.css')!!}
+		
 
 		{!!Html::style('assets/plugins/ajax-loader/src/jquery.mloading.css')!!}
 	
-		<script src='http://www.jqueryscript.net/demo/Input-Based-Table-Data-Filter-With-jQuery-multifilter/multifilter.js'></script> 
+		<!-- <script src="http://www.jqueryscript.net/demo/Input-Based-Table-Data-Filter-With-jQuery-multifilter/multifilter.js"></script> -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src='assets/plugins/multifilter/multifilter.js'></script>
 
 	</head>
 	<!-- end: HEAD -->
@@ -52,22 +55,31 @@
 		$currentPath = Route::getCurrentRoute()->getPath();
 		//echo $currentPath;
 	?>
-
+	<style>
+		.loader 
+		{
+	        position: fixed;
+	        left: 0px;
+	        top: 0px;
+	        width: 100%;
+	        height: 100%;
+	        z-index: 9999;
+	        background: url('assets/images/page_loading.gif') 50% 50% no-repeat rgb(249,249,249);
+	    }
+	</style>
 	<body style="background-color:#f9f9f9">
 		<div class="loader"></div>
-		<div class=" navbar-fixed-top resize-login dd_login_header dd_login_header_2 "><!-- navbar-fixed-top -->
+		<div class="navbar-fixed-top resize-login dd_login_header disease_dd_login_header_2 "><!-- navbar-fixed-top -->
 			<div class="map_inner_wrapper_2">
 				<div class="container dd_pd_0">
 	        		<div class="row dd_mg_0">
 	        		 	<div class="col-sm-12 dd_pd_0">
-	        		 		<div class="logo_div">
-	    		 			   <a class="navbar-brand dd_logo_img_2" href="http://www.doctorsdiary.co">				                   
+	        		 		<div class="logo_div_a">
+	    		 			   <a class="navbar-brand dd_logo_img_2" href="http://www.doctorsdiary.co">
 								</a>
 							</div>
-							<div class="disease_heading">
-								DISEASE ATLAS
-							</div>
-							<div class="login_div">
+							
+							<div class="login_div_b">
 								<div class="doctorlogin_main">
 									<!-- <span class="doctor_login"><img src="assets/images/doctor_icon.png"></span> -->
 									<a href="doctor/login" >Doctor Login</a>&nbsp;  &nbsp;
@@ -78,27 +90,34 @@
 		        		 		 	</a>
 		        		 		</div>
 	        		 		</div>
+	        		 		<div class="disease_heading">
+							<img src="assets/images/Disease/main_logo.png">
+								<!-- DISEASE ATLAS -->
+							</div>
 	        		 	</div>
 	        		</div>
 	        	</div>
 	        </div>
         </div>
          <div class="map_inner_wrapper_3 ">
-         <div class="dd_drlogin_responsive">
-         <div class="logo_div">
-	    		 			   <!-- <a class="navbar-brand dd_logo_img_2" href="http://www.doctorsdiary.co">
-								</a> -->
+         <div class="disease-dd_drlogin_responsive">
+         <div class="map_logo_div">
+	    		 			 <div class="disease_dd_logo_responsive">
+			        	<a href="http://www.doctorsdiary.co" class="navbar-brand-disease disease_logo_img_2">
+								</a>
+			        		
+			        </div>
 								<div class="disease_heading2">
-								DISEASE ATLAS
+								<img src="assets/images/Disease/main_logo.png">
 							</div>	
 							</div>
-			        	<div class="login_div2">
-							<div class="doctorlogin_main2">								
-								<a href="signin" @if($currentPath=="doctor/signin") class="topmenu-active dd_doctor_login" @endif>Doctor Login</a>&nbsp; / &nbsp;
+			        	<div class="disease-login_div2">
+							<div class="disease-doctorlogin_main2">								
+								<a href="doctor/login"><b>Doctor Login</b></a>&nbsp; / &nbsp;
 							</div>
-	        		 		<div class="patientlogin_main2"> 							        		 		       	
-	        		 		 	<a href="../patient/signin" @if($currentPath=="patient/sigin") class="topmenu-active" @endif>
-	        		 		 		Patient Login
+	        		 		<div class="disease-patientlogin_main2"> 							        		 		       	
+	        		 		 	<a href="patient/login">
+	        		 		 		<b>Patient Login</b>
 	        		 		 	</a>
 	        		 		</div>
         		 		</div> 	
@@ -365,34 +384,37 @@ foreach ($mapData as $key => $value) {
 	{!!Html::script('assets/plugins/bootstrap-colorpalette/js/bootstrap-colorpalette.js')!!}
 	{!!Html::script('assets/js/main.js')!!}
 	{!!Html::script('assets/plugins/jquery-validation/dist/jquery.validate.min.js')!!}
-	{!!Html::script('assets/js/disease-index.js')!!}
+
 	{!!Html::script('http://www.jqueryscript.net/demo/Input-Based-Table-Data-Filter-With-jQuery-multifilter/multifilter.js')!!}
 	{!!Html::script('assets/plugins/ajax-loader/src/jquery.mloading.js')!!}
 
 	<script type="text/javascript">
-		$(document).ready(function(){
-			//$.mLoading("show");
+       
+		jQuery(document).ready(function($){
+			$('.filter').multifilter();
 			
-			//$(".filters_box").mLoading({ });
-			$("body").mLoading({ });
 			 var $window = $(window);
-			 if ($window.width() < 514) {
-			// 	console.log($window.width());
+			 if ($window.width() < 768) {
+			
             $(".filters_box").toggleClass("hidefilter");
         }
 			
 		    $(".btn_let-site").click(function(){
 		        $(".filters_box").toggleClass("hidefilter");
 		    });
-		    $('.filter').multifilter()
+		    
 			$(window).on('load', function() {
+				 
 		   		setTimeout(function(){
-		   			
-		    		$("body").mLoading("hide");
+		   			$(".loader").fadeOut("slow");
 		    		$('.filters_box').removeClass('hidden');
-		    		 $('#content').fadeIn('slow');
+		    		$('#content').fadeIn('slow');
 				}, 3000);
 				
 			});
+
+       
+
+   
 		});
 	</script>
